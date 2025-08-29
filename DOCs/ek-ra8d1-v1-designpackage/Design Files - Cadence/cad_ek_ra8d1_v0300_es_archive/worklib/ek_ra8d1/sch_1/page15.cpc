@@ -1,0 +1,153 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#ISCELL
+  standard offpage *
+  page18_i116
+#ISCELL
+  standard offpage *
+  page18_i117
+#ISCELL
+  standard offpage *
+  page18_i118
+#ISCELL
+  standard offpage *
+  page18_i119
+#ISCELL
+  standard offpage *
+  page18_i120
+#ISCELL
+  standard offpage *
+  page18_i121
+#ISCELL
+  standard offpage *
+  page18_i122
+#CELL
+  ana_122_dc_dc ren_isl9008 *
+  page18_i126
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i127
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i128
+#ISCELL
+  oth_179_divers ground *
+  page18_i129
+#CELL
+  pas_151_capacitor cap *
+  page18_i132
+#ISCELL
+  oth_179_divers ground *
+  page18_i133
+#ISCELL
+  standard offpage *
+  page18_i142
+#ISCELL
+  standard offpage *
+  page18_i143
+#ISCELL
+  standard offpage *
+  page18_i144
+#ISCELL
+  standard offpage *
+  page18_i145
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i146
+#CELL
+  pas_151_capacitor cap *
+  page18_i147
+#ISCELL
+  oth_179_divers ground *
+  page18_i148
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i149
+#ISCELL
+  standard offpage *
+  page18_i151
+#ISCELL
+  standard offpage *
+  page18_i152
+#ISCELL
+  oth_179_divers ground *
+  page18_i153
+#CELL
+  dig_100_logic busswitchquad *
+  page18_i154
+#ISCELL
+  oth_179_divers ground *
+  page18_i155
+#ISCELL
+  standard offpage *
+  page18_i156
+#ISCELL
+  standard offpage *
+  page18_i157
+#ISCELL
+  standard offpage *
+  page18_i158
+#ISCELL
+  standard offpage *
+  page18_i159
+#CELL
+  con_160_b_to_b sam_erx8_26pin *
+  page18_i161
+#CELL
+  pas_150_resistor res *
+  page18_i162
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i163
+#CELL
+  pas_151_capacitor cap *
+  page18_i164
+#ISCELL
+  oth_179_divers ground *
+  page18_i165
+#CELL
+  pas_150_resistor res *
+  page18_i166
+#ISCELL
+  oth_179_divers ground *
+  page18_i167
+#ISCELL
+  oth_179_divers ground *
+  page18_i2
+#ISCELL
+  oth_179_divers ground *
+  page18_i3
+#ISCELL
+  oth_179_divers p5v0 *
+  page18_i61
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i62
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i63
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i64
+#ISCELL
+  oth_179_divers p3v3 *
+  page18_i65
+#ISCELL
+  oth_179_divers p5v0 *
+  page18_i66
+#ISCELL
+  standard offpage *
+  page18_i77
+#ISCELL
+  standard offpage *
+  page18_i78
+#ISCELL
+  standard offpage *
+  page18_i96
+#ISCELL
+  standard offpage *
+  page18_i97
+#ISCELL
+  standard offpage *
+  page18_i98

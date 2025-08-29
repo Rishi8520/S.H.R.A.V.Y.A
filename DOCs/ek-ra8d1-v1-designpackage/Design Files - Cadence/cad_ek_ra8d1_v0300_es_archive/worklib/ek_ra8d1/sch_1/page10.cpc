@@ -1,0 +1,99 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#CELL
+  dig_100_logic busswitch *
+  page9_i10
+#CELL
+  dig_100_logic busswitch *
+  page9_i11
+#ISCELL
+  standard offpage *
+  page9_i19
+#ISCELL
+  oth_179_divers p3v3 *
+  page9_i2
+#ISCELL
+  standard offpage *
+  page9_i20
+#ISCELL
+  standard offpage *
+  page9_i22
+#ISCELL
+  standard offpage *
+  page9_i23
+#ISCELL
+  standard offpage *
+  page9_i27
+#ISCELL
+  standard offpage *
+  page9_i28
+#ISCELL
+  standard offpage *
+  page9_i29
+#ISCELL
+  standard offpage *
+  page9_i3
+#ISCELL
+  standard offpage *
+  page9_i30
+#ISCELL
+  standard offpage *
+  page9_i31
+#ISCELL
+  standard offpage *
+  page9_i32
+#ISCELL
+  standard offpage *
+  page9_i33
+#ISCELL
+  standard offpage *
+  page9_i34
+#ISCELL
+  oth_179_divers ground *
+  page9_i35
+#ISCELL
+  standard offpage *
+  page9_i36
+#ISCELL
+  standard offpage *
+  page9_i4
+#CELL
+  pas_151_capacitor cap *
+  page9_i41
+#CELL
+  pas_151_capacitor cap *
+  page9_i42
+#ISCELL
+  oth_179_divers ground *
+  page9_i43
+#ISCELL
+  oth_179_divers p3v3 *
+  page9_i45
+#CELL
+  con_160_b_to_b double_row_10 *
+  page9_i46
+#ISCELL
+  oth_179_divers p3v3 *
+  page9_i47
+#ISCELL
+  oth_179_divers ground *
+  page9_i48
+#ISCELL
+  standard offpage *
+  page9_i49
+#ISCELL
+  standard offpage *
+  page9_i5
+#ISCELL
+  standard offpage *
+  page9_i50
+#ISCELL
+  standard offpage *
+  page9_i51
+#CELL
+  pas_150_resistor res *
+  page9_i52
+#CELL
+  pas_150_resistor res *
+  page9_i55

@@ -1,0 +1,123 @@
+("..\\packaged\\pstdmlmodels.dat" 
+ (PackagedDevice 
+  ("DEFAULT_RESISTOR_0.001OHM_1_2" 
+   (ESpice ".subckt DEFAULT_RESISTOR_0.001OHM_1_2 2 1
+R1 2 1 0.001
+.ends DEFAULT_RESISTOR_0.001OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  ("DEFAULT_RESISTOR_0.005OHM_1_2" 
+   (ESpice ".subckt DEFAULT_RESISTOR_0.005OHM_1_2 2 1
+R1 2 1 0.005
+.ends DEFAULT_RESISTOR_0.005OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  ("DEFAULT_RESISTOR_1000.000000OHM_1_2" 
+   (ESpice ".subckt DEFAULT_RESISTOR_1000.000000OHM_1_2 2 1
+R1 2 1 1000
+.ends DEFAULT_RESISTOR_1000.000000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_10000OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_10000OHM_1_2 2 1
+R1 2 1 10000
+.ends DEFAULT_RESISTOR_10000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  ("DEFAULT_RESISTOR_110.000000OHM_1_2" 
+   (ESpice ".subckt DEFAULT_RESISTOR_110.000000OHM_1_2 2 1
+R1 2 1 110
+.ends DEFAULT_RESISTOR_110.000000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_15000OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_15000OHM_1_2 2 1
+R1 2 1 15000
+.ends DEFAULT_RESISTOR_15000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_1500OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_1500OHM_1_2 2 1
+R1 2 1 1500
+.ends DEFAULT_RESISTOR_1500OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_2000OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_2000OHM_1_2 2 1
+R1 2 1 2000
+.ends DEFAULT_RESISTOR_2000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_2200OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_2200OHM_1_2 2 1
+R1 2 1 2200
+.ends DEFAULT_RESISTOR_2200OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_2370OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_2370OHM_1_2 2 1
+R1 2 1 2370
+.ends DEFAULT_RESISTOR_2370OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_2610OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_2610OHM_1_2 2 1
+R1 2 1 2610
+.ends DEFAULT_RESISTOR_2610OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_30000OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_30000OHM_1_2 2 1
+R1 2 1 30000
+.ends DEFAULT_RESISTOR_30000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  ("DEFAULT_RESISTOR_33.000000OHM_1_2" 
+   (ESpice ".subckt DEFAULT_RESISTOR_33.000000OHM_1_2 2 1
+R1 2 1 33
+.ends DEFAULT_RESISTOR_33.000000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  ("DEFAULT_RESISTOR_464.000000OHM_1_2" 
+   (ESpice ".subckt DEFAULT_RESISTOR_464.000000OHM_1_2 2 1
+R1 2 1 464
+.ends DEFAULT_RESISTOR_464.000000OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) 
+  (DEFAULT_RESISTOR_4700OHM_1_2 
+   (ESpice ".subckt DEFAULT_RESISTOR_4700OHM_1_2 2 1
+R1 2 1 4700
+.ends DEFAULT_RESISTOR_4700OHM_1_2
+" ) 
+   (PinConnections 
+    (2 1 ) 
+    (1 2 ) ) ) ) 
+ (LibraryVersion 136.2 ) ) 

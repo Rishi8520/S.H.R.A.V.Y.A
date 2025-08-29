@@ -1,0 +1,1 @@
+SPLBPD-505,Cell 'double_row_5':For logical part DOUBLE_ROW_5, pack type SMD is present in the chips.prt file but missing in the part table file. Add PTF rows for that package to ensure that you can instantiate the package.,Warning

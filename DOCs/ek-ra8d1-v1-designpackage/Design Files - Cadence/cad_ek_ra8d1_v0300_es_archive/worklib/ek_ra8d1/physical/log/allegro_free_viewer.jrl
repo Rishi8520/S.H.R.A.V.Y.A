@@ -1,0 +1,16 @@
+\t (00:00:00) allegro_free_viewer 17.2 S052 Windows SPB 64-bit Edition
+\t (00:00:00)     Journal start - Wed Jun 15 09:33:46 2022
+\t (00:00:00)         Host=REE-0049971 User=b3900353 Pid=10408 CPUs=12
+\t (00:00:00) CmdLine= C:\Users\b3900353\AppData\Local\Programs\Cadence Design Systems\17.2\tools\bin\allegro_free_viewer.exe J:\td_v1\hw\proj_CAD_REE\rsk_team\ek-ra8d1_v0110_ws\hw\cad_ek_ra8d1_v0110_ws\worklib\ek_ra8d1\physical\D018162_06_draft_ek_ra8d1_20220615.brd
+\t (00:00:00) 
+\t (00:00:00) Opening existing design...
+\e (00:00:01) ERROR(SPMHOD-29): Unable to open design, Design was saved under a newer release and contains features not compatible with this version of software. See the newer release's documentation for any conversion capability.
+\e (00:00:01) ERROR(SPMHOD-29): Unable to open design, Design was saved under a newer release and contains features not compatible with this version of software. See the newer release's documentation for any conversion capability.
+\i (00:00:03) fillin confirm
+\t (00:00:03) Starting new design...
+\i (00:00:04) trapsize 641
+\i (00:00:04) trapsize 629
+\i (00:00:04) trapsize 557
+\i (00:00:04) trapsize 888
+\i (00:00:12) exit 
+\t (00:00:12)     Journal end - Wed Jun 15 09:33:58 2022

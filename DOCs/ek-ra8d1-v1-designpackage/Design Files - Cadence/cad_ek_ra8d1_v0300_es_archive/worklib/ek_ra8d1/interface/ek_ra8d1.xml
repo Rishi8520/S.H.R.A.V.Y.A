@@ -1,0 +1,17 @@
+<schema xmlns="http://www.cadence.com/spb/csschema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.cadence.com/spb/csschema ConIBDSSchema001.xsd">
+ <header>
+  <schemaVersion>17.2</schemaVersion>
+  <creatorTool>concepthdl</creatorTool>
+  <modifierTool>concepthdl</modifierTool>
+  <modificationTime>2023-07-14T11:09:41</modificationTime>
+  <savedLibrary>ek_ra8d1</savedLibrary>
+ </header>
+ <design schemaType="nameBased" name="ek_ra8d1">
+  <netgroups>
+  </netgroups>
+  <netinterfaces>
+  </netinterfaces>
+ </design>
+</schema>

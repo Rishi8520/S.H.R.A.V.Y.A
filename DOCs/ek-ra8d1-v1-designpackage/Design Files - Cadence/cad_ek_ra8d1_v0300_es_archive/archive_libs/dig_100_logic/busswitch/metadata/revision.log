@@ -1,0 +1,28 @@
+	(Comment
+		(Time 01/14/22,12:28:48)
+		(User a5050295)
+		(MsgId ECO_021)
+		(Text "Package BUSSWITCH added to cell")
+		(Param1 "BUSSWITCH")
+	)
+	(Comment
+		(Time 01/14/22,12:33:51)
+		(User a5050295)
+		(MsgId ECO_081)
+		(Text "Symbol sym_1 added to cell")
+		(Param1 "sym_1")
+	)
+	(Comment
+		(Time 01/19/22,10:51:28)
+		(User a5050295)
+		(MsgId ECO_081)
+		(Text "Symbol sym_2 added to cell")
+		(Param1 "sym_2")
+	)
+	(Comment
+		(Time 02/01/23,12:40:14)
+		(User a5124061)
+		(MsgId ECO_081)
+		(Text "Symbol sym_3 added to cell")
+		(Param1 "sym_3")
+	)

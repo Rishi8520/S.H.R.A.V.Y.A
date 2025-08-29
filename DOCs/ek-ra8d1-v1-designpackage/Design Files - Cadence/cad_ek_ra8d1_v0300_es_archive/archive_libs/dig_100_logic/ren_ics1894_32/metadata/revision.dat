@@ -1,0 +1,194 @@
+(Cell	ren_ics1894_32
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.20)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	08/09/21,15:45:15)
+
+			(User	a5050295)
+
+			(Path	dig_100_logic.ren_ics1894_32)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	08/10/21,11:37:26)
+
+			(User	a5050295)
+
+			(Path	dig_100_logic.ren_ics1894_32)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.4)
+
+				(ModificationStatus	NULL)
+
+				(Status	Modified)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+			)
+
+			(Symbols	1
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000a9e1f287)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.2)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	08/10/21,11:09:35)
+
+							(User	a5050295)
+
+							(Path	dig_100_logic.ren_ics1894_32)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001d8f03b8)
+
+		)
+
+		(View	Chips
+
+			(Checksum	000000004f67ea61)
+
+			(Primitives	1
+
+				(Primitive	REN_ICS1894_32_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.3)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	)
+
+							(User	)
+
+							(Path	)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	REN_ICS1894_32
+
+							(PackType	REN_ICS1894_32_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001e0503ea)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.4-2019 S018 (3945310))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001bc803a5)
+
+)
+

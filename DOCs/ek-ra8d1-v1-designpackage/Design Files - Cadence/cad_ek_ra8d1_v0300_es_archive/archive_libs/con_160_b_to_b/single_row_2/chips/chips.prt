@@ -1,0 +1,23 @@
+FILE_TYPE=LIBRARY_PARTS;
+primitive 'SINGLE_ROW_2_THT','SINGLE_ROW_2_SMD';
+  pin
+    '1':
+      PIN_NUMBER='(1)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    '2':
+      PIN_NUMBER='(2)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+  end_pin;
+  body
+    PART_NAME='SINGLE_ROW_2';
+    BODY_NAME='SINGLE_ROW_2';
+    PHYS_DES_PREFIX='CN';
+    CLASS='IO';
+  end_body;
+end_primitive;
+
+END.

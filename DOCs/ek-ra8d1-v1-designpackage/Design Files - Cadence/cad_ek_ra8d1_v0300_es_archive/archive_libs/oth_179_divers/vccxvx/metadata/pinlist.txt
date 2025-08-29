@@ -1,0 +1,24 @@
+(Pinlist
+	(Pin
+		(Name VCCXVX)
+		(MSB )
+		(LSB )
+		(Type UNSPEC)
+		(Location Bottom)
+		(InputLoadLow )
+		(InputLoadHigh )
+		(OutputLoadLow )
+		(OutputLoadHigh )
+		(CheckLoad Off)
+		(CheckIO Off)
+		(CheckDir 0)
+		(CheckAssert 0)
+		(CheckOutput 0)
+		(UnknownLoading 0)
+		(PinShape Line)
+		(DIFF_PAIR_PINS_POS )
+		(DIFF_PAIR_PINS_NEG )
+	)
+
+
+)

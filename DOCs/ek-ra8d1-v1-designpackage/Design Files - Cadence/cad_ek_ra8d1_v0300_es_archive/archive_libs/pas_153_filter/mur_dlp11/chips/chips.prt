@@ -1,0 +1,33 @@
+FILE_TYPE=LIBRARY_PARTS;
+primitive 'MUR_DLP11_SMD';
+  pin
+    'PIN1':
+      PIN_NUMBER='(1)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'PIN4':
+      PIN_NUMBER='(4)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'PIN2':
+      PIN_NUMBER='(2)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'PIN3':
+      PIN_NUMBER='(3)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+  end_pin;
+  body
+    PART_NAME='MUR_DLP11';
+    BODY_NAME='MUR_DLP11';
+    PHYS_DES_PREFIX='FIL';
+    CLASS='DISCRETE';
+  end_body;
+end_primitive;
+
+END.

@@ -1,0 +1,61 @@
+Starting to read J:/td_v1/hw/proj_CAD_REE/rsk_team/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/packaged/pstchip.dat 
+   Finished reading J:/td_v1/hw/proj_CAD_REE/rsk_team/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/packaged/pstchip.dat (00:00:00.21)
+Starting to read J:/td_v1/hw/proj_CAD_REE/rsk_team/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/packaged/pstxprt.dat 
+   Finished reading J:/td_v1/hw/proj_CAD_REE/rsk_team/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/packaged/pstxprt.dat (00:00:00.04)
+Starting to read J:/td_v1/hw/proj_CAD_REE/rsk_team/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/packaged/pstxnet.dat 
+   Finished reading J:/td_v1/hw/proj_CAD_REE/rsk_team/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/packaged/pstxnet.dat (00:00:00.03)
+     
+
+ERC Summary:
+
+     Single Node Violations:            0
+     IO Check Violations:               0
+     Loading Check Violations:          0
+
+ERC-DX run on Jan 31 10:52:01 2023
+   DESIGN NAME : 'EK_RA8D1'
+   PACKAGING ON 31-Jan-2023 AT 10:42:55
+
+   DIRECTORIES  <none>
+   LIBRARIES  'ek_ra8d1' 'standard' 'ree_999_border' 'ana_120_adc_dac'
+              'ana_121_amplify' 'ana_122_dc_dc' 'ana_123_interface'
+              'ana_124_v_ctrl' 'ana_125_v_mon' 'ana_126_codec' 'ana_127_rf_gsm'
+              'con_160_b_to_b' 'con_161_interface' 'con_162_ic_socket'
+              'con_163_board' 'dig_100_logic' 'dig_101_progr' 'dig_102_memory'
+              'dig_103_clock' 'dig_104_delay' 'dis_140_dio_led'
+              'dis_141_dio_rec' 'dis_142_dio_zen' 'dis_143_tr_fet'
+              'dis_144_tr_bjt' 'oth_170_crystal' 'oth_171_osci' 'oth_172_relay'
+              'oth_173_fuse' 'oth_174_display' 'oth_175_transf' 'oth_176_transc'
+              'oth_177_audio' 'oth_178_battery' 'oth_179_divers'
+              'pas_150_resistor' 'pas_151_capacitor' 'pas_152_inductor'
+              'pas_153_filter' 'pas_154_coupler' 'pas_155_attenuator'
+              'pro_201_mechanical_parts' 'oth_180_switch'
+   MASTER_LIBRARIES  <none>
+   MAX_ERRORS 500
+   ASSERT_CHECK OFF
+   PIN_DIRECTION_CHECK OFF
+   CONNECT_CHECK OFF
+   SINGLE_NODE_CHECK ON
+   IO_CHECK OFF
+   IO_CHECK_HIGH ON
+   IO_CHECK_LOW ON
+   LOAD_CHECK OFF
+   LOAD_CHECK_HIGH ON
+   LOAD_CHECK_LOW ON
+   ENABLE_TIMES OFF
+   VERBOSE_LOADING ON
+   VPUNKNOWNLOADING ON
+   EXTENDEDDESCRIPTIONS ON
+   OVERSIGHTS ON
+   SINGLE_NODE_NETS ON
+   SUPPRESS   20
+   WARNINGS ON
+   GLOBALS_SYNONYM_CHECK OFF
+
+ No error detected
+ No oversight detected
+ No warning detected
+
+cpu time      0:00:32
+elapsed time  0:00:00
+

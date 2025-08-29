@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/Cadence/SPB_17.4/share/pcb/consmgr/VDD/report/treeview.xsl"?>
+<ConstraintDifferenceReport Path="file:///C:/Cadence/SPB_17.4/share/pcb/consmgr/VDD/report/rc" Type="Constraint Difference Report">
+
+  <RptSummary Col1="Layout" Col2="Schematic">
+    <Entry Name="Report time">Mon Jan 10 18:24:35 2022
+</Entry>
+    <Entry Name="Software version">17.4 (S024)</Entry>
+    <Entry Name="Layout">C:\temp_brd\ek_ra8d1_v0100\worklib\ek_ra6m5\physical\D017572_06_V0300_ek_ra6m5.brd</Entry>
+    <Entry Name="Schematic">C:\temp_brd\ek_ra8d1_v0100\worklib\ek_ra6m5\packaged\pstcmdb.dat</Entry>
+    <Entry Name="Baseline File">C:\Users\a5050270\AppData\Local\Temp\Tmp000016f2.dcf</Entry>
+    <Entry Name="Destination design updated">No</Entry>
+    <Entry Name="Update Mode">Diff3</Entry>
+    <Entry Name="Constraint Information">Electrical, NetClasses, Properties</Entry>
+    <Entry Name="Objects with conflicts">0</Entry>
+  </RptSummary>
+
+  <Tree>
+    <Item Filter="0x7" Name="Summary" Ref="main-summary">
+      <Item Filter="0x0" Name="Constraint Sets [1]" Ref="50">
+        <Item Filter="0x0" Name="ElectricalCSets [1]" Ref="4f">
+          <Item Filter="0x0" Name="CLOCK" Ref="4b"/>
+        </Item>
+      </Item>
+      <Item Filter="0x2" Name="DiffPairs [2]" Ref="52">
+        <Item Filter="0x2" Name="USBF" Ref="3"/>
+        <Item Filter="0x2" Name="USBFS_R" Ref="b"/>
+      </Item>
+      <Item Filter="0x2" Name="NetClasses [2]" Ref="51">
+        <Item Filter="0x0" Name="PWR" Ref="9"/>
+        <Item Filter="0x2" Name="USB_DIFF_90R" Ref="a"/>
+      </Item>
+      <Item Filter="0x4" Name="Nets [15]" Ref="4e">
+        <Item Filter="0x4" Name="P415" Ref="4c"/>
+        <Item Filter="0x0" Name="P506" Ref="28">
+          <Item Filter="0x0" Name="R79.2:J4.13" Ref="27"/>
+        </Item>
+        <Item Filter="0x0" Name="P511" Ref="26">
+          <Item Filter="0x0" Name="J22.6:J24.9" Ref="25"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_MICKSZ8091RNB_I105_1" Ref="23">
+          <Item Filter="0x0" Name="R53.2:U4.18" Ref="22"/>
+          <Item Filter="0x0" Name="R61.1:R53.2" Ref="24"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_MICKSZ8091RNB_I105_4" Ref="1b">
+          <Item Filter="0x0" Name="U4.16:R52.2" Ref="1a"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_MICKSZ8091RNB_I105_5" Ref="1f">
+          <Item Filter="0x0" Name="U4.15:R51.2" Ref="1e"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_MICKSZ8091RNB_I105_7" Ref="13">
+          <Item Filter="0x0" Name="R48.2:U4.25" Ref="12"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_MICKSZ8091RNB_I105_8" Ref="f">
+          <Item Filter="0x0" Name="R50.2:U4.23" Ref="e"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_MICKSZ8091RNB_I105_T" Ref="17">
+          <Item Filter="0x0" Name="R49.2:U4.24" Ref="16"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_RES_I118_A" Ref="11">
+          <Item Filter="0x0" Name="E14.2:R48.1" Ref="10"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_RES_I119_A" Ref="15">
+          <Item Filter="0x0" Name="E15.2:R49.1" Ref="14"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_RES_I120_A" Ref="d">
+          <Item Filter="0x0" Name="E16.2:R50.1" Ref="c"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_RES_I121_A" Ref="1d">
+          <Item Filter="0x0" Name="E17.2:R51.1" Ref="1c"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_RES_I122_A" Ref="19">
+          <Item Filter="0x0" Name="E18.2:R52.1" Ref="18"/>
+        </Item>
+        <Item Filter="0x0" Name="UNNAMED_12_RES_I123_A" Ref="21">
+          <Item Filter="0x0" Name="E19.2:R53.1" Ref="20"/>
+        </Item>
+      </Item>
+      <Item Filter="0x2" Name="Xnets [2]" Ref="4d">
+        <Item Filter="0x2" Name="USBFS_R_N" Ref="6"/>
+        <Item Filter="0x2" Name="USBFS_R_P" Ref="2"/>
+      </Item>
+    </Item>
+  </Tree>
+
+  <Summaries>
+    <MainSummary ID="main-summary">
+      <ChangedObject Filter="0x0" Name="Constraint Sets" ObjNumber="ElectricalCSet: 1" Ref="50"/>
+      <ChangedObject Filter="0x2" Name="DiffPairs" ObjNumber="2" Ref="52"/>
+      <ChangedObject Filter="0x2" Name="NetClasses" ObjNumber="2" Ref="51"/>
+      <ChangedObject Filter="0x4" Name="Nets" ObjNumber="15" Ref="4e"/>
+      <ChangedObject Filter="0x2" Name="Xnets" ObjNumber="2" Ref="4d"/>
+    </MainSummary>
+    <GroupSummary ID="4d" Name="Xnets">
+      <ChangedObject Attributes="0" Child="0" Filter="0x2" Membership="2" Name="USBFS_R_N" Notes="0" Other="0" Ref="6" Reference="0" Status="Deleted"/>
+      <ChangedObject Attributes="0" Child="0" Filter="0x2" Membership="2" Name="USBFS_R_P" Notes="0" Other="0" Ref="2" Reference="0" Status="Deleted"/>
+    </GroupSummary>
+    <ObjectSummary ID="6" Kind="Xnet" Name="USBFS_R_N" Status="Deleted">
+      <Associations Filter="0x2" Type="Membership">
+        <Reference Add="0" Filter="0x40000000" Kind="Net" Name="USBFS_R_N"/>
+        <Reference Add="0" Filter="0x40000000" Kind="Net" Name="USBF_N"/>
+      </Associations>
+    </ObjectSummary>
+    <ObjectSummary ID="2" Kind="Xnet" Name="USBFS_R_P" Status="Deleted">
+      <Associations Filter="0x2" Type="Membership">
+        <Reference Add="0" Filter="0x40000000" Kind="Net" Name="USBF_P"/>
+        <Reference Add="0" Filter="0x40000000" Kind="Net" Name="USBFS_R_P"/>
+      </Associations>
+    </ObjectSummary>
+    <GroupSummary ID="4e" Name="Nets">
+      <ChangedObject Attributes="0" Child="0" Filter="0x4" Membership="0" Name="P415" Notes="0" Other="0" Ref="4c" Reference="1"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="P506" Notes="0" Other="0" Ref="28" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="P511" Notes="0" Other="0" Ref="26" Reference="0"/>
+      <ChangedObject Attributes="0" Child="2" Filter="0x0" Membership="0" Name="UNNAMED_12_MICKSZ8091RNB_I105_1" Notes="0" Other="0" Ref="23" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_MICKSZ8091RNB_I105_4" Notes="0" Other="0" Ref="1b" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_MICKSZ8091RNB_I105_5" Notes="0" Other="0" Ref="1f" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_MICKSZ8091RNB_I105_7" Notes="0" Other="0" Ref="13" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_MICKSZ8091RNB_I105_8" Notes="0" Other="0" Ref="f" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_MICKSZ8091RNB_I105_T" Notes="0" Other="0" Ref="17" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_RES_I118_A" Notes="0" Other="0" Ref="11" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_RES_I119_A" Notes="0" Other="0" Ref="15" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_RES_I120_A" Notes="0" Other="0" Ref="d" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_RES_I121_A" Notes="0" Other="0" Ref="1d" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_RES_I122_A" Notes="0" Other="0" Ref="19" Reference="0"/>
+      <ChangedObject Attributes="0" Child="1" Filter="0x0" Membership="0" Name="UNNAMED_12_RES_I123_A" Notes="0" Other="0" Ref="21" Reference="0"/>
+    </GroupSummary>
+    <ObjectSummary ID="4c" Kind="Net" Name="P415">
+      <Associations Filter="0x4" Type="Reference">
+        <Reference Add="0" Filter="0x4" Kind="ElectricalCSet" Name="CLOCK" Ref="4b"/>
+      </Associations>
+    </ObjectSummary>
+    <ObjectSummary ID="28" Kind="Net" Name="P506">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="R79.2:J4.13" Notes="1" Other="0" Ref="27" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="26" Kind="Net" Name="P511">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="J22.6:J24.9" Notes="1" Other="0" Ref="25" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="23" Kind="Net" Name="UNNAMED_12_MICKSZ8091RNB_I105_1">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="R53.2:U4.18" Notes="1" Other="0" Ref="22" Reference="0"/>
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="R61.1:R53.2" Notes="1" Other="0" Ref="24" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="1b" Kind="Net" Name="UNNAMED_12_MICKSZ8091RNB_I105_4">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="U4.16:R52.2" Notes="1" Other="0" Ref="1a" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="1f" Kind="Net" Name="UNNAMED_12_MICKSZ8091RNB_I105_5">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="U4.15:R51.2" Notes="1" Other="0" Ref="1e" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="13" Kind="Net" Name="UNNAMED_12_MICKSZ8091RNB_I105_7">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="R48.2:U4.25" Notes="1" Other="0" Ref="12" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="f" Kind="Net" Name="UNNAMED_12_MICKSZ8091RNB_I105_8">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="R50.2:U4.23" Notes="1" Other="0" Ref="e" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="17" Kind="Net" Name="UNNAMED_12_MICKSZ8091RNB_I105_T">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="R49.2:U4.24" Notes="1" Other="0" Ref="16" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="11" Kind="Net" Name="UNNAMED_12_RES_I118_A">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="E14.2:R48.1" Notes="1" Other="0" Ref="10" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="15" Kind="Net" Name="UNNAMED_12_RES_I119_A">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="E15.2:R49.1" Notes="1" Other="0" Ref="14" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="d" Kind="Net" Name="UNNAMED_12_RES_I120_A">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="E16.2:R50.1" Notes="1" Other="0" Ref="c" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="1d" Kind="Net" Name="UNNAMED_12_RES_I121_A">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="E17.2:R51.1" Notes="1" Other="0" Ref="1c" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="19" Kind="Net" Name="UNNAMED_12_RES_I122_A">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="E18.2:R52.1" Notes="1" Other="0" Ref="18" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <ObjectSummary ID="21" Kind="Net" Name="UNNAMED_12_RES_I123_A">
+      <Children Type="Child">
+        <Children Type=" PinPair">
+          <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="E19.2:R53.1" Notes="1" Other="0" Ref="20" Reference="0"/>
+        </Children>
+      </Children>
+    </ObjectSummary>
+    <GroupSummary ID="50" Name="Constraint Sets">
+      <ChangedObject Filter="0x0" Name="ElectricalCSets" ObjNumber="1" Ref="4f"/>
+    </GroupSummary>
+    <GroupSummary ID="4f" Name="ElectricalCSets">
+      <ChangedObject Attributes="0" Child="0" Filter="0x0" Membership="0" Name="CLOCK" Notes="0" Other="0" Ref="4b" Reference="0" Status="Deleted"/>
+    </GroupSummary>
+    <ObjectSummary ID="4b" Kind="ElectricalCSet" Name="CLOCK" Status="Deleted"/>
+    <GroupSummary ID="51" Name="NetClasses">
+      <ChangedObject Attributes="0" Child="0" Domain="-+--" Filter="0x0" Membership="0" Name="PWR" Notes="0" Other="0" Ref="9" Reference="0" Status="Created"/>
+      <ChangedObject Attributes="0" Child="0" Domain="-+--" Filter="0x2" Membership="1" Name="USB_DIFF_90R" Notes="0" Other="0" Ref="a" Reference="0"/>
+    </GroupSummary>
+    <ObjectSummary ID="9" Kind="NetClass" Name="PWR" Status="Created"/>
+    <ObjectSummary ID="a" Kind="NetClass" Name="USB_DIFF_90R">
+      <Associations Filter="0x2" Type="Membership">
+        <Reference Add="1" Filter="0x40000000" Kind="DiffPair" Name="USBFS_R" Ref="b"/>
+      </Associations>
+    </ObjectSummary>
+    <GroupSummary ID="52" Name="DiffPairs">
+      <ChangedObject Attributes="0" Child="0" Filter="0x2" Membership="4" Name="USBF" Notes="0" Other="0" Ref="3" Reference="0"/>
+      <ChangedObject Attributes="0" Child="0" Filter="0x2" Membership="2" Name="USBFS_R" Notes="0" Other="0" Ref="b" Reference="0" Status="Created"/>
+    </GroupSummary>
+    <ObjectSummary ID="3" Kind="DiffPair" Name="USBF">
+      <Associations Filter="0x2" Type="Membership">
+        <Reference Add="0" Filter="0x40000000" Kind="Xnet" Name="USBFS_R_P" Ref="2"/>
+        <Reference Add="0" Filter="0x40000000" Kind="Xnet" Name="USBFS_R_N" Ref="6"/>
+        <Reference Add="1" Filter="0x40000000" Kind="Net" Name="USBF_N"/>
+        <Reference Add="1" Filter="0x40000000" Kind="Net" Name="USBF_P"/>
+      </Associations>
+    </ObjectSummary>
+    <ObjectSummary ID="b" Kind="DiffPair" Name="USBFS_R" Status="Created">
+      <Associations Filter="0x2" Type="Membership">
+        <Reference Add="1" Filter="0x40000000" Kind="Net" Name="USBFS_R_N"/>
+        <Reference Add="1" Filter="0x40000000" Kind="Net" Name="USBFS_R_P"/>
+      </Associations>
+    </ObjectSummary>
+    <ObjectSummary ID="10" Kind="PinPair" Name="E14.2:R48.1">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;E14.2:R48.1&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="14" Kind="PinPair" Name="E15.2:R49.1">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;E15.2:R49.1&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="c" Kind="PinPair" Name="E16.2:R50.1">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;E16.2:R50.1&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="1c" Kind="PinPair" Name="E17.2:R51.1">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;E17.2:R51.1&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="18" Kind="PinPair" Name="E18.2:R52.1">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;E18.2:R52.1&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="20" Kind="PinPair" Name="E19.2:R53.1">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;E19.2:R53.1&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="25" Kind="PinPair" Name="J22.6:J24.9">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;J22.6:J24.9&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="12" Kind="PinPair" Name="R48.2:U4.25">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;R48.2:U4.25&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="16" Kind="PinPair" Name="R49.2:U4.24">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;R49.2:U4.24&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="e" Kind="PinPair" Name="R50.2:U4.23">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;R50.2:U4.23&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="22" Kind="PinPair" Name="R53.2:U4.18">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;R53.2:U4.18&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="24" Kind="PinPair" Name="R61.1:R53.2">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;R61.1:R53.2&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="27" Kind="PinPair" Name="R79.2:J4.13">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;R79.2:J4.13&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="1e" Kind="PinPair" Name="U4.15:R51.2">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;U4.15:R51.2&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+    <ObjectSummary ID="1a" Kind="PinPair" Name="U4.16:R52.2">
+      <Notes Filter="0x0" Type="Notes">
+        <Note Text="Not creating PinPair: &quot;U4.16:R52.2&quot;. Preserving deletion." Type="Warning"/>
+      </Notes>
+    </ObjectSummary>
+  </Summaries>
+
+  <Notes>
+    <Note Text="Baseline file(s) are invalid so Changes-only may make incorrect changes." Type="Warning"/>
+    <Note Ref="c" Text="Not creating PinPair: &quot;E16.2:R50.1&quot;. Preserving deletion. (PinPair E16.2:R50.1)" Type="Warning"/>
+    <Note Ref="e" Text="Not creating PinPair: &quot;R50.2:U4.23&quot;. Preserving deletion. (PinPair R50.2:U4.23)" Type="Warning"/>
+    <Note Ref="10" Text="Not creating PinPair: &quot;E14.2:R48.1&quot;. Preserving deletion. (PinPair E14.2:R48.1)" Type="Warning"/>
+    <Note Ref="12" Text="Not creating PinPair: &quot;R48.2:U4.25&quot;. Preserving deletion. (PinPair R48.2:U4.25)" Type="Warning"/>
+    <Note Ref="14" Text="Not creating PinPair: &quot;E15.2:R49.1&quot;. Preserving deletion. (PinPair E15.2:R49.1)" Type="Warning"/>
+    <Note Ref="16" Text="Not creating PinPair: &quot;R49.2:U4.24&quot;. Preserving deletion. (PinPair R49.2:U4.24)" Type="Warning"/>
+    <Note Ref="18" Text="Not creating PinPair: &quot;E18.2:R52.1&quot;. Preserving deletion. (PinPair E18.2:R52.1)" Type="Warning"/>
+    <Note Ref="1a" Text="Not creating PinPair: &quot;U4.16:R52.2&quot;. Preserving deletion. (PinPair U4.16:R52.2)" Type="Warning"/>
+    <Note Ref="1c" Text="Not creating PinPair: &quot;E17.2:R51.1&quot;. Preserving deletion. (PinPair E17.2:R51.1)" Type="Warning"/>
+    <Note Ref="1e" Text="Not creating PinPair: &quot;U4.15:R51.2&quot;. Preserving deletion. (PinPair U4.15:R51.2)" Type="Warning"/>
+    <Note Ref="20" Text="Not creating PinPair: &quot;E19.2:R53.1&quot;. Preserving deletion. (PinPair E19.2:R53.1)" Type="Warning"/>
+    <Note Ref="22" Text="Not creating PinPair: &quot;R53.2:U4.18&quot;. Preserving deletion. (PinPair R53.2:U4.18)" Type="Warning"/>
+    <Note Ref="24" Text="Not creating PinPair: &quot;R61.1:R53.2&quot;. Preserving deletion. (PinPair R61.1:R53.2)" Type="Warning"/>
+    <Note Ref="25" Text="Not creating PinPair: &quot;J22.6:J24.9&quot;. Preserving deletion. (PinPair J22.6:J24.9)" Type="Warning"/>
+    <Note Ref="27" Text="Not creating PinPair: &quot;R79.2:J4.13&quot;. Preserving deletion. (PinPair R79.2:J4.13)" Type="Warning"/>
+  </Notes>
+
+  <Layers>
+    <Layer Name="TOP" Type="Conductor"/>
+    <Layer Name="02_LAY_GND" Type="Plane"/>
+    <Layer Name="03_LAY" Type="Conductor"/>
+    <Layer Name="04_LAY" Type="Conductor"/>
+    <Layer Name="05_LAY_PWR" Type="Plane"/>
+    <Layer Name="BOTTOM" Type="Conductor"/>
+  </Layers>
+
+  <GenericLayers>
+    <Layer Name="Conductor"/>
+    <Layer Name="Plane"/>
+  </GenericLayers>
+
+</ConstraintDifferenceReport>

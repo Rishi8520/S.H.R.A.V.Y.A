@@ -1,0 +1,173 @@
+(Cell	tp
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	1.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	02/28/07,13:30:30)
+
+			(User	hagedornj)
+
+			(Path	misc.tp)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	02/28/07,13:30:59)
+
+			(User	hagedornj)
+
+			(Path	misc.tp)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000f48936bb)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/28/07,13:30:55)
+
+							(User	hagedornj)
+
+							(Path	misc.tp)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001c6d03b9)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000b88c636e)
+
+			(Primitives	1
+
+				(Primitive	TP_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/28/07,13:30:37)
+
+							(User	hagedornj)
+
+							(Path	misc.tp)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	TP
+
+							(PackType	TP_SMD)
+
+							(PackType	TP_THT)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001cf5038e)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001ca803b0)
+
+)
+
+

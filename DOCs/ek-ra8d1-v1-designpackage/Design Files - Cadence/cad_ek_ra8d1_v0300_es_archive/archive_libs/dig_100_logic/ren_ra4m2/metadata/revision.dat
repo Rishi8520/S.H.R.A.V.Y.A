@@ -1,0 +1,194 @@
+(Cell	ren_ra4m2
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.8)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	01/27/22,09:14:38)
+
+			(User	a5050295)
+
+			(Path	dig_100_logic.ren_ra4m2)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	01/27/22,09:31:45)
+
+			(User	a5050295)
+
+			(Path	dig_100_logic.ren_ra4m2)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.6)
+
+				(ModificationStatus	NULL)
+
+				(Status	Modified)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+			)
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000ba2bb4c8)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.6)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	01/27/22,09:31:29)
+
+							(User	a5050295)
+
+							(Path	dig_100_logic.ren_ra4m2)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001ebf0409)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000bf016718)
+
+			(Primitives	1
+
+				(Primitive	REN_RA4M2_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.2)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	01/27/22,09:30:17)
+
+							(User	a5050295)
+
+							(Path	dig_100_logic.ren_ra4m2)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	REN_RA4M2
+
+							(PackType	REN_RA4M2_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001e8103d7)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.4-2019 S021 (3976684))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001bb8037e)
+
+)
+

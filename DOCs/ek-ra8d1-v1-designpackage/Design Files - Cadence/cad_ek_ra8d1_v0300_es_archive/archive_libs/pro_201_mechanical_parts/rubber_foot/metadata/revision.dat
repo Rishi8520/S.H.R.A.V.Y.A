@@ -1,0 +1,196 @@
+(Cell	rubber_foot
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.10)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	08/30/12,09:57:06)
+
+			(User	cdsadmin)
+
+			(Path	pro_201_mechanical_parts.rubber_foot)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	05/24/07,10:55:30)
+
+			(User	cdsadmin)
+
+			(Path	pro_201_mechanical_parts.rubber_foot)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.1)
+
+				(ModificationStatus	NULL)
+
+				(Status	)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+			)
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000cab32f48)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.7)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	08/30/12,09:57:06)
+
+							(User	cdsadmin)
+
+							(Path	pro_201_mechanical_parts.rubber_foot)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001e7403de)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000697e6bf3)
+
+			(Primitives	1
+
+				(Primitive	RUBBER_FOOT_THT
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.3)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	08/30/12,09:57:06)
+
+							(User	cdsadmin)
+
+							(Path	pro_201_mechanical_parts.rubber_foot)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	RUBBER_FOOT
+
+							(PackType	RUBBER_FOOT_THT)
+
+							(PackType	RUBBER_FOOT_SMD)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001c7203b9)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.2-2016 S062 (3829508))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001ba7037c)
+
+)
+

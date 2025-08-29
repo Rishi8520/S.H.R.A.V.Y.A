@@ -1,0 +1,15 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    DBDOCTOR                                                         )
+(                                                                     )
+(    Drawing          : D018942_06_v03_ek_ra8d1_bak.brd               )
+(    Software Version : 22.1S002                                      )
+(    Date/Time        : Thu Mar 16 10:52:51 2023                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+
+WARNING:   WARNING(SPMHDB-42): Run batch DRC to regenerate DRC errs.
+
+1 warnings, 0 errors detected, 0 errors  fixed.

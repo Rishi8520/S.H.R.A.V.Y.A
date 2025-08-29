@@ -1,0 +1,117 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#CELL
+  con_160_b_to_b single_row_10 *
+  page10_i1
+#ISCELL
+  oth_179_divers p3v3 *
+  page10_i10
+#ISCELL
+  oth_179_divers p5v0 *
+  page10_i11
+#ISCELL
+  oth_179_divers ground *
+  page10_i12
+#ISCELL
+  standard offpage *
+  page10_i13
+#ISCELL
+  standard offpage *
+  page10_i14
+#ISCELL
+  standard offpage *
+  page10_i15
+#ISCELL
+  standard offpage *
+  page10_i16
+#ISCELL
+  standard offpage *
+  page10_i17
+#ISCELL
+  standard offpage *
+  page10_i18
+#ISCELL
+  standard offpage *
+  page10_i19
+#ISCELL
+  standard offpage *
+  page10_i20
+#ISCELL
+  standard offpage *
+  page10_i21
+#ISCELL
+  standard offpage *
+  page10_i22
+#ISCELL
+  standard offpage *
+  page10_i23
+#ISCELL
+  standard offpage *
+  page10_i24
+#ISCELL
+  standard offpage *
+  page10_i25
+#ISCELL
+  standard offpage *
+  page10_i26
+#ISCELL
+  standard offpage *
+  page10_i27
+#ISCELL
+  standard offpage *
+  page10_i28
+#ISCELL
+  standard offpage *
+  page10_i29
+#ISCELL
+  standard offpage *
+  page10_i30
+#ISCELL
+  standard offpage *
+  page10_i31
+#ISCELL
+  standard offpage *
+  page10_i32
+#ISCELL
+  standard offpage *
+  page10_i33
+#ISCELL
+  standard offpage *
+  page10_i34
+#ISCELL
+  standard offpage *
+  page10_i35
+#CELL
+  pas_150_resistor res *
+  page10_i36
+#ISCELL
+  oth_179_divers p3v3 *
+  page10_i37
+#CELL
+  pas_150_resistor res *
+  page10_i38
+#CELL
+  pas_150_resistor res *
+  page10_i40
+#ISCELL
+  standard offpage *
+  page10_i41
+#ISCELL
+  standard offpage *
+  page10_i42
+#ISCELL
+  standard offpage *
+  page10_i43
+#ISCELL
+  oth_179_divers ground *
+  page10_i6
+#CELL
+  con_160_b_to_b single_row_8 *
+  page10_i7
+#CELL
+  con_160_b_to_b single_row_8 *
+  page10_i8
+#CELL
+  con_160_b_to_b single_row_6 *
+  page10_i9

@@ -1,0 +1,426 @@
+(Cell	double_row_10
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	1.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/19/12,16:26:20)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_10)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	04/19/12,16:25:03)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_10x)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	2
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000009f93aea5)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000004ca0b80b)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001d5103ae)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000f4edc1d3)
+
+			(Primitives	1
+
+				(Primitive	DOUBLE_ROW_10_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	DOUBLE_ROW_10
+
+							(PackType	DOUBLE_ROW_10_SMD)
+
+							(PackType	DOUBLE_ROW_10_THT)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001bb6037e)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001c8c03ab)
+
+)
+
+
+(Cell	double_row_10
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	1.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/19/12,16:26:20)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_10)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	04/19/12,16:25:03)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_10x)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	2
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000004ca0b80b)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000009f93aea5)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001d5103ae)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000f4edc1d3)
+
+			(Primitives	1
+
+				(Primitive	DOUBLE_ROW_10_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	DOUBLE_ROW_10
+
+							(PackType	DOUBLE_ROW_10_SMD)
+
+							(PackType	DOUBLE_ROW_10_THT)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001bb6037e)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001c8c03ab)
+
+)
+
+

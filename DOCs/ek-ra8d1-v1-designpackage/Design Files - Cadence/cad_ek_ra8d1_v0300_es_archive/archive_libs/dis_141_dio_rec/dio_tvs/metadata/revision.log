@@ -1,0 +1,14 @@
+	(Comment
+		(Time 12/08/22,09:14:52)
+		(User a5050295)
+		(MsgId ECO_021)
+		(Text "Package DIO_TVS added to cell")
+		(Param1 "DIO_TVS")
+	)
+	(Comment
+		(Time 12/08/22,09:15:49)
+		(User a5050295)
+		(MsgId ECO_081)
+		(Text "Symbol sym_1 added to cell")
+		(Param1 "sym_1")
+	)

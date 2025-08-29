@@ -1,0 +1,14 @@
+	(Comment
+		(Time 01/28/22,11:19:26)
+		(User a5050295)
+		(MsgId ECO_021)
+		(Text "Package ISSI512MBSDRAM_X16 added to cell")
+		(Param1 "ISSI512MBSDRAM_X16")
+	)
+	(Comment
+		(Time 01/28/22,11:34:13)
+		(User a5050295)
+		(MsgId ECO_081)
+		(Text "Symbol sym_1 added to cell")
+		(Param1 "sym_1")
+	)

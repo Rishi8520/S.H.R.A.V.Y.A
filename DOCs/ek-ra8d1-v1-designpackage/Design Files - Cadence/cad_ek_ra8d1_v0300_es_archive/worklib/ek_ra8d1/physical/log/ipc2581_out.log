@@ -1,0 +1,74 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    IPC2581 Export                                                   )
+(                                                                     )
+(    Software Version : 22.1S002                                      )
+(    Date/Time        : Thu Mar 16 09:01:44 2023                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+
+
+Collecting net list ...
+
+
+
+Collecting package defintions ...
+
+WARNING:  Multiple PLACE_BOUND outlines defined for the package "ISS_TW_BGA_54L_8X13".
+  An overall bounding box has been exported.
+WARNING:  Both top and bottom PLACE_BOUND outlines defined for the package "NPL_HOLE_3P30".
+  An overall bounding box has been exported.
+WARNING:  Multiple PLACE_BOUND outlines defined for the package "KEY_5019".
+  An overall bounding box has been exported.
+WARNING:  Multiple PLACE_BOUND outlines defined for the package "LIT_0603_LED".
+  An overall bounding box has been exported.
+WARNING:  Multiple PLACE_BOUND outlines defined for the package "2X6X2_54_DIGILENT_HOST".
+  An overall bounding box has been exported.
+WARNING:  Multiple PLACE_BOUND outlines defined for the package "SAM_FTSH_110_01_L_DV_007_K".
+  An overall bounding box has been exported.
+WARNING: No PLACE_BOUND outline found for the package "CE_MARK_H_5MM", IGNORED.
+WARNING: No PLACE_BOUND outline found for the package "FCC_MARK_H_5MM", IGNORED.
+WARNING:  Multiple PLACE_BOUND outlines defined for the package "MIC_USB_WR".
+  An overall bounding box has been exported.
+WARNING: No PLACE_BOUND outline found for the package "UKCA_MARK_H_5MM", IGNORED.
+
+
+Collecting component descriptions ...
+
+WARNING: No PLACE_BOUND outline found for the symbol located at (51.411, 61.044), (SymbolName="CE_MARK_H_5MM"), IGNORED.
+WARNING: No PLACE_BOUND outline found for the symbol located at (46.000, 13.840), (SymbolName="FCC_MARK_H_5MM"), IGNORED.
+WARNING: No PLACE_BOUND outline found for the symbol located at (50.158, 54.624), (SymbolName="UKCA_MARK_H_5MM"), IGNORED.
+
+
+Collecting BOM items ...
+
+
+
+Property configuration file: C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/ipc2581_attr_config.atr
+IPC2581 file: C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/D018942_06_v03_ek_ra8d1_ipc2581.xml
+IPC2581 version: IPC2581-B
+BRD file: C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/D018942_06_v03_ek_ra8d1.brd
+IPC2581 units: MILLIMETER
+Global package pin1 orientation: OTHER
+Default symbol height: 2.00
+Export drill information?: YES
+Export backdrill information?: NO
+Export BOM information?: YES
+Export component descriptions?: YES
+Export component packages?: YES
+Export land patterns?: YES
+Export device descriptions?: YES
+Export net list?: YES
+Export hierarchical layer/stack instance?: NO
+Export Outer Copper Layers?: YES
+Export Inner Layers?: YES
+Export Documentation Layers?: YES
+Export Miscellaneous Image Layers?: YES
+Export SolderMask/SolderPaste Legend Layers?: YES
+Export vector text?: YES
+Export cavities?: NO
+Export padstack definitions?: NO
+Export zip file?: NO
+a2ipc2581 complete.

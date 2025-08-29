@@ -1,0 +1,23 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    Dangling Line and Via Report                                     )
+(                                                                     )
+(    Drawing          : D018942_06_v03_ek_ra8d1.brd                   )
+(    Software Version : 22.1S002                                      )
+(    Date/Time        : Thu Jul 13 15:50:37 2023                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+Report methodology:
+  - Dangling lines have at least one end not connected.
+  - Dangling vias have one or no connection
+      - Plus are not a test, thieving or netshort property via.
+  - Not part of the current partition.
+  - To suppress items in dangle report add the OK_DANGLE property to the via
+    or connect line.
+
+
+<< Summary >>
+  Total dangling lines:       0
+  Total dangling vias:        0

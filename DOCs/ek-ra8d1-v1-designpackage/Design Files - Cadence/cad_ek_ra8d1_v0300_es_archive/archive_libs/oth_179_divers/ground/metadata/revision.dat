@@ -1,0 +1,90 @@
+(Cell	ground
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.4)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/26/12,12:06:02)
+
+			(User	cdsadmin3)
+
+			(Path	oth_179_divers.ground)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000aaec47d1)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.3)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/26/12,12:06:02)
+
+							(User	cdsadmin3)
+
+							(Path	oth_179_divers.ground)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001f3a040b)
+
+		)
+
+		(Checksum	000000001c5703a2)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001bab0377)
+
+)
+

@@ -1,0 +1,194 @@
+(Cell	dio_tvs
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.8)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	12/08/22,09:14:41)
+
+			(User	a5050295)
+
+			(Path	dis_141_dio_rec.dio_tvs)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	12/08/22,09:15:57)
+
+			(User	a5050295)
+
+			(Path	dis_141_dio_rec.dio_tvs)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.3)
+
+				(ModificationStatus	NULL)
+
+				(Status	Modified)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+			)
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000b1278c5f)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.3)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	12/08/22,09:15:49)
+
+							(User	a5050295)
+
+							(Path	dis_141_dio_rec.dio_tvs)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001c4f03b3)
+
+		)
+
+		(View	Chips
+
+			(Checksum	0000000009989682)
+
+			(Primitives	1
+
+				(Primitive	DIO_TVS_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.4)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	12/08/22,09:14:52)
+
+							(User	a5050295)
+
+							(Path	dis_141_dio_rec.dio_tvs)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	DIO_TVS
+
+							(PackType	DIO_TVS_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001be60386)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.4-2019 S021 (3976684))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001c710380)
+
+)
+

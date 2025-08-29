@@ -1,0 +1,163 @@
+(Cell	single_row_6
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	1.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/25/12,16:29:40)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.single_row_6)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000741b9ba6)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/25/12,16:29:40)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.single_row_6)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001c0603b1)
+
+		)
+
+		(View	Chips
+
+			(Checksum	000000004f91e009)
+
+			(Primitives	1
+
+				(Primitive	SINGLE_ROW_6_THT
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/25/12,16:29:40)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.single_row_6)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	SINGLE_ROW_6
+
+							(PackType	SINGLE_ROW_6_THT)
+
+							(PackType	SINGLE_ROW_6_SMD)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001ce903e4)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001cdf03af)
+
+)
+
+

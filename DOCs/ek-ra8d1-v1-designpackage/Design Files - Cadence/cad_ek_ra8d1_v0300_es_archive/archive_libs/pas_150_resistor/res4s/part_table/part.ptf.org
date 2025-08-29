@@ -1,0 +1,15 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART 'RES4S'
+
+{========================================================================================}
+:PART_NUMBER   | VALUE | PACK_TYPE    = PART_NUMBER   | PART_TYPE      | VALUE | TOLERANCE | POWER    | DESCRIPTION                                       | JEDEC_TYPE | HEIGHT  | DATASHEET                  | MANUFACTURER_PART_NUMBER | MANUFACTURER | PRICE  | AVAILABILITY | UL_STATUS | EDA_STATUS   | SIGNAL_MODEL   | IMPLEMENTATION | COMP_TYPE | COMP_MATERIAL      | THETA_JC | THETA_JB | 3D_PACKAGE | 3D_DX | 3D_DY | BQR_PARTNUM | ACTIVEPARTSID | CLASS      | ALLEGRO_DESIGN_WORKBENCH ;
+{========================================================================================}
+ 'FC-RES-0230' | '56r' | 'SMD'(!)     = 'FC-RES-0230' | 'Res_Array_4S' | '56r' | '5%'      | '0.063W' | 'Resistor Array 4x Single 56r 5% 0.063W RS4N SMD' | 'RES_RS4N' | '0.5mm' | 'susumu_SMD_RES_Array.pdf' | 'RS4N0560J2N'            | 'Susumu'     | '0.23' | 'in Stock'   | 'no'      | 'unverified' | 'rpack_x4_56r' | 'RBREAK'       | 'Simple'  | 'Lumped component' | ''       | ''       | ''         | ''    | ''    | ''          | ''            | 'DISCRETE' | ''                      
+ 'FC-RES-0257' | '10k' | 'SMD'(!)     = 'FC-RES-0257' | 'Res_Array_4S' | '10k' | '5%'      | '0.063W' | 'Resistor Array 4x Single 10k 5% 0.063W RS4N SMD' | 'RES_RS4N' | '0.5mm' | 'susumu_SMD_RES_Array.pdf' | 'RS4N1002J2N'            | 'Susumu'     | '0.23' | 'in Stock'   | 'no'      | 'unverified' | 'rpack_x4_10k' | 'RBREAK'       | 'Simple'  | 'Lumped component' | ''       | ''       | ''         | ''    | ''    | ''          | ''            | 'DISCRETE' | ''                      
+ 'FC-RES-0265' | '47k' | 'SMD'(!)     = 'FC-RES-0265' | 'Res_Array_4S' | '47k' | '5%'      | '0.063W' | 'Resistor Array 4x Single 47k 5% 0.063W RS4N SMD' | 'RES_RS4N' | '0.5mm' | 'susumu_SMD_RES_Array.pdf' | 'RS4N4702J2N'            | 'Susumu'     | '0.23' | 'in Stock'   | 'no'      | 'unverified' | 'rpack_x4_47k' | 'RBREAK'       | 'Simple'  | 'Lumped component' | ''       | ''       | ''         | ''    | ''    | ''          | ''            | 'DISCRETE' | ''                      
+
+END_PART
+
+END.
+

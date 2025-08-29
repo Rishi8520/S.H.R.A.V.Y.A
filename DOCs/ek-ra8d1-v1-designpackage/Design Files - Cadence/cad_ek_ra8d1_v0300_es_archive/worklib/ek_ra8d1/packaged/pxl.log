@@ -1,0 +1,283 @@
+
+
+
+
+    Cadence Design Systems, Inc.
+    Packager-XL 22.1 S002 (4088182) WIN32 2/6/2023 12:00:00 IST
+    (C) Copyright 1994, Cadence Design Systems, Inc.
+
+    Run on Fri Jul 14 10:35:36 2023
+
+
+ **********************************************
+ *  Processing project file and command line  *
+ **********************************************
+
+
+
+    ANNOTATE  'BODY' 'PIN'
+    COMP_DEF_PROP  'ALT_SYMBOLS' 'JEDEC_TYPE' 'MERGE_NC_PINS' 'MERGE_POWER_PINS'
+                   'NC_PINS' 'PART_NUMBER' 'PINCOUNT' 'POWER_GROUP' 'POWER_PINS'
+                   'VALUE' 'DESCRIPTION'
+    COMP_INST_PROP  'GROUP' 'ROOM' 'REUSE_INSTANCE' 'REUSE_ID' 'REUSE_NAME'
+                    'SIGNAL_MODEL' 'DEFAULT_SIGNAL_MODEL'
+                    'VOLT_TEMP_SIGNAL_MODEL' 'SYMBOL_EDITED'
+                    'INCLUDE_IN_RF_TOPOLOGY' 'NO_XNET_CONNECTION'
+                    'EMBEDDED_PLACEMENT' 'ASI_MODEL' 'ISRFELEMENT'
+                    'RFELEMENTTYPE' 'RFLAYER' 'RFLAYER1' 'RFLAYER2' 'RFLAYER3'
+                    'RFLAYER4' 'RFLAYER5' 'RFLAYER6' 'RFLAYER7' 'RFLAYER8'
+                    'RFLAYER9' 'RFLAYER10' 'RFLAYER11' 'RFLAYER12' 'RFLAYER13'
+                    'RFLAYER14' 'RFLAYER15' 'RFLAYER16' 'RFCOUPLINGMODE'
+                    'RFFLIPMODE' 'RFANGLE' 'RFANGLE1' 'RFWIDTH' 'RFWIDTH1'
+                    'RFWIDTH2' 'RFWIDTH3' 'RFWIDTH4' 'RFWIDTH5' 'RFWIDTH6'
+                    'RFWIDTH7' 'RFWIDTH8' 'RFWIDTH9' 'RFWIDTH10' 'RFWIDTH11'
+                    'RFWIDTH12' 'RFWIDTH13' 'RFWIDTH14' 'RFWIDTH15' 'RFWIDTH16'
+                    'RFLENGTH' 'RFLENGTH1' 'RFLENGTH2' 'RFLENGTH3' 'RFLENGTH4'
+                    'RFLENGTH5' 'RFLENGTH6' 'RFLENGTH7' 'RFLENGTH8' 'RFSPACING'
+                    'RFSPACING1' 'RFSPACING2' 'RFSPACING3' 'RFSPACING4'
+                    'RFSPACING5' 'RFSPACING6' 'RFSPACING7' 'RFSPACING8'
+                    'RFSPACING9' 'RFSPACING10' 'RFSPACING11' 'RFSPACING12'
+                    'RFSPACING13' 'RFSPACING14' 'RFSPACING15' 'RFOFFSETX'
+                    'RFOFFSETY' 'RFRADIUS' 'RFDEPTH' 'RFFREQUENCY'
+                    'RFMITERFRACTION' 'RFBENDMODE' 'RFNUMBERLEGS'
+                    'RFNUMBERPAIRS' 'RFNUMBERTURNS' 'RFCAPACITANCE'
+                    'RFRESISTANCE' 'RFINDUCTANCE' 'RFPADSTACKNAME'
+                    'RFPADSSMNAME1' 'RFPADSSMNAME2' 'RFPADBEGINLAYER'
+                    'RFPADENDLAYER' 'RFPADLINEWIDTH1' 'RFPADLINEWIDTH2'
+                    'RFPADDIAMETER' 'RFPADDIAMETER1' 'RFPADDIAMETER2'
+                    'RFPADLENGTH1' 'RFPADLENGTH2' 'RFHOLEDIAMETER' 'RFPADANGLE'
+                    'RFDRANAME' 'RFPADTYPE' 'RFUID' 'RFBLOCK' 'RFDCNET'
+                    'RFGROUP' 'MWO_NAME'
+    SUPPRESS_GLOBAL_SHORT_CHECK OFF
+    DEBUG    0
+    DEFAULT_PHYS_DES_PREFIX U
+    FEEDBACK  'OFF'
+    MAX_ERRORS 999
+    NET_NAME_CHARS   @  -  !  #  %  &  (  )  *  .  /  :  ?  [  ]  ^  _  `  +
+                     =  >  0  1  2  3  4  5  6  7  8  9
+    NET_NAME_LENGTH 31
+    NUM_OLD_VERSIONS 3
+    OPTIMIZE OFF
+    REUSE_REFDES OFF
+    OPF_OPTIMIZATION OFF
+    HARD_LOC_SEC OFF
+    FORCE_PTF_ENTRY OFF
+    REGENERATE_PHYSICAL_NET_NAME OFF
+    SCH_POWER_GROUP_WINS_OVER_PPT OFF
+    NULL_OPT_VALID OFF
+    USE_VECTOR_NOTATION ON
+    FILTER_ECS_FROM_XNET ON
+    OUTPUT  'ON'
+    PACKAGE_PROP  'GROUP' 'ROOM'
+    PART_TYPE_LENGTH 31
+    PPT  J:\ACLib\ree_lib/de_hdl/global_part_tables 
+    REF_DES_LENGTH 31
+    REPACKAGE OFF
+    ELECTRICAL_CONSTRAINTS ON
+    OVERWRITE_CONSTRAINTS OFF
+    RUN_DIR ./worklib/ek_ra8d1/packaged/
+    STRICT_PACKAGE_PROP  'REUSE_INSTANCE'
+    USE_LIBRARY_PPT ON
+    USE_STATE ON
+    WARNINGS ON
+    LIBRARY  'ek_ra8d1' 'standard' 'ree_999_border' 'ana_120_adc_dac'
+             'ana_121_amplify' 'ana_122_dc_dc' 'ana_123_interface'
+             'ana_124_v_ctrl' 'ana_125_v_mon' 'ana_126_codec' 'ana_127_rf_gsm'
+             'con_160_b_to_b' 'con_161_interface' 'con_162_ic_socket'
+             'con_163_board' 'dig_100_logic' 'dig_101_progr' 'dig_102_memory'
+             'dig_103_clock' 'dig_104_delay' 'dis_140_dio_led' 'dis_141_dio_rec'
+             'dis_142_dio_zen' 'dis_143_tr_fet' 'dis_144_tr_bjt'
+             'oth_170_crystal' 'oth_171_osci' 'oth_172_relay' 'oth_173_fuse'
+             'oth_174_display' 'oth_175_transf' 'oth_176_transc' 'oth_177_audio'
+             'oth_178_battery' 'oth_179_divers' 'pas_150_resistor'
+             'pas_151_capacitor' 'pas_152_inductor' 'pas_153_filter'
+             'pas_154_coupler' 'pas_155_attenuator' 'pro_201_mechanical_parts'
+             'oth_180_switch'
+    CDSPROP_FILE 
+    VIEW_PTF part_table
+    VIEW_PACKAGER packaged
+    VIEW_CONSTRAINTS sch_1
+    DESIGN_LIBRARY ek_ra8d1
+    DESIGN_NAME ek_ra8d1
+    VIEW_CONFIG_PHYSICAL cfg_package
+    SD_SUFFIX_SEPARATOR _
+    STOP_PST_GEN_ON_PTF_MISMATCH ON
+    IGNORE_PRIM_BINDING OFF
+    LOG_INST_PHYS_PATH ON
+    ANNOTATE_VISIBLE_SEC OFF
+    PTF_MISMATCH_EXCLUDE_INJ_PROP  'ALL'
+    IMPORT_HFS_HARDSEC_ON_SWAP_PINS OFF
+    ALLOW_PTFVALUE_INITIAL_BLANKS ON
+    PRESERVE_UNSUBSTITUTED_MACROS OFF
+    DETECT_SYS_NETSHORTS_PKG ON
+    PROCESS_PIN_SHORT_PROP ON
+    STOP_PACKAGE_ON_SCHEMATIC_ERROR OFF
+    LOCK_FILE_PERM 444
+    LOCK_FOR_SAME_USER OFF
+    ERROR_ON_MISMATCHED_INTERFACE ON
+    RETAIN_ZERO_NODE_NETS OFF
+    IGNORE_ERR_EMPTY_LONGPARTNAME OFF
+    ERROR_ILLEGAL_QUOTE_PPT OFF
+    B2F_OVERWRITE_CONSTRAINTS OFF
+    ERROR_ON_PARTIAL_INSTANTIATION_OF_HSS OFF
+    RUN_HIERWR_BEFORE_PXL OFF
+    IMPORT_CONSTRAINTS_ONLY_FEEDBACK OFF
+    REPORT_NET_PROP_CONFLICT_AS_ERROR OFF
+    CHECK_PACK_SYNC_ON_PKG OFF
+    ERR_OK_NET_ONE_PIN_MULTI_NODES OFF
+    ALLOW_PINTEXT_SWAP ON
+    SHOW_EXTENDED_HELP ON
+    HONOR_SOFT_PROPS_PACKAGE  'NONE'
+    ALLOW_SAME_PACKAGE OFF
+    INCLUDE_KEY_PROP_COMP_DEF OFF
+
+ **************************************************************
+ *  End processing project file and command line  (00:00:01)  *
+ **************************************************************
+
+
+Creating Configuration "cfg_package" for Design "ek_ra8d1"
+
+INFO(SPCODD-181): Loading c:\cadence\spb_22.1\share\cdssetup\cdsprop.tmf.
+      INFO(SPCODD-181): Loading c:\cadence\spb_22.1\share\cdssetup\cdsprop.paf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_120_a~
+	dc_dac.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_121_a~
+	mplify.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_122_d~
+	c_dc.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_123_i~
+	nterface.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_124_v~
+	_ctrl.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_125_v~
+	_mon.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_126_c~
+	odec.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_127_r~
+	f_gsm.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_160_b~
+	_to_b.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_161_i~
+	nterface.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_162_i~
+	c_socket.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_163_b~
+	oard.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_100_l~
+	ogic.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_101_p~
+	rogr.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_102_m~
+	emory.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_103_c~
+	lock.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_104_d~
+	elay.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_140_d~
+	io_led.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_141_d~
+	io_rec.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_142_d~
+	io_zen.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_143_t~
+	r_fet.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_144_t~
+	r_bjt.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_170_c~
+	rystal.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_171_o~
+	sci.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_172_r~
+	elay.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_173_f~
+	use.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_174_d~
+	isplay.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_175_t~
+	ransf.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_176_t~
+	ransc.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_177_a~
+	udio.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_178_b~
+	attery.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_179_d~
+	ivers.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_180_s~
+	witch.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_150_r~
+	esistor.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_151_c~
+	apacitor.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_152_i~
+	nductor.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_153_f~
+	ilter.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_154_c~
+	oupler.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_155_a~
+	ttenuator.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_200_P~
+	ACKAGING.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pro_201_m~
+	echanical_parts.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_210_M~
+	EDIA.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_226_E~
+	LECTRONIC_ASSEMBLY.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_228_C~
+	ABLE.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_230_M~
+	ECHANICAL.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_232_L~
+	ICENSE.ptf.
+      INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_234_S~
+	OFTWARE.ptf.
+      
+ *********************************
+ *  Loading the design database  *
+ *********************************
+
+
+ *************************
+ *  Loading State Files  *
+ *************************
+
+Loading ./worklib/ek_ra8d1/packaged/pxl.state. 
+
+ *****************************************
+ *  End loading State Files  (00:00:00)  *
+ *****************************************
+
+
+ ****************************************
+ *  Starting to assign physical parts.  *
+ ****************************************
+
+
+ ***********************************************
+ *  End assigning physical parts.  (00:00:00)  *
+ ***********************************************
+
+
+ ***************
+ *  Packaging  *
+ ***************
+
+
+ *******************************
+ *  End packaging  (00:00:00)  *
+ *******************************
+
+INFO(SPCOPK-1442): No errors detected
+INFO(SPCOPK-1444): No warnings detected
+    Start time   10:35:36
+    End time     10:35:46
+    Elapsed time  0:00:10
+
+ ***************************************************************************
+ *  Packager-XL execution done.
+ ***************************************************************************
+Starting to audit ECsets in the design...
+Audit completed successfully.

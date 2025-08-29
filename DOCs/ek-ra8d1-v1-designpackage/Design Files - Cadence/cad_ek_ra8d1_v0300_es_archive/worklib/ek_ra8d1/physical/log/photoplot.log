@@ -1,0 +1,2688 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    ARTWORK LOG                                                      )
+(                                                                     )
+(    Drawing          : D018942_06_v03_ek_ra8d1.brd                   )
+(    Software Version : 22.1S002                                      )
+(    Date/Time        : Thu Mar 16 08:59:47 2023                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+ ---- Photoplot outline rectangle not found; using drawing extents.
+
+
+
+Results from parameter file ...
+    DEVICE-TYPE           GERBER_RS274X
+    OUTPUT-UNITS          MM
+    FILM-SIZE             40000000 30000000
+    FORMAT                3.5
+    ABORT-ON-ERROR        NO
+    SCALE                 1
+    SUPPRESS-LEAD-ZEROES  YES
+    SUPPRESS-TRAIL-ZEROES NO
+    SUPPRESS-EQUAL        NO
+    UNDEF-APT-CONT        NO
+
+
+
+================================================================
+     PROCESSING FILM < 02_GND >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/02_GND.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.08000                                  DARK 
+  CIRCLE     0.11000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.12600                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.55000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.30000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     02_GND created.
+
+
+================================================================
+     PROCESSING FILM < 03_SIG >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/03_SIG.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.08000                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.11000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.11500                                  DARK 
+  CIRCLE     0.12600                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.55000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.30000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     03_SIG created.
+
+
+================================================================
+     PROCESSING FILM < 08_BOTTOM >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/08_BOTTOM.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.08000                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.11000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.11500                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.20800                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.34000                                  DARK 
+  CIRCLE     0.35000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.35000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.10000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.25000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000      90.000 NO     DARK 
+  RECTANGLE  0.42500     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.50000     x 1.10000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000      90.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000     135.000 NO     DARK 
+  RECTANGLE  0.85000     x 0.85000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.90000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 2.90000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      90.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00   0.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00  90.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 180.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,50.000 270.000 YES    DARK 
+
+     08_BOTTOM created.
+
+
+================================================================
+     PROCESSING FILM < DRILL_DRAWING >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/DRILL_DRAWING.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+    WARNING: 0 width line found at (124.410 108.791)
+           ... using undefined line width of 0.100
+
+    WARNING: Multiple 0 width lines; all will be treated the same as the first.
+           ... using undefined line width of 0.100
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.60000                                  DARK 
+  CIRCLE     0.61000                                  DARK 
+
+     DRILL_DRAWING created with warnings
+
+
+================================================================
+     PROCESSING FILM < OUTLINE >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/OUTLINE.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10000                                  DARK 
+
+     OUTLINE created.
+
+
+================================================================
+     PROCESSING FILM < PASTEMASK_BOTTOM >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/PASTEMASK_BOTTOM.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  RECTANGLE  0.24000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.25000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000      90.000 NO     DARK 
+  RECTANGLE  0.42500     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.50000     x 1.10000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000      90.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000     135.000 NO     DARK 
+  RECTANGLE  0.85000     x 0.85000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.90000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 2.90000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,50.000 270.000 YES    DARK 
+
+     PASTEMASK_BOTTOM created.
+
+
+================================================================
+     PROCESSING FILM < PASTEMASK_TOP >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/PASTEMASK_TOP.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.45000                                  DARK 
+  SQUARE     0.80000                     0.000 NO     DARK 
+  SQUARE     3.30000                     0.000 NO     DARK 
+  RECTANGLE  0.20000     x 0.67500      90.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.70000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000      90.000 NO     DARK 
+  RECTANGLE  0.40000     x 1.35000      90.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.55000      90.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.60000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000      90.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000     135.000 NO     DARK 
+  RECTANGLE  0.58000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.05000      90.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.55000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.74000     x 2.80000      90.000 NO     DARK 
+  RECTANGLE  0.76000     x 1.25000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.90000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 2.90000       0.000 NO     DARK 
+  RECTANGLE  1.00000     x 1.20000      90.000 NO     DARK 
+  RECTANGLE  1.05000     x 1.30000       0.000 NO     DARK 
+  RECTANGLE  1.20000     x 1.80000       0.000 NO     DARK 
+  RECTANGLE  1.25000     x 1.22000       0.000 NO     DARK 
+  RECTANGLE  1.30000     x 1.55000      90.000 NO     DARK 
+  RECTANGLE  1.40000     x 0.75000      90.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      45.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      90.000 NO     DARK 
+  RECTANGLE  1.60000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  1.80000     x 1.90000      90.000 NO     DARK 
+  RECTANGLE  2.55000     x 2.77000      90.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000      90.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R          0.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_L          0.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R        180.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_L        180.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     PASTEMASK_TOP created.
+
+
+================================================================
+     PROCESSING FILM < SOLDERMASK_BOTTOM >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/SOLDERMASK_BOTTOM.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.35000                                  DARK 
+  CIRCLE     1.45000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.10000                                  DARK 
+  CIRCLE     3.30000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.25000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000      90.000 NO     DARK 
+  RECTANGLE  0.42500     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.50000     x 1.10000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000      90.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000     135.000 NO     DARK 
+  RECTANGLE  0.85000     x 0.85000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.90000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 2.90000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      90.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00   0.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00  90.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 180.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,50.000 270.000 YES    DARK 
+
+     SOLDERMASK_BOTTOM created.
+
+
+================================================================
+     PROCESSING FILM < SOLDERMASK_TOP >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/SOLDERMASK_TOP.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.45000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.35000                                  DARK 
+  CIRCLE     1.45000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.10000                                  DARK 
+  CIRCLE     3.30000                                  DARK 
+  SQUARE     0.80000                     0.000 NO     DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  SQUARE     3.30000                     0.000 NO     DARK 
+  RECTANGLE  0.20000     x 0.67500      90.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.70000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000      90.000 NO     DARK 
+  RECTANGLE  0.40000     x 1.35000      90.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.55000      90.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.60000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000      90.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000     135.000 NO     DARK 
+  RECTANGLE  0.58000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.05000      90.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.55000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.74000     x 2.80000      90.000 NO     DARK 
+  RECTANGLE  0.76000     x 1.25000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.90000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 2.90000       0.000 NO     DARK 
+  RECTANGLE  1.00000     x 1.20000      90.000 NO     DARK 
+  RECTANGLE  1.05000     x 1.30000       0.000 NO     DARK 
+  RECTANGLE  1.20000     x 1.80000       0.000 NO     DARK 
+  RECTANGLE  1.25000     x 1.22000       0.000 NO     DARK 
+  RECTANGLE  1.30000     x 1.55000      90.000 NO     DARK 
+  RECTANGLE  1.40000     x 0.75000      90.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      45.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      90.000 NO     DARK 
+  RECTANGLE  1.60000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  1.80000     x 1.90000      90.000 NO     DARK 
+  RECTANGLE  2.55000     x 2.77000      90.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000      90.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R          0.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_L          0.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 180.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R        180.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_L        180.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00 270.000 NO     DARK 
+
+     SOLDERMASK_TOP created.
+
+
+================================================================
+     PROCESSING FILM < 01_TOP >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/01_TOP.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.08000                                  DARK 
+  CIRCLE     0.09500                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.11000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.11500                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.25000                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.34000                                  DARK 
+  CIRCLE     0.35000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.45000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.35000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.10000                                  DARK 
+  SQUARE     0.80000                     0.000 NO     DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  SQUARE     3.30000                     0.000 NO     DARK 
+  RECTANGLE  0.20000     x 0.67500      90.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.70000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000      90.000 NO     DARK 
+  RECTANGLE  0.40000     x 1.35000      90.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.55000      90.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.60000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000      90.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000     135.000 NO     DARK 
+  RECTANGLE  0.58000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.05000      90.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.55000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.74000     x 2.80000      90.000 NO     DARK 
+  RECTANGLE  0.76000     x 1.25000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.90000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 2.90000       0.000 NO     DARK 
+  RECTANGLE  1.00000     x 1.20000      90.000 NO     DARK 
+  RECTANGLE  1.05000     x 1.30000       0.000 NO     DARK 
+  RECTANGLE  1.20000     x 1.80000       0.000 NO     DARK 
+  RECTANGLE  1.25000     x 1.22000       0.000 NO     DARK 
+  RECTANGLE  1.30000     x 1.55000      90.000 NO     DARK 
+  RECTANGLE  1.40000     x 0.75000      90.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      45.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      90.000 NO     DARK 
+  RECTANGLE  1.60000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  1.80000     x 1.90000      90.000 NO     DARK 
+  RECTANGLE  2.55000     x 2.77000      90.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000      90.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R          0.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_L          0.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R        180.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 180.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_L        180.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     01_TOP created.
+
+
+================================================================
+     PROCESSING FILM < DIMENSION_DRAWING >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/DIMENSION_DRAWING.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+    WARNING: more than one pin class in film record
+    WARNING: Null REGULAR-PAD specified for padstack R01P800_01P900 at (1.250 82.940).
+    WARNING: Null REGULAR-PAD specified for padstack R01P800_01P900 at (1.250 85.240).
+    WARNING: Null REGULAR-PAD specified for padstack R01P800_01P900 at (1.250 98.690).
+    WARNING: Null REGULAR-PAD specified for padstack R01P800_01P900 at (1.250 100.990).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (1.855 119.943).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (1.855 124.443).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (1.839 127.479).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (1.839 131.979).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (1.839 136.399).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (1.839 140.899).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (2.975 113.338).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (2.691 113.003).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (2.975 114.488).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (2.667 114.254).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (2.667 115.854).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500 at (4.000 4.000).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500 at (4.000 72.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 83.440).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 82.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 84.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 84.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 85.390).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (3.750 89.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (3.750 90.890).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 99.190).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 98.540).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 99.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 101.140).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (4.050 100.490).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (4.250 105.040).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (4.250 106.640).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (3.651 113.003).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500 at (4.000 165.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P625_01P000 at (5.088 87.590).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500_NO_PM at (5.070 164.140).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (5.812 84.190).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (5.812 84.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (5.812 84.990).
+    WARNING: Null REGULAR-PAD specified for padstack R00P625_01P000 at (6.312 87.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (6.270 91.390).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (5.812 99.940).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (5.812 100.340).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (5.812 100.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P625_01P000 at (5.638 103.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (6.895 113.326).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (6.597 113.005).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (6.895 114.476).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (6.577 114.262).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (6.577 115.862).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.825 119.916).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.825 121.066).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.815 127.548).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.815 128.698).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.965 133.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.965 135.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.965 137.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (5.965 139.250).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500_NO_PM at (6.595 3.320).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (6.688 84.990).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (6.688 84.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (6.688 84.190).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (7.230 91.390).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (6.688 99.940).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (6.688 100.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (6.688 100.340).
+    WARNING: Null REGULAR-PAD specified for padstack R00P625_01P000 at (6.862 103.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (7.730 107.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (6.770 107.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (7.557 113.005).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (7.115 133.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (7.115 135.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (7.115 137.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (7.115 139.250).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (8.999 162.749).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (8.999 166.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.020 85.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.020 84.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.020 99.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.020 100.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (8.965 133.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (8.965 135.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (8.965 137.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (8.965 139.250).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (8.431 160.032).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (10.125 84.865).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (10.125 84.315).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.980 85.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.980 84.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (9.270 91.390).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.980 99.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (8.980 100.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (9.770 107.090).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (9.805 119.943).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (9.805 124.443).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (9.789 127.479).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (9.789 131.979).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (10.115 133.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (10.115 135.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (10.115 137.250).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (9.789 136.399).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (10.115 139.250).
+    WARNING: Null REGULAR-PAD specified for padstack R01P300_01P550 at (9.789 140.899).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (11.375 84.865).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (11.375 84.315).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (10.230 91.390).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (10.375 100.365).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (10.375 99.815).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (10.730 107.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (11.195 113.360).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (10.865 113.005).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (11.195 114.510).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (10.847 114.258).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (10.847 115.858).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (11.335 122.769).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (11.335 121.809).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (11.325 129.241).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (11.325 130.201).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (11.322 135.456).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (11.322 136.416).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (10.431 160.032).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (11.625 100.365).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P700 at (11.625 99.815).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (11.825 113.005).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (12.691 134.785).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (12.691 136.385).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (13.250 83.610).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (13.250 84.570).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (13.250 98.360).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (13.250 99.320).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (14.700 83.445).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (14.700 84.595).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (14.730 86.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (13.770 86.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (15.150 98.495).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (15.150 99.645).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (14.620 100.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (14.495 114.525).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (14.495 115.485).
+    WARNING: Null REGULAR-PAD specified for padstack R02P550_02P770 at (16.380 89.940).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (15.580 100.840).
+    WARNING: Null REGULAR-PAD specified for padstack R02P550_02P770 at (16.680 104.640).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (16.665 82.120).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (16.400 83.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (16.400 84.690).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (16.400 85.640).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (16.775 96.720).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (16.900 98.390).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (16.900 99.340).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (16.900 100.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (17.815 82.120).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (17.925 96.720).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (19.270 82.190).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (19.100 83.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (19.100 85.640).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (19.600 98.390).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P050 at (19.600 100.290).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (20.450 14.350).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (20.230 82.190).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (20.270 96.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (21.690 42.770).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (21.690 43.730).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (21.740 45.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (21.740 46.375).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (20.900 83.660).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (20.900 84.620).
+    WARNING: Null REGULAR-PAD specified for padstack R02P550_02P770 at (22.820 89.940).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (21.230 96.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (21.300 99.220).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (21.300 98.260).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (21.495 114.517).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (21.495 115.477).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (22.240 45.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (22.740 45.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (22.740 46.375).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (22.240 46.375).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (22.800 83.840).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (22.800 85.840).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (23.250 98.590).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (23.250 100.590).
+    WARNING: Null REGULAR-PAD specified for padstack R02P550_02P770 at (23.120 104.640).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (24.970 14.351).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (23.983 34.957).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.040 42.675).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (23.540 42.675).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (23.040 42.675).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (23.040 43.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (23.540 43.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.040 43.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (23.240 45.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (23.240 46.375).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (23.650 49.763).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (23.650 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (23.650 50.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (23.650 49.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (23.650 50.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (23.650 51.723).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (25.397 33.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.540 42.675).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.540 43.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.190 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.690 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (25.190 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (25.190 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.690 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (24.190 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (24.650 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (24.650 49.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (24.650 50.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (24.650 51.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (25.110 52.800).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (24.650 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (25.310 54.730).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (25.310 56.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (26.260 21.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (25.640 42.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (25.640 43.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (25.690 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (25.690 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (25.650 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (25.650 49.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (25.650 50.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (25.650 51.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (26.070 52.800).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (25.650 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (26.500 157.360).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (26.500 158.320).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (27.010 17.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (27.010 18.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (27.010 18.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (27.010 19.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (27.010 19.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (27.010 20.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (27.220 21.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.240 42.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (26.740 42.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (26.740 43.575).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.240 43.575).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (26.640 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.140 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.640 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.640 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.140 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (26.640 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (26.670 48.743).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (27.630 48.743).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (27.650 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (26.650 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (27.650 49.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (26.650 49.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (27.650 50.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (26.650 50.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (27.650 51.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (26.650 51.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (27.650 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (26.650 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (28.060 17.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (28.560 17.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P900 at (28.310 19.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (28.780 18.895).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (28.770 20.385).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (28.560 20.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (28.060 20.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (29.015 23.202).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (29.015 24.902).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (29.015 26.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (29.015 28.352).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (29.015 30.052).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (28.965 31.902).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (28.965 33.602).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (28.240 42.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.740 42.625).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (27.740 43.575).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (28.240 43.575).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (28.140 45.475).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (28.140 46.425).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (28.500 157.360).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (28.500 158.320).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (29.700 14.610).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (29.700 15.570).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (29.610 17.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (29.610 18.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (29.610 18.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (29.740 18.895).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (29.610 19.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (29.610 19.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (29.730 20.385).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (29.610 20.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (30.165 23.202).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (30.165 24.902).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (30.165 26.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (30.165 28.352).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (30.165 30.052).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (30.115 31.902).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (30.115 33.602).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 40.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 41.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 41.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 42.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 42.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 43.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 43.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.050 44.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (29.140 45.620).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (29.140 46.580).
+    WARNING: Null REGULAR-PAD specified for padstack R01P250_01P220 at (29.365 109.090).
+    WARNING: Null REGULAR-PAD specified for padstack R01P250_01P220 at (29.385 111.755).
+    WARNING: Null REGULAR-PAD specified for padstack R01P250_01P220 at (29.365 114.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (30.950 15.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (30.950 15.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (30.950 16.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (30.950 16.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (30.950 17.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (30.950 17.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.850 40.243).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (31.100 42.293).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (30.850 44.343).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (30.690 45.443).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (30.560 47.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (31.057 158.167).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (32.000 14.773).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P900 at (32.250 16.573).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (32.000 18.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (31.350 40.243).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 41.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 40.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 42.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 42.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 41.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 43.543).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 43.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (31.350 44.343).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (32.150 44.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (31.650 45.443).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (31.520 47.300).
+    WARNING: Null REGULAR-PAD specified for padstack R01P250_01P220 at (32.635 109.090).
+    WARNING: Null REGULAR-PAD specified for padstack R01P250_01P220 at (32.655 111.755).
+    WARNING: Null REGULAR-PAD specified for padstack R01P250_01P220 at (32.635 114.090).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (32.017 158.167).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (33.550 15.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (32.500 14.773).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (33.550 16.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (33.550 15.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (33.550 17.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (33.550 17.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (33.550 16.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P240_00P900 at (32.500 18.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (32.750 24.673).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (32.750 26.273).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (32.860 46.300).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (33.970 24.073).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (33.970 26.973).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (33.960 28.525).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (33.970 29.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (34.400 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 40.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 40.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 41.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 41.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 42.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 42.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 43.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.100 43.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (34.370 45.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (33.820 46.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.650 47.223).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (34.900 49.273).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 47.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 48.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 48.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 49.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 49.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 50.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 50.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.650 51.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (33.850 51.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (34.320 52.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (34.260 54.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (34.540 105.157).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (35.000 112.500).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (35.000 114.100).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (34.800 115.700).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (34.800 117.700).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (36.000 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (35.200 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (36.000 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (35.200 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R01P400_00P750 at (36.123 16.223).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (35.470 17.623).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (34.930 24.073).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (34.930 26.973).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (34.920 28.525).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (34.930 29.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (35.200 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.400 40.173).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.900 40.173).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (35.150 42.223).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.400 44.273).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (34.900 44.273).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (35.330 45.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.150 47.223).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 48.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 48.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 47.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 49.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 49.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 50.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 50.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.150 51.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (35.950 51.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (35.280 52.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (35.220 54.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (35.555 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (35.555 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (36.040 105.157).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (36.800 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (36.800 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (36.430 17.623).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (36.400 25.043).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (36.400 26.003).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.000 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (36.800 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 41.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 40.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 40.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 42.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 41.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 43.473).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 42.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (36.200 43.973).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (36.825 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (36.825 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (36.505 113.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (36.505 114.271).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (36.495 115.363).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (36.495 116.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P580_01P000 at (36.780 159.800).
+    WARNING: Null REGULAR-PAD specified for padstack R01P200_01P800 at (37.210 167.835).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (37.600 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (37.600 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (38.300 13.690).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (37.340 13.690).
+    WARNING: Null REGULAR-PAD specified for padstack R01P400_00P750 at (37.577 16.223).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (37.270 17.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (38.230 17.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (37.940 20.560).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (37.940 21.520).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (38.100 25.043).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (38.100 26.003).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (38.185 26.978).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (38.185 27.938).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (37.600 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 39.952).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 41.452).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 40.952).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 40.452).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 42.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 42.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 43.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.155 43.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 47.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 48.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 47.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 49.302).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 48.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 50.802).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 50.302).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (38.055 49.802).
+    WARNING: Null REGULAR-PAD specified for padstack R00P425_00P500 at (38.190 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P425_00P500 at (38.190 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (38.095 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (38.095 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R01P600_02P000 at (38.931 115.744).
+    WARNING: Null REGULAR-PAD specified for padstack SR00P415_00P550_L at (37.681 114.744).
+    WARNING: Null REGULAR-PAD specified for padstack R00P230_00P550_R at (37.506 115.244).
+    WARNING: Null REGULAR-PAD specified for padstack R00P230_00P550_R at (37.506 115.744).
+    WARNING: Null REGULAR-PAD specified for padstack R00P230_00P550_R at (37.506 116.244).
+    WARNING: Null REGULAR-PAD specified for padstack SR00P415_00P550_R at (37.681 116.744).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (37.631 117.975).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (37.910 153.836).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (37.910 154.986).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (37.900 157.145).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (37.900 158.295).
+    WARNING: Null REGULAR-PAD specified for padstack R00P580_01P000 at (37.900 159.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (39.200 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (38.400 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R01P050_01P300 at (39.715 11.350).
+    WARNING: Null REGULAR-PAD specified for padstack R01P050_01P300 at (39.715 13.650).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (39.200 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (38.400 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (39.500 15.643).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (39.500 17.343).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.055 20.281).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.055 21.241).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.600 25.043).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.600 26.003).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.550 29.293).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.550 30.253).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (38.400 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (39.200 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 39.952).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 40.452).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 40.952).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 41.452).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 42.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 42.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 43.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.105 43.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 47.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 47.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 48.152).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 49.302).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 48.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 49.802).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 50.302).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (39.005 50.802).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (39.050 55.273).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (39.050 57.273).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (38.690 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (39.190 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (39.190 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (38.690 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (39.365 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (39.365 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.003 111.417).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.003 112.377).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (38.591 117.975).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (39.610 153.836).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (39.610 154.986).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (39.600 157.145).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (39.600 158.295).
+    WARNING: Null REGULAR-PAD specified for padstack R00P580_01P000 at (39.590 159.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P550 at (38.510 163.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P550 at (39.510 163.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (40.000 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (40.000 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (40.650 15.643).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (40.650 17.343).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.350 19.053).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.350 18.093).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.350 19.893).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.350 20.853).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.000 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.630 33.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (39.670 33.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_00P550 at (40.630 34.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_00P550 at (39.670 34.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.770 49.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.770 51.023).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (39.690 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (40.190 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (40.190 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (39.690 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (40.635 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (40.635 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.485 111.943).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.485 112.903).
+    WARNING: Null REGULAR-PAD specified for padstack R00P230_00P550_R at (40.356 115.244).
+    WARNING: Null REGULAR-PAD specified for padstack SR00P415_00P550_R at (40.181 114.744).
+    WARNING: Null REGULAR-PAD specified for padstack SR00P415_00P550_L at (40.181 116.744).
+    WARNING: Null REGULAR-PAD specified for padstack R00P230_00P550_R at (40.356 116.244).
+    WARNING: Null REGULAR-PAD specified for padstack R00P230_00P550_R at (40.356 115.744).
+    WARNING: Null REGULAR-PAD specified for padstack R00P580_01P000 at (40.710 159.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.540 161.040).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P550 at (40.510 163.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (41.600 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (40.800 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R01P050_01P300 at (41.465 11.350).
+    WARNING: Null REGULAR-PAD specified for padstack R01P050_01P300 at (41.465 13.650).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (41.600 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (40.800 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (41.975 15.630).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (42.000 17.343).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.750 19.943).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.750 20.903).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.950 23.043).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.900 25.043).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.950 24.003).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.900 26.003).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.950 28.720).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.950 29.680).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (40.800 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (41.600 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (41.050 32.673).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (41.650 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (40.850 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (41.650 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (40.850 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.730 49.823).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (41.650 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (40.850 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.730 51.023).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (41.650 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (40.850 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (41.650 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (40.850 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (41.650 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (40.850 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.850 55.093).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (40.850 56.053).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (40.690 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (41.190 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P425_00P500 at (41.690 74.550).
+    WARNING: Null REGULAR-PAD specified for padstack R00P425_00P500 at (41.690 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (41.190 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P250_00P500 at (40.690 76.050).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (41.905 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (41.905 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.500 161.040).
+    WARNING: Null REGULAR-PAD specified for padstack R00P600_01P550 at (41.510 163.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (42.400 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.850 11.360).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (42.400 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (43.125 15.630).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (43.150 17.343).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (43.250 18.723).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (43.250 20.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.050 23.043).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.050 24.003).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.990 28.720).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (41.990 29.680).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (42.400 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.050 32.993).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (43.050 32.673).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.050 33.953).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (42.450 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (42.450 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.670 49.823).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (42.450 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.620 51.023).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (42.450 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (42.450 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (42.450 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (43.120 78.540).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (43.175 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (43.175 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.250 113.025).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (42.250 113.985).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (42.456 115.981).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (42.456 117.581).
+    WARNING: Null REGULAR-PAD specified for padstack R01P200_01P800 at (42.810 167.835).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (44.000 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (43.200 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (43.810 11.360).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (44.000 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (43.200 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (43.470 24.823).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.270 26.273).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (43.200 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.000 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (44.400 32.623).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.050 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (43.250 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.050 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (43.250 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (43.630 49.823).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.050 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (43.250 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (43.580 51.023).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.050 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (43.250 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.050 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (43.250 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.050 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (43.250 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.080 78.540).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (43.500 113.025).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (43.500 113.985).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (44.374 115.984).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (44.374 117.984).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (44.800 8.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_01P100 at (44.800 13.250).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.701 14.208).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.701 15.168).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (45.250 18.723).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (45.250 20.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.120 23.173).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.430 24.823).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.230 26.273).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (44.800 31.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.375 40.112).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 40.972).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 41.472).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.375 41.112).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.375 40.612).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 41.972).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 42.472).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.265 42.262).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.375 41.612).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 43.102).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 43.602).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.265 43.762).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.265 43.262).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.265 42.762).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 44.102).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (45.425 44.602).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.850 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.850 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.850 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.700 51.003).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.700 50.043).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.850 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.850 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (44.850 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (44.445 78.925).
+    WARNING: Null REGULAR-PAD specified for padstack R00P760_01P250 at (44.445 85.075).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.720 113.025).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (44.720 113.985).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 20.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 21.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 21.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.080 23.173).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 22.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 23.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 24.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 25.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 25.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 26.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 27.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 28.323).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 29.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 29.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P400 at (45.600 30.723).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (46.000 32.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.160 38.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.325 40.112).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 41.472).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 40.972).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.325 40.612).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.325 41.112).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 42.472).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 41.972).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.215 42.262).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.325 41.612).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 43.602).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 43.102).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.215 42.762).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.215 43.262).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.215 43.762).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 44.602).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (46.375 44.102).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (46.450 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (45.650 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (46.450 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (45.650 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (46.450 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (45.650 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (46.450 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (45.650 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (46.450 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (45.650 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (46.450 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (45.650 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (46.300 75.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.620 76.140).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.580 76.140).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.620 77.340).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.580 77.340).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.620 78.540).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.580 78.540).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.500 80.470).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.570 79.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.530 79.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.500 81.430).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.610 81.410).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.570 81.410).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.861 83.079).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.861 83.079).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.933 113.025).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (45.939 114.898).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (45.933 113.985).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.850 19.943).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (46.850 20.903).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.240 25.220).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.120 38.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.200 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (47.210 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.060 46.200).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (47.250 47.123).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (47.250 47.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (47.250 48.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (47.250 51.923).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (47.250 52.723).
+    WARNING: Null REGULAR-PAD specified for padstack C00P450 at (47.250 53.523).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.050 55.143).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.050 56.103).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.010 72.531).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.010 73.491).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (47.900 75.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.539 82.401).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.539 82.401).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (47.461 83.679).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (47.089 114.898).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (49.010 22.651).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.200 25.220).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.070 39.273).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.000 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.500 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.010 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.510 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (48.250 42.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (48.260 42.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.000 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.500 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.010 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (48.510 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.020 46.200).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (48.505 49.232).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (48.505 50.732).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (48.505 50.232).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (48.505 49.732).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.010 72.531).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.010 73.491).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 77.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 78.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 78.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 79.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 79.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 80.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 80.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (48.525 81.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.760 81.000).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.139 83.001).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.800 83.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (48.800 84.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.870 8.791).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.870 9.751).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.030 39.273).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.300 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (49.310 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (49.455 49.232).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (49.455 49.732).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (49.455 50.232).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P500 at (49.455 50.732).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.770 73.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.100 75.060).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (49.750 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (49.250 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.100 76.020).
+    WARNING: Null REGULAR-PAD specified for padstack R03P300_03P300 at (51.000 79.540).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.720 81.000).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (49.250 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (49.750 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.510 82.030).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.800 83.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (49.800 84.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (51.220 8.971).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (51.220 10.571).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (51.010 22.651).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (50.560 45.600).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (50.730 73.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (50.750 75.670).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (50.750 74.710).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (50.750 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (50.250 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (50.250 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (50.750 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (50.470 82.030).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (50.800 83.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (50.800 84.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_00P750 at (52.520 7.471).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_00P750 at (52.520 8.771).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (51.520 45.600).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (51.680 72.761).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_00P600 at (52.350 73.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_00P600 at (51.550 73.740).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_00P600 at (51.550 74.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P500_00P600 at (52.350 74.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (51.770 75.690).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (52.250 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (51.750 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (51.250 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (51.250 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (51.750 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (52.250 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (52.000 83.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (52.000 84.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (52.000 87.520).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (52.000 86.560).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (52.101 158.207).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (54.145 14.360).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.660 39.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.300 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (53.310 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.665 45.685).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.140 47.610).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (52.640 72.761).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (52.730 75.690).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (52.750 77.065).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 77.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 78.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 78.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 80.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 79.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 79.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 81.290).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (53.475 80.790).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P900 at (52.750 82.015).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.200 83.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.200 84.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.200 87.520).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.200 86.560).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.061 158.207).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_00P750 at (54.620 7.471).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_00P750 at (54.620 8.121).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_00P750 at (54.620 8.771).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.100 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.600 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.600 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.100 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (54.350 35.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (54.350 35.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.100 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.600 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.600 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.100 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.620 39.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (53.960 39.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.600 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.100 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.110 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.610 40.323).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (54.350 42.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (54.360 42.373).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.600 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.100 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.110 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (54.610 44.423).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.625 45.685).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.060 45.700).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.100 47.610).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.900 81.260).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.900 82.220).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.900 81.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.900 82.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.400 83.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.400 84.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.400 87.520).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.400 86.560).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (55.920 8.071).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (54.920 39.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 40.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 41.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 41.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 42.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 42.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 43.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 43.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.400 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (55.410 44.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (55.020 45.700).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (55.220 79.340).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (55.900 81.960).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (55.900 82.920).
+    WARNING: Null REGULAR-PAD specified for padstack R00P850_00P850 at (56.200 84.765).
+    WARNING: Null REGULAR-PAD specified for padstack R00P850_00P850 at (56.200 88.115).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (56.640 38.420).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (56.860 39.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (56.640 39.380).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (56.180 79.340).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P000 at (57.520 8.071).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (58.610 14.351).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (57.820 39.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (58.240 45.520).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (58.240 46.480).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (57.720 81.240).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (58.300 84.440).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (58.300 86.440).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 100.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 100.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 101.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (58.230 101.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 101.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 102.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (58.330 103.611).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 102.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 103.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 103.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 104.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 104.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 105.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (58.410 105.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (59.260 39.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (58.965 70.200).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (58.680 81.240).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (59.190 101.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (59.290 103.611).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (58.840 109.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (58.840 110.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (59.840 38.520).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (59.840 39.480).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.220 39.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (60.115 70.200).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.640 96.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.640 95.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.340 98.692).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (60.360 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (59.860 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.340 99.652).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (59.860 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (60.360 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (59.890 109.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (59.890 110.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.380 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (61.960 39.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 40.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 41.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 41.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 40.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 41.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 42.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 42.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 41.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 42.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 43.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 43.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 43.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 43.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 42.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 44.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (61.390 44.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (61.055 45.495).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.995 47.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (61.955 47.590).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (61.640 96.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (61.640 95.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (61.360 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (60.860 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (60.860 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (61.360 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.940 109.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (61.990 109.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (60.940 110.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (61.990 110.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.260 30.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.270 32.700).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.180 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.680 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.180 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.680 33.823).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (62.430 35.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (62.430 35.873).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.180 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.680 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.180 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.680 37.923).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.920 39.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.060 39.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.020 39.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.190 40.393).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.690 40.393).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.190 40.393).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.690 40.393).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (62.440 42.443).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_02P900 at (62.440 42.443).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.190 44.493).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.690 44.493).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.190 44.493).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (62.690 44.493).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.015 45.495).
+    WARNING: Null REGULAR-PAD specified for padstack R01P000_01P200 at (63.090 94.000).
+    WARNING: Null REGULAR-PAD specified for padstack R01P000_01P200 at (63.090 95.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.790 96.600).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (62.860 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (62.360 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (61.860 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.710 107.491).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (62.710 106.531).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (61.860 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (62.360 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (62.860 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.040 109.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.040 110.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.220 30.800).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.230 32.700).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 34.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 34.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 35.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 35.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 36.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 36.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 37.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.480 37.623).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 41.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 40.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 40.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 41.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 42.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 41.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 41.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 42.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 43.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 43.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 42.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 42.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 43.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 43.693).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 44.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_00P800 at (63.490 44.193).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.750 96.600).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.866 98.680).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (63.860 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (63.360 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (63.866 99.640).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (63.360 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (63.860 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (64.090 109.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (64.090 110.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (65.120 82.440).
+    WARNING: Null REGULAR-PAD specified for padstack R01P000_01P200 at (64.790 94.000).
+    WARNING: Null REGULAR-PAD specified for padstack R01P000_01P200 at (64.790 95.300).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (64.680 96.600).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (65.360 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (64.860 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (64.360 98.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (64.360 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (64.860 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (65.360 107.311).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (65.140 109.370).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (65.140 110.330).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (66.080 82.440).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (65.640 96.600).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 100.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 101.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 100.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (66.210 101.908).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 102.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 101.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 103.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 103.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 102.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 104.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 104.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 105.861).
+    WARNING: Null REGULAR-PAD specified for padstack R00P300_01P500 at (66.810 105.361).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (67.870 97.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (66.910 97.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (66.910 98.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (67.870 98.100).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (67.170 101.908).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (68.010 108.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (69.330 101.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (69.330 102.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (69.330 103.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (69.330 104.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P800_00P800 at (69.610 108.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (69.100 111.670).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (69.100 112.630).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (69.491 142.128).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (71.001 162.749).
+    WARNING: Null REGULAR-PAD specified for padstack R03P800_02P000 at (71.001 166.750).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (70.290 101.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (70.290 102.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (70.290 103.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (70.290 104.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (70.830 108.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (72.017 110.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (72.017 111.393).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (72.017 112.663).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (72.017 113.933).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (72.017 115.203).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 123.709).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 124.979).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 126.249).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 127.519).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 128.789).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 130.059).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 131.329).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 132.599).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 133.869).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (71.974 135.139).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (70.465 139.000).
+    WARNING: Null REGULAR-PAD specified for padstack R01P450_00P950 at (71.491 142.128).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (70.465 141.500).
+    WARNING: Null REGULAR-PAD specified for padstack R00P625_01P000 at (72.300 95.628).
+    WARNING: Null REGULAR-PAD specified for padstack R00P625_01P000 at (72.300 96.852).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (71.908 98.101).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (71.908 98.501).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (71.908 98.901).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (71.790 108.911).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (71.615 139.000).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (71.615 141.500).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (73.030 71.711).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (73.030 72.711).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (73.220 90.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (73.220 91.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (72.784 98.901).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (72.784 98.501).
+    WARNING: Null REGULAR-PAD specified for padstack R00P200_00P675 at (72.784 98.101).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (73.465 139.000).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (73.465 141.500).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (73.990 71.711).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (73.990 72.711).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (74.930 72.711).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (74.180 90.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (74.180 91.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (74.965 119.500).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (74.965 122.000).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 123.709).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 124.979).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 126.249).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 127.519).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 128.789).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 130.059).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 131.329).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 132.599).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 133.869).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.034 135.139).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (74.615 139.000).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (74.615 141.500).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500 at (76.000 4.000).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500 at (76.000 72.850).
+    WARNING: Null REGULAR-PAD specified for padstack R00P570_00P620 at (75.890 72.711).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (75.875 97.540).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (75.875 98.840).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (75.875 98.190).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (75.875 99.490).
+    WARNING: Null REGULAR-PAD specified for padstack R00P400_01P350 at (75.875 100.140).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.081 110.123).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.081 111.393).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.081 112.663).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.081 113.933).
+    WARNING: Null REGULAR-PAD specified for padstack R00P740_02P800 at (76.081 115.203).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (76.115 119.500).
+    WARNING: Null REGULAR-PAD specified for padstack R00P900_01P3_NO_PM at (76.115 122.000).
+    WARNING: Null REGULAR-PAD specified for padstack C00P500 at (76.070 165.840).
+    WARNING: Null REGULAR-PAD specified for padstack R01P800_01P900 at (78.550 97.690).
+    WARNING: Null REGULAR-PAD specified for padstack R01P800_01P900 at (78.550 99.990).
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.01000                                  DARK 
+  CIRCLE     0.02500                                  DARK 
+  CIRCLE     0.05000                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.12700                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.25000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.45000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.60000                                  DARK 
+  CIRCLE     0.61000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.35000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.10000                                  DARK 
+  SQUARE     0.80000                     0.000 NO     DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  SQUARE     3.30000                     0.000 NO     DARK 
+  RECTANGLE  0.20000     x 0.67500      90.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.24000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.25000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.50000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.70000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.80000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 0.90000      90.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000       0.000 NO     DARK 
+  RECTANGLE  0.30000     x 1.50000      90.000 NO     DARK 
+  RECTANGLE  0.40000     x 1.35000      90.000 NO     DARK 
+  RECTANGLE  0.42500     x 0.50000       0.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.55000      90.000 NO     DARK 
+  RECTANGLE  0.50000     x 0.60000       0.000 NO     DARK 
+  RECTANGLE  0.50000     x 1.10000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000       0.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000      90.000 NO     DARK 
+  RECTANGLE  0.57000     x 0.62000     135.000 NO     DARK 
+  RECTANGLE  0.58000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.05000      90.000 NO     DARK 
+  RECTANGLE  0.60000     x 1.55000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.62500     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.74000     x 2.80000      90.000 NO     DARK 
+  RECTANGLE  0.76000     x 1.25000       0.000 NO     DARK 
+  RECTANGLE  0.85000     x 0.85000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.00000      90.000 NO     DARK 
+  RECTANGLE  0.90000     x 1.90000       0.000 NO     DARK 
+  RECTANGLE  0.90000     x 2.90000       0.000 NO     DARK 
+  RECTANGLE  1.00000     x 1.20000      90.000 NO     DARK 
+  RECTANGLE  1.05000     x 1.30000       0.000 NO     DARK 
+  RECTANGLE  1.20000     x 1.80000       0.000 NO     DARK 
+  RECTANGLE  1.25000     x 1.22000       0.000 NO     DARK 
+  RECTANGLE  1.30000     x 1.55000      90.000 NO     DARK 
+  RECTANGLE  1.40000     x 0.75000      90.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000       0.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      45.000 NO     DARK 
+  RECTANGLE  1.45000     x 0.95000      90.000 NO     DARK 
+  RECTANGLE  1.60000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  1.80000     x 1.90000      90.000 NO     DARK 
+  RECTANGLE  2.55000     x 2.77000      90.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000       0.000 NO     DARK 
+  RECTANGLE  3.80000     x 2.00000      90.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R          0.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00   0.000 YES    DARK 
+  PAD SHAPE  CR_00P415_00P550_L          0.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00  90.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_R        180.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 180.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 180.000 NO     DARK 
+  PAD SHAPE  CR_00P415_00P550_L        180.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,200.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,115.00 270.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,50.000 270.000 YES    DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     DIMENSION_DRAWING created with warnings
+
+
+================================================================
+     PROCESSING FILM < ASSEMBLY_TOP >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/ASSEMBLY_TOP.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+    WARNING: text composed 0 width line found at (50.010 21.851)
+           ... using undefined line width of 0.100
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.01000                                  DARK 
+  CIRCLE     0.02500                                  DARK 
+  CIRCLE     0.05000                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.12700                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.25000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+
+     ASSEMBLY_TOP created with warnings
+
+
+================================================================
+     PROCESSING FILM < ASSEMBLY_BOTTOM >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/ASSEMBLY_BOTTOM.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.100
+  Suppress shape fill on neg film     NO
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+    WARNING: text having Multiple 0 width lines; all will be treated the same as the first.
+           ... using undefined line width of 0.100
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.01000                                  DARK 
+  CIRCLE     0.05000                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+
+     ASSEMBLY_BOTTOM created with warnings
+
+
+================================================================
+     PROCESSING FILM < SILKSCREEN_TOP >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/SILKSCREEN_TOP.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+    WARNING: rectangle or unfilled shape composed 0 width line found at (0.000 3.000)
+           ... ignored.
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.05100                                  DARK 
+  CIRCLE     0.09900                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.12700                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.20100                                  DARK 
+  CIRCLE     0.25000                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+
+     SILKSCREEN_TOP created with warnings
+
+
+================================================================
+     PROCESSING FILM < SILKSCREEN_BOTTOM >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/SILKSCREEN_BOTTOM.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+    WARNING: rectangle or unfilled shape having Multiple 0 width lines; all will be treated the same as the first.
+           ... ignored.
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.05000                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.15000                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.20100                                  DARK 
+  CIRCLE     0.25000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+
+     SILKSCREEN_BOTTOM created with warnings
+
+
+================================================================
+     PROCESSING FILM < 04_PWR >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/04_PWR.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.08000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.55000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.30000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     04_PWR created.
+
+
+================================================================
+     PROCESSING FILM < 05_PWR >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/05_PWR.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.35000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.55000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.30000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     05_PWR created.
+
+
+================================================================
+     PROCESSING FILM < 06_SIG_V >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/06_SIG_V.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.08000                                  DARK 
+  CIRCLE     0.10000                                  DARK 
+  CIRCLE     0.11000                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.11500                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.55000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.30000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     06_SIG_V created.
+
+
+================================================================
+     PROCESSING FILM < 07_GND >
+     TO FILE < C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing/07_GND.art > ...
+================================================================
+
+  FILM PARAMETERS :
+  ---------------------------------------------------------
+  Undefined line width                0.000
+  Mirror code                         NONE
+  Rotate angle                        NONE
+  Offset x:                           0.000
+  Offset y:                           0.000
+  Plot negative                       NO
+  Suppress unconnected internal pads  NO
+  Draw holes only                     NO
+
+
+
+  APERTURES USED:
+  ---------------------------------------------------------
+  TYPE       SIZE/NAME                   ROT   MIRROR MODE 
+  ---------------------------------------------------------
+  CIRCLE     0.10800                                  DARK 
+  CIRCLE     0.11100                                  DARK 
+  CIRCLE     0.20000                                  DARK 
+  CIRCLE     0.30000                                  DARK 
+  CIRCLE     0.35000                                  DARK 
+  CIRCLE     0.40000                                  DARK 
+  CIRCLE     0.50000                                  DARK 
+  CIRCLE     0.55000                                  DARK 
+  CIRCLE     1.25000                                  DARK 
+  CIRCLE     1.30000                                  DARK 
+  CIRCLE     1.50000                                  DARK 
+  CIRCLE     1.55000                                  DARK 
+  CIRCLE     1.65000                                  DARK 
+  CIRCLE     2.30000                                  DARK 
+  SQUARE     1.30000                     0.000 NO     DARK 
+  SQUARE     1.35000                     0.000 NO     DARK 
+  SQUARE     1.65000                     0.000 NO     DARK 
+  OBLONG     1.05000     x 1.25000      90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00  90.000 NO     DARK 
+  PAD SHAPE  ROUNDED_RECTANGLE ,500.00 270.000 NO     DARK 
+
+     07_GND created.
+
+
+------------------------------------------------------
+ SUMMARY:
+        02_GND created.
+        03_SIG created.
+        08_BOTTOM created.
+        DRILL_DRAWING created with warnings
+        OUTLINE created.
+        PASTEMASK_BOTTOM created.
+        PASTEMASK_TOP created.
+        SOLDERMASK_BOTTOM created.
+        SOLDERMASK_TOP created.
+        01_TOP created.
+        DIMENSION_DRAWING created with warnings
+        ASSEMBLY_TOP created with warnings
+        ASSEMBLY_BOTTOM created with warnings
+        SILKSCREEN_TOP created with warnings
+        SILKSCREEN_BOTTOM created with warnings
+        04_PWR created.
+        05_PWR created.
+        06_SIG_V created.
+        07_GND created.
+
+ ARTWORK had warnings

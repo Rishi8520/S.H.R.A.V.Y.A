@@ -1,0 +1,34 @@
+
+
+	(Comment
+		(Time 04/20/12,12:07:51)
+		(User cdsadmin3)
+		(MsgId ECO_332)
+		(Text "Revision for symbol sym_1 has been updated to 1.0.0")
+		(Param1 sym_1)
+		(Param2 1.0.0)
+	)
+	(Comment
+		(Time 04/20/12,12:07:51)
+		(User cdsadmin3)
+		(MsgId ECO_332)
+		(Text "Revision for symbol sym_2 has been updated to 1.0.0")
+		(Param1 sym_2)
+		(Param2 1.0.0)
+	)
+	(Comment
+		(Time 04/20/12,12:07:51)
+		(User cdsadmin3)
+		(MsgId ECO_333)
+		(Text "Revision for package DOUBLE_ROW_10_SMD has been updated to 1.0.0")
+		(Param1 DOUBLE_ROW_10_SMD)
+		(Param2 1.0.0)
+	)
+	(Comment
+		(Time 04/20/12,12:07:51)
+		(User cdsadmin3)
+		(MsgId ECO_331)
+		(Text "Revision for cell double_row_10 has been updated to 1.0.0")
+		(Param1 double_row_10)
+		(Param2 1.0.0)
+	)

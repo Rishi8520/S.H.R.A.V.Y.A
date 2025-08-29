@@ -1,0 +1,226 @@
+(Cell	single_row_2
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	1.0.3)
+
+		(ModificationStatus	NULL)
+
+		(Status	Modified)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/25/12,16:18:02)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.single_row_2)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.1)
+
+				(ModificationStatus	NULL)
+
+				(Status	Modified)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+			)
+
+			(Symbols	2
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000379064f8)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/25/12,16:18:02)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.single_row_2)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000ce996443)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/25/12,16:18:02)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.single_row_2)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001b1b0384)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000624275ed)
+
+			(Primitives	1
+
+				(Primitive	SINGLE_ROW_2_THT
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/25/12,16:18:02)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.single_row_2)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	SINGLE_ROW_2
+
+							(PackType	SINGLE_ROW_2_THT)
+
+							(PackType	SINGLE_ROW_2_SMD)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001c9c038d)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.4-2019 S024 (3998392))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001c7f03b0)
+
+)
+

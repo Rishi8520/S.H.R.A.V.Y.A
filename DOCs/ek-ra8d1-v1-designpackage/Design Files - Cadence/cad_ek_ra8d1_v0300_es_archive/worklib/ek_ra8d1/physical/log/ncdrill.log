@@ -1,0 +1,150 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    NC DRILL Log                                                     )
+(                                                                     )
+(    Drawing          : D018942_06_v03_ek_ra8d1.brd                   )
+(    Software Version : 22.1S002                                      )
+(    Date/Time        : Thu Mar 16 08:45:23 2023                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+
+ Processing NC Parameters file 'nc_param.txt' ...
+
+ NC PARAMETERS
+ -------------
+
+ FORMAT   		3.4
+ MACHINE-OFFSET		x:0.00000	y:0.00000   (mm)
+ FEEDRATE		1
+ COORDINATES		ABSOLUTE
+ OUTPUT-UNITS		METRIC
+ TOOL-ORDER		INCREASING
+ REPEAT-CODES		NO
+ SUPPRESS-LEAD-ZEROES	NO
+ SUPPRESS-TRAIL-ZEROES	NO
+ SUPPRESS-EQUAL		NO
+ TOOL-SELECT		YES
+ HEADER			none
+ LEADER			12
+ CODE			ASCII
+ SEPARATE		NO
+ SEPARATE-ROUTING	NO
+ OPTIMIZE_DRILLING	NO
+ ENHANCED_EXCELLON	YES
+ SCALE			1.000000
+
+ WARNING(SPMHMF-365): This design contains 12 slot holes that cannot be drilled.
+ WARNING(SPMHMF-366): They can be processed by NC routing instead.
+ WARNING(SPMHMF-368): Cannot find NC Drill tool file 'nc_tools.txt'
+ WARNING(SPMHMF-369): ... will auto-generate tool file 'nc_tools_auto.txt'.
+
+
+     Auto-generating tool file 'nc_tools_auto.txt' ...
+
+           Size  Plating  Tool        + Tolerance  - Tolerance
+
+          0.100  P        T01            0.025000     0.025000
+          0.200  P        T02            0.050000     0.050000
+          0.800  P        T03            0.100000     0.100000
+          0.830  P        T04            0.050000     0.050000
+          0.900  P        T05            0.100000     0.100000
+          1.000  P        T06            0.100000     0.100000
+          1.650  P        T07            0.100000     0.100000
+          1.450  N        T08            0.080000     0.080000
+          3.300  N        T09            0.100000     0.100000
+
+
+ Drill files being output to directory 'C:/_work_proj_CAD_REE/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/manufacturing' ...
+
+
+
+     'D018942_06_v03_ek_ra8d1-2-3.drl' created for holes connecting 02_GND and 03_SIG_H
+     ----------------------------------------------------------------------------------
+
+     Tool  Num     Size      +/- Tolerance     Plating   Quantity
+
+     T01    1.   0.1000    0.0250/  0.0250      PLATED        241
+
+     ---- Total holes:                                        241
+
+     ---- Total head travel:              9.10 feet (2.77 meters)
+
+
+
+
+     'D018942_06_v03_ek_ra8d1-3-6.drl' created for holes connecting 03_SIG_H and 06_SIG_V
+     ------------------------------------------------------------------------------------
+
+     Tool  Num     Size      +/- Tolerance     Plating   Quantity
+
+     T02    1.   0.2000    0.0500/  0.0500      PLATED        199
+
+     ---- Total holes:                                        199
+
+     ---- Total head travel:              26.92 feet (8.20 meters)
+
+
+
+
+     'D018942_06_v03_ek_ra8d1-6-7.drl' created for holes connecting 06_SIG_V and 07_GND
+     ----------------------------------------------------------------------------------
+
+     Tool  Num     Size      +/- Tolerance     Plating   Quantity
+
+     T01    1.   0.1000    0.0250/  0.0250      PLATED        141
+
+     ---- Total holes:                                        141
+
+     ---- Total head travel:              3.32 feet (1.01 meters)
+
+
+
+
+     'D018942_06_v03_ek_ra8d1-7-8.drl' created for holes connecting 07_GND and BOTTOM
+     --------------------------------------------------------------------------------
+
+     Tool  Num     Size      +/- Tolerance     Plating   Quantity
+
+     T01    1.   0.1000    0.0250/  0.0250      PLATED        150
+
+     ---- Total holes:                                        150
+
+     ---- Total head travel:              4.08 feet (1.24 meters)
+
+
+
+
+     'D018942_06_v03_ek_ra8d1-1-2.drl' created for holes connecting TOP and 02_GND
+     -----------------------------------------------------------------------------
+
+     Tool  Num     Size      +/- Tolerance     Plating   Quantity
+
+     T01    1.   0.1000    0.0250/  0.0250      PLATED        408
+
+     ---- Total holes:                                        408
+
+     ---- Total head travel:              13.60 feet (4.15 meters)
+
+
+
+
+     'D018942_06_v03_ek_ra8d1-1-8.drl' created for holes connecting TOP and BOTTOM
+     -----------------------------------------------------------------------------
+
+     Tool  Num     Size      +/- Tolerance     Plating   Quantity
+
+     T02    1.   0.2000    0.0500/  0.0500      PLATED        923
+     T03    2.   0.8000    0.1000/  0.1000      PLATED         40
+     T04    3.   0.8300    0.0500/  0.0500      PLATED          2
+     T05    4.   0.9000    0.1000/  0.1000      PLATED         24
+     T06    5.   1.0000    0.1000/  0.1000      PLATED        242
+     T07    6.   1.6500    0.1000/  0.1000      PLATED          2
+     T08    7.   1.4500    0.0800/  0.0800  NON_PLATED          2
+     T09    8.   3.3000    0.1000/  0.1000  NON_PLATED          6
+
+     ---- Total holes:                                       1241
+
+     ---- Total head travel:              75.14 feet (22.90 meters)
+

@@ -1,0 +1,31 @@
+
+	(Comment
+		(Time 04/20/12,12:51:33)
+		(User cdsadmin)
+		(MsgId USR)
+		(Text "Transfered to new library")
+	)
+	(Comment
+		(Time 04/20/12,12:51:38)
+		(User cdsadmin)
+		(MsgId ECO_332)
+		(Text "Revision for symbol sym_1 has been updated to 1.0.0")
+		(Param1 sym_1)
+		(Param2 1.0.0)
+	)
+	(Comment
+		(Time 04/20/12,12:51:38)
+		(User cdsadmin)
+		(MsgId ECO_333)
+		(Text "Revision for package CRYSTAL_THT has been updated to 1.0.0")
+		(Param1 CRYSTAL_THT)
+		(Param2 1.0.0)
+	)
+	(Comment
+		(Time 04/20/12,12:51:38)
+		(User cdsadmin)
+		(MsgId ECO_331)
+		(Text "Revision for cell crystal has been updated to 1.0.0")
+		(Param1 crystal)
+		(Param2 1.0.0)
+	)

@@ -1,0 +1,33 @@
+FILE_TYPE=LIBRARY_PARTS;
+primitive 'CRYSTAL_FA_XXX_SMD';
+  pin
+    'PIN4':
+      PIN_NUMBER='(4)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'PIN3':
+      PIN_NUMBER='(3)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'PIN2':
+      PIN_NUMBER='(2)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'PIN1':
+      PIN_NUMBER='(1)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+  end_pin;
+  body
+    PART_NAME='crystal_fa_xxx';
+    BODY_NAME='CRYSTAL_FA_XXX';
+    PHYS_DES_PREFIX='X';
+    CLASS='IC';
+  end_body;
+end_primitive;
+
+END.

@@ -1,0 +1,33 @@
+#ISCELL
+  ree_999_border addon_top_table *
+  *
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#ISCELL
+  ree_999_border initial_top_table *
+  *
+#CELL
+  oth_179_divers tp *
+  page8_i1
+#CELL
+  oth_179_divers tp *
+  page8_i2
+#CELL
+  pro_201_mechanical_parts rubber_foot *
+  page8_i3
+#CELL
+  pro_201_mechanical_parts rubber_foot *
+  page8_i4
+#CELL
+  pro_201_mechanical_parts rubber_foot *
+  page8_i5
+#CELL
+  pro_201_mechanical_parts rubber_foot *
+  page8_i6
+#CELL
+  pro_201_mechanical_parts rubber_foot *
+  page8_i7
+#CELL
+  pro_201_mechanical_parts rubber_foot *
+  page8_i8

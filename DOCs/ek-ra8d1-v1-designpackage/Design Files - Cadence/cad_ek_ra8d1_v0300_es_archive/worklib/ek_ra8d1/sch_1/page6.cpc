@@ -1,0 +1,264 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i100
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i102
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i103
+#ISCELL
+  oth_179_divers ground *
+  page6_i104
+#CELL
+  con_160_b_to_b single_row_4 *
+  page6_i105
+#ISCELL
+  oth_179_divers ground *
+  page6_i106
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i107
+#CELL
+  con_160_b_to_b double_row_6_pmod_if *
+  page6_i108
+#ISCELL
+  oth_179_divers ground *
+  page6_i109
+#CELL
+  pas_151_capacitor cap *
+  page6_i110
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i111
+#ISCELL
+  oth_179_divers ground *
+  page6_i112
+#CELL
+  pas_151_capacitor cap *
+  page6_i113
+#CELL
+  con_160_b_to_b single_row_4 *
+  page6_i114
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i119
+#ISCELL
+  oth_179_divers ground *
+  page6_i120
+#CELL
+  pas_151_capacitor cap *
+  page6_i121
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i122
+#CELL
+  con_160_b_to_b single_row_4 *
+  page6_i123
+#ISCELL
+  oth_179_divers ground *
+  page6_i124
+#CELL
+  con_160_b_to_b double_row_6_pmod_if *
+  page6_i125
+#ISCELL
+  oth_179_divers ground *
+  page6_i126
+#CELL
+  pas_151_capacitor cap *
+  page6_i127
+#ISCELL
+  oth_179_divers ground *
+  page6_i128
+#ISCELL
+  oth_179_divers ground *
+  page6_i133
+#ISCELL
+  standard offpage *
+  page6_i141
+#CELL
+  pas_150_resistor res *
+  page6_i144
+#CELL
+  pas_150_resistor res *
+  page6_i145
+#ISCELL
+  standard offpage *
+  page6_i147
+#ISCELL
+  standard offpage *
+  page6_i148
+#ISCELL
+  standard offpage *
+  page6_i185
+#ISCELL
+  standard offpage *
+  page6_i186
+#ISCELL
+  standard offpage *
+  page6_i187
+#ISCELL
+  standard offpage *
+  page6_i188
+#ISCELL
+  standard offpage *
+  page6_i189
+#ISCELL
+  standard offpage *
+  page6_i190
+#ISCELL
+  standard offpage *
+  page6_i191
+#ISCELL
+  standard offpage *
+  page6_i192
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i193
+#ISCELL
+  standard offpage *
+  page6_i194
+#ISCELL
+  standard offpage *
+  page6_i195
+#ISCELL
+  standard offpage *
+  page6_i196
+#ISCELL
+  standard offpage *
+  page6_i197
+#CELL
+  dig_100_logic busswitch *
+  page6_i201
+#ISCELL
+  oth_179_divers ground *
+  page6_i202
+#ISCELL
+  standard offpage *
+  page6_i203
+#ISCELL
+  oth_179_divers ground *
+  page6_i208
+#CELL
+  pas_151_capacitor cap *
+  page6_i209
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i210
+#CELL
+  oth_179_divers scraper_bridge *
+  page6_i213
+#CELL
+  oth_179_divers scraper_bridge *
+  page6_i214
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i215
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i216
+#ISCELL
+  standard offpage *
+  page6_i217
+#ISCELL
+  standard offpage *
+  page6_i218
+#ISCELL
+  standard offpage *
+  page6_i219
+#ISCELL
+  standard offpage *
+  page6_i220
+#ISCELL
+  standard offpage *
+  page6_i222
+#ISCELL
+  standard offpage *
+  page6_i223
+#ISCELL
+  standard offpage *
+  page6_i224
+#ISCELL
+  standard offpage *
+  page6_i225
+#ISCELL
+  standard offpage *
+  page6_i226
+#ISCELL
+  standard offpage *
+  page6_i227
+#ISCELL
+  standard offpage *
+  page6_i228
+#ISCELL
+  standard offpage *
+  page6_i229
+#ISCELL
+  standard offpage *
+  page6_i230
+#ISCELL
+  standard offpage *
+  page6_i231
+#CELL
+  pas_150_resistor res *
+  page6_i232
+#CELL
+  oth_179_divers scraper_bridge *
+  page6_i233
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i234
+#ISCELL
+  standard offpage *
+  page6_i235
+#CELL
+  oth_179_divers scraper_bridge *
+  page6_i236
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i237
+#CELL
+  oth_179_divers scraper_bridge *
+  page6_i238
+#CELL
+  oth_179_divers scraper_bridge *
+  page6_i239
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i240
+#CELL
+  oth_179_divers solder_bridge *
+  page6_i241
+#ISCELL
+  standard offpage *
+  page6_i242
+#ISCELL
+  standard offpage *
+  page6_i243
+#ISCELL
+  standard offpage *
+  page6_i79
+#ISCELL
+  standard offpage *
+  page6_i80
+#CELL
+  pas_151_capacitor cap *
+  page6_i81
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i86
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i95
+#ISCELL
+  oth_179_divers p5v0 *
+  page6_i96
+#ISCELL
+  oth_179_divers p3v3 *
+  page6_i97
+#CELL
+  oth_179_divers scraper_bridge *
+  page6_i99

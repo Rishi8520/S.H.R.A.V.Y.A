@@ -1,0 +1,623 @@
+				<schematicsymbol>
+					<schematicsymbolheader>
+						<name>"sym_1"</name>
+						<originalboundingbox>
+							<rectangle>
+								<pt> <x>-200</x> <y>250</y></pt>
+								<pt> <x>50</x> <y>-200</y></pt></rectangle></originalboundingbox>
+					</schematicsymbolheader>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-200</x><y>250</y></pt>
+								<pt> <x>-200</x><y>-200</y></pt></pointlist>
+                           <pattern>-1</pattern><color>0</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-200</x><y>250</y></pt>
+								<pt> <x>50</x><y>250</y></pt></pointlist>
+                           <pattern>-1</pattern><color>0</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>50</x><y>250</y></pt>
+								<pt> <x>50</x><y>-200</y></pt></pointlist>
+                           <pattern>-1</pattern><color>0</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-200</x><y>-200</y></pt>
+								<pt> <x>50</x><y>-200</y></pt></pointlist>
+                           <pattern>-1</pattern><color>0</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+				 <propertydisplay>
+                <name>$LOCATION</name>
+         		 <value>CN?</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>-207</x>
+                <y>260</y>
+                </pt></origin><rotation>0</rotation>
+   			 </transform>
+                </propertydisplay>
+				 <propertydisplay>
+                <name>$VALUE</name>
+         		 <value>?</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>-200</x>
+                <y>310</y>
+                </pt></origin><rotation>0</rotation>
+   			 </transform>
+                </propertydisplay>
+					<schematicsymbolportimplementation>
+					<filled>1</filled>
+					<size>32</size>
+					<stublength>100</stublength>
+					<transform>
+					<origin>
+					<pt> 
+					<x>-300</x>
+					<y>0</y>
+					</pt></origin><rotation>0</rotation></transform>
+						<schematicsymbolporttemplateref> <pinshape>2l_bidir</pinshape>
+						<libraryref>J:\ACLib\ree_lib\shapelib\pin_shapes\2l_bidir</libraryref><scaling>
+                       <horizontal>1</horizontal>
+                       <vertical>1</vertical>
+                       </scaling></schematicsymbolporttemplateref>
+						<bubble> <bubbleable>0</bubbleable>
+						<defaultstate>0</defaultstate><pointlist>
+                       <pt><x>0</x><y>0</y></pt>
+                       <pt><x>0</x><y>0</y></pt>
+                       </pointlist></bubble>
+						<portattributedisplay>
+					<portnamedisplay>
+					<name>ID</name>
+					<justification>R</justification>
+					<transform>
+				    <origin>
+		            <pt>
+			        <x>-350</x>
+					<y>0</y>
+			        </pt></origin><rotation>0</rotation></transform>
+					</portnamedisplay>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-300</x><y>0</y></pt>
+								<pt> <x>-200</x><y>0</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>0</y></pt>
+								<pt> <x>-225</x><y>15</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>0</y></pt>
+								<pt> <x>-225</x><y>-15</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>0</y></pt>
+								<pt> <x>-230</x><y>15</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>0</y></pt>
+								<pt> <x>-230</x><y>-15</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+				 <portpropertyloc>
+                <name>$PN</name>
+   			 <offset>
+			     <pt>
+				 <x>-370</x>
+                <y>-95</y>
+                </pt></offset>
+                </portpropertyloc>
+				 <portpropertydisplay>
+                <name>PIN_TEXT</name>
+         		 <value>ID</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>-190</x>
+                <y>0</y>
+                </pt></origin><rotation>0</rotation>
+   			 </transform>
+                </portpropertydisplay>
+						</portattributedisplay>
+					</schematicsymbolportimplementation>
+					<schematicsymbolportimplementation>
+					<filled>1</filled>
+					<size>32</size>
+					<stublength>100</stublength>
+					<transform>
+					<origin>
+					<pt> 
+					<x>-300</x>
+					<y>150</y>
+					</pt></origin><rotation>0</rotation></transform>
+						<schematicsymbolporttemplateref> <pinshape>2l_bidir</pinshape>
+						<libraryref>J:\ACLib\ree_lib\shapelib\pin_shapes\2l_bidir</libraryref><scaling>
+                       <horizontal>1</horizontal>
+                       <vertical>1</vertical>
+                       </scaling></schematicsymbolporttemplateref>
+						<bubble> <bubbleable>0</bubbleable>
+						<defaultstate>0</defaultstate><pointlist>
+                       <pt><x>0</x><y>0</y></pt>
+                       <pt><x>0</x><y>0</y></pt>
+                       </pointlist></bubble>
+						<portattributedisplay>
+					<portnamedisplay>
+					<name>VBUS</name>
+					<justification>R</justification>
+					<transform>
+				    <origin>
+		            <pt>
+			        <x>-350</x>
+					<y>150</y>
+			        </pt></origin><rotation>0</rotation></transform>
+					</portnamedisplay>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-300</x><y>150</y></pt>
+								<pt> <x>-200</x><y>150</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>150</y></pt>
+								<pt> <x>-225</x><y>165</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>150</y></pt>
+								<pt> <x>-225</x><y>135</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>150</y></pt>
+								<pt> <x>-230</x><y>165</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>150</y></pt>
+								<pt> <x>-230</x><y>135</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+				 <portpropertyloc>
+                <name>$PN</name>
+   			 <offset>
+			     <pt>
+				 <x>-370</x>
+                <y>155</y>
+                </pt></offset>
+                </portpropertyloc>
+				 <portpropertydisplay>
+                <name>PIN_TEXT</name>
+         		 <value>VBUS</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>-190</x>
+                <y>150</y>
+                </pt></origin><rotation>0</rotation>
+   			 </transform>
+                </portpropertydisplay>
+						</portattributedisplay>
+					</schematicsymbolportimplementation>
+					<schematicsymbolportimplementation>
+					<filled>1</filled>
+					<size>32</size>
+					<stublength>100</stublength>
+					<transform>
+					<origin>
+					<pt> 
+					<x>-300</x>
+					<y>100</y>
+					</pt></origin><rotation>0</rotation></transform>
+						<schematicsymbolporttemplateref> <pinshape>2l_bidir</pinshape>
+						<libraryref>J:\ACLib\ree_lib\shapelib\pin_shapes\2l_bidir</libraryref><scaling>
+                       <horizontal>1</horizontal>
+                       <vertical>1</vertical>
+                       </scaling></schematicsymbolporttemplateref>
+						<bubble> <bubbleable>0</bubbleable>
+						<defaultstate>0</defaultstate><pointlist>
+                       <pt><x>0</x><y>0</y></pt>
+                       <pt><x>0</x><y>0</y></pt>
+                       </pointlist></bubble>
+						<portattributedisplay>
+					<portnamedisplay>
+					<name>DM</name>
+					<justification>R</justification>
+					<transform>
+				    <origin>
+		            <pt>
+			        <x>-350</x>
+					<y>100</y>
+			        </pt></origin><rotation>0</rotation></transform>
+					</portnamedisplay>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-300</x><y>100</y></pt>
+								<pt> <x>-200</x><y>100</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>100</y></pt>
+								<pt> <x>-225</x><y>115</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>100</y></pt>
+								<pt> <x>-225</x><y>85</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>100</y></pt>
+								<pt> <x>-230</x><y>115</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>100</y></pt>
+								<pt> <x>-230</x><y>85</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+				 <portpropertyloc>
+                <name>$PN</name>
+   			 <offset>
+			     <pt>
+				 <x>-370</x>
+                <y>105</y>
+                </pt></offset>
+                </portpropertyloc>
+				 <portpropertydisplay>
+                <name>PIN_TEXT</name>
+         		 <value>DM</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>-190</x>
+                <y>100</y>
+                </pt></origin><rotation>0</rotation>
+   			 </transform>
+                </portpropertydisplay>
+						</portattributedisplay>
+					</schematicsymbolportimplementation>
+					<schematicsymbolportimplementation>
+					<filled>1</filled>
+					<size>32</size>
+					<stublength>100</stublength>
+					<transform>
+					<origin>
+					<pt> 
+					<x>-300</x>
+					<y>50</y>
+					</pt></origin><rotation>0</rotation></transform>
+						<schematicsymbolporttemplateref> <pinshape>2l_bidir</pinshape>
+						<libraryref>J:\ACLib\ree_lib\shapelib\pin_shapes\2l_bidir</libraryref><scaling>
+                       <horizontal>1</horizontal>
+                       <vertical>1</vertical>
+                       </scaling></schematicsymbolporttemplateref>
+						<bubble> <bubbleable>0</bubbleable>
+						<defaultstate>0</defaultstate><pointlist>
+                       <pt><x>0</x><y>0</y></pt>
+                       <pt><x>0</x><y>0</y></pt>
+                       </pointlist></bubble>
+						<portattributedisplay>
+					<portnamedisplay>
+					<name>DP</name>
+					<justification>R</justification>
+					<transform>
+				    <origin>
+		            <pt>
+			        <x>-350</x>
+					<y>50</y>
+			        </pt></origin><rotation>0</rotation></transform>
+					</portnamedisplay>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-300</x><y>50</y></pt>
+								<pt> <x>-200</x><y>50</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>50</y></pt>
+								<pt> <x>-225</x><y>65</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-210</x><y>50</y></pt>
+								<pt> <x>-225</x><y>35</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>50</y></pt>
+								<pt> <x>-230</x><y>65</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-245</x><y>50</y></pt>
+								<pt> <x>-230</x><y>35</y></pt></pointlist>
+                           <pattern>-1</pattern><color>4</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+				 <portpropertyloc>
+                <name>$PN</name>
+   			 <offset>
+			     <pt>
+				 <x>-370</x>
+                <y>55</y>
+                </pt></offset>
+                </portpropertyloc>
+				 <portpropertydisplay>
+                <name>PIN_TEXT</name>
+         		 <value>DP</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>-190</x>
+                <y>50</y>
+                </pt></origin><rotation>0</rotation>
+   			 </transform>
+                </portpropertydisplay>
+						</portattributedisplay>
+					</schematicsymbolportimplementation>
+					<schematicsymbolportimplementation>
+					<filled>1</filled>
+					<size>32</size>
+					<stublength>100</stublength>
+					<transform>
+					<origin>
+					<pt> 
+					<x>-300</x>
+					<y>-50</y>
+					</pt></origin><rotation>0</rotation></transform>
+						<schematicsymbolporttemplateref> <pinshape>Line</pinshape>
+						<libraryref>Line</libraryref><scaling>
+                       <horizontal>1</horizontal>
+                       <vertical>1</vertical>
+                       </scaling></schematicsymbolporttemplateref>
+						<bubble> <bubbleable>0</bubbleable>
+						<defaultstate>0</defaultstate><pointlist>
+                       <pt><x>0</x><y>0</y></pt>
+                       <pt><x>0</x><y>0</y></pt>
+                       </pointlist></bubble>
+						<portattributedisplay>
+					<portnamedisplay>
+					<name>GND</name>
+					<justification>R</justification>
+					<transform>
+				    <origin>
+		            <pt>
+			        <x>-350</x>
+					<y>-50</y>
+			        </pt></origin><rotation>0</rotation></transform>
+					</portnamedisplay>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>-300</x><y>-50</y></pt>
+								<pt> <x>-200</x><y>-50</y></pt></pointlist>
+                           <pattern>-1</pattern><color>0</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+				 <portpropertyloc>
+                <name>$PN</name>
+   			 <offset>
+			     <pt>
+				 <x>-300</x>
+                <y>-250</y>
+                </pt></offset>
+                </portpropertyloc>
+				 <portpropertydisplay>
+                <name>PIN_TEXT</name>
+         		 <value>GND</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>-190</x>
+                <y>-50</y>
+                </pt></origin><rotation>0</rotation>
+   			 </transform>
+                </portpropertydisplay>
+						</portattributedisplay>
+					</schematicsymbolportimplementation>
+					<schematicsymbolportimplementation>
+					<filled>1</filled>
+					<size>32</size>
+					<stublength>100</stublength>
+					<transform>
+					<origin>
+					<pt> 
+					<x>0</x>
+					<y>-300</y>
+					</pt></origin><rotation>90</rotation></transform>
+						<schematicsymbolporttemplateref> <pinshape>Line</pinshape>
+						<libraryref>Line</libraryref><scaling>
+                       <horizontal>1</horizontal>
+                       <vertical>1</vertical>
+                       </scaling></schematicsymbolporttemplateref>
+						<bubble> <bubbleable>0</bubbleable>
+						<defaultstate>0</defaultstate><pointlist>
+                       <pt><x>0</x><y>0</y></pt>
+                       <pt><x>0</x><y>0</y></pt>
+                       </pointlist></bubble>
+						<portattributedisplay>
+					<portnamedisplay>
+					<name>SHIELD_Less_Than_Character_3..0_Greater_Than_Character_</name>
+					<justification>R</justification>
+					<transform>
+				    <origin>
+		            <pt>
+			        <x>0</x>
+					<y>-350</y>
+			        </pt></origin><rotation>90</rotation></transform>
+					</portnamedisplay>
+					<figure>
+						<path>
+							<pointlist>
+								<pt> <x>0</x><y>-300</y></pt>
+								<pt> <x>0</x><y>-200</y></pt></pointlist>
+                           <pattern>-1</pattern><color>0</color><width>76</width>
+							<scalable>0</scalable>
+							<identifier>0</identifier></path></figure>
+				 <portpropertyloc>
+                <name>$PN</name>
+   			 <offset>
+			     <pt>
+				 <x>0</x>
+                <y>-300</y>
+                </pt></offset>
+                </portpropertyloc>
+				 <portpropertydisplay>
+                <name>PIN_TEXT</name>
+         		 <value>SHIELD[3..0]</value>
+   			 <justification>0</justification>
+    			 <color>32</color>
+    			 <size>32</size>
+   			 <nv>0</nv>
+   			 <vv>1</vv>
+	    		 <ip>0</ip>
+                <slant>0</slant>
+                <over>0</over>
+                <inv>0</inv>
+                <font>0</font>
+   			 <transform><origin>
+			     <pt>
+				 <x>0</x>
+                <y>-190</y>
+                </pt></origin><rotation>90</rotation>
+   			 </transform>
+                </portpropertydisplay>
+						</portattributedisplay>
+					</schematicsymbolportimplementation>
+				</schematicsymbol>

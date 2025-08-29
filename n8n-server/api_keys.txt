@@ -1,0 +1,22 @@
+mistral ai api = ySS4Ljio9pGh0eI1vabSI4fZ5Y84A0p1
+open router api key = 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
+
+eleven labs API = sk_9ee2a4f21e97540214c407073381367a9b4732ec903c4086
+eleven labs voice id = X5gGKB97vhrZhE6AgMYI
+eleven labs api key 2 = sk_ffa74986f098201caeef02af9bb54a3d198acda10e0cc3b0
+(Eleven labs free tier exceeded)
+
+hume.ai api key = EYhpKtUu9cztoYflaxFy2Ar7WRT4Dxy80swA4r4VYngNGHwc	
+huma.ai api key_2 = clT5GHfXAVTBNGIz4rC6kqGmASzuvPg19J2p0gx1XMOpgZIc	
+hume.ai api key_3 = Rycg7mhKl9Htupwwj30eG3P17417kq4VLwMA56Aj3uscVsTA
+hume.ai secret key_2 = Y1sjJ8GmnjuOg5Hjp787DTGAsZ7vrOIAgOAIJDwD83HQIEHGWS23ED75yNHBrVaa
+hume.ai secret key_3 = Ry9e6NZbgGbefBAfW7fKGG1jGH7mYYTTtO6bN05F7iN1xEQt5Ane9OOgaIa8Igrp
+hume.ai voice id = a7ecc00a-6fc0-4546-8126-e12cfd8de3bf
+
+camb.ai api key = 88270788-fe71-4c21-978c-680e263da5bc
+
+deepgram tts api = 1723e5ceee2b9d78799278e418750a7924639080
+
+Murf ai
+{"voice_id":"en-UK-hazel","style":"Conversational"}
+api key = ap2_d7eaf76c-2a6e-46da-91fc-407e482ece5e

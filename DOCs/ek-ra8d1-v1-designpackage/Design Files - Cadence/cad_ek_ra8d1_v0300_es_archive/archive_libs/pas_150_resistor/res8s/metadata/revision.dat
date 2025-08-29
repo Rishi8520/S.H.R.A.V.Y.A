@@ -1,0 +1,184 @@
+(Cell	res8s
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.8)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	02/23/15,10:26:46)
+
+			(User	cdsadmin4)
+
+			(Path	pas_150_resistor.res8s)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.5)
+
+				(ModificationStatus	NULL)
+
+				(Status	Created)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	02/23/15,10:26:46)
+
+					(User	cdsadmin4)
+
+					(Path	pas_150_resistor.res8s)
+
+				)
+
+			)
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000fc136641)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.5)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/23/15,10:26:46)
+
+							(User	cdsadmin4)
+
+							(Path	pas_150_resistor.res8s)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001ced037f)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000d735e18b)
+
+			(Primitives	1
+
+				(Primitive	RES8S_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.2)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/23/15,10:26:46)
+
+							(User	cdsadmin4)
+
+							(Path	pas_150_resistor.res8s)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	RES8S
+
+							(PackType	RES8S_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001c8603aa)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.6-S038 (v16-6-112CX))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001be703a8)
+
+)
+

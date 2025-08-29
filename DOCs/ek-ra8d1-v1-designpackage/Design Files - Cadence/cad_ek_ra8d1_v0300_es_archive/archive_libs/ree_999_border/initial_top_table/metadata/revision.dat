@@ -1,0 +1,90 @@
+(Cell	initial_top_table
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.6)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/25/12,10:14:04)
+
+			(User	cdsadmin)
+
+			(Path	ree_999_border.initial_top_table)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000788d8a18)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.4)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/25/12,10:14:04)
+
+							(User	cdsadmin)
+
+							(Path	ree_999_border.initial_top_table)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001bf1038e)
+
+		)
+
+		(Checksum	000000001c8d03ab)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001cce03d7)
+
+)
+

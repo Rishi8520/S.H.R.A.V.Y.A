@@ -1,0 +1,212 @@
+(Cell	double_row_4
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.1)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/19/12,16:02:44)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_4)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	04/19/12,16:02:37)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_4x)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	2
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000c455c4e1)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:02:44)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_4)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000792ac7f5)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:02:44)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_4)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001c7403b6)
+
+		)
+
+		(View	Chips
+
+			(Checksum	0000000062a1acce)
+
+			(Primitives	1
+
+				(Primitive	DOUBLE_ROW_4_THT
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:02:44)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_4)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	DOUBLE_ROW_4
+
+							(PackType	DOUBLE_ROW_4_THT)
+
+							(PackType	DOUBLE_ROW_4_SMD)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001c3d0382)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001c2e0379)
+
+)
+

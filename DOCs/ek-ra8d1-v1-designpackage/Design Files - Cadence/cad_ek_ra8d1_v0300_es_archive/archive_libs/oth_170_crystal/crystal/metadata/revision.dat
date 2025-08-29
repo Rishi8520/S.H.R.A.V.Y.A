@@ -1,0 +1,162 @@
+(Cell	crystal
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	1.0.3)
+
+		(ModificationStatus	NULL)
+
+		(Status	Modified)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	03/05/07,13:57:03)
+
+			(User	hagedornj)
+
+			(Path	oscillator.crystal)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	0000000089ac8e2b)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/05/07,13:57:03)
+
+							(User	hagedornj)
+
+							(Path	oscillator.crystal)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001d2903e7)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000c0ee7156)
+
+			(Primitives	1
+
+				(Primitive	CRYSTAL_THT
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/05/07,13:57:03)
+
+							(User	hagedornj)
+
+							(Path	oscillator.crystal)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	CRYSTAL
+
+							(PackType	CRYSTAL_THT)
+
+							(PackType	CRYSTAL_SMD)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001d3103b5)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001b8d0374)
+
+)
+

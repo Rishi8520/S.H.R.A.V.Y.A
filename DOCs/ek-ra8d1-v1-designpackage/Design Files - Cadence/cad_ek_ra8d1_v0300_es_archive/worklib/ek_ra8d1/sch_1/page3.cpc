@@ -1,0 +1,129 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#CELL
+  con_161_interface micro_usb_a_b *
+  page1_i1
+#ISCELL
+  oth_179_divers vccxvx *
+  page1_i13
+#ISCELL
+  oth_179_divers vccxvx *
+  page1_i15
+#CELL
+  pas_150_resistor res *
+  page1_i16
+#CELL
+  pas_150_resistor res *
+  page1_i17
+#ISCELL
+  oth_179_divers ground *
+  page1_i18
+#CELL
+  pas_151_capacitor cap *
+  page1_i19
+#ISCELL
+  oth_179_divers ground *
+  page1_i2
+#ISCELL
+  oth_179_divers ground *
+  page1_i20
+#ISCELL
+  oth_179_divers p5v0 *
+  page1_i22
+#CELL
+  pas_151_capacitor cap *
+  page1_i23
+#CELL
+  pas_151_capacitor cap *
+  page1_i24
+#ISCELL
+  oth_179_divers ground *
+  page1_i25
+#ISCELL
+  oth_179_divers ground *
+  page1_i26
+#ISCELL
+  oth_179_divers ground *
+  page1_i27
+#ISCELL
+  oth_179_divers ground *
+  page1_i28
+#CELL
+  pas_151_capacitor cap *
+  page1_i30
+#ISCELL
+  oth_179_divers ground *
+  page1_i31
+#ISCELL
+  oth_179_divers vccxvx *
+  page1_i32
+#CELL
+  pas_150_resistor res *
+  page1_i34
+#ISCELL
+  oth_179_divers ground *
+  page1_i36
+#CELL
+  pas_150_resistor res *
+  page1_i37
+#ISCELL
+  oth_179_divers p3v3 *
+  page1_i38
+#CELL
+  con_160_b_to_b single_row_3 *
+  page1_i42
+#CELL
+  pas_153_filter mur_dlp11 *
+  page1_i5
+#CELL
+  pas_150_resistor res *
+  page1_i6
+#CELL
+  pas_150_resistor res *
+  page1_i7
+#CELL
+  ana_124_v_ctrl dio_ap2151 *
+  page1_i83
+#ISCELL
+  standard offpage *
+  page1_i84
+#ISCELL
+  standard offpage *
+  page1_i85
+#ISCELL
+  standard offpage *
+  page1_i86
+#ISCELL
+  standard offpage *
+  page1_i87
+#ISCELL
+  standard offpage *
+  page1_i88
+#CELL
+  con_160_b_to_b single_row_2 *
+  page1_i89
+#CELL
+  pas_151_capacitor cappol *
+  page1_i91
+#CELL
+  dis_141_dio_rec rclamp0582n *
+  page1_i93
+#ISCELL
+  oth_179_divers ground *
+  page1_i94
+#ISCELL
+  oth_179_divers ground *
+  page1_i95
+#CELL
+  dis_141_dio_rec tvsdiode *
+  page1_i96
+#CELL
+  oth_179_divers scraper_bridge *
+  page1_i97
+#CELL
+  oth_179_divers scraper_bridge *
+  page1_i98
+#ISCELL
+  oth_179_divers vccxvx *
+  page1_i99

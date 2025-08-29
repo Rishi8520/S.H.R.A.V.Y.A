@@ -1,0 +1,236 @@
+(Cell	double_row_6_pmod_if
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	1.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	03/14/13,12:43:28)
+
+			(User	romesr)
+
+			(Path	con_160_b_to_b.double_row_6_pmod_if)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	04/19/12,16:12:03)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_6x)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	1)
+
+				(Revision	1.0.0)
+
+				(ModificationStatus	NULL)
+
+				(Status	Baselined)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	03/14/13,12:43:28)
+
+					(User	romesr)
+
+					(Path	con_160_b_to_b.double_row_6_pmod_if)
+
+				)
+
+			)
+
+			(Symbols	2
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000009c581c6d)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/14/13,12:43:28)
+
+							(User	romesr)
+
+							(Path	con_160_b_to_b.double_row_6_pmod_if)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000a0de1f6a)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/14/13,12:43:28)
+
+							(User	romesr)
+
+							(Path	con_160_b_to_b.double_row_6_pmod_if)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001c5e03b2)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000effa787c)
+
+			(Primitives	1
+
+				(Primitive	DOUBLE_ROW_6_PMOD_IF_THT
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/14/13,12:43:28)
+
+							(User	romesr)
+
+							(Path	con_160_b_to_b.double_row_6_pmod_if)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	DOUBLE_ROW_6_PMOD_IF
+
+							(PackType	DOUBLE_ROW_6_PMOD_IF_THT)
+
+							(PackType	DOUBLE_ROW_6_PMOD_IF_SMD)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001c3203b3)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.6-p001 (v16-6-112A))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001b890372)
+
+)
+

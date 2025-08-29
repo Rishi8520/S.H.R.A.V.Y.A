@@ -1,0 +1,60 @@
+
+	(Comment
+		(Time 09/14/06,10:40:31)
+		(User BWilke)
+		(MsgId ECO_021)
+		(Text "Package DIO_1 added to cell")
+		(Param1 DIO_1)
+	)
+
+
+
+
+	(Comment
+		(Time 10/02/06,13:07:52)
+		(User BWilke)
+		(MsgId ECO_022)
+		(Text "Package DIO_THT deleted from cell")
+		(Param1 DIO_THT)
+	)
+
+	(Comment
+		(Time 10/02/06,13:08:54)
+		(User BWilke)
+		(MsgId ECO_021)
+		(Text "Package DIO_1 added to cell")
+		(Param1 DIO_1)
+	)
+
+	(Comment
+		(Time 10/02/06,13:13:02)
+		(User BWilke)
+		(MsgId ECO_022)
+		(Text "Package DIO_1_3KANC deleted from cell")
+		(Param1 DIO_1_3KANC)
+	)
+	(Comment
+		(Time 10/02/06,13:13:11)
+		(User BWilke)
+		(MsgId ECO_021)
+		(Text "Package DIO_1 added to cell")
+		(Param1 DIO_1)
+	)
+
+
+
+
+
+	(Comment
+		(Time 04/18/12,15:34:22)
+		(User cdsadmin)
+		(MsgId USR)
+		(Text "Transferred to new library")
+	)
+	(Comment
+		(Time 07/02/18,17:58:14)
+		(User a5095642)
+		(MsgId ECO_081)
+		(Text "Symbol sym_5 added to cell")
+		(Param1 "sym_5")
+	)

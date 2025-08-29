@@ -1,0 +1,144 @@
+Log File: C:\Users\a5142624\AppData\Local\Temp\9\s5gs.0
+Markers File: C:\Users\a5142624\AppData\Local\Temp\9\s5gs.1
+Debug File: C:\Users\a5142624\AppData\Local\Temp\9\s5gs.3
+     Debug[0] := TRUE
+Elapsed time since start = (00:00:01)
+
+ **************************************************************
+ *  End processing project file and command line  (00:00:01)  *
+ **************************************************************
+
+INFO(SPCODD-215): Merging part rows for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-215): Merging part rows for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-215): Merging part rows for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-215): Merging part rows for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-215): Merging part rows for PPT 'SUBD15'.
+      INFO(SPCODD-215): Merging part rows for PPT 'REN_F1KM_S2_176'.
+      INFO(SPCODD-215): Merging part rows for PPT 'XXXX'.
+      INFO(SPCODD-215): Merging part rows for PPT 'XXXX'.
+      INFO(SPCODD-215): Merging part rows for PPT 'XXXX'.
+      INFO(SPCODD-215): Merging part rows for PPT 'XXXX'.
+      INFO(SPCODD-215): Merging part rows for PPT 'XXXX'.
+      INFO(SPCODD-215): Merging part rows for PPT 'XXXX'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10004318,HEADER 3WAY' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10004341,SOCKET 3WAY' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10005430,SHROUDED HEADER 3WAY' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-160-10005482,HEADER3WAYSMD' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10005699,P2500R-03' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-160-10006497,HEADER 3WAY SMD' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10006576,HEADER 3WAY' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10007057,HEADER 3WAY' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-160-10007204,HEADER 3WAY SMD' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10007230,HEADER 3WAY' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10007339,1717732' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10007341,1757255' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-160-10007547,SM03B-SRSS-TB' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10007768,WR-WTB STRAIGHT' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-160-10007992,1X3X2.54MM SMD PADS' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-160-10007400,HDR3WAY 2.00MM' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-160-10008390,2842102-3' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-160-10008391,2842102-3 JUMPER_2P00' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-161-10004399,BOX HEADER 3WAY' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-161-10005731,MKDSN1_5/3' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-161-10005803,AK(Z)350-V' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_SMD-161-10006262,MOL_43650_0311' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-161-10007019,MOL_39380-0103' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_3_THT-161-10008178,73100-0105' for PPT 'SINGLE_ROW_3'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10004317,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10004340,SOCKET 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10004881,SOCKET 2WAY 508MM' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10008415,JUMPER FOR SOCKET 2WAY 508MM' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10004883,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10004957,RECEPTACLE 2 WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_SMD-160-10004958,RECEPTACLE 2 WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10005135,HEADER 2 WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10005676,BS2P-SHF-1AA(LF)(SN)' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10006011,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_SMD-160-10006502,HEADER 2WAY SMD' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10006559,MSTBVA_1755736' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_SMD-160-10006946,HEADER 2WAY SMD' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10007115,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10007121,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10007227,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10007340,1717729' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10007344,1757242' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10007399,HDR2WAY2.00MM' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_SMD-160-10007631,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10007767,WR-WTB STRAIGHT' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10008123,UMPT-02-02.5-L-V-S-TR' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10008124,UMPS-02-07.5-L-V-S-TR' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_SMD-160-10008197,UMPS-02-07.5-L-V-S-W-TR' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_SMD-160-10008274,0533980271' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10008298,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-160-10008436,SOCKET 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10004855,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10004856,HEADER 2WAY' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10008120,WR-TBL,VERTICAL,WITH PLUG' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10004507,IEC320C8 POWER LINE' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10004533,IEC320C8 POWER LINE' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10005011,CTB1202/2' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10005157,MKDSN1_5/2' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_SMD-161-10006261,MOL_43650_0210' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10006742,OSTVN02A150' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10007090,HEADER 2WAY PLUGGABLE' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10007106,39380-0102' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_2_THT-161-10008144,WR-TBL,HORIZONTAL,WITH PLUG' for PPT 'SINGLE_ROW_2'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-160-10004323,HEADER 8WAY' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-160-10004346,SOCKET 8WAY' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-160-10005790,HPF-08-01-T-S' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_SMD-160-10006543,HEADER 8WAY SMD' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-160-10007122,FTS-108-01-L-S' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-160-10007337,691321300008' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-160-10007396,SKT8WAY2.54MM' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_SMD-160-10007699,8-WAY' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-161-10005136,MKDSP25/8' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_8_THT-161-10006658,HEADER 8WAY' for PPT 'SINGLE_ROW_8'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10004321,HEADER 6WAY' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10004344,SOCKET 6WAY' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_SMD-160-10005043,HEADER 6WAY' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10006010,FTS-106-01-L-S 6-WAY' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10006425,HEADER 6WAY' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_SMD-160-10006500,HEADER 6WAY SMD' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_SMD-160-10006542,HEADER 6WAY SMD' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10006765,HEADER 6WAY POGO REC KS-100 30 05' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_SMD-160-10006803,HEADER 6WAY SMD SHORT' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10006831,SD-53048-0610' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10006856,SD-53047-0610' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-160-10007385,SOCKET 6WAY' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_SMD-160-10007698,6-WAY' for PPT 'SINGLE_ROW_6'.
+      INFO(SPCODD-216): Created merged part 'SINGLE_ROW_6_THT-161-10006657,HEADER 6WAY' for PPT 'SINGLE_ROW_6'.
+      
+ *************************
+ *  Loading State Files  *
+ *************************
+
+Elapsed time since start = (00:00:09)
+
+ *****************************************
+ *  End loading State Files  (00:00:00)  *
+ *****************************************
+
+
+ ****************************************
+ *  Starting to assign physical parts.  *
+ ****************************************
+
+Elapsed time since start = (00:00:09)
+
+ ***********************************************
+ *  End assigning physical parts.  (00:00:00)  *
+ ***********************************************
+
+
+ ***************
+ *  Packaging  *
+ ***************
+
+Elapsed time since start = (00:00:09)
+
+ *******************************
+ *  End packaging  (00:00:00)  *
+ *******************************
+
+DDB_INFO: State file for design EK_RA8D1 successfully written.
+DDB_INFO: Pst files for design EK_RA8D1 successfully written.

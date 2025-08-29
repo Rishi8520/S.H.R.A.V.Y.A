@@ -1,0 +1,234 @@
+(Cell	sam_erx8_26pin
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.1)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	02/16/22,17:50:06)
+
+			(User	a5050275)
+
+			(Path	con_160_b_to_b.sam_erx8_26pin)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	04/20/12,11:44:09)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.sam_erx8_26pin)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.1)
+
+				(ModificationStatus	NULL)
+
+				(Status	Created)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	02/16/22,17:50:06)
+
+					(User	a5050275)
+
+					(Path	con_160_b_to_b.sam_erx8_26pin)
+
+				)
+
+			)
+
+			(Symbols	2
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000dfbc365c)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/16/22,17:50:06)
+
+							(User	a5050275)
+
+							(Path	con_160_b_to_b.sam_erx8_26pin)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000006cf84033)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/16/22,17:50:06)
+
+							(User	a5050275)
+
+							(Path	con_160_b_to_b.sam_erx8_26pin)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001cd203ba)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000dda7e219)
+
+			(Primitives	1
+
+				(Primitive	sam_erx8_26pin_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/16/22,17:50:06)
+
+							(User	a5050275)
+
+							(Path	con_160_b_to_b.sam_erx8_26pin)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	SAM_ERX8_26PIN
+
+							(PackType	sam_erx8_26pin_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001e3c03e9)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.4-2019 S026 (4007227))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001c9803ae)
+
+)
+

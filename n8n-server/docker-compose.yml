@@ -1,0 +1,14 @@
+### YML file
+services:
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    container_name: n8n-server  # Custom container name
+    ports:
+      - "5678:5678"
+    env_file:
+      - .env
+    volumes:
+      - ./n8n-data:/home/node/.n8n
+
+

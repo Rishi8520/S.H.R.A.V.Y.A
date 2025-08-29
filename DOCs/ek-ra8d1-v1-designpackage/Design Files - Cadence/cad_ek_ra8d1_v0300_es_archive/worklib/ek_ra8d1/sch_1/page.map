@@ -1,0 +1,16 @@
+8 1 Title Page
+7 2 Power & HMI
+1 3 USB FS
+10 4 Arduino Header
+2 5 mikroBus
+6 6 PMOD, Grove, qwiic
+16 7 JLOB Debugger
+15 8 RA8D1 Ports
+14 9 RA8D1 Power and Clocks
+9 10 Camera
+3 11 Pin Headers
+12 12 Ethernet
+17 13 USB HS
+13 14 OctalSPI Flash
+18 15 MIPI Display
+5 16 SDRAM

@@ -1,0 +1,9 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART 'DIO'
+:PART_NUMBER | VALUE | PACK_TYPE = PART_NUMBER | PART_TYPE | VALUE |  VOLTAGE | CURRENT | POWER | DESCRIPTION | JEDEC_TYPE | HEIGHT | DATASHEET | MANUFACTURER_PART_NUMBER | MANUFACTURER | PRICE | AVAILABILITY | UL_STATUS | EDA_STATUS | SIGNAL_MODEL | IMPLEMENTATION | COMP_TYPE | COMP_MATERIAL | THETA_JC | THETA_JB | 3D_PACKAGE | 3D_DX | 3D_DY | BQR_PARTNUM | ACTIVEPARTSID | CLASS | ALLEGRO_DESIGN_WORKBENCH;
+'FC-DIO-0001' | 'BAS16' | '3KANC' = 'FC-DIO-0001' | 'Diode' | 'BAS16' |  '' | '0.2A' | '' | 'Diode 100V0.2A SOT23 SMD' | 'sot23' | '1.2mm' | 'BAS16.pdf' | 'BAS16' | 'Fairchild' | '0.48' | 'in Stock' | 'no' | 'unverified' | '' | 'BAS16' | 'Simple' | 'Lumped component' | '' | '' | '2_3p_smd/SOT23' | '' | '' | '' | '' | 'DISCRETE' | '' 
+'FC-DIO-0003' | '1N4148' | '2KA' = 'FC-DIO-0003' | 'Diode' | '1N4148' |  '100V' | '0.2A' | '' | 'Diode 100V 0.2A DO35 THT' | 'dio_th_a_rm10_16x2_5' | '2.0mm' | '1N4148.pdf' | '1N4148' | 'Fairchild' | '0.48' | 'in Stock' | 'no' | 'unverified' | '' | 'D1N4148' | 'Simple' | 'Lumped component' | '' | '' | '' | '' | '' | '' | '' | 'DISCRETE' | '' 
+END_PART
+
+END.

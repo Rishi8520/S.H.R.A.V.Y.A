@@ -1,0 +1,134 @@
+(Cell	vccxvx
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.3)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/26/12,12:07:54)
+
+			(User	cdsadmin3)
+
+			(Path	oth_179_divers.vccxvx)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	08/18/09,10:18:41)
+
+			(User	cdsadmin)
+
+			(Path	misc.pxvx)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	2
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	0000000027263c7d)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.3)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/26/12,12:07:54)
+
+							(User	cdsadmin3)
+
+							(Path	oth_179_divers.vccxvx)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000acdf3c1f)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.3)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/26/12,12:07:54)
+
+							(User	cdsadmin3)
+
+							(Path	oth_179_divers.vccxvx)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001bde0389)
+
+		)
+
+		(Checksum	000000001d5903b1)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001bbd037a)
+
+)
+

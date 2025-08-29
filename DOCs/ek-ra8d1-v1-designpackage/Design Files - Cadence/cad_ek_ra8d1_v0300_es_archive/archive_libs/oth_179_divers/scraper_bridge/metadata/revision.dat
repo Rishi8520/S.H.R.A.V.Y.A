@@ -1,0 +1,184 @@
+(Cell	scraper_bridge
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.16)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	02/07/20,08:56:38)
+
+			(User	Cdsadmin4)
+
+			(Path	oth_179_divers.scraper_bridge)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.9)
+
+				(ModificationStatus	NULL)
+
+				(Status	Created)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	02/07/20,08:56:38)
+
+					(User	Cdsadmin4)
+
+					(Path	oth_179_divers.scraper_bridge)
+
+				)
+
+			)
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000002a4bc0c3)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.9)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/07/20,08:56:38)
+
+							(User	Cdsadmin4)
+
+							(Path	oth_179_divers.scraper_bridge)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001d3e03d3)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000709e7346)
+
+			(Primitives	1
+
+				(Primitive	SCRAPER_BRIDGE_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.2)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/07/20,08:56:38)
+
+							(User	Cdsadmin4)
+
+							(Path	oth_179_divers.scraper_bridge)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	SCRAPER_BRIDGE
+
+							(PackType	SCRAPER_BRIDGE_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001daf03bc)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.2-2016 S045 (3732898))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001dd80405)
+
+)
+

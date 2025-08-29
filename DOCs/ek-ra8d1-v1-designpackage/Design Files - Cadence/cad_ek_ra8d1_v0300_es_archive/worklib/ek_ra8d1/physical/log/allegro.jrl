@@ -1,0 +1,50 @@
+\t (00:00:08) allegro 22.1 S002 Windows SPB 64-bit Edition
+\t (00:00:08)     Journal start - Thu Jul 13 15:45:39 2023
+\t (00:00:08)         Host=REE-DU0EDA2 User=a5142629 Pid=11420 CPUs=2
+\t (00:00:08) CmdLine= allegro -proj J:\td_v1\hw\proj_CAD_REE\rsk_team\ek_ra8d1_v0300_es\hw\cad_ek_ra8d1_v0300_es\cad_ek_ra8d1_v0300_es.cpm -product Concept_HDL_studio -mpssession a5142629_ProjectMgr17238 -mpshost ree-du0eda2
+\t (00:00:08) 
+   (00:00:09) Loading axlcore.cxt 
+   (00:00:09) Loading context "c:/cadence/spb_22.1/share/pcb/etc/FloWare/skill/allegro/floware.cxt"
+   (00:00:09) FloWare version: 22.4.06 Dec 2022
+   (00:00:09) Initializing modules....
+   (00:00:09) Registering Floware menu...
+\t (00:00:21) Opening existing design...
+\i (00:00:22) QtSignal SPBFoldDockArea FoldAreaTabWidget currentChanged "D018942_06_v03_ek_ra8d1"
+\w (00:00:22) WARNING(SPMHDB-212): Design features are disabled because selected product and options do not match design capability required: Maximum Crosstalk, Maximum Peak Crosstalk. DRC set "out of date".. Either select required product and options in Product Choices or click Update to Tier in File Properties to suppress the message. See Allegro PCB Design Solutions datasheet on www.cadence.com for mapping of products and options to design features.
+\i (00:04:57) fillin confirm
+\d (00:04:57) Design opened: J:/td_v1/hw/proj_CAD_REE/rsk_team/ek_ra8d1_v0300_es/hw/cad_ek_ra8d1_v0300_es/worklib/ek_ra8d1/physical/D018942_06_v03_ek_ra8d1.brd
+\i (00:04:57) trapsize 1933
+\i (00:04:58) trapsize 2014
+\i (00:04:58) trapsize 1933
+\i (00:04:58) trapsize 2347
+\i (00:04:58) generaledit 
+\i (00:05:04) 3d 
+\i (00:05:07) QtSignal 3DUniFilterDialog UniFilterOkButton clicked
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 0 "1X10X2_54_S"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 1 "1X2X2_54"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 2 "1X6X2_54_S"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 3 "1X8X2_54_S"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 4 "2X10X2_54"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 5 "2X10X2_54_CP"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 6 "2X20X2_54"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 7 "2X6X2_54_DIGILENT_HOST"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 8 "6-UFDFN"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 9 ABM8
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 10 "ABR_ABS06"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 11 "APE_IKH_SW_DIP08_SMD"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 12 "BGA_224"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 14 "CAP_CC0402_YAG-L"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 15 "CAT16_0804"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 16 "CYP_BGA24_1"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 17 "C_EIA0402H0P8"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 18 "DIO_SOT25"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 19 "ECS-1612MV_1P6X1P2X0P6"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 20 "ECX_2236B"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 21 EIA0402
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 22 EIA0402H0P55
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 23 EIA0805
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 24 "EIA2917_3P1"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 25 "EIA_CC0603H0P8"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 26 "EIA_CC0805H1P25"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 27 "FIDUCIAL_HEYFRA"
+\i (00:05:35) QtSignal pcb3d_MapperTab packageDeviceList itemChanged 28 "FTSH-

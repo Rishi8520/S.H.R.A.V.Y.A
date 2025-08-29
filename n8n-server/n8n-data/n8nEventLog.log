@@ -1,0 +1,2 @@
+{"__type":"$$EventMessageAudit","id":"30967119-aab1-4189-a5e0-7a689945f337","ts":"2025-08-23T10:09:40.499+00:00","eventName":"n8n.audit.user.login.success","message":"n8n.audit.user.login.success","payload":{"userId":"bf5e0d56-5f77-49ad-9913-e15fba6fc933","_email":"rishiraj2003kop@gmail.com","_firstName":"Rishiraj","_lastName":"Kumar","globalRole":"global:owner","authenticationMethod":"email"}}
+{"__type":"$$EventMessageConfirm","confirm":"30967119-aab1-4189-a5e0-7a689945f337","ts":"2025-08-23T10:09:40.499+00:00","source":{"id":"0","name":"eventBus"}}

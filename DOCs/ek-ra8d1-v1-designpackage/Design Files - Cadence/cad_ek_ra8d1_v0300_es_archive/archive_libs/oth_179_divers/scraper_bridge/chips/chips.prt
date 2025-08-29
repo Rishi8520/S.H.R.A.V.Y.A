@@ -1,0 +1,23 @@
+FILE_TYPE=LIBRARY_PARTS;
+primitive 'SCRAPER_BRIDGE_SMD';
+  pin
+    'PIN1':
+      PIN_NUMBER='(1)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'PIN2':
+      PIN_NUMBER='(2)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+  end_pin;
+  body
+    PART_NAME='SCRAPER_BRIDGE';
+    BODY_NAME='SCRAPER_BRIDGE';
+    PHYS_DES_PREFIX='E';
+    CLASS='IC';
+  end_body;
+end_primitive;
+
+END.

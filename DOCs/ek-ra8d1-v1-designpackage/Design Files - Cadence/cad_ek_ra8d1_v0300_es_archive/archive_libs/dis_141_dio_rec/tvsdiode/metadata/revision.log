@@ -1,0 +1,14 @@
+	(Comment
+		(Time 08/03/12,13:47:44)
+		(User cdsadmin)
+		(MsgId ECO_212)
+		(Text "PTF file part.ptf deleted")
+		(Param1 part.ptf)
+	)
+	(Comment
+		(Time 08/03/12,13:51:26)
+		(User cdsadmin)
+		(MsgId ECO_082)
+		(Text "Symbol sym_2 deleted from cell")
+		(Param1 sym_2)
+	)

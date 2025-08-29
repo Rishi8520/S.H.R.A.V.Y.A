@@ -1,0 +1,7 @@
+\t (00:00:00) padstack_editor 22.1 S002 Windows SPB 64-bit Edition
+\t (00:00:00)     Journal start - Thu Mar 16 10:38:32 2023
+\t (00:00:00)         Host=REE-DUN04649 User=a5050275 Pid=16924 CPUs=12
+\t (00:00:00) CmdLine= padstack_editor -mpssession a5050275_ProjectMgr26480 -file C:/Users/a5050275/AppData/Local/Temp/#Taaaais26212.tmp -pname LAY_1-2-1 -data C:/Users/a5050275/AppData/Local/Temp/#Taaaaiv26212.tmp
+\t (00:00:00) 
+\d (00:00:03) QtSignal GuidedTabsParent GuidedTabs currentChanged Drill
+\t (00:00:05)     Journal end - Thu Mar 16 10:38:37 2023

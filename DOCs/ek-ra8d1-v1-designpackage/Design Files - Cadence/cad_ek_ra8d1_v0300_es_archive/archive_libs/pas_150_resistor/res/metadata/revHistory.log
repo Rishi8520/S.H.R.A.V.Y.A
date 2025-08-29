@@ -1,0 +1,1045 @@
+(Cell	res
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	1.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	03/27/12,09:52:08)
+
+			(User	cdsadmin3)
+
+			(Path	pas_150_resistor.res)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	03/27/12,09:52:08)
+
+			(User	cdsadmin3)
+
+			(Path	pas_150_resistor.res)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(Symbols	4
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001dc44d8e)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000cbb24d5f)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_3
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001f1a4daf)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_4
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001f974e45)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001a9e0355)
+
+		)
+
+		(View	Chips
+
+			(Checksum	00000000bf436a36)
+
+			(Primitives	1
+
+				(Primitive	RES_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	RES
+
+							(PackType	RES_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_3)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_4)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001da803e8)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.5-S003 (v16-5-13M))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001ccd03af)
+
+)
+
+
+(Cell	res
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	2.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	03/27/12,09:52:08)
+
+			(User	cdsadmin3)
+
+			(Path	pas_150_resistor.res)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	05/28/13,17:00:15)
+
+			(User	cdsadmin3)
+
+			(Path	pas_150_resistor.res)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	1)
+
+				(Revision	1.0.0)
+
+				(ModificationStatus	NULL)
+
+				(Status	Baselined)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+				(LastModifyInfo	
+
+					(Time	05/28/13,17:00:15)
+
+					(User	cdsadmin3)
+
+					(Path	pas_150_resistor.res)
+
+				)
+
+			)
+
+			(Symbols	4
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001dc44d8e)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_4
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001f974e45)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_3
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001f1a4daf)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000cbb24d5f)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001a9e0355)
+
+		)
+
+		(View	Chips
+
+			(Checksum	000000001f8a927b)
+
+			(Primitives	1
+
+				(Primitive	RES_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	RES
+
+							(PackType	RES_SMD)
+
+							(PackType	RES_THT)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_4)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_3)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001bce0381)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.6-S008 (v16-6-112AB))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001d4b03a8)
+
+)
+
+
+(Cell	res
+
+	(RevisionInfoBlock	
+
+		(Baselined	1)
+
+		(Revision	2.0.0)
+
+		(ModificationStatus	NULL)
+
+		(Status	Baselined)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	03/27/12,09:52:08)
+
+			(User	cdsadmin3)
+
+			(Path	pas_150_resistor.res)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	05/28/13,17:00:15)
+
+			(User	cdsadmin3)
+
+			(Path	pas_150_resistor.res)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	1)
+
+				(Revision	1.0.0)
+
+				(ModificationStatus	NULL)
+
+				(Status	Baselined)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+				(LastModifyInfo	
+
+					(Time	05/28/13,17:00:15)
+
+					(User	cdsadmin3)
+
+					(Path	pas_150_resistor.res)
+
+				)
+
+			)
+
+			(Symbols	4
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001dc44d8e)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_4
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001f974e45)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_3
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001f1a4daf)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000cbb24d5f)
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001a9e0355)
+
+		)
+
+		(View	Chips
+
+			(Checksum	000000001f8a927b)
+
+			(Primitives	1
+
+				(Primitive	RES_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	1)
+
+						(Revision	2.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	03/27/12,09:52:08)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+						(LastModifyInfo	
+
+							(Time	05/28/13,17:00:15)
+
+							(User	cdsadmin3)
+
+							(Path	pas_150_resistor.res)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	RES
+
+							(PackType	RES_SMD)
+
+							(PackType	RES_THT)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_4)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_3)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001bce0381)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	16.6-S008 (v16-6-112AB))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001d4b03a8)
+
+)
+
+

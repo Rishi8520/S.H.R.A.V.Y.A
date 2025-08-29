@@ -1,0 +1,27 @@
+T9CD0A440 000:005.575   SEGGER J-Link V8.12f Log File
+T9CD0A440 000:005.684   DLL Compiled: Feb 12 2025 12:13:51
+T9CD0A440 000:005.688   Logging started @ 2025-08-18 08:34
+T9CD0A440 000:005.692   Process: /home/rishi/.eclipse/com.renesas.platform_2134061218/DebugComp/RA/e2-server-gdb
+T9CD0A440 000:005.701 - 5.696ms 
+T9CD0A440 000:005.706 JLINK_GetDLLVersion()
+T9CD0A440 000:005.710 - 0.003ms returns 81206
+T9CD0A440 000:010.541 JLINK_OpenEx(...)
+T9CD0A440 000:014.038   Looking for J-Link GUI Server exe at: ARM/Segger_v8.12.6/JLinkGUIServerExe
+T9CD0A440 000:014.081   Looking for J-Link GUI Server exe at: /opt/SEGGER/JLink/JLinkGUIServerExe
+T9CD0A440 000:319.308   Failed to connect to J-Link GUI Server.
+T9CD0A440 000:321.688   
+  ***** Error: 
+T9CD0A440 000:321.709   Cannot connect to J-Link.
+T9CD0A440 000:321.761 - 311.221ms returns "Cannot connect to J-Link."
+T9CD0A440 000:321.834 JLINK_OpenEx(...)
+T9CD0A440 000:324.543   Looking for J-Link GUI Server exe at: ARM/Segger_v8.12.6/JLinkGUIServerExe
+T9CD0A440 000:324.562   Looking for J-Link GUI Server exe at: /opt/SEGGER/JLink/JLinkGUIServerExe
+T9CD0A440 000:625.856   Failed to connect to J-Link GUI Server.
+T9CD0A440 000:625.918   
+  ***** Error: 
+T9CD0A440 000:625.935   Cannot connect to J-Link.
+T9CD0A440 000:626.004 - 304.169ms returns "Cannot connect to J-Link."
+T9CD0A440 006:838.319 JLINK_Close()
+T9CD0A440 006:842.331 - 4.013ms
+T9CD0A440 006:842.349   
+T9CD0A440 006:842.357   Closed

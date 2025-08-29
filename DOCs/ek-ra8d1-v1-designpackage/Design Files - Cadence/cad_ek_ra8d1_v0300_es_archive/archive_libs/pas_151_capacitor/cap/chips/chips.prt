@@ -1,0 +1,23 @@
+FILE_TYPE=LIBRARY_PARTS;
+primitive 'CAP_SMD','CAP_THT';
+  pin
+    'A':
+      PIN_NUMBER='(1)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+    'B':
+      PIN_NUMBER='(2)';
+      BIDIRECTIONAL='TRUE';
+      INPUT_LOAD='(-0.01,0.01)';
+      OUTPUT_LOAD='(1.0,-1.0)';
+  end_pin;
+  body
+    PART_NAME='CAP';
+    BODY_NAME='CAP';
+    PHYS_DES_PREFIX='C';
+    CLASS='DISCRETE';
+  end_body;
+end_primitive;
+
+END.

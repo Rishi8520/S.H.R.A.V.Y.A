@@ -1,0 +1,288 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#CELL
+  oth_179_divers tp *
+  page14_i1
+#CELL
+  pas_151_capacitor cap *
+  page14_i10
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i100
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i101
+#CELL
+  pas_152_inductor ind *
+  page14_i102
+#CELL
+  pas_151_capacitor cap *
+  page14_i103
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i104
+#CELL
+  pas_151_capacitor cap *
+  page14_i105
+#CELL
+  pas_151_capacitor cap *
+  page14_i106
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i107
+#ISCELL
+  oth_179_divers ground *
+  page14_i108
+#CELL
+  pas_151_capacitor cap *
+  page14_i11
+#CELL
+  pas_151_capacitor cap *
+  page14_i12
+#CELL
+  pas_151_capacitor cap *
+  page14_i13
+#CELL
+  pas_151_capacitor cap *
+  page14_i14
+#ISCELL
+  oth_179_divers ground *
+  page14_i15
+#CELL
+  pas_151_capacitor cap *
+  page14_i16
+#ISCELL
+  standard offpage *
+  page14_i17
+#CELL
+  pas_151_capacitor cap *
+  page14_i18
+#CELL
+  oth_170_crystal crystal *
+  page14_i19
+#CELL
+  oth_179_divers tp *
+  page14_i2
+#ISCELL
+  oth_179_divers ground *
+  page14_i20
+#CELL
+  pas_151_capacitor cap *
+  page14_i21
+#ISCELL
+  oth_179_divers ground *
+  page14_i22
+#ISCELL
+  oth_179_divers ground *
+  page14_i23
+#CELL
+  oth_179_divers solder_bridge *
+  page14_i25
+#CELL
+  oth_179_divers solder_bridge *
+  page14_i26
+#CELL
+  pas_151_capacitor cap *
+  page14_i27
+#ISCELL
+  oth_179_divers ground *
+  page14_i28
+#ISCELL
+  standard offpage *
+  page14_i29
+#ISCELL
+  oth_179_divers p3v3 *
+  page14_i3
+#ISCELL
+  standard offpage *
+  page14_i30
+#ISCELL
+  standard offpage *
+  page14_i31
+#ISCELL
+  standard offpage *
+  page14_i32
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i33
+#CELL
+  pas_151_capacitor cap *
+  page14_i34
+#ISCELL
+  oth_179_divers ground *
+  page14_i35
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i36
+#ISCELL
+  oth_179_divers ground *
+  page14_i38
+#CELL
+  pas_151_capacitor cap *
+  page14_i39
+#CELL
+  pas_150_resistor res *
+  page14_i4
+#ISCELL
+  oth_179_divers ground *
+  page14_i40
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i41
+#ISCELL
+  standard offpage *
+  page14_i42
+#CELL
+  pas_151_capacitor cap *
+  page14_i43
+#CELL
+  pas_151_capacitor cap *
+  page14_i44
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i45
+#CELL
+  pas_151_capacitor cap *
+  page14_i46
+#CELL
+  pas_151_capacitor cap *
+  page14_i47
+#CELL
+  pas_151_capacitor cap *
+  page14_i48
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i49
+#CELL
+  pas_151_capacitor cap *
+  page14_i5
+#CELL
+  pas_151_capacitor cap *
+  page14_i50
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i51
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i52
+#CELL
+  pas_151_capacitor cap *
+  page14_i53
+#CELL
+  pas_151_capacitor cap *
+  page14_i54
+#ISCELL
+  oth_179_divers ground *
+  page14_i56
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i57
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i58
+#CELL
+  oth_179_divers scraper_bridge *
+  page14_i59
+#CELL
+  pas_151_capacitor cap *
+  page14_i6
+#CELL
+  pas_150_resistor res *
+  page14_i60
+#ISCELL
+  oth_179_divers p3v3 *
+  page14_i61
+#CELL
+  oth_179_divers tp *
+  page14_i62
+#CELL
+  oth_179_divers tp *
+  page14_i63
+#ISCELL
+  oth_179_divers p3v3 *
+  page14_i64
+#CELL
+  pas_151_capacitor cap *
+  page14_i65
+#ISCELL
+  standard offpage *
+  page14_i66
+#ISCELL
+  standard offpage *
+  page14_i67
+#ISCELL
+  standard offpage *
+  page14_i68
+#ISCELL
+  standard offpage *
+  page14_i69
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i7
+#ISCELL
+  standard offpage *
+  page14_i70
+#ISCELL
+  standard offpage *
+  page14_i71
+#ISCELL
+  oth_179_divers ground *
+  page14_i72
+#ISCELL
+  oth_179_divers ground *
+  page14_i73
+#CELL
+  dig_100_logic ren_r7fa8d1bh2a_rev2_10 *
+  page14_i75
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i76
+#CELL
+  pas_151_capacitor cap *
+  page14_i77
+#CELL
+  pas_151_capacitor cap *
+  page14_i78
+#CELL
+  pas_151_capacitor cap *
+  page14_i8
+#ISCELL
+  oth_179_divers ground *
+  page14_i83
+#CELL
+  pas_151_capacitor cap *
+  page14_i85
+#ISCELL
+  oth_179_divers ground *
+  page14_i86
+#ISCELL
+  oth_179_divers ground *
+  page14_i89
+#CELL
+  pas_151_capacitor cap *
+  page14_i9
+#ISCELL
+  oth_179_divers ground *
+  page14_i90
+#ISCELL
+  oth_179_divers vccxvx *
+  page14_i91
+#CELL
+  dig_100_logic ren_r7fa8d1bh2a_rev2_10 *
+  page14_i93
+#ISCELL
+  standard offpage *
+  page14_i94
+#CELL
+  pas_151_capacitor cap *
+  page14_i95
+#CELL
+  pas_151_capacitor cap *
+  page14_i96
+#CELL
+  pas_151_capacitor cap *
+  page14_i97
+#CELL
+  oth_170_crystal crystal_abm8_xx *
+  page14_i99

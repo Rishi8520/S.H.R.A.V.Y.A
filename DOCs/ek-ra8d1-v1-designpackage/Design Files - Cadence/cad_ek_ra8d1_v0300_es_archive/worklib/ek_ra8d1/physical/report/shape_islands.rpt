@@ -1,0 +1,29 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    Shape Island Report                                              )
+(                                                                     )
+(    Drawing          : D018942_06_ek_ra8d1_20220706.brd              )
+(    Software Version : 17.4S029                                      )
+(    Date/Time        : Wed Jul  6 07:56:57 2022                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+  Total islands on design: 10
+
+
+  <<<  ETCH  >>>
+
+    Layer = 02_GND
+	Point on shape: (44.008 30.445)  Net: GROUND_POWER
+	Point on shape: (42.000 28.451)  Net: GROUND_POWER
+	Point on shape: (41.367 24.435)  Net: GROUND_POWER
+	Point on shape: (38.523 24.591)  Net: GROUND_POWER
+
+    Layer = 05_PWR
+	Point on shape: (31.148 38.506)  Net: GROUND_POWER
+	Point on shape: (39.392 20.673)  Net: GROUND_POWER
+	Point on shape: (47.104 70.147)  Net: GROUND_POWER
+	Point on shape: (42.901 65.510)  Net: GROUND_POWER
+	Point on shape: (31.206 40.125)  Net: GROUND_POWER
+	Point on shape: (42.505 28.825)  Net: GROUND_POWER

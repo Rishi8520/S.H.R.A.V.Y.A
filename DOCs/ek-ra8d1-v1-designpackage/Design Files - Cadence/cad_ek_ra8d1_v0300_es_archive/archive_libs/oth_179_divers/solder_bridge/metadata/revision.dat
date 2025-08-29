@@ -1,0 +1,184 @@
+(Cell	solder_bridge
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	0.0.7)
+
+		(ModificationStatus	NULL)
+
+		(Status	Created)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	02/10/20,09:12:56)
+
+			(User	Cdsadmin4)
+
+			(Path	oth_179_divers.solder_bridge)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.6)
+
+				(ModificationStatus	NULL)
+
+				(Status	Created)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	02/10/20,09:12:56)
+
+					(User	Cdsadmin4)
+
+					(Path	oth_179_divers.solder_bridge)
+
+				)
+
+			)
+
+			(Symbols	1
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	00000000f28ebd93)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.6)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/10/20,09:12:56)
+
+							(User	Cdsadmin4)
+
+							(Path	oth_179_divers.solder_bridge)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001e0003e8)
+
+		)
+
+		(View	Chips
+
+			(Checksum	0000000003587271)
+
+			(Primitives	1
+
+				(Primitive	SOLDER_BRIDGE_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	0.0.1)
+
+						(ModificationStatus	NULL)
+
+						(Status	Created)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	02/10/20,09:12:56)
+
+							(User	Cdsadmin4)
+
+							(Path	oth_179_divers.solder_bridge)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	SOLDER_BRIDGE
+
+							(PackType	SOLDER_BRIDGE_SMD)
+
+						)
+
+					)
+
+					(Packages	1
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001a2e032c)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.2-2016 S045 (3732898))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001c4403a2)
+
+)
+

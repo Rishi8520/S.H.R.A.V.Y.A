@@ -1,0 +1,63 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#ISCELL
+  oth_179_divers p3v3 *
+  page2_i15
+#ISCELL
+  oth_179_divers ground *
+  page2_i16
+#ISCELL
+  oth_179_divers p5v0 *
+  page2_i17
+#ISCELL
+  oth_179_divers ground *
+  page2_i18
+#CELL
+  con_160_b_to_b single_row_8 *
+  page2_i49
+#CELL
+  con_160_b_to_b single_row_8 *
+  page2_i50
+#ISCELL
+  standard offpage *
+  page2_i51
+#ISCELL
+  standard offpage *
+  page2_i52
+#ISCELL
+  standard offpage *
+  page2_i53
+#ISCELL
+  standard offpage *
+  page2_i54
+#ISCELL
+  standard offpage *
+  page2_i55
+#ISCELL
+  standard offpage *
+  page2_i56
+#ISCELL
+  standard offpage *
+  page2_i57
+#ISCELL
+  standard offpage *
+  page2_i58
+#ISCELL
+  standard offpage *
+  page2_i59
+#ISCELL
+  standard offpage *
+  page2_i60
+#ISCELL
+  standard offpage *
+  page2_i61
+#ISCELL
+  standard offpage *
+  page2_i62
+#ISCELL
+  oth_179_divers p3v3 *
+  page2_i63
+#CELL
+  pas_150_resistor res *
+  page2_i64

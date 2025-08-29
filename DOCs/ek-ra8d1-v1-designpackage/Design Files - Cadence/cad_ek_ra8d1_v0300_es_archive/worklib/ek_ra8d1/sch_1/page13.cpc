@@ -1,0 +1,129 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#CELL
+  dis_141_dio_rec rclamp0582n *
+  page17_i40
+#ISCELL
+  oth_179_divers vccxvx *
+  page17_i41
+#CELL
+  con_160_b_to_b single_row_2 *
+  page17_i42
+#CELL
+  con_160_b_to_b single_row_3 *
+  page17_i43
+#ISCELL
+  oth_179_divers ground *
+  page17_i44
+#CELL
+  con_161_interface micro_usb_a_b *
+  page17_i45
+#ISCELL
+  oth_179_divers p3v3 *
+  page17_i46
+#ISCELL
+  oth_179_divers vccxvx *
+  page17_i47
+#CELL
+  pas_150_resistor res *
+  page17_i48
+#ISCELL
+  oth_179_divers vccxvx *
+  page17_i49
+#ISCELL
+  standard offpage *
+  page17_i50
+#CELL
+  pas_150_resistor res *
+  page17_i51
+#CELL
+  pas_151_capacitor cappol *
+  page17_i53
+#CELL
+  pas_151_capacitor cap *
+  page17_i54
+#ISCELL
+  oth_179_divers ground *
+  page17_i55
+#ISCELL
+  oth_179_divers ground *
+  page17_i56
+#CELL
+  pas_150_resistor res *
+  page17_i57
+#CELL
+  pas_151_capacitor cap *
+  page17_i58
+#ISCELL
+  oth_179_divers ground *
+  page17_i59
+#ISCELL
+  oth_179_divers ground *
+  page17_i60
+#CELL
+  pas_150_resistor res *
+  page17_i61
+#CELL
+  pas_150_resistor res *
+  page17_i62
+#ISCELL
+  oth_179_divers ground *
+  page17_i63
+#ISCELL
+  oth_179_divers p5v0 *
+  page17_i64
+#ISCELL
+  standard offpage *
+  page17_i65
+#CELL
+  pas_153_filter mur_dlp11 *
+  page17_i66
+#ISCELL
+  oth_179_divers ground *
+  page17_i67
+#CELL
+  ana_124_v_ctrl dio_ap2151 *
+  page17_i68
+#CELL
+  pas_151_capacitor cap *
+  page17_i69
+#CELL
+  pas_151_capacitor cap *
+  page17_i70
+#ISCELL
+  oth_179_divers ground *
+  page17_i71
+#ISCELL
+  oth_179_divers ground *
+  page17_i72
+#CELL
+  pas_150_resistor res *
+  page17_i73
+#ISCELL
+  oth_179_divers ground *
+  page17_i74
+#ISCELL
+  standard offpage *
+  page17_i76
+#ISCELL
+  standard offpage *
+  page17_i77
+#ISCELL
+  standard offpage *
+  page17_i78
+#ISCELL
+  oth_179_divers ground *
+  page17_i79
+#CELL
+  dis_141_dio_rec tvsdiode *
+  page17_i80
+#CELL
+  oth_179_divers scraper_bridge *
+  page17_i81
+#CELL
+  oth_179_divers scraper_bridge *
+  page17_i82
+#ISCELL
+  oth_179_divers vccxvx *
+  page17_i83

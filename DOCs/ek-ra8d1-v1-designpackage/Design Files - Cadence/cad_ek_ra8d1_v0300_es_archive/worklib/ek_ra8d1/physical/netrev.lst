@@ -1,0 +1,121 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    Allegro Netrev Import Logic                                      )
+(                                                                     )
+(    Drawing          : D018942_06_ek_ra8d1_20220624.brd              )
+(    Software Version : 17.4S029                                      )
+(    Date/Time        : Tue Jun 28 10:16:19 2022                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+------ Directives ------------
+
+Ripup etch:                  No
+Ripup delete first segment:  No
+Ripup retain bondwire:       No
+Ripup symbols:               Always
+Missing symbol has error:    No
+DRC update:                  Yes
+Schematic directory:         'J:\td_v1\hw\proj_CAD_REE\rsk_team\ek-ra8d1_v0110_ws\hw\cad_ek_ra8d1_v0110_ws\worklib\ek_ra8d1\packaged'
+Design Directory:            'J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/physical'
+Old design name:             'J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/physical/D018942_06_ek_ra8d1_20220624.brd'
+New design name:             'J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/physical/D018942_06_ek_ra8d1_20220628.brd'
+
+CmdLine: netrev -proj J:\td_v1\hw\proj_CAD_REE\rsk_team\ek-ra8d1_v0110_ws\hw\cad_ek_ra8d1_v0110_ws\ek_ra8d1.cpm -y 1 -z -O J:\td_v1\hw\proj_CAD_REE\rsk_team\ek-ra8d1_v0110_ws\hw\cad_ek_ra8d1_v0110_ws\worklib\ek_ra8d1\physical\D018942_06_ek_ra8d1_20220624.brd J:\td_v1\hw\proj_CAD_REE\rsk_team\ek-ra8d1_v0110_ws\hw\cad_ek_ra8d1_v0110_ws\worklib\ek_ra8d1\physical\D018942_06_ek_ra8d1_20220628.brd -w J:\td_v1\hw\proj_CAD_REE\rsk_team\ek-ra8d1_v0110_ws\hw\cad_ek_ra8d1_v0110_ws\temp\constraints_difference_report.xml -$
+
+------ Preparing to read pst files ------
+
+Starting to read J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/packaged/pstchip.dat 
+   Finished reading J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/packaged/pstchip.dat (00:00:02.42)
+Starting to read J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/packaged/pstxprt.dat 
+   Finished reading J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/packaged/pstxprt.dat (00:00:00.21)
+Starting to read J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/packaged/pstxnet.dat 
+   Finished reading J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/packaged/pstxnet.dat (00:00:00.19)
+
+------ Oversights/Warnings/Errors ------
+
+
+
+
+===========================================================
+Start Constraint Diff3 Import
+	Constraint File:    J:/td_v1/hw/proj_CAD_REE/rsk_team/ek-ra8d1_v0110_ws/hw/cad_ek_ra8d1_v0110_ws/worklib/ek_ra8d1/packaged/pstcmdb.dat
+	Allegro Baseline:   C:/Users/b3900353/AppData/Local/Temp/#Taaaaah24592.tmp
+	Start time: Tue Jun 28 10:16:23 2022
+===========================================================
+===========================================================
+Finished Constraint Update	Time: Tue Jun 28 10:16:28 2022
+===========================================================
+
+------ Library Paths ------
+MODULEPATH =  . 
+           C:/Cadence/ACLib.SVN/ree_site/pcb/modules 
+
+PSMPATH =  . 
+           ./symbols 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/psm/smd 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/psm/thr 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/bsm/logos 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/bsm/npth 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/bsm/outline 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/bsm/pth 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/bsm/layerstackup 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/fsm 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/ssm 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/osm 
+
+PADPATH =  . 
+           ./padstacks 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/pad/npth 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/pad/pth 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/pad/smd 
+           C:\Cadence\ACLib.SVN\ree_lib/pcb/pad/via 
+
+
+------ Summary Statistics ------
+
+
+netrev run on Jun 28 10:16:17 2022
+   DESIGN NAME : 'EK_RA8D1'
+   PACKAGING ON 28-Jun-2022 AT 10:15:14
+
+   COMPILE 'logic'
+   CHECK_PIN_NAMES OFF
+   CROSS_REFERENCE OFF
+   DIRECTORIES  <none>
+   FEEDBACK OFF
+   INCREMENTAL OFF
+   INTERFACE_TYPE PHYSICAL
+   LIBRARIES  'ek_ra8d1' 'standard' 'ree_999_border' 'ana_120_adc_dac'
+              'ana_121_amplify' 'ana_122_dc_dc' 'ana_123_interface'
+              'ana_124_v_ctrl' 'ana_125_v_mon' 'ana_126_codec' 'ana_127_rf_gsm'
+              'con_160_b_to_b' 'con_161_interface' 'con_162_ic_socket'
+              'con_163_board' 'dig_100_logic' 'dig_101_progr' 'dig_102_memory'
+              'dig_103_clock' 'dig_104_delay' 'dis_140_dio_led'
+              'dis_141_dio_rec' 'dis_142_dio_zen' 'dis_143_tr_fet'
+              'dis_144_tr_bjt' 'oth_170_crystal' 'oth_171_osci' 'oth_172_relay'
+              'oth_173_fuse' 'oth_174_display' 'oth_175_transf' 'oth_176_transc'
+              'oth_177_audio' 'oth_178_battery' 'oth_179_divers'
+              'pas_150_resistor' 'pas_151_capacitor' 'pas_152_inductor'
+              'pas_153_filter' 'pas_154_coupler' 'pas_155_attenuator'
+              'pro_201_mechanical_parts' 'oth_180_switch'
+   MASTER_LIBRARIES  <none>
+   MAX_ERRORS 500
+   MERGE_MINIMUM 5
+   NET_NAME_CHARS '#%&()*+-./:=>?@[]^_`|'
+   NET_NAME_LENGTH 24
+   OVERSIGHTS ON
+   REPLACE_CHECK OFF
+   SINGLE_NODE_NETS ON
+   SPLIT_MINIMUM 0
+   SUPPRESS   20
+   WARNINGS ON
+
+ No error detected
+ No oversight detected
+ No warning detected
+
+cpu time      0:51:46
+elapsed time  0:00:21
+

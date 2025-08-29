@@ -1,0 +1,90 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#ISCELL
+  oth_179_divers p3v3 *
+  page13_i39
+#CELL
+  pas_151_capacitor cap *
+  page13_i40
+#ISCELL
+  oth_179_divers ground *
+  page13_i41
+#CELL
+  pas_151_capacitor cap *
+  page13_i43
+#CELL
+  pas_151_capacitor cap *
+  page13_i44
+#ISCELL
+  oth_179_divers p3v3 *
+  page13_i50
+#ISCELL
+  standard offpage *
+  page13_i64
+#ISCELL
+  standard offpage *
+  page13_i65
+#ISCELL
+  standard offpage *
+  page13_i66
+#ISCELL
+  standard offpage *
+  page13_i67
+#ISCELL
+  standard offpage *
+  page13_i68
+#ISCELL
+  standard offpage *
+  page13_i69
+#ISCELL
+  standard offpage *
+  page13_i70
+#ISCELL
+  standard offpage *
+  page13_i71
+#ISCELL
+  standard offpage *
+  page13_i72
+#ISCELL
+  standard offpage *
+  page13_i73
+#ISCELL
+  standard offpage *
+  page13_i74
+#ISCELL
+  standard offpage *
+  page13_i75
+#CELL
+  dig_102_memory s28hl512tfpbhi010 *
+  page13_i76
+#CELL
+  pas_151_capacitor cap *
+  page13_i77
+#ISCELL
+  standard offpage *
+  page13_i78
+#CELL
+  pas_150_resistor res *
+  page13_i79
+#CELL
+  pas_150_resistor res *
+  page13_i80
+#CELL
+  pas_150_resistor res *
+  page13_i89
+#CELL
+  pas_150_resistor res4s *
+  page13_i90
+#CELL
+  pas_150_resistor res4s *
+  page13_i91
+#CELL
+  pas_150_resistor res4s *
+  page13_i92
+#CELL
+  pas_150_resistor res4s *
+  page13_i93
+#CELL
+  pas_150_resistor res4s *
+  page13_i94

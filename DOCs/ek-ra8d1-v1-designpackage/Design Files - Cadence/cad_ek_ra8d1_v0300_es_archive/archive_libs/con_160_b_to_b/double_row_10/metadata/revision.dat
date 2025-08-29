@@ -1,0 +1,236 @@
+(Cell	double_row_10
+
+	(RevisionInfoBlock	
+
+		(Baselined	0)
+
+		(Revision	1.0.10)
+
+		(ModificationStatus	NULL)
+
+		(Status	Modified)
+
+		(ErrorStatus	0)
+
+		(CreateInfo	
+
+			(Time	04/19/12,16:26:20)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_10)
+
+		)
+
+		(LastModifyInfo	
+
+			(Time	04/19/12,16:25:03)
+
+			(User	cdsadmin3)
+
+			(Path	con_160_b_to_b.double_row_10)
+
+		)
+
+	)
+
+	(Views	
+
+		(View	Symbol
+
+			(RevisionInfoBlock	
+
+				(Baselined	0)
+
+				(Revision	0.0.9)
+
+				(ModificationStatus	NULL)
+
+				(Status	Modified)
+
+				(ErrorStatus	0)
+
+				(CreateInfo	
+
+					(Time	)
+
+					(User	)
+
+					(Path	)
+
+				)
+
+			)
+
+			(Symbols	2
+
+				(Symbol	sym_2
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000001894b805)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.5)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+				)
+
+				(Symbol	sym_1
+
+					(Symbol_Type	Normal)
+
+					(Max_Size	0)
+
+					(Checksum	000000006ceeae9f)
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.6)
+
+						(ModificationStatus	NULL)
+
+						(Status	Modified)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+				)
+
+			)
+
+			(Checksum	000000001ac2035a)
+
+		)
+
+		(View	Chips
+
+			(Checksum	0000000097dbd3a8)
+
+			(Primitives	1
+
+				(Primitive	DOUBLE_ROW_10_SMD
+
+					(RevisionInfoBlock	
+
+						(Baselined	0)
+
+						(Revision	1.0.0)
+
+						(ModificationStatus	NULL)
+
+						(Status	Baselined)
+
+						(ErrorStatus	0)
+
+						(CreateInfo	
+
+							(Time	04/19/12,16:26:20)
+
+							(User	cdsadmin3)
+
+							(Path	con_160_b_to_b.double_row_10)
+
+						)
+
+					)
+
+					(LogicalPhysicalPartRelation	
+
+						(LogicalPart	DOUBLE_ROW_10
+
+							(PackType	DOUBLE_ROW_10_SMD)
+
+							(PackType	DOUBLE_ROW_10_THT)
+
+						)
+
+					)
+
+					(Packages	2
+
+						(FunctionGroups	1
+
+							(FunctionGroup	1[1]
+
+								(Linkages	
+
+									(Linkage	Symbol
+
+										(Name	sym_2)
+
+									)
+
+									(Linkage	Symbol
+
+										(Name	sym_1)
+
+									)
+
+								)
+
+							)
+
+						)
+
+					)
+
+				)
+
+			)
+
+		)
+
+		(Checksum	000000001d4f03af)
+
+	)
+
+	(VersionInfoBlock	
+
+		(ToolName	PDV)
+
+		(Version	17.4-2019 S032 (4052516))
+
+		(License	PCB_librarian_expert)
+
+	)
+
+	(Checksum	000000001ccb03da)
+
+)
+

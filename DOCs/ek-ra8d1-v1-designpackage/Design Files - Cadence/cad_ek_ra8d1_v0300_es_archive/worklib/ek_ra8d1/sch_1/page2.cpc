@@ -1,0 +1,243 @@
+#ISCELL
+  ree_999_border frame_a3 *
+  *
+#CELL
+  ana_122_dc_dc int_isl8010x *
+  page7_i1
+#CELL
+  con_160_b_to_b single_row_2 *
+  page7_i100
+#ISCELL
+  oth_179_divers ground *
+  page7_i11
+#CELL
+  pas_150_resistor res *
+  page7_i12
+#CELL
+  dis_140_dio_led led *
+  page7_i13
+#CELL
+  pas_151_capacitor cap *
+  page7_i14
+#CELL
+  pas_151_capacitor cap *
+  page7_i15
+#ISCELL
+  oth_179_divers ground *
+  page7_i16
+#ISCELL
+  oth_179_divers p3v3 *
+  page7_i17
+#CELL
+  pas_150_resistor res *
+  page7_i18
+#ISCELL
+  oth_179_divers ground *
+  page7_i19
+#CELL
+  pas_150_resistor res *
+  page7_i2
+#CELL
+  pas_150_resistor res *
+  page7_i20
+#CELL
+  pas_151_capacitor cap *
+  page7_i21
+#ISCELL
+  oth_179_divers ground *
+  page7_i23
+#ISCELL
+  oth_179_divers ground *
+  page7_i24
+#ISCELL
+  oth_179_divers ground *
+  page7_i25
+#ISCELL
+  oth_179_divers p3v3 *
+  page7_i26
+#CELL
+  oth_180_switch but_4pin *
+  page7_i27
+#ISCELL
+  oth_179_divers ground *
+  page7_i28
+#ISCELL
+  oth_179_divers ground *
+  page7_i29
+#ISCELL
+  oth_179_divers p3v3 *
+  page7_i3
+#CELL
+  pas_151_capacitor cap *
+  page7_i30
+#CELL
+  pas_150_resistor res *
+  page7_i31
+#ISCELL
+  oth_179_divers ground *
+  page7_i32
+#ISCELL
+  oth_179_divers p5v0 *
+  page7_i33
+#CELL
+  pas_151_capacitor cap *
+  page7_i34
+#CELL
+  pas_151_capacitor cap *
+  page7_i35
+#ISCELL
+  oth_179_divers ground *
+  page7_i36
+#CELL
+  pas_151_capacitor cap *
+  page7_i37
+#ISCELL
+  oth_179_divers ground *
+  page7_i38
+#ISCELL
+  oth_179_divers ground *
+  page7_i39
+#CELL
+  pas_150_resistor res *
+  page7_i4
+#ISCELL
+  oth_179_divers p3v3 *
+  page7_i40
+#CELL
+  pas_150_resistor res *
+  page7_i41
+#CELL
+  oth_180_switch but_4pin *
+  page7_i42
+#ISCELL
+  oth_179_divers ground *
+  page7_i43
+#CELL
+  dis_141_dio_rec schotdio *
+  page7_i44
+#CELL
+  dis_141_dio_rec schotdio *
+  page7_i45
+#ISCELL
+  oth_179_divers vccxvx *
+  page7_i47
+#ISCELL
+  oth_179_divers vccxvx *
+  page7_i48
+#CELL
+  oth_180_switch but_4pin *
+  page7_i5
+#CELL
+  pas_150_resistor res *
+  page7_i54
+#CELL
+  pas_150_resistor res *
+  page7_i55
+#ISCELL
+  oth_179_divers p3v3 *
+  page7_i56
+#ISCELL
+  oth_179_divers ground *
+  page7_i57
+#CELL
+  pas_150_resistor res *
+  page7_i58
+#CELL
+  dis_140_dio_led led *
+  page7_i59
+#CELL
+  pas_151_capacitor cap *
+  page7_i6
+#ISCELL
+  oth_179_divers ground *
+  page7_i60
+#CELL
+  pas_150_resistor res *
+  page7_i62
+#ISCELL
+  oth_179_divers ground *
+  page7_i63
+#ISCELL
+  oth_179_divers ground *
+  page7_i66
+#CELL
+  dis_140_dio_led led *
+  page7_i67
+#CELL
+  pas_150_resistor res *
+  page7_i68
+#CELL
+  dis_140_dio_led led *
+  page7_i69
+#ISCELL
+  oth_179_divers ground *
+  page7_i7
+#CELL
+  oth_179_divers tp *
+  page7_i70
+#CELL
+  oth_179_divers tp *
+  page7_i71
+#ISCELL
+  oth_179_divers ground *
+  page7_i72
+#CELL
+  oth_179_divers tp *
+  page7_i73
+#CELL
+  oth_179_divers tp *
+  page7_i74
+#ISCELL
+  oth_179_divers ground *
+  page7_i8
+#CELL
+  oth_179_divers scraper_bridge *
+  page7_i81
+#CELL
+  oth_179_divers scraper_bridge *
+  page7_i82
+#CELL
+  oth_179_divers scraper_bridge *
+  page7_i83
+#CELL
+  oth_179_divers scraper_bridge *
+  page7_i84
+#CELL
+  oth_179_divers scraper_bridge *
+  page7_i85
+#ISCELL
+  standard offpage *
+  page7_i86
+#ISCELL
+  standard offpage *
+  page7_i89
+#ISCELL
+  standard offpage *
+  page7_i90
+#ISCELL
+  standard offpage *
+  page7_i91
+#ISCELL
+  standard offpage *
+  page7_i92
+#ISCELL
+  standard offpage *
+  page7_i93
+#ISCELL
+  standard offpage *
+  page7_i94
+#CELL
+  oth_179_divers scraper_bridge *
+  page7_i95
+#ISCELL
+  oth_179_divers vccxvx *
+  page7_i96
+#CELL
+  con_160_b_to_b single_row_2 *
+  page7_i97
+#CELL
+  dis_141_dio_rec schotdio *
+  page7_i98
+#ISCELL
+  oth_179_divers vccxvx *
+  page7_i99

@@ -1,0 +1,177 @@
+
+
+    Cadence Design Systems, Inc.
+    Bomhdl 22.1 S002 (4088182) 2/6/2023
+    Copyright 2021 Cadence Design Systems, Inc, Cadence Design Systems, Inc.
+
+    Run on Fri Jul 14 14:07:36 2023
+
+
+*****************************
+*  Processing project file  *
+*****************************
+
+    DESIGN_LIBRARY 'ek_ra8d1'
+    DESIGN_NAME 'ek_ra8d1'
+    VIEW_SCHEMATIC 'sch_1'
+    VIEW_PACKAGER 'packaged'
+    VIEW_VARIANT 'variant'
+    VIEW_BOM ''
+    VIEW_CONFIG_PHYSICAL 'cfg_package'
+    PPT 'J:\ACLib\ree_lib/de_hdl/global_part_tables'
+    USE_LIBRARY_PPT 'on'
+    MERGE_PPT 'on'
+    INCLUDE_PPT ''
+    EXCLUDE_PPT ''
+    SPREADSHEET 'OFF'
+    LAST_OUTPUT_FILE './production_data/BOM.rpt'
+    TEMPLATE_FILE 'template.bom'
+    PACKAGED_VARIANT_SYNC_CHECK '1'
+    LAST_TEMPLATE_FILE 'J:\ACLib\ree_site/cdssetup/bom/ree_all_v1.0.bom'
+    LAST_SS_DELIMITER 'Comma ,'
+    LAST_STANDARD_OPTION '1'
+    LAST_WHAT_TO_OUTPUT '0'
+    LAST_VARIANT_FILE ''
+    USE_FILTERS '1'
+    LAST_CALLOUT_FILE ''
+    LAST_VARIANT ''
+    GEN_HIER_BOM '0'
+
+*********************************
+*  End processing project file  *
+*********************************
+
+ 
+Initializing tool communication modules... 
+
+*********************************
+*  Loading the design database  *
+*********************************
+
+Start loading the design. 
+Loading logical design view of ek_ra8d1 
+Setting design view directives...
+ 
+Loading pstX files...
+ 
+
+Loading... J:\td_v1\hw\proj_CAD_REE\rsk_team\ek_ra8d1_v0300_es\hw\cad_ek_ra8d1_v0300_es\worklib\ek_ra8d1\packaged\pstchip.dat
+ 
+
+Loading... J:\td_v1\hw\proj_CAD_REE\rsk_team\ek_ra8d1_v0300_es\hw\cad_ek_ra8d1_v0300_es\worklib\ek_ra8d1\packaged\pstxprt.dat
+ 
+
+Loading... J:\td_v1\hw\proj_CAD_REE\rsk_team\ek_ra8d1_v0300_es\hw\cad_ek_ra8d1_v0300_es\worklib\ek_ra8d1\packaged\pstxnet.dat
+ 
+packaging the design view... 
+End loading logical design view of ek_ra8d1 
+Reading cell level PPTs... 
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_120_adc_dac.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_121_amplify.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_122_dc_dc.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_123_interface.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_124_v_ctrl.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_125_v_mon.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_126_codec.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/ana_127_rf_gsm.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_160_b_to_b.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_161_interface.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_162_ic_socket.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/con_163_board.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_100_logic.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_101_progr.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_102_memory.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_103_clock.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dig_104_delay.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_140_dio_led.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_141_dio_rec.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_142_dio_zen.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_143_tr_fet.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/dis_144_tr_bjt.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_170_crystal.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_171_osci.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_172_relay.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_173_fuse.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_174_display.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_175_transf.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_176_transc.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_177_audio.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_178_battery.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_179_divers.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/oth_180_switch.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_150_resistor.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_151_capacitor.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_152_inductor.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_153_filter.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_154_coupler.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pas_155_attenuator.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_200_PACKAGING.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/pro_201_mechanical_parts.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_210_MEDIA.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_226_ELECTRONIC_ASSEMBLY.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_228_CABLE.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_230_MECHANICAL.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_232_LICENSE.ptf.
+       
+INFO(SPCODD-181): Loading J:/ACLib/ree_lib/de_hdl/global_part_tables/PRO_234_SOFTWARE.ptf.
+       
+Design loaded successfully. 
+
+
+******************************************
+*  Finished loading the design database  *
+******************************************
+
+    Start time   14:07:36
+    End time     14:09:01
+    Elapsed time  0:01:25
+
+*********************************
+*  BOM-HDL execution done.      *
+*********************************
+
