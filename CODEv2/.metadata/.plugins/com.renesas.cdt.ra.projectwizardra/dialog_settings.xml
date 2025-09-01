@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="com.renesas.cdt.ra.projectwizardra.wizard.UnifiedProjectWizardRA">
+		<item key="SELECTED_IDE" value="com.renesas.cdt.ddsc.project.idegeneric.e2.projecttype"/>
+		<section name="UnifiedProjectWizardRA.dialogBounds">
+			<item key="DIALOG_X_ORIGIN" value="618"/>
+			<item key="DIALOG_Y_ORIGIN" value="0"/>
+			<item key="DIALOG_WIDTH" value="895"/>
+			<item key="DIALOG_HEIGHT" value="847"/>
+			<item key="DIALOG_FONT_NAME" value="1|Ubuntu Sans|11.0|0|GTK|1|"/>
+		</section>
+	</section>
+</section>
