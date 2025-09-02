@@ -1,17 +1,42 @@
 #include "hal_data.h"
-#include "eeg_types.h"
-#include "shravya_config.h"
-#include "signal_processing.h"
-#include "mtk3_bsp2/include/tk/tkernel.h"
+#include "eegTYPES.h"
+#include "shravyaCONFIG.h"
+#include "signalPROCESSING.h"
+//#include "mtk3_bsp2/include/tk/tkernel.h"
 #include <math.h>     // For sinf(), cosf(), fabsf(), sqrtf()
 #include <string.h>   // For memset(), memmove()
 
 #include <stdio.h>    // For printf()
 #include <string.h>   // For memset(), strcpy()
 
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+#ifndef E_OK
+#define E_OK (0)
+#endif
+#ifndef TMO_FEVR
+#define TMO_FEVR (-1)           // Wait forever
+#endif
 
-#include <math.h>
-#include <string.h>
+/* ✅ Missing FSP Error Codes */
+#ifndef FSP_ERR_NOT_READY
+#define FSP_ERR_NOT_READY (-12) // Standard FSP error code
+#endif
+#ifndef FSP_ERR_INVALID_POINTER
+#define FSP_ERR_INVALID_POINTER (-6)
+#endif
+
+/* ✅ μT-Kernel Function Prototypes */
+extern ER tk_wai_sem(ID semid, INT timeout);
+extern ER tk_sig_sem(ID semid, INT cnt);
+extern ER tk_dly_tsk(INT dlytim);
 
 /* DSP Constants */
 #define PI                          3.14159265358979323846f

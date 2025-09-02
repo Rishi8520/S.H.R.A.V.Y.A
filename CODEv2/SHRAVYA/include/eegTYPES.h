@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "shravya_config.h"  // Add this for buffer size constants
+#include "shravyaCONFIG.h"  // Add this for buffer size constants
 
 /* EEG Signal Quality Structure */
 typedef struct {

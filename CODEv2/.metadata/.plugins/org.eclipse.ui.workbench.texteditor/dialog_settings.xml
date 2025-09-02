@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="false"/>
+		<list key="findhistory">
+			<item value="feature_vector_t"/>
+			<item value="_I2S_Configure(&amp;g_i2s0_ctrl, &amp;i2s_config);"/>
+			<item value="R_I2S_Open(&amp;g_i2s0_ctrl, &amp;g_i2s0_cfg)"/>
+		</list>
+	</section>
+</section>

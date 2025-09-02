@@ -1,0 +1,22 @@
+#ifndef HARDWARE_DRIVERS_H
+#define HARDWARE_DRIVERS_H
+
+#include "hal_data.h"
+#include "eegTYPES.h"
+
+/* EEG Acquisition Functions */
+fsp_err_t eeg_acquisition_init(void);
+fsp_err_t eeg_get_samples(eeg_raw_sample_t *samples, uint32_t count, uint32_t *samples_read);
+void eeg_get_statistics(uint32_t *total_samples, uint32_t *error_count, bool *is_running);
+
+/* Interrupt Callbacks */
+void ads1263_drdy_callback(external_irq_callback_args_t *p_args);
+
+/* External semaphore declarations */
+extern ID eeg_data_semaphore;
+extern ID preprocessing_semaphore;
+extern ID feature_extraction_semaphore;
+extern ID classification_semaphore;
+extern ID haptic_semaphore;
+
+#endif /* HARDWARE_DRIVERS_H */

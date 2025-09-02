@@ -1,36 +1,64 @@
 #include "hal_data.h"
-#include "eeg_types.h"
-#include "cognitive_states.h"
-#include "signal_processing.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "signalPROCESSING.h"
+#include "audioINTERFACE.h"
 #include "mtk3_bsp2/include/tk/tkernel.h"
 
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+// ✅ μT-Kernel typedefs and constants
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+#ifndef UINT
+typedef unsigned int UINT;
+#endif
+#ifndef TMO_FEVR
+#define TMO_FEVR (-1)
+#endif
+#ifndef E_OK
+#define E_OK (0)  // ✅ FIXED: Define E_OK
+#endif
+
+// ✅ Forward declarations for μT-Kernel functions
+extern ER tk_wai_sem(ID semid, INT timeout);
+extern ER tk_sig_sem(ID semid, INT cnt);  // ✅ FIXED: Added declaration
+extern ER tk_dly_tsk(INT dlytim);         // ✅ FIXED: Added declaration
 
 /* DSP and ML Constants */
-#define FFT_SIZE                    256     // Must match processing window
-#define FFT_SIZE_HALF              128     // FFT_SIZE / 2
-#define SAMPLE_RATE                500.0f  // Hz
-#define FREQ_RESOLUTION            (SAMPLE_RATE / FFT_SIZE)  // ~1.95Hz per bin
+#define FFT_SIZE 256
+#define FFT_SIZE_HALF 128
+#define SAMPLE_RATE 500.0f
+#define FREQ_RESOLUTION (SAMPLE_RATE / FFT_SIZE)
+#define PI 3.14159265358979323846f
 
 /* EEG Frequency Band Definitions */
-#define DELTA_START_BIN            (int)(0.5f / FREQ_RESOLUTION)   // 0.5Hz
-#define DELTA_END_BIN              (int)(4.0f / FREQ_RESOLUTION)   // 4Hz
-#define THETA_START_BIN            (int)(4.0f / FREQ_RESOLUTION)   // 4Hz
-#define THETA_END_BIN              (int)(8.0f / FREQ_RESOLUTION)   // 8Hz
-#define ALPHA_START_BIN            (int)(8.0f / FREQ_RESOLUTION)   // 8Hz
-#define ALPHA_END_BIN              (int)(13.0f / FREQ_RESOLUTION)  // 13Hz
-#define BETA_START_BIN             (int)(13.0f / FREQ_RESOLUTION)  // 13Hz
-#define BETA_END_BIN               (int)(30.0f / FREQ_RESOLUTION)  // 30Hz
-#define GAMMA_START_BIN            (int)(30.0f / FREQ_RESOLUTION)  // 30Hz
-#define GAMMA_END_BIN              (int)(45.0f / FREQ_RESOLUTION)  // 45Hz
+#define DELTA_START_BIN (int)(0.5f / FREQ_RESOLUTION)
+#define DELTA_END_BIN (int)(4.0f / FREQ_RESOLUTION)
+#define THETA_START_BIN (int)(4.0f / FREQ_RESOLUTION)
+#define THETA_END_BIN (int)(8.0f / FREQ_RESOLUTION)
+#define ALPHA_START_BIN (int)(8.0f / FREQ_RESOLUTION)
+#define ALPHA_END_BIN (int)(13.0f / FREQ_RESOLUTION)
+#define BETA_START_BIN (int)(13.0f / FREQ_RESOLUTION)
+#define BETA_END_BIN (int)(30.0f / FREQ_RESOLUTION)
+#define GAMMA_START_BIN (int)(30.0f / FREQ_RESOLUTION)
+#define GAMMA_END_BIN (int)(45.0f / FREQ_RESOLUTION)
 
 /* Neural Network Architecture */
-#define INPUT_FEATURES             24      // Total feature vector size
-#define HIDDEN_LAYER1_SIZE         16      // First hidden layer
-#define HIDDEN_LAYER2_SIZE         12      // Second hidden layer
-#define OUTPUT_LAYER_SIZE          6       // 6 cognitive states
+#define INPUT_FEATURES 24
+#define HIDDEN_LAYER1_SIZE 16
+#define HIDDEN_LAYER2_SIZE 12
+#define OUTPUT_LAYER_SIZE 6
 
 /* Feature Extraction Structures */
 typedef struct {
@@ -44,19 +72,12 @@ typedef struct {
     float power_spectrum[FFT_SIZE_HALF];
 } fft_result_t;
 
-/* Complete Feature Vector */
-
 /* Lightweight Neural Network Weights (Pre-trained) */
 typedef struct {
-    /* Input to Hidden Layer 1 */
     float w1[INPUT_FEATURES][HIDDEN_LAYER1_SIZE];
     float b1[HIDDEN_LAYER1_SIZE];
-
-    /* Hidden Layer 1 to Hidden Layer 2 */
     float w2[HIDDEN_LAYER1_SIZE][HIDDEN_LAYER2_SIZE];
     float b2[HIDDEN_LAYER2_SIZE];
-
-    /* Hidden Layer 2 to Output */
     float w3[HIDDEN_LAYER2_SIZE][OUTPUT_LAYER_SIZE];
     float b3[OUTPUT_LAYER_SIZE];
 } neural_network_t;
@@ -88,16 +109,18 @@ static void forward_propagation(const feature_vector_t *features, float *output)
 static cognitive_state_type_t determine_dominant_state(const float *probabilities);
 static bool intervention_required(const cognitive_classification_t *result);
 
+// ✅ Public function declarations (add to header later)
+void task_feature_extraction_entry(INT stacd, void *exinf);
+void task_classification_entry(INT stacd, void *exinf);
+
 /**
  * @brief Initialize cognitive classification system
  */
 fsp_err_t cognitive_classifier_init(void)
 {
-    /* Clear feature vector */
     memset(&current_features, 0, sizeof(current_features));
     memset(&classification_result, 0, sizeof(classification_result));
 
-    /* Initialize pre-trained neural network */
     init_neural_network();
 
     classifications_performed = 0;
@@ -108,21 +131,16 @@ fsp_err_t cognitive_classifier_init(void)
 
 /**
  * @brief Initialize pre-trained neural network weights
- * Note: In production, these would be loaded from flash memory
  */
 static void init_neural_network(void)
 {
-    /* Simplified pre-trained weights for demonstration */
-    /* In production, these would be derived from training on EEG datasets */
-
-    /* Input to Hidden Layer 1 - Random initialization for now */
+    /* Input to Hidden Layer 1 */
     for (int i = 0; i < INPUT_FEATURES; i++) {
         for (int j = 0; j < HIDDEN_LAYER1_SIZE; j++) {
-            cognitive_nn.w1[i][j] = ((float)rand() / RAND_MAX - 0.5f) * 0.2f;
+            cognitive_nn.w1[i][j] = ((float)rand() / (float)RAND_MAX - 0.5f) * 0.2f; // ✅ FIXED cast
         }
     }
 
-    /* Bias initialization */
     for (int i = 0; i < HIDDEN_LAYER1_SIZE; i++) {
         cognitive_nn.b1[i] = 0.0f;
     }
@@ -130,7 +148,7 @@ static void init_neural_network(void)
     /* Hidden Layer 1 to Hidden Layer 2 */
     for (int i = 0; i < HIDDEN_LAYER1_SIZE; i++) {
         for (int j = 0; j < HIDDEN_LAYER2_SIZE; j++) {
-            cognitive_nn.w2[i][j] = ((float)rand() / RAND_MAX - 0.5f) * 0.2f;
+            cognitive_nn.w2[i][j] = ((float)rand() / (float)RAND_MAX - 0.5f) * 0.2f; // ✅ FIXED cast
         }
     }
 
@@ -141,20 +159,17 @@ static void init_neural_network(void)
     /* Hidden Layer 2 to Output */
     for (int i = 0; i < HIDDEN_LAYER2_SIZE; i++) {
         for (int j = 0; j < OUTPUT_LAYER_SIZE; j++) {
-            cognitive_nn.w3[i][j] = ((float)rand() / RAND_MAX - 0.5f) * 0.2f;
+            cognitive_nn.w3[i][j] = ((float)rand() / (float)RAND_MAX - 0.5f) * 0.2f; // ✅ FIXED cast
         }
     }
 
     for (int i = 0; i < OUTPUT_LAYER_SIZE; i++) {
         cognitive_nn.b3[i] = 0.0f;
     }
-
-    /* TODO: Load actual pre-trained weights from flash memory */
-    /* load_pretrained_weights_from_flash(&cognitive_nn); */
 }
 
 /**
- * @brief Compute FFT using simple DFT (optimized for microcontroller)
+ * @brief Compute FFT using simple DFT
  */
 static void compute_fft(const float *input, complex_t *output, int size)
 {
@@ -165,19 +180,18 @@ static void compute_fft(const float *input, complex_t *output, int size)
         output[k].imag = 0.0f;
 
         for (int n = 0; n < size; n++) {
-            float angle = -pi2 * k * n / size;
+            float angle = -pi2 * (float)k * (float)n / (float)size; // ✅ FIXED casts
             output[k].real += input[n] * cosf(angle);
             output[k].imag += input[n] * sinf(angle);
         }
 
-        /* Normalize */
-        output[k].real /= size;
-        output[k].imag /= size;
+        output[k].real /= (float)size; // ✅ FIXED cast
+        output[k].imag /= (float)size; // ✅ FIXED cast
     }
 }
 
 /**
- * @brief Extract frequency domain features from EEG signals
+ * @brief Extract frequency domain features
  */
 static void extract_frequency_features(const float *left_signal, const float *right_signal, int size)
 {
@@ -185,11 +199,9 @@ static void extract_frequency_features(const float *left_signal, const float *ri
     complex_t right_fft[FFT_SIZE_HALF];
     float combined_power[FFT_SIZE_HALF];
 
-    /* Compute FFT for both channels */
     compute_fft(left_signal, left_fft, size);
     compute_fft(right_signal, right_fft, size);
 
-    /* Calculate power spectrum (average of both channels) */
     for (int i = 0; i < FFT_SIZE_HALF; i++) {
         float left_power = left_fft[i].real * left_fft[i].real + left_fft[i].imag * left_fft[i].imag;
         float right_power = right_fft[i].real * right_fft[i].real + right_fft[i].imag * right_fft[i].imag;
@@ -240,12 +252,12 @@ static void extract_frequency_features(const float *left_signal, const float *ri
             peak_bin = i;
         }
     }
-    current_features.peak_frequency = peak_bin * FREQ_RESOLUTION;
+    current_features.peak_frequency = (float)peak_bin * FREQ_RESOLUTION; // ✅ FIXED cast
 
     /* Calculate spectral centroid */
     float numerator = 0.0f, denominator = 0.0f;
     for (int i = 0; i < FFT_SIZE_HALF; i++) {
-        float frequency = i * FREQ_RESOLUTION;
+        float frequency = (float)i * FREQ_RESOLUTION; // ✅ FIXED cast
         numerator += frequency * combined_power[i];
         denominator += combined_power[i];
     }
@@ -257,7 +269,6 @@ static void extract_frequency_features(const float *left_signal, const float *ri
  */
 static void extract_time_domain_features(const float *left_signal, const float *right_signal, int size)
 {
-    /* Combine both channels for analysis */
     float combined_signal[FFT_SIZE];
     for (int i = 0; i < size; i++) {
         combined_signal[i] = (left_signal[i] + right_signal[i]) / 2.0f;
@@ -268,14 +279,14 @@ static void extract_time_domain_features(const float *left_signal, const float *
     for (int i = 0; i < size; i++) {
         sum += combined_signal[i];
     }
-    current_features.mean_amplitude = sum / size;
+    current_features.mean_amplitude = sum / (float)size; // ✅ FIXED cast
 
     /* Calculate RMS */
     float sum_squares = 0.0f;
     for (int i = 0; i < size; i++) {
         sum_squares += combined_signal[i] * combined_signal[i];
     }
-    current_features.rms_amplitude = sqrtf(sum_squares / size);
+    current_features.rms_amplitude = sqrtf(sum_squares / (float)size); // ✅ FIXED cast
 
     /* Calculate variance */
     float variance_sum = 0.0f;
@@ -283,7 +294,7 @@ static void extract_time_domain_features(const float *left_signal, const float *
         float diff = combined_signal[i] - current_features.mean_amplitude;
         variance_sum += diff * diff;
     }
-    current_features.variance = variance_sum / (size - 1);
+    current_features.variance = variance_sum / (float)(size - 1); // ✅ FIXED cast
 
     /* Calculate skewness and kurtosis */
     float std_dev = sqrtf(current_features.variance);
@@ -294,13 +305,11 @@ static void extract_time_domain_features(const float *left_signal, const float *
             float normalized = (combined_signal[i] - current_features.mean_amplitude) / std_dev;
             float normalized_cubed = normalized * normalized * normalized;
             float normalized_fourth = normalized_cubed * normalized;
-
             skew_sum += normalized_cubed;
             kurt_sum += normalized_fourth;
         }
-
-        current_features.skewness = skew_sum / size;
-        current_features.kurtosis = kurt_sum / size - 3.0f; // Excess kurtosis
+        current_features.skewness = skew_sum / (float)size; // ✅ FIXED cast
+        current_features.kurtosis = kurt_sum / (float)size - 3.0f; // ✅ FIXED cast
     } else {
         current_features.skewness = 0.0f;
         current_features.kurtosis = 0.0f;
@@ -314,7 +323,7 @@ static void extract_time_domain_features(const float *left_signal, const float *
             zero_crossings++;
         }
     }
-    current_features.zero_crossing_rate = (float)zero_crossings / (size - 1);
+    current_features.zero_crossing_rate = (float)zero_crossings / (float)(size - 1); // ✅ FIXED cast
 
     /* Calculate Hjorth parameters */
     current_features.hjorth_activity = current_features.variance;
@@ -326,7 +335,6 @@ static void extract_time_domain_features(const float *left_signal, const float *
  */
 static float calculate_hjorth_parameters(const float *signal, int size, float *mobility)
 {
-    /* Calculate first derivative */
     float derivative[FFT_SIZE-1];
     for (int i = 0; i < size-1; i++) {
         derivative[i] = signal[i+1] - signal[i];
@@ -337,16 +345,15 @@ static float calculate_hjorth_parameters(const float *signal, int size, float *m
     for (int i = 0; i < size-1; i++) {
         deriv_mean += derivative[i];
     }
-    deriv_mean /= (size-1);
+    deriv_mean /= (float)(size-1); // ✅ FIXED cast
 
     float deriv_variance = 0.0f;
     for (int i = 0; i < size-1; i++) {
         float diff = derivative[i] - deriv_mean;
         deriv_variance += diff * diff;
     }
-    deriv_variance /= (size-2);
+    deriv_variance /= (float)(size-2); // ✅ FIXED cast
 
-    /* Hjorth mobility = sqrt(variance_derivative / variance_signal) */
     *mobility = (current_features.hjorth_activity > 0) ?
         sqrtf(deriv_variance / current_features.hjorth_activity) : 0.0f;
 
@@ -360,7 +367,6 @@ static void extract_coherence_features(const float *left_signal, const float *ri
 {
     /* Calculate cross-correlation */
     float correlation_sum = 0.0f, left_sum = 0.0f, right_sum = 0.0f;
-
     for (int i = 0; i < size; i++) {
         correlation_sum += left_signal[i] * right_signal[i];
         left_sum += left_signal[i] * left_signal[i];
@@ -370,14 +376,12 @@ static void extract_coherence_features(const float *left_signal, const float *ri
     float denominator = sqrtf(left_sum * right_sum);
     current_features.cross_correlation = (denominator > 0) ? correlation_sum / denominator : 0.0f;
 
-    /* Simplified coherence calculation for alpha and beta bands */
-    /* In production, this would use cross-spectral density */
+    /* Simplified coherence calculation */
     current_features.coherence_alpha = fabsf(current_features.cross_correlation) *
         (current_features.alpha_power / (current_features.alpha_power + current_features.beta_power + 1e-6f));
     current_features.coherence_beta = fabsf(current_features.cross_correlation) *
         (current_features.beta_power / (current_features.alpha_power + current_features.beta_power + 1e-6f));
 
-    /* Phase lag index (simplified) */
     current_features.phase_lag_index = (1.0f - fabsf(current_features.cross_correlation)) / 2.0f;
 }
 
@@ -386,14 +390,15 @@ static void extract_coherence_features(const float *left_signal, const float *ri
  */
 static void extract_quality_features(const float *left_signal, const float *right_signal, int size)
 {
-    /* Estimate SNR based on signal power vs noise floor */
-    float signal_power = current_features.rms_amplitude * current_features.rms_amplitude;
-    float noise_estimate = current_features.variance * 0.1f; // Simplified noise estimation
+    (void)left_signal;   // ✅ Suppress unused parameter warnings
+    (void)right_signal;
+    (void)size;
 
+    float signal_power = current_features.rms_amplitude * current_features.rms_amplitude;
+    float noise_estimate = current_features.variance * 0.1f;
     current_features.snr_estimate = (noise_estimate > 0) ?
         10.0f * log10f(signal_power / noise_estimate) : 0.0f;
 
-    /* Signal stability based on variance */
     current_features.signal_stability = 1.0f / (1.0f + current_features.variance);
 }
 
@@ -405,14 +410,12 @@ static float calculate_spectral_entropy(const float *power_spectrum, int size)
     float total_power = 0.0f;
     float entropy = 0.0f;
 
-    /* Calculate total power */
     for (int i = 0; i < size; i++) {
         total_power += power_spectrum[i];
     }
 
     if (total_power <= 0) return 0.0f;
 
-    /* Calculate normalized spectral entropy */
     for (int i = 0; i < size; i++) {
         if (power_spectrum[i] > 0) {
             float probability = power_spectrum[i] / total_power;
@@ -420,7 +423,6 @@ static float calculate_spectral_entropy(const float *power_spectrum, int size)
         }
     }
 
-    /* Normalize by maximum possible entropy */
     float max_entropy = log2f((float)size);
     return (max_entropy > 0) ? entropy / max_entropy : 0.0f;
 }
@@ -443,7 +445,6 @@ static float relu_activation(float x)
  */
 static void forward_propagation(const feature_vector_t *features, float *output)
 {
-    /* Convert feature structure to input array */
     float input[INPUT_FEATURES] = {
         features->delta_power, features->theta_power, features->alpha_power,
         features->beta_power, features->gamma_power, features->alpha_beta_ratio,
@@ -485,14 +486,13 @@ static void forward_propagation(const feature_vector_t *features, float *output)
         raw_output[i] = sum;
     }
 
-    /* Apply softmax activation for probabilities */
+    /* Apply softmax activation */
     float exp_sum = 0.0f;
     for (int i = 0; i < OUTPUT_LAYER_SIZE; i++) {
         output[i] = expf(raw_output[i]);
         exp_sum += output[i];
     }
 
-    /* Normalize to probabilities */
     if (exp_sum > 0) {
         for (int i = 0; i < OUTPUT_LAYER_SIZE; i++) {
             output[i] /= exp_sum;
@@ -523,13 +523,10 @@ static cognitive_state_type_t determine_dominant_state(const float *probabilitie
  */
 static bool intervention_required(const cognitive_classification_t *result)
 {
-    /* Intervention needed for stress, anxiety, or severe fatigue */
     if (result->dominant_state == COGNITIVE_STATE_STRESS &&
         result->confidence_scores[COGNITIVE_STATE_STRESS] > 0.7f) return true;
-
     if (result->dominant_state == COGNITIVE_STATE_ANXIETY &&
         result->confidence_scores[COGNITIVE_STATE_ANXIETY] > 0.75f) return true;
-
     if (result->dominant_state == COGNITIVE_STATE_FATIGUE &&
         result->confidence_scores[COGNITIVE_STATE_FATIGUE] > 0.8f) return true;
 
@@ -538,7 +535,6 @@ static bool intervention_required(const cognitive_classification_t *result)
 
 /**
  * @brief μT-Kernel Task: Feature Extraction (5Hz)
- * Priority: 20
  */
 void task_feature_extraction_entry(INT stacd, void *exinf)
 {
@@ -551,28 +547,24 @@ void task_feature_extraction_entry(INT stacd, void *exinf)
 
     while(1)
     {
-        /* Wait for processed signal data */
         ercd = tk_wai_sem(feature_extraction_semaphore, TMO_FEVR);
-        if (ercd != E_OK) continue;
+        if (ercd != E_OK) continue; // ✅ FIXED: E_OK now defined
 
-        /* Get filtered signal buffers */
         if (signal_processing_get_buffer(&left_buffer, &right_buffer, &buffer_size) == FSP_SUCCESS)
         {
-            /* Extract all feature categories */
-            extract_frequency_features(left_buffer, right_buffer, buffer_size);
-            extract_time_domain_features(left_buffer, right_buffer, buffer_size);
-            extract_coherence_features(left_buffer, right_buffer, buffer_size);
-            extract_quality_features(left_buffer, right_buffer, buffer_size);
+            /* ✅ FIXED: Cast uint32_t to int to avoid warnings */
+            extract_frequency_features(left_buffer, right_buffer, (int)buffer_size);
+            extract_time_domain_features(left_buffer, right_buffer, (int)buffer_size);
+            extract_coherence_features(left_buffer, right_buffer, (int)buffer_size);
+            extract_quality_features(left_buffer, right_buffer, (int)buffer_size);
 
-            /* Signal classification task */
-            tk_sig_sem(classification_semaphore, 1);
+            tk_sig_sem(classification_semaphore, 1); // ✅ FIXED: Now declared
         }
     }
 }
 
 /**
  * @brief μT-Kernel Task: Cognitive Classification (5Hz)
- * Priority: 25
  */
 void task_classification_entry(INT stacd, void *exinf)
 {
@@ -582,44 +574,37 @@ void task_classification_entry(INT stacd, void *exinf)
     ER ercd;
     uint32_t start_time, end_time;
 
-    /* Initialize classifier */
     if (cognitive_classifier_init() != FSP_SUCCESS)
     {
-        while(1) tk_dly_tsk(1000);
+        while(1) tk_dly_tsk(1000); // ✅ FIXED: Now declared
     }
 
     while(1)
     {
-        /* Wait for feature extraction completion */
         ercd = tk_wai_sem(classification_semaphore, TMO_FEVR);
-        if (ercd != E_OK) continue;
+        if (ercd != E_OK) continue; // ✅ FIXED: E_OK now defined
 
-        /* Record inference start time */
-        start_time = R_FSP_SystemClockHzGet() / 1000;
+        /* ✅ FIXED: Provide required clock parameter */
+        start_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
 
-        /* Run neural network inference */
         forward_propagation(&current_features, classification_result.confidence_scores);
 
-        /* Determine dominant state */
         classification_result.dominant_state = determine_dominant_state(classification_result.confidence_scores);
 
-        /* Calculate overall wellness score */
         classification_result.overall_wellness_score =
             classification_result.confidence_scores[COGNITIVE_STATE_CALM] * 0.4f +
             classification_result.confidence_scores[COGNITIVE_STATE_FOCUS] * 0.3f +
             (1.0f - classification_result.confidence_scores[COGNITIVE_STATE_STRESS]) * 0.2f +
             (1.0f - classification_result.confidence_scores[COGNITIVE_STATE_ANXIETY]) * 0.1f;
 
-        /* Check if intervention is needed */
         classification_result.intervention_needed = intervention_required(&classification_result);
 
-        /* Record inference time */
-        end_time = R_FSP_SystemClockHzGet() / 1000;
+        /* ✅ FIXED: Provide required clock parameter */
+        end_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
         classification_result.inference_time_ms = end_time - start_time;
 
         classifications_performed++;
 
-        /* Trigger haptic feedback if intervention needed */
         if (classification_result.intervention_needed)
         {
             tk_sig_sem(haptic_semaphore, 1);

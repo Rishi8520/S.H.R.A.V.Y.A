@@ -20,6 +20,6 @@
 #ifndef _MTKBSP_TK_TKERNEL_H_
 #define _MTKBSP_TK_TKERNEL_H_
 
-#include <mtkernel/include/tk/tkernel.h>
-
+#include <mtk3_bsp2/include/tk/tkernel.h>
+//#include "tkernel.h"
 #endif /* _MTKBSP_TK_TKERNEL_H_ */

@@ -1,10 +1,11 @@
 #include "hal_data.h"
-#include "eeg_types.h"
-#include "cognitive_states.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "audioINTERFACE.h"
 #include "mtk3_bsp2/include/tk/tkernel.h"
-
 #include <math.h>
 #include <string.h>
+#include <stdint.h>
 
 /* Audio Configuration */
 #define SAMPLE_RATE_HZ              16000   // 16kHz for voice
@@ -49,7 +50,7 @@ fsp_err_t audio_interface_init(void)
     fsp_err_t err = FSP_SUCCESS;
 
     /* Initialize SSI interface for INMP441 - CORRECTED */
-    err = R_SSI_Open(&g_ssi0_ctrl, &g_ssi0_cfg);
+    err = R_SSI_Open(&g_i2s0_ctrl, &g_i2s0_cfg);
     if (FSP_SUCCESS != err) return err;
 
     /* SSI configuration is typically done in FSP configurator,
@@ -122,7 +123,7 @@ static bool detect_voice_activity(const int16_t *buffer, uint32_t size)
         energy += (float)(buffer[i] * buffer[i]);
     }
 
-    energy = sqrtf(energy / size); // RMS energy
+    energy = sqrtf(energy / (float)size); // RMS energy
 
     /* Simple threshold-based VAD */
     return (energy > VOICE_DETECTION_THRESHOLD);
@@ -139,7 +140,7 @@ static void calculate_ambient_noise(const int16_t *buffer, uint32_t size)
         rms += (float)(buffer[i] * buffer[i]);
     }
 
-    rms = sqrtf(rms / size);
+    rms = sqrtf(rms / (float)size);
 
     /* Exponential moving average */
     const float alpha = 0.1f;
@@ -172,29 +173,28 @@ void task_audio_interface_entry(INT stacd, void *exinf)
     (void)exinf;
 
     int16_t audio_sample;
-    ER ercd;
-
+    //ER ercd;
+    fsp_err_t read_result;
     /* Initialize audio interface */
     if (audio_interface_init() != FSP_SUCCESS) {
         while(1) tk_dly_tsk(1000);
     }
 
     /* Start SSI reception - CORRECTED */
-    R_SSI_Start(&g_ssi0_ctrl);
-
+    R_SSI_Start(&g_i2s0_ctrl);
     while(1) {
-        /* Read audio sample from SSI - CORRECTED */
-        size_t bytes_read;
-        if (R_SSI_Read(&g_ssi0_ctrl, &audio_sample, 2, &bytes_read) == FSP_SUCCESS) {
-            if (bytes_read == 2) { // 16-bit sample = 2 bytes
+            /* Read audio sample from SSI - CORRECTED API USAGE */
+            read_result = R_SSI_Read(&g_i2s0_ctrl, &audio_sample, sizeof(audio_sample)); // ✅ FIXED: 3 parameters only
+
+            if (read_result == FSP_SUCCESS) {
                 process_audio_sample(audio_sample);
             }
-        }
 
-        /* Sleep for approximately 62.5μs (16kHz sampling rate) */
-        tk_dly_tsk(1); // Minimum μT-Kernel delay
+            /* Sleep for approximately 62.5μs (16kHz sampling rate) */
+            tk_dly_tsk(1); // Minimum μT-Kernel delay
+        }
     }
-}
+
 
 /**
  * @brief Get audio interface statistics

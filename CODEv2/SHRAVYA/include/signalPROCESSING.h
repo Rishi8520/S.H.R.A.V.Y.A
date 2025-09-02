@@ -1,7 +1,7 @@
 #ifndef SIGNAL_PROCESSING_H
 #define SIGNAL_PROCESSING_H
 
-#include "eeg_types.h"
+#include "eegTYPES.h"
 #include "hal_data.h"
 
 /* Function prototypes */

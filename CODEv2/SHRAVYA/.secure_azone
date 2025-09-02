@@ -174,5 +174,18 @@
             <slot name="PB06.CM85" secure="true"/>
             <slot name="PB07.CM85" secure="true"/>
         </peripheral>
+        <peripheral name="SSIE0.CM85" group="SSIE" security="s"/>
+        <peripheral name="ICU_EXT_IRQ.CM85">
+            <slot name="ICU_EXT_IRQ0.CM85" secure="true"/>
+        </peripheral>
+        <peripheral name="ICU.CM85">
+            <slot name="IRQ0.CM85" secure="true"/>
+            <slot name="IRQ1.CM85" secure="true"/>
+            <slot name="IRQ2.CM85" secure="true"/>
+            <slot name="IRQ3.CM85" secure="true"/>
+            <slot name="IRQ4.CM85" secure="true"/>
+            <slot name="IRQ5.CM85" secure="true"/>
+            <slot name="IRQ6.CM85" secure="true"/>
+        </peripheral>
     </partition>
 </azone>

@@ -1,59 +1,89 @@
 #include "hal_data.h"
-#include "eeg_types.h"
-#include "shravya_config.h"
-#include "hardware_drivers.h"
-
-/* Include μT-Kernel 3.0 headers */
+#include "eegTYPES.h"
+#include "shravyaCONFIG.h"
+#include "hardwareDRIVERS.h"
 #include "mtk3_bsp2/include/tk/tkernel.h"
 
+#include <math.h>
+#include <string.h>
+#include <stdio.h>
+
+// ✅ μT-Kernel typedefs
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+#ifndef E_OK
+#define E_OK (0)
+#endif
+
+// ✅ Forward declarations for μT-Kernel functions
+extern ER tk_dly_tsk(INT dlytim);
+extern ER tk_wai_sem(ID semid, INT timeout);
+extern ER tk_sig_sem(ID semid, INT cnt);
+extern ER tk_isig_sem(ID semid, INT cnt);
+
+// ✅ REMOVED conflicting external_irq_callback_args_t - it's already in SDK
+// ✅ REMOVED conflicting spi_instance_ctrl_t - using SDK's spi_b_instance_ctrl_t
+
+// ✅ Define SPI bit width
+#ifndef SPI_BIT_WIDTH_8_BITS
+#define SPI_BIT_WIDTH_8_BITS (8U)
+#endif
+
 /* ADS1263 Register Definitions */
-#define ADS1263_ID_REG          0x00
-#define ADS1263_POWER_REG       0x01
-#define ADS1263_INTERFACE_REG   0x02
-#define ADS1263_MODE0_REG       0x03
-#define ADS1263_MODE1_REG       0x04
-#define ADS1263_MODE2_REG       0x05
-#define ADS1263_INPMUX_REG      0x06
-#define ADS1263_OFCAL0_REG      0x07
-#define ADS1263_OFCAL1_REG      0x08
-#define ADS1263_OFCAL2_REG      0x09
-#define ADS1263_FSCAL0_REG      0x0A
-#define ADS1263_FSCAL1_REG      0x0B
-#define ADS1263_FSCAL2_REG      0x0C
-#define ADS1263_IDACMUX_REG     0x0D
-#define ADS1263_IDACMAG_REG     0x0E
-#define ADS1263_REFMUX_REG      0x0F
-#define ADS1263_TDACP_REG       0x10
-#define ADS1263_TDACN_REG       0x11
-#define ADS1263_GPIOCON_REG     0x12
-#define ADS1263_GPIODIR_REG     0x13
-#define ADS1263_GPIODAT_REG     0x14
-#define ADS1263_ADC2CFG_REG     0x15
-#define ADS1263_ADC2MUX_REG     0x16
-#define ADS1263_ADC2OFC0_REG    0x17
-#define ADS1263_ADC2OFC1_REG    0x18
-#define ADS1263_ADC2FSC0_REG    0x19
-#define ADS1263_ADC2FSC1_REG    0x1A
+#define ADS1263_ID_REG 0x00
+#define ADS1263_POWER_REG 0x01
+#define ADS1263_INTERFACE_REG 0x02
+#define ADS1263_MODE0_REG 0x03
+#define ADS1263_MODE1_REG 0x04
+#define ADS1263_MODE2_REG 0x05
+#define ADS1263_INPMUX_REG 0x06
+#define ADS1263_OFCAL0_REG 0x07
+#define ADS1263_OFCAL1_REG 0x08
+#define ADS1263_OFCAL2_REG 0x09
+#define ADS1263_FSCAL0_REG 0x0A
+#define ADS1263_FSCAL1_REG 0x0B
+#define ADS1263_FSCAL2_REG 0x0C
+#define ADS1263_IDACMUX_REG 0x0D
+#define ADS1263_IDACMAG_REG 0x0E
+#define ADS1263_REFMUX_REG 0x0F
+#define ADS1263_TDACP_REG 0x10
+#define ADS1263_TDACN_REG 0x11
+#define ADS1263_GPIOCON_REG 0x12
+#define ADS1263_GPIODIR_REG 0x13
+#define ADS1263_GPIODAT_REG 0x14
+#define ADS1263_ADC2CFG_REG 0x15
+#define ADS1263_ADC2MUX_REG 0x16
+#define ADS1263_ADC2OFC0_REG 0x17
+#define ADS1263_ADC2OFC1_REG 0x18
+#define ADS1263_ADC2FSC0_REG 0x19
+#define ADS1263_ADC2FSC1_REG 0x1A
 
 /* ADS1263 Commands */
-#define ADS1263_CMD_NOP         0x00
-#define ADS1263_CMD_RESET       0x06
-#define ADS1263_CMD_START1      0x08
-#define ADS1263_CMD_STOP1       0x0A
-#define ADS1263_CMD_START2      0x0C
-#define ADS1263_CMD_STOP2       0x0E
-#define ADS1263_CMD_RDATA1      0x12
-#define ADS1263_CMD_RDATA2      0x14
-#define ADS1263_CMD_SYOCAL1     0x16
-#define ADS1263_CMD_SYGCAL1     0x17
-#define ADS1263_CMD_SFOCAL1     0x19
-#define ADS1263_CMD_SYOCAL2     0x1B
-#define ADS1263_CMD_SYGCAL2     0x1C
-#define ADS1263_CMD_SFOCAL2     0x1E
+#define ADS1263_CMD_NOP 0x00
+#define ADS1263_CMD_RESET 0x06
+#define ADS1263_CMD_START1 0x08
+#define ADS1263_CMD_STOP1 0x0A
+#define ADS1263_CMD_START2 0x0C
+#define ADS1263_CMD_STOP2 0x0E
+#define ADS1263_CMD_RDATA1 0x12
+#define ADS1263_CMD_RDATA2 0x14
+#define ADS1263_CMD_SYOCAL1 0x16
+#define ADS1263_CMD_SYGCAL1 0x17
+#define ADS1263_CMD_SFOCAL1 0x19
+#define ADS1263_CMD_SYOCAL2 0x1B
+#define ADS1263_CMD_SYGCAL2 0x1C
+#define ADS1263_CMD_SFOCAL2 0x1E
 
 /* Register read/write commands */
-#define ADS1263_CMD_RREG        0x20
-#define ADS1263_CMD_WREG        0x40
+#define ADS1263_CMD_RREG 0x20
+#define ADS1263_CMD_WREG 0x40
 
 /* Global Variables */
 static eeg_circular_buffer_t eeg_buffer;
@@ -78,9 +108,10 @@ static void ads1263_calculate_signal_quality(eeg_raw_sample_t *sample);
 static fsp_err_t eeg_buffer_init(void);
 static fsp_err_t eeg_buffer_write(const eeg_raw_sample_t *sample);
 
+// ✅ Public function declarations - REMOVED duplicate ads1263_drdy_callback declaration
+
 /**
  * @brief Initialize EEG Acquisition Hardware
- * @return FSP_SUCCESS on success, error code on failure
  */
 fsp_err_t eeg_acquisition_init(void)
 {
@@ -106,7 +137,6 @@ fsp_err_t eeg_acquisition_init(void)
     if (FSP_SUCCESS != err) return err;
 
     ads1263_initialized = true;
-
     return FSP_SUCCESS;
 }
 
@@ -201,12 +231,12 @@ static fsp_err_t ads1263_write_register(uint8_t reg_addr, uint8_t data)
     R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
 
     /* Prepare command sequence */
-    tx_data[0] = ADS1263_CMD_WREG | reg_addr;  // Write command + register address
-    tx_data[1] = 0x00;                         // Number of registers - 1
-    tx_data[2] = data;                         // Data to write
+    tx_data[0] = ADS1263_CMD_WREG | reg_addr;
+    tx_data[1] = 0x00;
+    tx_data[2] = data;
 
-    /* Send command */
-    err = R_SPI_Write(&g_spi0_ctrl, tx_data, 3, SPI_BIT_WIDTH_8_BITS);
+    /* Send command - ✅ FIXED: Use correct SPI function for spi_b driver */
+    err = R_SPI_B_Write(&g_spi0_ctrl, tx_data, 3, SPI_BIT_WIDTH_8_BITS);
 
     /* Wait for completion */
     R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
@@ -231,12 +261,12 @@ static fsp_err_t ads1263_read_register(uint8_t reg_addr, uint8_t *data)
     R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
 
     /* Prepare command sequence */
-    tx_data[0] = ADS1263_CMD_RREG | reg_addr;  // Read command + register address
-    tx_data[1] = 0x00;                         // Number of registers - 1
-    tx_data[2] = 0x00;                         // Dummy byte
+    tx_data[0] = ADS1263_CMD_RREG | reg_addr;
+    tx_data[1] = 0x00;
+    tx_data[2] = 0x00;
 
-    /* Send command and receive data */
-    err = R_SPI_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 3, SPI_BIT_WIDTH_8_BITS);
+    /* Send command and receive data - ✅ FIXED: Use correct SPI function */
+    err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 3, SPI_BIT_WIDTH_8_BITS);
 
     /* Extract data */
     *data = rx_data[2];
@@ -258,8 +288,8 @@ static fsp_err_t ads1263_write_command(uint8_t command)
     R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
     R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
 
-    /* Send command */
-    err = R_SPI_Write(&g_spi0_ctrl, &command, 1, SPI_BIT_WIDTH_8_BITS);
+    /* Send command - ✅ FIXED: Use correct SPI function */
+    err = R_SPI_B_Write(&g_spi0_ctrl, &command, 1, SPI_BIT_WIDTH_8_BITS);
 
     /* Wait for completion */
     R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
@@ -287,23 +317,23 @@ static fsp_err_t ads1263_read_data(int32_t *adc1_data, int32_t *adc2_data)
     tx_data[0] = ADS1263_CMD_RDATA1;
 
     /* Read ADC1 data (4 bytes: status + 3 data bytes) */
-    err = R_SPI_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 4, SPI_BIT_WIDTH_8_BITS);
+    err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 4, SPI_BIT_WIDTH_8_BITS);
     if (FSP_SUCCESS != err) goto cleanup;
 
     /* Extract 24-bit ADC1 data and sign extend to 32-bit */
     *adc1_data = (int32_t)((rx_data[1] << 16) | (rx_data[2] << 8) | rx_data[3]);
-    if (*adc1_data & 0x800000) *adc1_data |= 0xFF000000;  // Sign extend
+    if (*adc1_data & 0x800000) *adc1_data |= (int32_t)0xFF000000;
 
     /* Send RDATA2 command for ADC2 */
     tx_data[0] = ADS1263_CMD_RDATA2;
 
     /* Read ADC2 data (3 bytes) */
-    err = R_SPI_WriteRead(&g_spi0_ctrl, tx_data, &rx_data[4], 3, SPI_BIT_WIDTH_8_BITS);
+    err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, &rx_data[4], 3, SPI_BIT_WIDTH_8_BITS);
     if (FSP_SUCCESS != err) goto cleanup;
 
     /* Extract 24-bit ADC2 data and sign extend to 32-bit */
     *adc2_data = (int32_t)((rx_data[4] << 16) | (rx_data[5] << 8) | rx_data[6]);
-    if (*adc2_data & 0x800000) *adc2_data |= 0xFF000000;  // Sign extend
+    if (*adc2_data & 0x800000) *adc2_data |= (int32_t)0xFF000000;
 
 cleanup:
     /* De-assert CS pin */
@@ -318,9 +348,8 @@ cleanup:
 static void ads1263_calculate_signal_quality(eeg_raw_sample_t *sample)
 {
     /* Calculate electrode impedance (simplified estimation) */
-    /* This would typically require injection of test currents */
-    sample->quality.impedance_left_kohms = 50.0f;   // Placeholder
-    sample->quality.impedance_right_kohms = 45.0f;  // Placeholder
+    sample->quality.impedance_left_kohms = 50.0f;
+    sample->quality.impedance_right_kohms = 45.0f;
 
     /* Assess contact quality based on signal amplitude */
     int32_t left_abs = (sample->left_channel < 0) ? -sample->left_channel : sample->left_channel;
@@ -330,10 +359,10 @@ static void ads1263_calculate_signal_quality(eeg_raw_sample_t *sample)
     sample->quality.contact_quality_good = (left_abs < 0x400000) && (right_abs < 0x400000);
 
     /* Calculate noise level (simplified) */
-    sample->quality.signal_noise_level = (left_abs + right_abs) >> 16;
+    sample->quality.signal_noise_level = (uint8_t)((left_abs + right_abs) >> 16);
 
     /* Common mode voltage estimation */
-    sample->quality.common_mode_voltage = (sample->left_channel + sample->right_channel) / 2.0f * 2.5f / 8388608.0f;
+    sample->quality.common_mode_voltage = ((float)sample->left_channel + (float)sample->right_channel) / 2.0f * 2.5f / 8388608.0f;
 }
 
 /**
@@ -344,7 +373,7 @@ static fsp_err_t eeg_buffer_init(void)
     eeg_buffer.write_index = 0;
     eeg_buffer.read_index = 0;
     eeg_buffer.buffer_full = false;
-    eeg_buffer.buffer_mutex = NULL;  // Will be set by μT-Kernel
+    eeg_buffer.buffer_mutex = NULL;
 
     /* Clear buffer memory */
     memset(eeg_buffer.samples, 0, sizeof(eeg_buffer.samples));
@@ -399,7 +428,7 @@ void task_eeg_acquisition_entry(INT stacd, void *exinf)
         /* Initialization failed - enter error state */
         while(1)
         {
-            tk_dly_tsk(1000);  // 1 second delay
+            tk_dly_tsk(1000);
             error_count++;
         }
     }
@@ -412,7 +441,7 @@ void task_eeg_acquisition_entry(INT stacd, void *exinf)
     while (acquisition_running)
     {
         /* Wait for DRDY signal from ADS1263 (500Hz) */
-        ercd = tk_wai_sem(eeg_data_semaphore, 5);  // 5ms timeout
+        ercd = tk_wai_sem(eeg_data_semaphore, 5);
         if (ercd != E_OK)
         {
             error_count++;
@@ -425,15 +454,14 @@ void task_eeg_acquisition_entry(INT stacd, void *exinf)
             /* Populate sample structure */
             sample.left_channel = adc1_data;
             sample.right_channel = adc2_data;
-            sample.drl_feedback = 0;  // Will be implemented with DRL circuit
-            sample.timestamp_us = sample_count * 2000;  // 2ms per sample at 500Hz
+            sample.drl_feedback = 0;
+            sample.timestamp_us = sample_count * 2000;
 
             /* Calculate signal quality metrics */
             ads1263_calculate_signal_quality(&sample);
 
             /* Store in circular buffer */
             eeg_buffer_write(&sample);
-
             sample_count++;
 
             /* Signal preprocessing task every 10 samples (50Hz rate) */
@@ -451,6 +479,7 @@ void task_eeg_acquisition_entry(INT stacd, void *exinf)
 
 /**
  * @brief External interrupt callback for ADS1263 DRDY signal
+ * ✅ FIXED: Uses SDK's external_irq_callback_args_t type
  */
 void ads1263_drdy_callback(external_irq_callback_args_t *p_args)
 {
@@ -510,5 +539,5 @@ void eeg_get_statistics(uint32_t *total_samples, uint32_t *error_count_out, bool
 {
     if (total_samples) *total_samples = sample_count;
     if (error_count_out) *error_count_out = error_count;
-    if (is_running) *is_running = acquisition_running && ads1263_initialized;
+    if (is_running) *is_running = acquisition_running;
 }

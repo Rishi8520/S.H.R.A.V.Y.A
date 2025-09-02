@@ -1,0 +1,526 @@
+#include "hal_data.h"
+#include "eeg_types.h"
+#include "cognitive_states.h"
+#include "shravya_config.h"
+#include "mtk3_bsp2/include/tk/tkernel.h"
+
+#include <math.h>
+#include <string.h>
+
+/* Haptic Pattern Definitions */
+#define MAX_PATTERN_STEPS          32      // Maximum steps in a pattern
+#define PATTERN_RESOLUTION_MS      50      // 50ms resolution for patterns
+#define PWM_FREQUENCY_HZ           250     // 250Hz PWM for vibration motors
+#define MAX_INTENSITY              100     // Maximum vibration intensity (%)
+
+/* Vibration Motor Specifications (from BOM) */
+#define MOTOR_VOLTAGE              3.0f    // 3V coin motors
+#define MOTOR_CURRENT_MAX_MA       100     // 100mA peak current
+#define MOTOR_RESPONSE_TIME_MS     10      // ~10ms response time
+
+/* Intervention Timing Constants */
+#define STRESS_PATTERN_DURATION_S      30     // 30 second stress relief
+#define ANXIETY_PATTERN_DURATION_S     45     // 45 second anxiety reduction
+#define FATIGUE_PATTERN_DURATION_S     20     // 20 second alertness boost
+#define FOCUS_PATTERN_DURATION_S       15     // 15 second focus enhancement
+#define BREATHING_CYCLE_DURATION_S     8      // 8 second breathing cycle (4s in, 4s out)
+
+/* Haptic Pattern Structure */
+typedef struct {
+    uint8_t left_intensity;      // 0-100% intensity for left motor
+    uint8_t right_intensity;     // 0-100% intensity for right motor
+    uint16_t duration_ms;        // Duration of this step
+    bool fade_in;                // Smooth fade in
+    bool fade_out;               // Smooth fade out
+} haptic_step_t;
+
+typedef struct {
+    haptic_step_t steps[MAX_PATTERN_STEPS];
+    uint8_t step_count;
+    uint8_t repeat_count;        // 0 = no repeat, >0 = repeat count
+    bool bilateral;              // true = both ears, false = alternating
+    char pattern_name[16];       // Pattern identifier
+} haptic_pattern_t;
+
+/* Haptic State Management */
+typedef struct {
+    haptic_pattern_t current_pattern;
+    uint8_t current_step;
+    uint16_t step_timer_ms;
+    uint8_t repeat_counter;
+    bool pattern_active;
+    bool pattern_paused;
+    cognitive_state_type_t active_intervention;
+    uint32_t intervention_start_time;
+    uint32_t total_interventions;
+    float effectiveness_score;
+} haptic_state_t;
+
+/* PWM Control Structure */
+typedef struct {
+    uint8_t left_duty_cycle;     // 0-100%
+    uint8_t right_duty_cycle;    // 0-100%
+    bool left_active;
+    bool right_active;
+} pwm_control_t;
+
+/* Global Variables */
+static haptic_state_t haptic_state;
+static pwm_control_t pwm_control;
+static volatile bool haptic_initialized = false;
+
+/* Pre-defined Intervention Patterns */
+static haptic_pattern_t stress_relief_pattern;
+static haptic_pattern_t anxiety_reduction_pattern;
+static haptic_pattern_t fatigue_alertness_pattern;
+static haptic_pattern_t focus_enhancement_pattern;
+static haptic_pattern_t breathing_guide_pattern;
+
+/* External semaphore references */
+extern ID haptic_semaphore;
+
+/* Private Function Prototypes */
+static void init_haptic_patterns(void);
+static void init_stress_relief_pattern(void);
+static void init_anxiety_reduction_pattern(void);
+static void init_fatigue_alertness_pattern(void);
+static void init_focus_enhancement_pattern(void);
+static void init_breathing_guide_pattern(void);
+static void set_motor_intensity(uint8_t left_intensity, uint8_t right_intensity);
+static void update_pwm_outputs(void);
+static void fade_intensity(uint8_t *current, uint8_t target, uint8_t steps);
+static void start_intervention_pattern(cognitive_state_type_t state);
+static void process_pattern_step(void);
+static bool is_intervention_effective(cognitive_state_type_t state);
+
+/**
+ * @brief Initialize haptic feedback system
+ */
+fsp_err_t haptic_feedback_init(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* Initialize PWM timers for vibration motors */
+    err = R_GPT_Open(&g_timer1_ctrl, &g_timer1_cfg);  // Left motor
+    if (FSP_SUCCESS != err) return err;
+
+    err = R_GPT_Open(&g_timer2_ctrl, &g_timer2_cfg);  // Right motor
+    if (FSP_SUCCESS != err) return err;
+
+    /* Configure PWM frequency and duty cycle */
+    uint32_t period_counts = R_FSP_SystemClockHzGet() / PWM_FREQUENCY_HZ;
+
+    err = R_GPT_PeriodSet(&g_timer1_ctrl, period_counts);
+    if (FSP_SUCCESS != err) return err;
+
+    err = R_GPT_PeriodSet(&g_timer2_ctrl, period_counts);
+    if (FSP_SUCCESS != err) return err;
+
+    /* Initialize GPIO for motor control (with MOSFET drivers) */
+    err = R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_LEFT_PIN, BSP_IO_LEVEL_LOW);
+    if (FSP_SUCCESS != err) return err;
+
+    err = R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_RIGHT_PIN, BSP_IO_LEVEL_LOW);
+    if (FSP_SUCCESS != err) return err;
+
+    /* Clear haptic state */
+    memset(&haptic_state, 0, sizeof(haptic_state));
+    memset(&pwm_control, 0, sizeof(pwm_control));
+
+    /* Initialize pre-defined patterns */
+    init_haptic_patterns();
+
+    haptic_initialized = true;
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize all pre-defined haptic patterns
+ */
+static void init_haptic_patterns(void)
+{
+    init_stress_relief_pattern();
+    init_anxiety_reduction_pattern();
+    init_fatigue_alertness_pattern();
+    init_focus_enhancement_pattern();
+    init_breathing_guide_pattern();
+}
+
+/**
+ * @brief Initialize stress relief pattern (deep, slow pulses)
+ */
+static void init_stress_relief_pattern(void)
+{
+    strcpy(stress_relief_pattern.pattern_name, "StressRelief");
+    stress_relief_pattern.bilateral = true;
+    stress_relief_pattern.repeat_count = 6;  // 30 seconds total
+    stress_relief_pattern.step_count = 8;
+
+    /* Deep breathing simulation: 4 sec in, 4 sec out */
+    stress_relief_pattern.steps[0] = {0, 0, 500, true, false};      // Rest
+    stress_relief_pattern.steps[1] = {30, 30, 1000, true, false};   // Gentle start
+    stress_relief_pattern.steps[2] = {60, 60, 1500, false, false};  // Inhale guidance
+    stress_relief_pattern.steps[3] = {40, 40, 1000, false, true};   // Peak hold
+    stress_relief_pattern.steps[4] = {20, 20, 1500, false, false};  // Exhale guidance
+    stress_relief_pattern.steps[5] = {5, 5, 1000, false, true};     // Gentle end
+    stress_relief_pattern.steps[6] = {0, 0, 500, false, false};     // Rest
+    stress_relief_pattern.steps[7] = {0, 0, 1000, false, false};    // Pause
+}
+
+/**
+ * @brief Initialize anxiety reduction pattern (asymmetric, grounding)
+ */
+static void init_anxiety_reduction_pattern(void)
+{
+    strcpy(anxiety_reduction_pattern.pattern_name, "AnxietyReduce");
+    anxiety_reduction_pattern.bilateral = false;  // Alternating
+    anxiety_reduction_pattern.repeat_count = 9;   // 45 seconds total
+    anxiety_reduction_pattern.step_count = 10;
+
+    /* Grounding technique: alternating gentle pulses */
+    anxiety_reduction_pattern.steps[0] = {25, 0, 800, true, false};    // Left gentle
+    anxiety_reduction_pattern.steps[1] = {0, 0, 200, false, false};    // Gap
+    anxiety_reduction_pattern.steps[2] = {0, 25, 800, true, false};    // Right gentle
+    anxiety_reduction_pattern.steps[3] = {0, 0, 200, false, false};    // Gap
+    anxiety_reduction_pattern.steps[4] = {40, 0, 600, true, false};    // Left stronger
+    anxiety_reduction_pattern.steps[5] = {0, 0, 200, false, false};    // Gap
+    anxiety_reduction_pattern.steps[6] = {0, 40, 600, true, false};    // Right stronger
+    anxiety_reduction_pattern.steps[7] = {0, 0, 300, false, false};    // Longer gap
+    anxiety_reduction_pattern.steps[8] = {15, 15, 1200, true, true};   // Both gentle
+    anxiety_reduction_pattern.steps[9] = {0, 0, 800, false, false};    // Rest
+}
+
+/**
+ * @brief Initialize fatigue alertness pattern (sharp, energizing)
+ */
+static void init_fatigue_alertness_pattern(void)
+{
+    strcpy(fatigue_alertness_pattern.pattern_name, "FatigueAlert");
+    fatigue_alertness_pattern.bilateral = true;
+    fatigue_alertness_pattern.repeat_count = 4;   // 20 seconds total
+    fatigue_alertness_pattern.step_count = 6;
+
+    /* Energizing pattern: sharp bursts followed by building waves */
+    fatigue_alertness_pattern.steps[0] = {80, 80, 150, false, false};  // Sharp burst
+    fatigue_alertness_pattern.steps[1] = {0, 0, 100, false, false};    // Quick gap
+    fatigue_alertness_pattern.steps[2] = {90, 90, 150, false, false};  // Stronger burst
+    fatigue_alertness_pattern.steps[3] = {0, 0, 200, false, false};    // Gap
+    fatigue_alertness_pattern.steps[4] = {50, 50, 2000, true, false}; // Building wave
+    fatigue_alertness_pattern.steps[5] = {10, 10, 2400, false, true}; // Gentle decline
+}
+
+/**
+ * @brief Initialize focus enhancement pattern (rhythmic, attention-grabbing)
+ */
+static void init_focus_enhancement_pattern(void)
+{
+    strcpy(focus_enhancement_pattern.pattern_name, "FocusBoost");
+    focus_enhancement_pattern.bilateral = false;  // Alternating for attention
+    focus_enhancement_pattern.repeat_count = 3;   // 15 seconds total
+    focus_enhancement_pattern.step_count = 8;
+
+    /* Attention pattern: rhythmic alternating with increasing intensity */
+    focus_enhancement_pattern.steps[0] = {30, 0, 300, true, false};    // Left start
+    focus_enhancement_pattern.steps[1] = {0, 30, 300, true, false};    // Right
+    focus_enhancement_pattern.steps[2] = {45, 0, 400, false, false};   // Left stronger
+    focus_enhancement_pattern.steps[3] = {0, 45, 400, false, false};   // Right stronger
+    focus_enhancement_pattern.steps[4] = {60, 0, 500, false, false};   // Left peak
+    focus_enhancement_pattern.steps[5] = {0, 60, 500, false, false};   // Right peak
+    focus_enhancement_pattern.steps[6] = {75, 75, 1000, false, true}; // Both peak
+    focus_enhancement_pattern.steps[7] = {0, 0, 1600, false, false};  // Rest
+}
+
+/**
+ * @brief Initialize breathing guidance pattern (4-7-8 technique)
+ */
+static void init_breathing_guide_pattern(void)
+{
+    strcpy(breathing_guide_pattern.pattern_name, "BreathGuide");
+    breathing_guide_pattern.bilateral = true;
+    breathing_guide_pattern.repeat_count = 4;     // 4 breathing cycles
+    breathing_guide_pattern.step_count = 4;
+
+    /* 4-7-8 breathing technique */
+    breathing_guide_pattern.steps[0] = {0, 0, 1000, false, false};      // Prepare
+    breathing_guide_pattern.steps[1] = {40, 40, 4000, true, false};     // Inhale 4s
+    breathing_guide_pattern.steps[2] = {20, 20, 7000, false, false};    // Hold 7s
+    breathing_guide_pattern.steps[3] = {10, 10, 8000, false, true};     // Exhale 8s
+}
+
+/**
+ * @brief Set motor intensity with safety limits
+ */
+static void set_motor_intensity(uint8_t left_intensity, uint8_t right_intensity)
+{
+    /* Clamp intensities to safe range */
+    if (left_intensity > MAX_INTENSITY) left_intensity = MAX_INTENSITY;
+    if (right_intensity > MAX_INTENSITY) right_intensity = MAX_INTENSITY;
+
+    pwm_control.left_duty_cycle = left_intensity;
+    pwm_control.right_duty_cycle = right_intensity;
+    pwm_control.left_active = (left_intensity > 0);
+    pwm_control.right_active = (right_intensity > 0);
+
+    /* Update PWM outputs */
+    update_pwm_outputs();
+}
+
+/**
+ * @brief Update PWM outputs to vibration motors
+ */
+static void update_pwm_outputs(void)
+{
+    /* Calculate duty cycle counts */
+    uint32_t period_counts = R_FSP_SystemClockHzGet() / PWM_FREQUENCY_HZ;
+    uint32_t left_duty_counts = (period_counts * pwm_control.left_duty_cycle) / 100;
+    uint32_t right_duty_counts = (period_counts * pwm_control.right_duty_cycle) / 100;
+
+    /* Update left motor PWM */
+    if (pwm_control.left_active && left_duty_counts > 0) {
+        R_GPT_DutyCycleSet(&g_timer1_ctrl, left_duty_counts, GPT_IO_PIN_GTIOCB);
+        if (!pwm_control.left_active) {
+            R_GPT_Start(&g_timer1_ctrl);
+        }
+    } else {
+        R_GPT_Stop(&g_timer1_ctrl);
+        R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_LEFT_PIN, BSP_IO_LEVEL_LOW);
+    }
+
+    /* Update right motor PWM */
+    if (pwm_control.right_active && right_duty_counts > 0) {
+        R_GPT_DutyCycleSet(&g_timer2_ctrl, right_duty_counts, GPT_IO_PIN_GTIOCB);
+        if (!pwm_control.right_active) {
+            R_GPT_Start(&g_timer2_ctrl);
+        }
+    } else {
+        R_GPT_Stop(&g_timer2_ctrl);
+        R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_RIGHT_PIN, BSP_IO_LEVEL_LOW);
+    }
+}
+
+/**
+ * @brief Start intervention pattern based on cognitive state
+ */
+static void start_intervention_pattern(cognitive_state_type_t state)
+{
+    haptic_pattern_t *selected_pattern = NULL;
+
+    /* Select appropriate pattern */
+    switch (state) {
+        case COGNITIVE_STATE_STRESS:
+            selected_pattern = &stress_relief_pattern;
+            break;
+        case COGNITIVE_STATE_ANXIETY:
+            selected_pattern = &anxiety_reduction_pattern;
+            break;
+        case COGNITIVE_STATE_FATIGUE:
+            selected_pattern = &fatigue_alertness_pattern;
+            break;
+        case COGNITIVE_STATE_FOCUS:
+            selected_pattern = &focus_enhancement_pattern;
+            break;
+        case COGNITIVE_STATE_BOREDOM:
+            selected_pattern = &breathing_guide_pattern;  // Use breathing for boredom
+            break;
+        default:
+            selected_pattern = &breathing_guide_pattern;  // Default to breathing
+            break;
+    }
+
+    /* Copy selected pattern to active pattern */
+    haptic_state.current_pattern = *selected_pattern;
+    haptic_state.current_step = 0;
+    haptic_state.step_timer_ms = 0;
+    haptic_state.repeat_counter = 0;
+    haptic_state.pattern_active = true;
+    haptic_state.pattern_paused = false;
+    haptic_state.active_intervention = state;
+    haptic_state.intervention_start_time = R_FSP_SystemClockHzGet() / 1000;
+    haptic_state.total_interventions++;
+}
+
+/**
+ * @brief Process current pattern step
+ */
+static void process_pattern_step(void)
+{
+    if (!haptic_state.pattern_active || haptic_state.pattern_paused) return;
+
+    haptic_step_t *current_step = &haptic_state.current_pattern.steps[haptic_state.current_step];
+
+    /* Handle fade effects */
+    static uint8_t fade_steps = 0;
+    static uint8_t target_left = 0, target_right = 0;
+
+    if (haptic_state.step_timer_ms == 0) {
+        /* Starting new step */
+        target_left = current_step->left_intensity;
+        target_right = current_step->right_intensity;
+
+        if (current_step->fade_in) {
+            fade_steps = current_step->duration_ms / (2 * PATTERN_RESOLUTION_MS);
+            set_motor_intensity(0, 0);  // Start from zero
+        } else {
+            set_motor_intensity(target_left, target_right);
+        }
+    }
+
+    /* Handle fading */
+    if (current_step->fade_in && haptic_state.step_timer_ms < current_step->duration_ms / 2) {
+        /* Fade in */
+        fade_intensity(&pwm_control.left_duty_cycle, target_left, fade_steps);
+        fade_intensity(&pwm_control.right_duty_cycle, target_right, fade_steps);
+        update_pwm_outputs();
+    } else if (current_step->fade_out && haptic_state.step_timer_ms > current_step->duration_ms / 2) {
+        /* Fade out */
+        fade_intensity(&pwm_control.left_duty_cycle, 0, fade_steps);
+        fade_intensity(&pwm_control.right_duty_cycle, 0, fade_steps);
+        update_pwm_outputs();
+    }
+
+    /* Advance timer */
+    haptic_state.step_timer_ms += PATTERN_RESOLUTION_MS;
+
+    /* Check if step is complete */
+    if (haptic_state.step_timer_ms >= current_step->duration_ms) {
+        /* Move to next step */
+        haptic_state.current_step++;
+        haptic_state.step_timer_ms = 0;
+
+        /* Check if pattern is complete */
+        if (haptic_state.current_step >= haptic_state.current_pattern.step_count) {
+            haptic_state.repeat_counter++;
+
+            if (haptic_state.repeat_counter >= haptic_state.current_pattern.repeat_count) {
+                /* Pattern complete */
+                haptic_state.pattern_active = false;
+                set_motor_intensity(0, 0);  // Stop motors
+
+                /* Calculate effectiveness */
+                haptic_state.effectiveness_score = is_intervention_effective(haptic_state.active_intervention) ? 0.8f : 0.3f;
+            } else {
+                /* Repeat pattern */
+                haptic_state.current_step = 0;
+            }
+        }
+    }
+}
+
+/**
+ * @brief Apply smooth intensity fading
+ */
+static void fade_intensity(uint8_t *current, uint8_t target, uint8_t steps)
+{
+    if (steps == 0) {
+        *current = target;
+        return;
+    }
+
+    int16_t difference = (int16_t)target - (int16_t)*current;
+    int16_t step_size = difference / (int16_t)steps;
+
+    if (step_size == 0 && difference != 0) {
+        step_size = (difference > 0) ? 1 : -1;
+    }
+
+    *current = (uint8_t)((int16_t)*current + step_size);
+
+    /* Ensure bounds */
+    if (*current > MAX_INTENSITY) *current = MAX_INTENSITY;
+}
+
+/**
+ * @brief Check if intervention was effective (simplified)
+ */
+static bool is_intervention_effective(cognitive_state_type_t state)
+{
+    /* In production, this would analyze EEG changes during/after intervention */
+    /* For now, return a basic effectiveness estimate */
+
+    cognitive_classification_t current_result;
+    if (get_classification_result(&current_result) == FSP_SUCCESS) {
+        /* Check if the problematic state confidence decreased */
+        switch (state) {
+            case COGNITIVE_STATE_STRESS:
+                return current_result.confidence_scores[COGNITIVE_STATE_STRESS] < 0.5f;
+            case COGNITIVE_STATE_ANXIETY:
+                return current_result.confidence_scores[COGNITIVE_STATE_ANXIETY] < 0.6f;
+            case COGNITIVE_STATE_FATIGUE:
+                return current_result.confidence_scores[COGNITIVE_STATE_FOCUS] > 0.4f;
+            default:
+                return true;  // Assume effective for other states
+        }
+    }
+
+    return false;  // Default to ineffective if no data
+}
+
+/**
+ * @brief μT-Kernel Task: Haptic Feedback (Variable Rate)
+ * Priority: 30
+ */
+void task_haptic_feedback_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    ER ercd;
+    cognitive_classification_t classification;
+
+    /* Initialize haptic system */
+    if (haptic_feedback_init() != FSP_SUCCESS) {
+        while(1) tk_dly_tsk(1000);
+    }
+
+    while(1) {
+        /* Wait for intervention trigger */
+        ercd = tk_wai_sem(haptic_semaphore, TMO_FEVR);
+        if (ercd != E_OK) continue;
+
+        /* Get latest classification */
+        if (get_classification_result(&classification) == FSP_SUCCESS) {
+            /* Only start new pattern if not currently active */
+            if (!haptic_state.pattern_active && classification.intervention_needed) {
+                start_intervention_pattern(classification.dominant_state);
+            }
+        }
+
+        /* Process active pattern at 20Hz (50ms intervals) */
+        while (haptic_state.pattern_active) {
+            process_pattern_step();
+            tk_dly_tsk(PATTERN_RESOLUTION_MS);
+        }
+    }
+}
+
+/**
+ * @brief Manual trigger for specific haptic pattern
+ */
+fsp_err_t trigger_haptic_pattern(cognitive_state_type_t state)
+{
+    if (!haptic_initialized) return FSP_ERR_NOT_INITIALIZED;
+
+    /* Stop current pattern if active */
+    if (haptic_state.pattern_active) {
+        haptic_state.pattern_active = false;
+        set_motor_intensity(0, 0);
+    }
+
+    /* Start requested pattern */
+    start_intervention_pattern(state);
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Get haptic system statistics
+ */
+fsp_err_t get_haptic_statistics(uint32_t *total_interventions, float *effectiveness, bool *is_active)
+{
+    if (total_interventions) *total_interventions = haptic_state.total_interventions;
+    if (effectiveness) *effectiveness = haptic_state.effectiveness_score;
+    if (is_active) *is_active = haptic_state.pattern_active;
+
+    return FSP_SUCCESS;
+}

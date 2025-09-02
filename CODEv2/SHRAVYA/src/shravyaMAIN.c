@@ -1,11 +1,22 @@
 #include "hal_data.h"
-#include "eeg_types.h"
-#include "cognitive_states.h"
-#include "signal_processing.h"
-#include "mtk3_bsp2/include/tk/tkernel.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "signalPROCESSING.h"
+//#include "mtk3_bsp2/include/tk/tkernel.h"
 
 #include <stdio.h>
-
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+#ifndef E_OK
+#define E_OK (0)
+#endif
 /* Application States */
 typedef enum {
     APP_STATE_INITIALIZING = 0,
@@ -46,6 +57,7 @@ static void coordinate_data_flow(void);
 static void handle_system_events(void);
 static void update_system_statistics(void);
 static void handle_error_conditions(void);
+extern ER tk_dly_tsk(INT dlytim);
 
 /**
  * @brief Initialize all SHRAVYA subsystems
@@ -209,7 +221,8 @@ static void handle_system_events(void)
  */
 static void update_system_statistics(void)
 {
-    uint32_t current_time = R_FSP_SystemClockHzGet() / 1000;
+    // ✅ FIXED: Added required clock parameter
+    uint32_t current_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK) / 1000;
     system_status.system_uptime_minutes = (current_time - system_status.session_start_time) / 60000;
 }
 
@@ -237,6 +250,7 @@ static void handle_error_conditions(void)
  * @brief μT-Kernel Task: Application Coordinator (2Hz)
  * Priority: 5 (Highest - System coordinator)
  */
+
 void task_shravya_main_entry(INT stacd, void *exinf)
 {
     (void)stacd;
@@ -245,7 +259,8 @@ void task_shravya_main_entry(INT stacd, void *exinf)
     /* Initialize system status */
     memset(&system_status, 0, sizeof(system_status));
     system_status.current_state = APP_STATE_INITIALIZING;
-    system_status.session_start_time = R_FSP_SystemClockHzGet() / 1000;
+    // ✅ FIXED: Added required clock parameter
+    system_status.session_start_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK) / 1000;
 
     /* Initialize all subsystems */
     initialize_all_subsystems();

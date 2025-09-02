@@ -1,0 +1,2671 @@
+1) cognitiveCLASSIFIER.c
+
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "signalPROCESSING.h"
+#include "audioINTERFACE.h"
+#include "mtk3_bsp2/include/tk/tkernel.h"
+
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+/* DSP and ML Constants */
+#define FFT_SIZE                    256     // Must match processing window
+#define FFT_SIZE_HALF              128     // FFT_SIZE / 2
+#define SAMPLE_RATE                500.0f  // Hz
+#define FREQ_RESOLUTION            (SAMPLE_RATE / FFT_SIZE)  // ~1.95Hz per bin
+#define PI 3.14159265358979323846f
+
+/* EEG Frequency Band Definitions */
+#define DELTA_START_BIN            (int)(0.5f / FREQ_RESOLUTION)   // 0.5Hz
+#define DELTA_END_BIN              (int)(4.0f / FREQ_RESOLUTION)   // 4Hz
+#define THETA_START_BIN            (int)(4.0f / FREQ_RESOLUTION)   // 4Hz
+#define THETA_END_BIN              (int)(8.0f / FREQ_RESOLUTION)   // 8Hz
+#define ALPHA_START_BIN            (int)(8.0f / FREQ_RESOLUTION)   // 8Hz
+#define ALPHA_END_BIN              (int)(13.0f / FREQ_RESOLUTION)  // 13Hz
+#define BETA_START_BIN             (int)(13.0f / FREQ_RESOLUTION)  // 13Hz
+#define BETA_END_BIN               (int)(30.0f / FREQ_RESOLUTION)  // 30Hz
+#define GAMMA_START_BIN            (int)(30.0f / FREQ_RESOLUTION)  // 30Hz
+#define GAMMA_END_BIN              (int)(45.0f / FREQ_RESOLUTION)  // 45Hz
+
+/* Neural Network Architecture */
+#define INPUT_FEATURES             24      // Total feature vector size
+#define HIDDEN_LAYER1_SIZE         16      // First hidden layer
+#define HIDDEN_LAYER2_SIZE         12      // Second hidden layer
+#define OUTPUT_LAYER_SIZE          6       // 6 cognitive states
+
+/* Feature Extraction Structures */
+typedef struct {
+    float real;
+    float imag;
+} complex_t;
+
+typedef struct {
+    float magnitude[FFT_SIZE_HALF];
+    float phase[FFT_SIZE_HALF];
+    float power_spectrum[FFT_SIZE_HALF];
+} fft_result_t;
+
+/* Complete Feature Vector */
+
+/* Lightweight Neural Network Weights (Pre-trained) */
+typedef struct {
+    /* Input to Hidden Layer 1 */
+    float w1[INPUT_FEATURES][HIDDEN_LAYER1_SIZE];
+    float b1[HIDDEN_LAYER1_SIZE];
+
+    /* Hidden Layer 1 to Hidden Layer 2 */
+    float w2[HIDDEN_LAYER1_SIZE][HIDDEN_LAYER2_SIZE];
+    float b2[HIDDEN_LAYER2_SIZE];
+
+    /* Hidden Layer 2 to Output */
+    float w3[HIDDEN_LAYER2_SIZE][OUTPUT_LAYER_SIZE];
+    float b3[OUTPUT_LAYER_SIZE];
+} neural_network_t;
+
+/* Global Variables */
+static feature_vector_t current_features;
+static cognitive_classification_t classification_result;
+static neural_network_t cognitive_nn;
+static volatile bool classifier_initialized = false;
+static volatile uint32_t classifications_performed = 0;
+
+/* External semaphore references */
+extern ID feature_extraction_semaphore;
+extern ID classification_semaphore;
+extern ID haptic_semaphore;
+
+/* Private Function Prototypes */
+static void init_neural_network(void);
+static void compute_fft(const float *input, complex_t *output, int size);
+static void extract_frequency_features(const float *left_signal, const float *right_signal, int size);
+static void extract_time_domain_features(const float *left_signal, const float *right_signal, int size);
+static void extract_coherence_features(const float *left_signal, const float *right_signal, int size);
+static void extract_quality_features(const float *left_signal, const float *right_signal, int size);
+static float calculate_spectral_entropy(const float *power_spectrum, int size);
+static float calculate_hjorth_parameters(const float *signal, int size, float *mobility);
+static float sigmoid_activation(float x);
+static float relu_activation(float x);
+static void forward_propagation(const feature_vector_t *features, float *output);
+static cognitive_state_type_t determine_dominant_state(const float *probabilities);
+static bool intervention_required(const cognitive_classification_t *result);
+
+/**
+ * @brief Initialize cognitive classification system
+ */
+fsp_err_t cognitive_classifier_init(void)
+{
+    /* Clear feature vector */
+    memset(&current_features, 0, sizeof(current_features));
+    memset(&classification_result, 0, sizeof(classification_result));
+
+    /* Initialize pre-trained neural network */
+    init_neural_network();
+
+    classifications_performed = 0;
+    classifier_initialized = true;
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize pre-trained neural network weights
+ * Note: In production, these would be loaded from flash memory
+ */
+static void init_neural_network(void)
+{
+    /* Simplified pre-trained weights for demonstration */
+    /* In production, these would be derived from training on EEG datasets */
+
+    /* Input to Hidden Layer 1 - Random initialization for now */
+    for (int i = 0; i < INPUT_FEATURES; i++) {
+        for (int j = 0; j < HIDDEN_LAYER1_SIZE; j++) {
+            cognitive_nn.w1[i][j] = ((float)rand() / RAND_MAX - 0.5f) * 0.2f;
+        }
+    }
+
+    /* Bias initialization */
+    for (int i = 0; i < HIDDEN_LAYER1_SIZE; i++) {
+        cognitive_nn.b1[i] = 0.0f;
+    }
+
+    /* Hidden Layer 1 to Hidden Layer 2 */
+    for (int i = 0; i < HIDDEN_LAYER1_SIZE; i++) {
+        for (int j = 0; j < HIDDEN_LAYER2_SIZE; j++) {
+            cognitive_nn.w2[i][j] = ((float)rand() / RAND_MAX - 0.5f) * 0.2f;
+        }
+    }
+
+    for (int i = 0; i < HIDDEN_LAYER2_SIZE; i++) {
+        cognitive_nn.b2[i] = 0.0f;
+    }
+
+    /* Hidden Layer 2 to Output */
+    for (int i = 0; i < HIDDEN_LAYER2_SIZE; i++) {
+        for (int j = 0; j < OUTPUT_LAYER_SIZE; j++) {
+            cognitive_nn.w3[i][j] = ((float)rand() / RAND_MAX - 0.5f) * 0.2f;
+        }
+    }
+
+    for (int i = 0; i < OUTPUT_LAYER_SIZE; i++) {
+        cognitive_nn.b3[i] = 0.0f;
+    }
+
+    /* TODO: Load actual pre-trained weights from flash memory */
+    /* load_pretrained_weights_from_flash(&cognitive_nn); */
+}
+
+/**
+ * @brief Compute FFT using simple DFT (optimized for microcontroller)
+ */
+static void compute_fft(const float *input, complex_t *output, int size)
+{
+    const float pi2 = 2.0f * PI;
+
+    for (int k = 0; k < size/2; k++) {
+        output[k].real = 0.0f;
+        output[k].imag = 0.0f;
+
+        for (int n = 0; n < size; n++) {
+            float angle = -pi2 * k * n / size;
+            output[k].real += input[n] * cosf(angle);
+            output[k].imag += input[n] * sinf(angle);
+        }
+
+        /* Normalize */
+        output[k].real /= size;
+        output[k].imag /= size;
+    }
+}
+
+/**
+ * @brief Extract frequency domain features from EEG signals
+ */
+static void extract_frequency_features(const float *left_signal, const float *right_signal, int size)
+{
+    complex_t left_fft[FFT_SIZE_HALF];
+    complex_t right_fft[FFT_SIZE_HALF];
+    float combined_power[FFT_SIZE_HALF];
+
+    /* Compute FFT for both channels */
+    compute_fft(left_signal, left_fft, size);
+    compute_fft(right_signal, right_fft, size);
+
+    /* Calculate power spectrum (average of both channels) */
+    for (int i = 0; i < FFT_SIZE_HALF; i++) {
+        float left_power = left_fft[i].real * left_fft[i].real + left_fft[i].imag * left_fft[i].imag;
+        float right_power = right_fft[i].real * right_fft[i].real + right_fft[i].imag * right_fft[i].imag;
+        combined_power[i] = (left_power + right_power) / 2.0f;
+    }
+
+    /* Extract frequency band powers */
+    current_features.delta_power = 0.0f;
+    for (int i = DELTA_START_BIN; i <= DELTA_END_BIN && i < FFT_SIZE_HALF; i++) {
+        current_features.delta_power += combined_power[i];
+    }
+
+    current_features.theta_power = 0.0f;
+    for (int i = THETA_START_BIN; i <= THETA_END_BIN && i < FFT_SIZE_HALF; i++) {
+        current_features.theta_power += combined_power[i];
+    }
+
+    current_features.alpha_power = 0.0f;
+    for (int i = ALPHA_START_BIN; i <= ALPHA_END_BIN && i < FFT_SIZE_HALF; i++) {
+        current_features.alpha_power += combined_power[i];
+    }
+
+    current_features.beta_power = 0.0f;
+    for (int i = BETA_START_BIN; i <= BETA_END_BIN && i < FFT_SIZE_HALF; i++) {
+        current_features.beta_power += combined_power[i];
+    }
+
+    current_features.gamma_power = 0.0f;
+    for (int i = GAMMA_START_BIN; i <= GAMMA_END_BIN && i < FFT_SIZE_HALF; i++) {
+        current_features.gamma_power += combined_power[i];
+    }
+
+    /* Calculate band ratios */
+    current_features.alpha_beta_ratio = (current_features.beta_power > 0) ?
+        current_features.alpha_power / current_features.beta_power : 0.0f;
+    current_features.theta_alpha_ratio = (current_features.alpha_power > 0) ?
+        current_features.theta_power / current_features.alpha_power : 0.0f;
+
+    /* Calculate spectral entropy */
+    current_features.spectral_entropy = calculate_spectral_entropy(combined_power, FFT_SIZE_HALF);
+
+    /* Find peak frequency */
+    int peak_bin = 0;
+    float max_power = combined_power[0];
+    for (int i = 1; i < FFT_SIZE_HALF; i++) {
+        if (combined_power[i] > max_power) {
+            max_power = combined_power[i];
+            peak_bin = i;
+        }
+    }
+    current_features.peak_frequency = peak_bin * FREQ_RESOLUTION;
+
+    /* Calculate spectral centroid */
+    float numerator = 0.0f, denominator = 0.0f;
+    for (int i = 0; i < FFT_SIZE_HALF; i++) {
+        float frequency = i * FREQ_RESOLUTION;
+        numerator += frequency * combined_power[i];
+        denominator += combined_power[i];
+    }
+    current_features.spectral_centroid = (denominator > 0) ? numerator / denominator : 0.0f;
+}
+
+/**
+ * @brief Extract time domain features
+ */
+static void extract_time_domain_features(const float *left_signal, const float *right_signal, int size)
+{
+    /* Combine both channels for analysis */
+    float combined_signal[FFT_SIZE];
+    for (int i = 0; i < size; i++) {
+        combined_signal[i] = (left_signal[i] + right_signal[i]) / 2.0f;
+    }
+
+    /* Calculate mean */
+    float sum = 0.0f;
+    for (int i = 0; i < size; i++) {
+        sum += combined_signal[i];
+    }
+    current_features.mean_amplitude = sum / size;
+
+    /* Calculate RMS */
+    float sum_squares = 0.0f;
+    for (int i = 0; i < size; i++) {
+        sum_squares += combined_signal[i] * combined_signal[i];
+    }
+    current_features.rms_amplitude = sqrtf(sum_squares / size);
+
+    /* Calculate variance */
+    float variance_sum = 0.0f;
+    for (int i = 0; i < size; i++) {
+        float diff = combined_signal[i] - current_features.mean_amplitude;
+        variance_sum += diff * diff;
+    }
+    current_features.variance = variance_sum / (size - 1);
+
+    /* Calculate skewness and kurtosis */
+    float std_dev = sqrtf(current_features.variance);
+    float skew_sum = 0.0f, kurt_sum = 0.0f;
+
+    if (std_dev > 0) {
+        for (int i = 0; i < size; i++) {
+            float normalized = (combined_signal[i] - current_features.mean_amplitude) / std_dev;
+            float normalized_cubed = normalized * normalized * normalized;
+            float normalized_fourth = normalized_cubed * normalized;
+
+            skew_sum += normalized_cubed;
+            kurt_sum += normalized_fourth;
+        }
+
+        current_features.skewness = skew_sum / size;
+        current_features.kurtosis = kurt_sum / size - 3.0f; // Excess kurtosis
+    } else {
+        current_features.skewness = 0.0f;
+        current_features.kurtosis = 0.0f;
+    }
+
+    /* Calculate zero crossing rate */
+    int zero_crossings = 0;
+    for (int i = 1; i < size; i++) {
+        if ((combined_signal[i] >= 0 && combined_signal[i-1] < 0) ||
+            (combined_signal[i] < 0 && combined_signal[i-1] >= 0)) {
+            zero_crossings++;
+        }
+    }
+    current_features.zero_crossing_rate = (float)zero_crossings / (size - 1);
+
+    /* Calculate Hjorth parameters */
+    current_features.hjorth_activity = current_features.variance;
+    current_features.hjorth_mobility = calculate_hjorth_parameters(combined_signal, size, &current_features.hjorth_mobility);
+}
+
+/**
+ * @brief Calculate Hjorth mobility parameter
+ */
+static float calculate_hjorth_parameters(const float *signal, int size, float *mobility)
+{
+    /* Calculate first derivative */
+    float derivative[FFT_SIZE-1];
+    for (int i = 0; i < size-1; i++) {
+        derivative[i] = signal[i+1] - signal[i];
+    }
+
+    /* Calculate variance of derivative */
+    float deriv_mean = 0.0f;
+    for (int i = 0; i < size-1; i++) {
+        deriv_mean += derivative[i];
+    }
+    deriv_mean /= (size-1);
+
+    float deriv_variance = 0.0f;
+    for (int i = 0; i < size-1; i++) {
+        float diff = derivative[i] - deriv_mean;
+        deriv_variance += diff * diff;
+    }
+    deriv_variance /= (size-2);
+
+    /* Hjorth mobility = sqrt(variance_derivative / variance_signal) */
+    *mobility = (current_features.hjorth_activity > 0) ?
+        sqrtf(deriv_variance / current_features.hjorth_activity) : 0.0f;
+
+    return *mobility;
+}
+
+/**
+ * @brief Extract coherence features between channels
+ */
+static void extract_coherence_features(const float *left_signal, const float *right_signal, int size)
+{
+    /* Calculate cross-correlation */
+    float correlation_sum = 0.0f, left_sum = 0.0f, right_sum = 0.0f;
+
+    for (int i = 0; i < size; i++) {
+        correlation_sum += left_signal[i] * right_signal[i];
+        left_sum += left_signal[i] * left_signal[i];
+        right_sum += right_signal[i] * right_signal[i];
+    }
+
+    float denominator = sqrtf(left_sum * right_sum);
+    current_features.cross_correlation = (denominator > 0) ? correlation_sum / denominator : 0.0f;
+
+    /* Simplified coherence calculation for alpha and beta bands */
+    /* In production, this would use cross-spectral density */
+    current_features.coherence_alpha = fabsf(current_features.cross_correlation) *
+        (current_features.alpha_power / (current_features.alpha_power + current_features.beta_power + 1e-6f));
+    current_features.coherence_beta = fabsf(current_features.cross_correlation) *
+        (current_features.beta_power / (current_features.alpha_power + current_features.beta_power + 1e-6f));
+
+    /* Phase lag index (simplified) */
+    current_features.phase_lag_index = (1.0f - fabsf(current_features.cross_correlation)) / 2.0f;
+}
+
+/**
+ * @brief Extract signal quality features
+ */
+static void extract_quality_features(const float *left_signal, const float *right_signal, int size)
+{
+    /* Estimate SNR based on signal power vs noise floor */
+    float signal_power = current_features.rms_amplitude * current_features.rms_amplitude;
+    float noise_estimate = current_features.variance * 0.1f; // Simplified noise estimation
+
+    current_features.snr_estimate = (noise_estimate > 0) ?
+        10.0f * log10f(signal_power / noise_estimate) : 0.0f;
+
+    /* Signal stability based on variance */
+    current_features.signal_stability = 1.0f / (1.0f + current_features.variance);
+}
+
+/**
+ * @brief Calculate spectral entropy
+ */
+static float calculate_spectral_entropy(const float *power_spectrum, int size)
+{
+    float total_power = 0.0f;
+    float entropy = 0.0f;
+
+    /* Calculate total power */
+    for (int i = 0; i < size; i++) {
+        total_power += power_spectrum[i];
+    }
+
+    if (total_power <= 0) return 0.0f;
+
+    /* Calculate normalized spectral entropy */
+    for (int i = 0; i < size; i++) {
+        if (power_spectrum[i] > 0) {
+            float probability = power_spectrum[i] / total_power;
+            entropy -= probability * log2f(probability);
+        }
+    }
+
+    /* Normalize by maximum possible entropy */
+    float max_entropy = log2f((float)size);
+    return (max_entropy > 0) ? entropy / max_entropy : 0.0f;
+}
+
+/**
+ * @brief Activation functions
+ */
+static float sigmoid_activation(float x)
+{
+    return 1.0f / (1.0f + expf(-x));
+}
+
+static float relu_activation(float x)
+{
+    return (x > 0) ? x : 0.0f;
+}
+
+/**
+ * @brief Forward propagation through neural network
+ */
+static void forward_propagation(const feature_vector_t *features, float *output)
+{
+    /* Convert feature structure to input array */
+    float input[INPUT_FEATURES] = {
+        features->delta_power, features->theta_power, features->alpha_power,
+        features->beta_power, features->gamma_power, features->alpha_beta_ratio,
+        features->theta_alpha_ratio, features->spectral_entropy, features->peak_frequency,
+        features->spectral_centroid, features->mean_amplitude, features->rms_amplitude,
+        features->variance, features->skewness, features->kurtosis, features->zero_crossing_rate,
+        features->hjorth_activity, features->hjorth_mobility, features->cross_correlation,
+        features->coherence_alpha, features->coherence_beta, features->phase_lag_index,
+        features->snr_estimate, features->signal_stability
+    };
+
+    /* Hidden Layer 1 */
+    float hidden1[HIDDEN_LAYER1_SIZE];
+    for (int i = 0; i < HIDDEN_LAYER1_SIZE; i++) {
+        float sum = cognitive_nn.b1[i];
+        for (int j = 0; j < INPUT_FEATURES; j++) {
+            sum += input[j] * cognitive_nn.w1[j][i];
+        }
+        hidden1[i] = relu_activation(sum);
+    }
+
+    /* Hidden Layer 2 */
+    float hidden2[HIDDEN_LAYER2_SIZE];
+    for (int i = 0; i < HIDDEN_LAYER2_SIZE; i++) {
+        float sum = cognitive_nn.b2[i];
+        for (int j = 0; j < HIDDEN_LAYER1_SIZE; j++) {
+            sum += hidden1[j] * cognitive_nn.w2[j][i];
+        }
+        hidden2[i] = relu_activation(sum);
+    }
+
+    /* Output Layer */
+    float raw_output[OUTPUT_LAYER_SIZE];
+    for (int i = 0; i < OUTPUT_LAYER_SIZE; i++) {
+        float sum = cognitive_nn.b3[i];
+        for (int j = 0; j < HIDDEN_LAYER2_SIZE; j++) {
+            sum += hidden2[j] * cognitive_nn.w3[j][i];
+        }
+        raw_output[i] = sum;
+    }
+
+    /* Apply softmax activation for probabilities */
+    float exp_sum = 0.0f;
+    for (int i = 0; i < OUTPUT_LAYER_SIZE; i++) {
+        output[i] = expf(raw_output[i]);
+        exp_sum += output[i];
+    }
+
+    /* Normalize to probabilities */
+    if (exp_sum > 0) {
+        for (int i = 0; i < OUTPUT_LAYER_SIZE; i++) {
+            output[i] /= exp_sum;
+        }
+    }
+}
+
+/**
+ * @brief Determine dominant cognitive state
+ */
+static cognitive_state_type_t determine_dominant_state(const float *probabilities)
+{
+    int max_index = 0;
+    float max_prob = probabilities[0];
+
+    for (int i = 1; i < OUTPUT_LAYER_SIZE; i++) {
+        if (probabilities[i] > max_prob) {
+            max_prob = probabilities[i];
+            max_index = i;
+        }
+    }
+
+    return (cognitive_state_type_t)max_index;
+}
+
+/**
+ * @brief Check if intervention is required
+ */
+static bool intervention_required(const cognitive_classification_t *result)
+{
+    /* Intervention needed for stress, anxiety, or severe fatigue */
+    if (result->dominant_state == COGNITIVE_STATE_STRESS &&
+        result->confidence_scores[COGNITIVE_STATE_STRESS] > 0.7f) return true;
+
+    if (result->dominant_state == COGNITIVE_STATE_ANXIETY &&
+        result->confidence_scores[COGNITIVE_STATE_ANXIETY] > 0.75f) return true;
+
+    if (result->dominant_state == COGNITIVE_STATE_FATIGUE &&
+        result->confidence_scores[COGNITIVE_STATE_FATIGUE] > 0.8f) return true;
+
+    return false;
+}
+
+/**
+ * @brief μT-Kernel Task: Feature Extraction (5Hz)
+ * Priority: 20
+ */
+void task_feature_extraction_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    float *left_buffer, *right_buffer;
+    uint32_t buffer_size;
+    ER ercd;
+
+    while(1)
+    {
+        /* Wait for processed signal data */
+        ercd = tk_wai_sem(feature_extraction_semaphore, TMO_FEVR);
+        if (ercd != E_OK) continue;
+
+        /* Get filtered signal buffers */
+        if (signal_processing_get_buffer(&left_buffer, &right_buffer, &buffer_size) == FSP_SUCCESS)
+        {
+            /* Extract all feature categories */
+            extract_frequency_features(left_buffer, right_buffer, buffer_size);
+            extract_time_domain_features(left_buffer, right_buffer, buffer_size);
+            extract_coherence_features(left_buffer, right_buffer, buffer_size);
+            extract_quality_features(left_buffer, right_buffer, buffer_size);
+
+            /* Signal classification task */
+            tk_sig_sem(classification_semaphore, 1);
+        }
+    }
+}
+
+/**
+ * @brief μT-Kernel Task: Cognitive Classification (5Hz)
+ * Priority: 25
+ */
+void task_classification_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    ER ercd;
+    uint32_t start_time, end_time;
+
+    /* Initialize classifier */
+    if (cognitive_classifier_init() != FSP_SUCCESS)
+    {
+        while(1) tk_dly_tsk(1000);
+    }
+
+    while(1)
+    {
+        /* Wait for feature extraction completion */
+        ercd = tk_wai_sem(classification_semaphore, TMO_FEVR);
+        if (ercd != E_OK) continue;
+
+        /* Record inference start time */
+        start_time = R_FSP_SystemClockHzGet() / 1000;
+
+        /* Run neural network inference */
+        forward_propagation(&current_features, classification_result.confidence_scores);
+
+        /* Determine dominant state */
+        classification_result.dominant_state = determine_dominant_state(classification_result.confidence_scores);
+
+        /* Calculate overall wellness score */
+        classification_result.overall_wellness_score =
+            classification_result.confidence_scores[COGNITIVE_STATE_CALM] * 0.4f +
+            classification_result.confidence_scores[COGNITIVE_STATE_FOCUS] * 0.3f +
+            (1.0f - classification_result.confidence_scores[COGNITIVE_STATE_STRESS]) * 0.2f +
+            (1.0f - classification_result.confidence_scores[COGNITIVE_STATE_ANXIETY]) * 0.1f;
+
+        /* Check if intervention is needed */
+        classification_result.intervention_needed = intervention_required(&classification_result);
+
+        /* Record inference time */
+        end_time = R_FSP_SystemClockHzGet() / 1000;
+        classification_result.inference_time_ms = end_time - start_time;
+
+        classifications_performed++;
+
+        /* Trigger haptic feedback if intervention needed */
+        if (classification_result.intervention_needed)
+        {
+            tk_sig_sem(haptic_semaphore, 1);
+        }
+    }
+}
+
+/**
+ * @brief Get latest classification result
+ */
+fsp_err_t get_classification_result(cognitive_classification_t *result)
+{
+    if (!result || !classifier_initialized) return FSP_ERR_INVALID_POINTER;
+
+    *result = classification_result;
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Get current feature vector
+ */
+fsp_err_t get_feature_vector(feature_vector_t *features)
+{
+    if (!features) return FSP_ERR_INVALID_POINTER;
+
+    *features = current_features;
+    return FSP_SUCCESS;
+}
+
+
+2) communicationN8N.c file
+
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "signalPROCESSING.h"
+#include "mtk3_bsp2/include/tk/tkernel.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+/* Communication Configuration */
+#define JSON_BUFFER_SIZE           2048    // JSON payload buffer
+#define N8N_WEBHOOK_URL           "https://your-n8n-instance.com/webhook/shravya"
+#define TRANSMISSION_INTERVAL_S    30      // 30 second intervals
+#define MAX_RETRIES               3       // Network retry attempts
+#define TIMEOUT_MS                5000    // 5 second timeout
+
+/* Data Aggregation Window */
+#define AGGREGATION_WINDOW_SIZE   6       // 6 samples (3 minutes at 30s intervals)
+#define FEATURE_HISTORY_SIZE      10      // Keep 10 feature vectors
+
+/* Communication State */
+typedef struct {
+    cognitive_classification_t classification_history[AGGREGATION_WINDOW_SIZE];
+    feature_vector_t feature_history[FEATURE_HISTORY_SIZE];
+    uint32_t history_index;
+    uint32_t transmissions_sent;
+    uint32_t transmission_errors;
+    uint32_t last_transmission_time;
+    bool connection_active;
+    float data_quality_score;
+} communication_state_t;
+
+/* JSON Payload Structure */
+typedef struct {
+    char timestamp[32];
+    char device_id[16];
+    float session_duration_min;
+
+    /* Aggregated Cognitive Data */
+    struct {
+        float avg_wellness_score;
+        float dominant_state_confidence;
+        char dominant_state_name[16];
+        uint32_t intervention_count;
+        float intervention_effectiveness;
+        uint32_t state_transitions;
+    } cognitive_summary;
+
+    /* EEG Signal Quality */
+    struct {
+        float avg_snr_db;
+        float signal_stability;
+        uint32_t artifact_count;
+        float electrode_quality;
+    } signal_quality;
+
+    /* Frequency Band Analysis */
+    struct {
+        float delta_avg;
+        float theta_avg;
+        float alpha_avg;
+        float beta_avg;
+        float gamma_avg;
+        float alpha_beta_ratio;
+        float spectral_entropy;
+    } frequency_analysis;
+
+    /* Behavioral Patterns */
+    struct {
+        float stress_episodes_per_hour;
+        float focus_duration_avg_min;
+        float anxiety_severity_avg;
+        float fatigue_onset_hour;
+        char primary_stressor[32];
+    } behavioral_insights;
+
+} n8n_payload_t;
+
+/* Global Variables */
+static communication_state_t comm_state;
+static char json_buffer[JSON_BUFFER_SIZE];
+static volatile bool communication_initialized = false;
+static uint32_t session_start_time;
+
+/* Private Function Prototypes */
+static void aggregate_cognitive_data(n8n_payload_t *payload);
+static void aggregate_signal_quality(n8n_payload_t *payload);
+static void aggregate_frequency_data(n8n_payload_t *payload);
+static void analyze_behavioral_patterns(n8n_payload_t *payload);
+static void build_json_payload(const n8n_payload_t *payload, char *json_buffer, size_t buffer_size);
+static fsp_err_t send_to_n8n_webhook(const char *json_data);
+static void get_current_timestamp(char *timestamp, size_t size);
+static float calculate_data_quality(void);
+static const char* cognitive_state_to_string(cognitive_state_type_t state);
+
+/**
+ * @brief Initialize communication system
+ */
+fsp_err_t communication_init(void)
+{
+    /* Clear communication state */
+    memset(&comm_state, 0, sizeof(comm_state));
+
+    /* Initialize network interface (placeholder) */
+    /* In production, this would initialize WiFi/Bluetooth/cellular */
+
+    session_start_time = R_FSP_SystemClockHzGet() / 1000;
+    comm_state.connection_active = true;  // Assume active for simulation
+    communication_initialized = true;
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Aggregate cognitive data from history
+ */
+static void aggregate_cognitive_data(n8n_payload_t *payload)
+{
+    float wellness_sum = 0.0f;
+    uint32_t intervention_sum = 0;
+    uint32_t valid_samples = 0;
+    cognitive_state_type_t current_state = COGNITIVE_STATE_CALM;
+    cognitive_state_type_t prev_state = COGNITIVE_STATE_CALM;
+    uint32_t transitions = 0;
+
+    /* Calculate averages from history */
+    for (int i = 0; i < AGGREGATION_WINDOW_SIZE; i++) {
+        cognitive_classification_t *sample = &comm_state.classification_history[i];
+
+        if (sample->overall_wellness_score > 0) {  // Valid sample
+            wellness_sum += sample->overall_wellness_score;
+
+            if (sample->intervention_needed) {
+                intervention_sum++;
+            }
+
+            /* Count state transitions */
+            if (valid_samples > 0 && sample->dominant_state != prev_state) {
+                transitions++;
+            }
+
+            prev_state = sample->dominant_state;
+            current_state = sample->dominant_state;  // Latest state
+            valid_samples++;
+        }
+    }
+
+    /* Fill cognitive summary */
+    payload->cognitive_summary.avg_wellness_score = (valid_samples > 0) ?
+        wellness_sum / valid_samples : 0.0f;
+    payload->cognitive_summary.intervention_count = intervention_sum;
+    payload->cognitive_summary.state_transitions = transitions;
+    strcpy(payload->cognitive_summary.dominant_state_name,
+           cognitive_state_to_string(current_state));
+
+    /* Get current state confidence */
+    cognitive_classification_t current_result;
+    if (get_classification_result(&current_result) == FSP_SUCCESS) {
+        payload->cognitive_summary.dominant_state_confidence =
+            current_result.confidence_scores[current_result.dominant_state];
+    }
+
+    /* Get haptic effectiveness */
+    get_haptic_statistics(NULL, &payload->cognitive_summary.intervention_effectiveness, NULL);
+}
+
+/**
+ * @brief Aggregate signal quality metrics
+ */
+static void aggregate_signal_quality(n8n_payload_t *payload)
+{
+    uint32_t total_samples, total_artifacts;
+    bool processing_ready;
+
+    /* Get processing statistics */
+    signal_processing_get_stats(&total_samples, &total_artifacts, &processing_ready);
+
+    /* Calculate averages from feature history */
+    float snr_sum = 0.0f, stability_sum = 0.0f;
+    uint32_t valid_features = 0;
+
+    for (int i = 0; i < FEATURE_HISTORY_SIZE; i++) {
+        feature_vector_t *features = &comm_state.feature_history[i];
+
+        if (features->snr_estimate > 0) {  // Valid feature
+            snr_sum += features->snr_estimate;
+            stability_sum += features->signal_stability;
+            valid_features++;
+        }
+    }
+
+    payload->signal_quality.avg_snr_db = (valid_features > 0) ? snr_sum / valid_features : 0.0f;
+    payload->signal_quality.signal_stability = (valid_features > 0) ?
+        stability_sum / valid_features : 0.0f;
+    payload->signal_quality.artifact_count = total_artifacts;
+    payload->signal_quality.electrode_quality = comm_state.data_quality_score;
+}
+
+/**
+ * @brief Aggregate frequency domain data
+ */
+static void aggregate_frequency_data(n8n_payload_t *payload)
+{
+    float delta_sum = 0.0f, theta_sum = 0.0f, alpha_sum = 0.0f;
+    float beta_sum = 0.0f, gamma_sum = 0.0f, ratio_sum = 0.0f, entropy_sum = 0.0f;
+    uint32_t valid_features = 0;
+
+    for (int i = 0; i < FEATURE_HISTORY_SIZE; i++) {
+        feature_vector_t *features = &comm_state.feature_history[i];
+
+        if (features->delta_power > 0) {  // Valid feature
+            delta_sum += features->delta_power;
+            theta_sum += features->theta_power;
+            alpha_sum += features->alpha_power;
+            beta_sum += features->beta_power;
+            gamma_sum += features->gamma_power;
+            ratio_sum += features->alpha_beta_ratio;
+            entropy_sum += features->spectral_entropy;
+            valid_features++;
+        }
+    }
+
+    if (valid_features > 0) {
+        payload->frequency_analysis.delta_avg = delta_sum / valid_features;
+        payload->frequency_analysis.theta_avg = theta_sum / valid_features;
+        payload->frequency_analysis.alpha_avg = alpha_sum / valid_features;
+        payload->frequency_analysis.beta_avg = beta_sum / valid_features;
+        payload->frequency_analysis.gamma_avg = gamma_sum / valid_features;
+        payload->frequency_analysis.alpha_beta_ratio = ratio_sum / valid_features;
+        payload->frequency_analysis.spectral_entropy = entropy_sum / valid_features;
+    }
+}
+
+/**
+ * @brief Analyze behavioral patterns from data
+ */
+static void analyze_behavioral_patterns(n8n_payload_t *payload)
+{
+    uint32_t stress_episodes = 0;
+    float focus_duration_sum = 0.0f;
+    float anxiety_sum = 0.0f;
+    uint32_t current_time = R_FSP_SystemClockHzGet() / 1000;
+    float session_hours = (current_time - session_start_time) / 3600.0f;
+
+    /* Analyze patterns from history */
+    for (int i = 0; i < AGGREGATION_WINDOW_SIZE; i++) {
+        cognitive_classification_t *sample = &comm_state.classification_history[i];
+
+        /* Count stress episodes */
+        if (sample->dominant_state == COGNITIVE_STATE_STRESS &&
+            sample->confidence_scores[COGNITIVE_STATE_STRESS] > 0.7f) {
+            stress_episodes++;
+        }
+
+        /* Calculate focus duration */
+        if (sample->dominant_state == COGNITIVE_STATE_FOCUS) {
+            focus_duration_sum += 0.5f;  // 30 second windows
+        }
+
+        /* Average anxiety severity */
+        anxiety_sum += sample->confidence_scores[COGNITIVE_STATE_ANXIETY];
+    }
+
+    payload->behavioral_insights.stress_episodes_per_hour =
+        (session_hours > 0) ? stress_episodes / session_hours : 0.0f;
+    payload->behavioral_insights.focus_duration_avg_min = focus_duration_sum;
+    payload->behavioral_insights.anxiety_severity_avg = anxiety_sum / AGGREGATION_WINDOW_SIZE;
+
+    /* Determine primary stressor (simplified) */
+    if (payload->behavioral_insights.stress_episodes_per_hour > 2.0f) {
+        strcpy(payload->behavioral_insights.primary_stressor, "high_frequency_stress");
+    } else if (payload->behavioral_insights.anxiety_severity_avg > 0.6f) {
+        strcpy(payload->behavioral_insights.primary_stressor, "persistent_anxiety");
+    } else if (payload->behavioral_insights.focus_duration_avg_min < 5.0f) {
+        strcpy(payload->behavioral_insights.primary_stressor, "attention_deficits");
+    } else {
+        strcpy(payload->behavioral_insights.primary_stressor, "none_detected");
+    }
+}
+
+/**
+ * @brief Build JSON payload for n8n webhook
+ */
+static void build_json_payload(const n8n_payload_t *payload, char *json_buffer, size_t buffer_size)
+{
+    snprintf(json_buffer, buffer_size,
+        "{\n"
+        "  \"timestamp\": \"%s\",\n"
+        "  \"device_id\": \"%s\",\n"
+        "  \"session_duration_min\": %.1f,\n"
+        "  \"cognitive_summary\": {\n"
+        "    \"avg_wellness_score\": %.3f,\n"
+        "    \"dominant_state\": \"%s\",\n"
+        "    \"dominant_state_confidence\": %.3f,\n"
+        "    \"intervention_count\": %u,\n"
+        "    \"intervention_effectiveness\": %.3f,\n"
+        "    \"state_transitions\": %u\n"
+        "  },\n"
+        "  \"signal_quality\": {\n"
+        "    \"avg_snr_db\": %.1f,\n"
+        "    \"signal_stability\": %.3f,\n"
+        "    \"artifact_count\": %u,\n"
+        "    \"electrode_quality\": %.3f\n"
+        "  },\n"
+        "  \"frequency_analysis\": {\n"
+        "    \"delta_avg\": %.3f,\n"
+        "    \"theta_avg\": %.3f,\n"
+        "    \"alpha_avg\": %.3f,\n"
+        "    \"beta_avg\": %.3f,\n"
+        "    \"gamma_avg\": %.3f,\n"
+        "    \"alpha_beta_ratio\": %.3f,\n"
+        "    \"spectral_entropy\": %.3f\n"
+        "  },\n"
+        "  \"behavioral_insights\": {\n"
+        "    \"stress_episodes_per_hour\": %.1f,\n"
+        "    \"focus_duration_avg_min\": %.1f,\n"
+        "    \"anxiety_severity_avg\": %.3f,\n"
+        "    \"primary_stressor\": \"%s\"\n"
+        "  }\n"
+        "}",
+        payload->timestamp,
+        payload->device_id,
+        payload->session_duration_min,
+        payload->cognitive_summary.avg_wellness_score,
+        payload->cognitive_summary.dominant_state_name,
+        payload->cognitive_summary.dominant_state_confidence,
+        payload->cognitive_summary.intervention_count,
+        payload->cognitive_summary.intervention_effectiveness,
+        payload->cognitive_summary.state_transitions,
+        payload->signal_quality.avg_snr_db,
+        payload->signal_quality.signal_stability,
+        payload->signal_quality.artifact_count,
+        payload->signal_quality.electrode_quality,
+        payload->frequency_analysis.delta_avg,
+        payload->frequency_analysis.theta_avg,
+        payload->frequency_analysis.alpha_avg,
+        payload->frequency_analysis.beta_avg,
+        payload->frequency_analysis.gamma_avg,
+        payload->frequency_analysis.alpha_beta_ratio,
+        payload->frequency_analysis.spectral_entropy,
+        payload->behavioral_insights.stress_episodes_per_hour,
+        payload->behavioral_insights.focus_duration_avg_min,
+        payload->behavioral_insights.anxiety_severity_avg,
+        payload->behavioral_insights.primary_stressor
+    );
+}
+
+/**
+ * @brief Send data to n8n webhook (placeholder implementation)
+ */
+static fsp_err_t send_to_n8n_webhook(const char *json_data)
+{
+    /* Placeholder for actual HTTP/HTTPS transmission */
+    /* In production, this would use WiFi/cellular module */
+
+    /* Simulate network transmission */
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* For debugging - could be sent via UART to external gateway */
+    printf("N8N Webhook Payload:\n%s\n", json_data);
+
+    comm_state.transmissions_sent++;
+    comm_state.last_transmission_time = R_FSP_SystemClockHzGet() / 1000;
+
+    return FSP_SUCCESS;  // Simulate success
+}
+
+/**
+ * @brief Get current timestamp in ISO 8601 format
+ */
+static void get_current_timestamp(char *timestamp, size_t size)
+{
+    uint32_t current_time = R_FSP_SystemClockHzGet() / 1000;
+    snprintf(timestamp, size, "2025-09-02T%02u:%02u:%02uZ",
+             (current_time / 3600) % 24,
+             (current_time / 60) % 60,
+             current_time % 60);
+}
+
+/**
+ * @brief Convert cognitive state enum to string
+ */
+static const char* cognitive_state_to_string(cognitive_state_type_t state)
+{
+    switch (state) {
+        case COGNITIVE_STATE_FOCUS: return "focus";
+        case COGNITIVE_STATE_STRESS: return "stress";
+        case COGNITIVE_STATE_ANXIETY: return "anxiety";
+        case COGNITIVE_STATE_FATIGUE: return "fatigue";
+        case COGNITIVE_STATE_CALM: return "calm";
+        case COGNITIVE_STATE_BOREDOM: return "boredom";
+        default: return "unknown";
+    }
+}
+
+/**
+ * @brief μT-Kernel Task: Communication (30-second intervals)
+ * Priority: 35 (Lowest)
+ */
+void task_communication_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    n8n_payload_t payload;
+    cognitive_classification_t current_classification;
+    feature_vector_t current_features;
+    uint32_t current_time;
+
+    /* Initialize communication system */
+    if (communication_init() != FSP_SUCCESS) {
+        while(1) tk_dly_tsk(1000);
+    }
+
+    while(1) {
+        /* Wait for 30-second interval */
+        tk_dly_tsk(TRANSMISSION_INTERVAL_S * 1000);
+
+        /* Collect current data */
+        if (get_classification_result(&current_classification) == FSP_SUCCESS) {
+            /* Store in history */
+            comm_state.classification_history[comm_state.history_index % AGGREGATION_WINDOW_SIZE] =
+                current_classification;
+        }
+
+        if (get_feature_vector(&current_features) == FSP_SUCCESS) {
+            /* Store in feature history */
+            comm_state.feature_history[comm_state.history_index % FEATURE_HISTORY_SIZE] =
+                current_features;
+        }
+
+        comm_state.history_index++;
+
+        /* Build payload every 3 minutes (6 samples) */
+        if ((comm_state.history_index % 6) == 0 && comm_state.history_index > 0) {
+            /* Clear payload structure */
+            memset(&payload, 0, sizeof(payload));
+
+            /* Fill basic info */
+            get_current_timestamp(payload.timestamp, sizeof(payload.timestamp));
+            strcpy(payload.device_id, "SHRAVYA_001");
+
+            current_time = R_FSP_SystemClockHzGet() / 1000;
+            payload.session_duration_min = (current_time - session_start_time) / 60.0f;
+
+            /* Aggregate all data categories */
+            aggregate_cognitive_data(&payload);
+            aggregate_signal_quality(&payload);
+            aggregate_frequency_data(&payload);
+            analyze_behavioral_patterns(&payload);
+
+            /* Build JSON and send */
+            build_json_payload(&payload, json_buffer, JSON_BUFFER_SIZE);
+
+            /* Attempt transmission with retries */
+            for (int retry = 0; retry < MAX_RETRIES; retry++) {
+                if (send_to_n8n_webhook(json_buffer) == FSP_SUCCESS) {
+                    break;  // Success
+                }
+                comm_state.transmission_errors++;
+                tk_dly_tsk(1000);  // 1 second retry delay
+            }
+
+            /* Update data quality score */
+            comm_state.data_quality_score = calculate_data_quality();
+        }
+    }
+}
+
+/**
+ * @brief Calculate overall data quality score
+ */
+static float calculate_data_quality(void)
+{
+    float quality_score = 1.0f;
+
+    /* Reduce quality for high error rates */
+    if (comm_state.transmissions_sent > 0) {
+        float error_rate = (float)comm_state.transmission_errors / comm_state.transmissions_sent;
+        quality_score *= (1.0f - error_rate);
+    }
+
+    /* Reduce quality for poor signal */
+    uint32_t total_samples, total_artifacts;
+    bool processing_ready;
+    signal_processing_get_stats(&total_samples, &total_artifacts, &processing_ready);
+
+    if (total_samples > 0) {
+        float artifact_rate = (float)total_artifacts / total_samples;
+        quality_score *= (1.0f - artifact_rate);
+    }
+
+    return (quality_score < 0.0f) ? 0.0f : quality_score;
+}
+
+/**
+ * @brief Get communication statistics
+ */
+fsp_err_t get_communication_stats(uint32_t *transmissions, uint32_t *errors, float *quality)
+{
+    if (transmissions) *transmissions = comm_state.transmissions_sent;
+    if (errors) *errors = comm_state.transmission_errors;
+    if (quality) *quality = comm_state.data_quality_score;
+
+    return FSP_SUCCESS;
+}
+
+3) eegACQUISITION.c
+
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "shravyaCONFIG.h"
+#include "hardwareDRIVERS.h"
+#include <stdint.h>
+
+/* Include μT-Kernel 3.0 headers */
+#include "mtk3_bsp2/include/tk/tkernel.h"
+
+/* ADS1263 Register Definitions */
+#define ADS1263_ID_REG          0x00
+#define ADS1263_POWER_REG       0x01
+#define ADS1263_INTERFACE_REG   0x02
+#define ADS1263_MODE0_REG       0x03
+#define ADS1263_MODE1_REG       0x04
+#define ADS1263_MODE2_REG       0x05
+#define ADS1263_INPMUX_REG      0x06
+#define ADS1263_OFCAL0_REG      0x07
+#define ADS1263_OFCAL1_REG      0x08
+#define ADS1263_OFCAL2_REG      0x09
+#define ADS1263_FSCAL0_REG      0x0A
+#define ADS1263_FSCAL1_REG      0x0B
+#define ADS1263_FSCAL2_REG      0x0C
+#define ADS1263_IDACMUX_REG     0x0D
+#define ADS1263_IDACMAG_REG     0x0E
+#define ADS1263_REFMUX_REG      0x0F
+#define ADS1263_TDACP_REG       0x10
+#define ADS1263_TDACN_REG       0x11
+#define ADS1263_GPIOCON_REG     0x12
+#define ADS1263_GPIODIR_REG     0x13
+#define ADS1263_GPIODAT_REG     0x14
+#define ADS1263_ADC2CFG_REG     0x15
+#define ADS1263_ADC2MUX_REG     0x16
+#define ADS1263_ADC2OFC0_REG    0x17
+#define ADS1263_ADC2OFC1_REG    0x18
+#define ADS1263_ADC2FSC0_REG    0x19
+#define ADS1263_ADC2FSC1_REG    0x1A
+
+/* ADS1263 Commands */
+#define ADS1263_CMD_NOP         0x00
+#define ADS1263_CMD_RESET       0x06
+#define ADS1263_CMD_START1      0x08
+#define ADS1263_CMD_STOP1       0x0A
+#define ADS1263_CMD_START2      0x0C
+#define ADS1263_CMD_STOP2       0x0E
+#define ADS1263_CMD_RDATA1      0x12
+#define ADS1263_CMD_RDATA2      0x14
+#define ADS1263_CMD_SYOCAL1     0x16
+#define ADS1263_CMD_SYGCAL1     0x17
+#define ADS1263_CMD_SFOCAL1     0x19
+#define ADS1263_CMD_SYOCAL2     0x1B
+#define ADS1263_CMD_SYGCAL2     0x1C
+#define ADS1263_CMD_SFOCAL2     0x1E
+
+/* Register read/write commands */
+#define ADS1263_CMD_RREG        0x20
+#define ADS1263_CMD_WREG        0x40
+
+/* Global Variables */
+static eeg_circular_buffer_t eeg_buffer;
+static volatile bool acquisition_running = false;
+static volatile bool ads1263_initialized = false;
+static volatile uint32_t sample_count = 0;
+static volatile uint32_t error_count = 0;
+
+/* External semaphore references */
+extern ID eeg_data_semaphore;
+extern ID preprocessing_semaphore;
+
+/* Private Function Prototypes */
+static fsp_err_t ads1263_write_register(uint8_t reg_addr, uint8_t data);
+static fsp_err_t ads1263_read_register(uint8_t reg_addr, uint8_t *data);
+static fsp_err_t ads1263_write_command(uint8_t command);
+static fsp_err_t ads1263_reset(void);
+static fsp_err_t ads1263_configure_for_eeg(void);
+static fsp_err_t ads1263_calibrate(void);
+static fsp_err_t ads1263_read_data(int32_t *adc1_data, int32_t *adc2_data);
+static void ads1263_calculate_signal_quality(eeg_raw_sample_t *sample);
+static fsp_err_t eeg_buffer_init(void);
+static fsp_err_t eeg_buffer_write(const eeg_raw_sample_t *sample);
+
+/**
+ * @brief Initialize EEG Acquisition Hardware
+ * @return FSP_SUCCESS on success, error code on failure
+ */
+fsp_err_t eeg_acquisition_init(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* Initialize circular buffer */
+    err = eeg_buffer_init();
+    if (FSP_SUCCESS != err) return err;
+
+    /* Reset and configure ADS1263 */
+    err = ads1263_reset();
+    if (FSP_SUCCESS != err) return err;
+
+    /* Wait for reset completion */
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Configure ADS1263 for EEG acquisition */
+    err = ads1263_configure_for_eeg();
+    if (FSP_SUCCESS != err) return err;
+
+    /* Perform system calibration */
+    err = ads1263_calibrate();
+    if (FSP_SUCCESS != err) return err;
+
+    ads1263_initialized = true;
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Reset ADS1263 via SPI command
+ */
+static fsp_err_t ads1263_reset(void)
+{
+    fsp_err_t err;
+
+    /* Send reset command */
+    err = ads1263_write_command(ADS1263_CMD_RESET);
+    if (FSP_SUCCESS != err) return err;
+
+    /* Wait for reset to complete */
+    R_BSP_SoftwareDelay(5, BSP_DELAY_UNITS_MILLISECONDS);
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Configure ADS1263 registers for optimal EEG acquisition
+ */
+static fsp_err_t ads1263_configure_for_eeg(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* Power register - Internal reference, bias enabled */
+    err |= ads1263_write_register(ADS1263_POWER_REG, 0x11);
+
+    /* Interface register - Status byte enabled, checksum disabled */
+    err |= ads1263_write_register(ADS1263_INTERFACE_REG, 0x05);
+
+    /* Mode0 register - Continuous conversion, 500 SPS */
+    err |= ads1263_write_register(ADS1263_MODE0_REG, 0x00);
+
+    /* Mode1 register - Digital filter enabled, 50/60Hz rejection */
+    err |= ads1263_write_register(ADS1263_MODE1_REG, 0x80);
+
+    /* Mode2 register - PGA gain = 32, data rate = 500 SPS */
+    err |= ads1263_write_register(ADS1263_MODE2_REG, 0x04);
+
+    /* Input multiplexer - AIN0/AIN1 differential (left electrode) */
+    err |= ads1263_write_register(ADS1263_INPMUX_REG, 0x01);
+
+    /* Reference multiplexer - Internal reference */
+    err |= ads1263_write_register(ADS1263_REFMUX_REG, 0x00);
+
+    /* ADC2 configuration for right electrode - AIN2/AIN3 differential */
+    err |= ads1263_write_register(ADS1263_ADC2CFG_REG, 0x04);
+    err |= ads1263_write_register(ADS1263_ADC2MUX_REG, 0x23);
+
+    return err;
+}
+
+/**
+ * @brief Perform system calibration
+ */
+static fsp_err_t ads1263_calibrate(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* Perform system offset calibration for ADC1 */
+    err |= ads1263_write_command(ADS1263_CMD_SYOCAL1);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Perform system gain calibration for ADC1 */
+    err |= ads1263_write_command(ADS1263_CMD_SYGCAL1);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Perform system offset calibration for ADC2 */
+    err |= ads1263_write_command(ADS1263_CMD_SYOCAL2);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Perform system gain calibration for ADC2 */
+    err |= ads1263_write_command(ADS1263_CMD_SYGCAL2);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    return err;
+}
+
+/**
+ * @brief Write data to ADS1263 register
+ */
+static fsp_err_t ads1263_write_register(uint8_t reg_addr, uint8_t data)
+{
+    uint8_t tx_data[3];
+    fsp_err_t err;
+
+    /* Assert CS pin low */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Prepare command sequence */
+    tx_data[0] = ADS1263_CMD_WREG | reg_addr;  // Write command + register address
+    tx_data[1] = 0x00;                         // Number of registers - 1
+    tx_data[2] = data;                         // Data to write
+
+    /* Send command */
+    err = R_SPI_Write(&g_spi0_ctrl, tx_data, 3, SPI_BIT_WIDTH_8_BITS);
+
+    /* Wait for completion */
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* De-assert CS pin */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    return err;
+}
+
+/**
+ * @brief Read data from ADS1263 register
+ */
+static fsp_err_t ads1263_read_register(uint8_t reg_addr, uint8_t *data)
+{
+    uint8_t tx_data[3];
+    uint8_t rx_data[3];
+    fsp_err_t err;
+
+    /* Assert CS pin low */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Prepare command sequence */
+    tx_data[0] = ADS1263_CMD_RREG | reg_addr;  // Read command + register address
+    tx_data[1] = 0x00;                         // Number of registers - 1
+    tx_data[2] = 0x00;                         // Dummy byte
+
+    /* Send command and receive data */
+    err = R_SPI_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 3, SPI_BIT_WIDTH_8_BITS);
+
+    /* Extract data */
+    *data = rx_data[2];
+
+    /* De-assert CS pin */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    return err;
+}
+
+/**
+ * @brief Send command to ADS1263
+ */
+static fsp_err_t ads1263_write_command(uint8_t command)
+{
+    fsp_err_t err;
+
+    /* Assert CS pin low */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Send command */
+    err = R_SPI_Write(&g_spi0_ctrl, &command, 1, SPI_BIT_WIDTH_8_BITS);
+
+    /* Wait for completion */
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* De-assert CS pin */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    return err;
+}
+
+/**
+ * @brief Read conversion data from both ADCs
+ */
+static fsp_err_t ads1263_read_data(int32_t *adc1_data, int32_t *adc2_data)
+{
+    uint8_t tx_data[10] = {0};
+    uint8_t rx_data[10] = {0};
+    fsp_err_t err;
+
+    /* Assert CS pin low */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Send RDATA1 command for ADC1 */
+    tx_data[0] = ADS1263_CMD_RDATA1;
+
+    /* Read ADC1 data (4 bytes: status + 3 data bytes) */
+    err = R_SPI_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 4, SPI_BIT_WIDTH_8_BITS);
+    if (FSP_SUCCESS != err) goto cleanup;
+
+    /* Extract 24-bit ADC1 data and sign extend to 32-bit */
+    *adc1_data = (int32_t)((rx_data[1] << 16) | (rx_data[2] << 8) | rx_data[3]);
+    if (*adc1_data & 0x800000) *adc1_data |= 0xFF000000;  // Sign extend
+
+    /* Send RDATA2 command for ADC2 */
+    tx_data[0] = ADS1263_CMD_RDATA2;
+
+    /* Read ADC2 data (3 bytes) */
+    err = R_SPI_WriteRead(&g_spi0_ctrl, tx_data, &rx_data[4], 3, SPI_BIT_WIDTH_8_BITS);
+    if (FSP_SUCCESS != err) goto cleanup;
+
+    /* Extract 24-bit ADC2 data and sign extend to 32-bit */
+    *adc2_data = (int32_t)((rx_data[4] << 16) | (rx_data[5] << 8) | rx_data[6]);
+    if (*adc2_data & 0x800000) *adc2_data |= 0xFF000000;  // Sign extend
+
+cleanup:
+    /* De-assert CS pin */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    return err;
+}
+
+/**
+ * @brief Calculate signal quality metrics
+ */
+static void ads1263_calculate_signal_quality(eeg_raw_sample_t *sample)
+{
+    /* Calculate electrode impedance (simplified estimation) */
+    /* This would typically require injection of test currents */
+    sample->quality.impedance_left_kohms = 50.0f;   // Placeholder
+    sample->quality.impedance_right_kohms = 45.0f;  // Placeholder
+
+    /* Assess contact quality based on signal amplitude */
+    int32_t left_abs = (sample->left_channel < 0) ? -sample->left_channel : sample->left_channel;
+    int32_t right_abs = (sample->right_channel < 0) ? -sample->right_channel : sample->right_channel;
+
+    /* Good contact if signals are within expected EEG range */
+    sample->quality.contact_quality_good = (left_abs < 0x400000) && (right_abs < 0x400000);
+
+    /* Calculate noise level (simplified) */
+    sample->quality.signal_noise_level = (left_abs + right_abs) >> 16;
+
+    /* Common mode voltage estimation */
+    sample->quality.common_mode_voltage = (sample->left_channel + sample->right_channel) / 2.0f * 2.5f / 8388608.0f;
+}
+
+/**
+ * @brief Initialize circular buffer
+ */
+static fsp_err_t eeg_buffer_init(void)
+{
+    eeg_buffer.write_index = 0;
+    eeg_buffer.read_index = 0;
+    eeg_buffer.buffer_full = false;
+    eeg_buffer.buffer_mutex = NULL;  // Will be set by μT-Kernel
+
+    /* Clear buffer memory */
+    memset(eeg_buffer.samples, 0, sizeof(eeg_buffer.samples));
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Write sample to circular buffer
+ */
+static fsp_err_t eeg_buffer_write(const eeg_raw_sample_t *sample)
+{
+    /* Check for buffer overflow */
+    uint32_t next_write_index = (eeg_buffer.write_index + 1) % EEG_BUFFER_SIZE_SAMPLES;
+
+    if (next_write_index == eeg_buffer.read_index && eeg_buffer.buffer_full)
+    {
+        /* Buffer overflow - advance read index (oldest sample lost) */
+        eeg_buffer.read_index = (eeg_buffer.read_index + 1) % EEG_BUFFER_SIZE_SAMPLES;
+        error_count++;
+    }
+
+    /* Write new sample */
+    eeg_buffer.samples[eeg_buffer.write_index] = *sample;
+    eeg_buffer.write_index = next_write_index;
+
+    /* Update buffer full flag */
+    if (eeg_buffer.write_index == eeg_buffer.read_index)
+    {
+        eeg_buffer.buffer_full = true;
+    }
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief μT-Kernel Task: EEG Acquisition (500Hz)
+ * Priority: 10 (Highest)
+ */
+void task_eeg_acquisition_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    eeg_raw_sample_t sample;
+    ER ercd;
+    int32_t adc1_data, adc2_data;
+
+    /* Initialize hardware */
+    if (eeg_acquisition_init() != FSP_SUCCESS)
+    {
+        /* Initialization failed - enter error state */
+        while(1)
+        {
+            tk_dly_tsk(1000);  // 1 second delay
+            error_count++;
+        }
+    }
+
+    /* Start continuous conversion */
+    ads1263_write_command(ADS1263_CMD_START1);
+    ads1263_write_command(ADS1263_CMD_START2);
+    acquisition_running = true;
+
+    while (acquisition_running)
+    {
+        /* Wait for DRDY signal from ADS1263 (500Hz) */
+        ercd = tk_wai_sem(eeg_data_semaphore, 5);  // 5ms timeout
+        if (ercd != E_OK)
+        {
+            error_count++;
+            continue;
+        }
+
+        /* Read EEG sample from both ADCs */
+        if (ads1263_read_data(&adc1_data, &adc2_data) == FSP_SUCCESS)
+        {
+            /* Populate sample structure */
+            sample.left_channel = adc1_data;
+            sample.right_channel = adc2_data;
+            sample.drl_feedback = 0;  // Will be implemented with DRL circuit
+            sample.timestamp_us = sample_count * 2000;  // 2ms per sample at 500Hz
+
+            /* Calculate signal quality metrics */
+            ads1263_calculate_signal_quality(&sample);
+
+            /* Store in circular buffer */
+            eeg_buffer_write(&sample);
+
+            sample_count++;
+
+            /* Signal preprocessing task every 10 samples (50Hz rate) */
+            if ((sample_count % 10) == 0)
+            {
+                tk_sig_sem(preprocessing_semaphore, 1);
+            }
+        }
+        else
+        {
+            error_count++;
+        }
+    }
+}
+
+/**
+ * @brief External interrupt callback for ADS1263 DRDY signal
+ */
+void ads1263_drdy_callback(external_irq_callback_args_t *p_args)
+{
+    (void)p_args;
+
+    /* Signal EEG acquisition task from ISR */
+    tk_isig_sem(eeg_data_semaphore, 1);
+}
+
+/**
+ * @brief Get latest EEG samples from circular buffer
+ */
+fsp_err_t eeg_get_samples(eeg_raw_sample_t *samples, uint32_t count, uint32_t *samples_read)
+{
+    uint32_t available_samples = 0;
+    uint32_t i;
+
+    if (!samples || !samples_read) return FSP_ERR_INVALID_POINTER;
+
+    /* Calculate available samples */
+    if (eeg_buffer.buffer_full)
+    {
+        available_samples = EEG_BUFFER_SIZE_SAMPLES;
+    }
+    else if (eeg_buffer.write_index >= eeg_buffer.read_index)
+    {
+        available_samples = eeg_buffer.write_index - eeg_buffer.read_index;
+    }
+    else
+    {
+        available_samples = (EEG_BUFFER_SIZE_SAMPLES - eeg_buffer.read_index) + eeg_buffer.write_index;
+    }
+
+    /* Limit to requested count */
+    *samples_read = (count < available_samples) ? count : available_samples;
+
+    /* Copy samples */
+    for (i = 0; i < *samples_read; i++)
+    {
+        samples[i] = eeg_buffer.samples[eeg_buffer.read_index];
+        eeg_buffer.read_index = (eeg_buffer.read_index + 1) % EEG_BUFFER_SIZE_SAMPLES;
+    }
+
+    /* Update buffer full flag */
+    if (*samples_read > 0)
+    {
+        eeg_buffer.buffer_full = false;
+    }
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Get EEG acquisition statistics
+ */
+void eeg_get_statistics(uint32_t *total_samples, uint32_t *error_count_out, bool *is_running)
+{
+    if (total_samples) *total_samples = sample_count;
+    if (error_count_out) *error_count_out = error_count;
+    if (is_running) *is_running = acquisition_running && ads1263_initialized;
+}
+
+4) hapticFEEDBACK.c
+
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "shravyaCONFIG.h"
+#include "mtk3_bsp2/include/tk/tkernel.h"
+
+#include <math.h>
+#include <string.h>
+/* ✅ ADD: Missing μT-Kernel 3.0 Definitions */
+#ifndef E_OK
+#define E_OK (0)
+#endif
+#ifndef TMO_FEVR
+#define TMO_FEVR (-1)           // Wait forever
+#endif
+#ifndef TMO_POL
+#define TMO_POL (0)             // Polling (no wait)
+#endif
+
+/* ✅ ADD: Missing μT-Kernel Function Prototypes */
+extern ER tk_wai_sem(ID semid, INT timeout);
+extern ER tk_dly_tsk(INT dlytim);
+
+/* ✅ ADD: Missing FSP GPT Definitions */
+#ifndef GPT_IO_PIN_GTIOCB
+#define GPT_IO_PIN_GTIOCB (1)   // GPT output pin B
+#endif
+
+/* Haptic Pattern Definitions */
+#define MAX_PATTERN_STEPS          32      // Maximum steps in a pattern
+#define PATTERN_RESOLUTION_MS      50      // 50ms resolution for patterns
+#define PWM_FREQUENCY_HZ           250     // 250Hz PWM for vibration motors
+#define MAX_INTENSITY              100     // Maximum vibration intensity (%)
+
+/* Vibration Motor Specifications (from BOM) */
+#define MOTOR_VOLTAGE              3.0f    // 3V coin motors
+#define MOTOR_CURRENT_MAX_MA       100     // 100mA peak current
+#define MOTOR_RESPONSE_TIME_MS     10      // ~10ms response time
+
+/* Intervention Timing Constants */
+#define STRESS_PATTERN_DURATION_S      30     // 30 second stress relief
+#define ANXIETY_PATTERN_DURATION_S     45     // 45 second anxiety reduction
+#define FATIGUE_PATTERN_DURATION_S     20     // 20 second alertness boost
+#define FOCUS_PATTERN_DURATION_S       15     // 15 second focus enhancement
+#define BREATHING_CYCLE_DURATION_S     8      // 8 second breathing cycle (4s in, 4s out)
+
+/* Haptic Pattern Structure */
+typedef struct {
+    uint8_t left_intensity;      // 0-100% intensity for left motor
+    uint8_t right_intensity;     // 0-100% intensity for right motor
+    uint16_t duration_ms;        // Duration of this step
+    bool fade_in;                // Smooth fade in
+    bool fade_out;               // Smooth fade out
+} haptic_step_t;
+
+typedef struct {
+    haptic_step_t steps[MAX_PATTERN_STEPS];
+    uint8_t step_count;
+    uint8_t repeat_count;        // 0 = no repeat, >0 = repeat count
+    bool bilateral;              // true = both ears, false = alternating
+    char pattern_name[16];       // Pattern identifier
+} haptic_pattern_t;
+
+/* Haptic State Management */
+typedef struct {
+    haptic_pattern_t current_pattern;
+    uint8_t current_step;
+    uint16_t step_timer_ms;
+    uint8_t repeat_counter;
+    bool pattern_active;
+    bool pattern_paused;
+    cognitive_state_type_t active_intervention;
+    uint32_t intervention_start_time;
+    uint32_t total_interventions;
+    float effectiveness_score;
+} haptic_state_t;
+
+/* PWM Control Structure */
+typedef struct {
+    uint8_t left_duty_cycle;     // 0-100%
+    uint8_t right_duty_cycle;    // 0-100%
+    bool left_active;
+    bool right_active;
+} pwm_control_t;
+
+/* Global Variables */
+static haptic_state_t haptic_state;
+static pwm_control_t pwm_control;
+static volatile bool haptic_initialized = false;
+
+/* Pre-defined Intervention Patterns */
+static haptic_pattern_t stress_relief_pattern;
+static haptic_pattern_t anxiety_reduction_pattern;
+static haptic_pattern_t fatigue_alertness_pattern;
+static haptic_pattern_t focus_enhancement_pattern;
+static haptic_pattern_t breathing_guide_pattern;
+
+/* External semaphore references */
+extern ID haptic_semaphore;
+
+/* Private Function Prototypes */
+static void init_haptic_patterns(void);
+static void init_stress_relief_pattern(void);
+static void init_anxiety_reduction_pattern(void);
+static void init_fatigue_alertness_pattern(void);
+static void init_focus_enhancement_pattern(void);
+static void init_breathing_guide_pattern(void);
+static void set_motor_intensity(uint8_t left_intensity, uint8_t right_intensity);
+static void update_pwm_outputs(void);
+static void fade_intensity(uint8_t *current, uint8_t target, uint8_t steps);
+static void start_intervention_pattern(cognitive_state_type_t state);
+static void process_pattern_step(void);
+static bool is_intervention_effective(cognitive_state_type_t state);
+
+/**
+ * @brief Initialize haptic feedback system
+ */
+/**
+ * @brief Initialize haptic feedback system
+ */
+fsp_err_t haptic_feedback_init(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* ✅ FIXED: Conditional timer initialization */
+    #ifdef g_timer1_ctrl
+    /* Initialize PWM timers for vibration motors */
+    err = R_GPT_Open(&g_timer1_ctrl, &g_timer1_cfg); // Left motor
+    if (FSP_SUCCESS != err) return err;
+    #endif
+
+    #ifdef g_timer2_ctrl
+    err = R_GPT_Open(&g_timer2_ctrl, &g_timer2_cfg); // Right motor
+    if (FSP_SUCCESS != err) return err;
+    #endif
+
+    /* ✅ FIXED: Conditional PWM frequency configuration */
+    #if defined(g_timer1_ctrl) && defined(g_timer2_ctrl)
+    /* Configure PWM frequency and duty cycle */
+    uint32_t period_counts = R_FSP_SystemClockHzGet() / PWM_FREQUENCY_HZ;
+
+    err = R_GPT_PeriodSet(&g_timer1_ctrl, period_counts);
+    if (FSP_SUCCESS != err) return err;
+
+    err = R_GPT_PeriodSet(&g_timer2_ctrl, period_counts);
+    if (FSP_SUCCESS != err) return err;
+    #endif
+
+    /* Initialize GPIO for motor control (with MOSFET drivers) */
+    #ifdef g_ioport_ctrl
+    err = R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_LEFT_PIN, BSP_IO_LEVEL_LOW);
+    if (FSP_SUCCESS != err) return err;
+
+    err = R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_RIGHT_PIN, BSP_IO_LEVEL_LOW);
+    if (FSP_SUCCESS != err) return err;
+    #endif
+
+    /* Clear haptic state */
+    memset(&haptic_state, 0, sizeof(haptic_state));
+    memset(&pwm_control, 0, sizeof(pwm_control));
+
+    /* Initialize pre-defined patterns */
+    init_haptic_patterns();
+
+    haptic_initialized = true;
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize all pre-defined haptic patterns
+ */
+static void init_haptic_patterns(void)
+{
+    init_stress_relief_pattern();
+    init_anxiety_reduction_pattern();
+    init_fatigue_alertness_pattern();
+    init_focus_enhancement_pattern();
+    init_breathing_guide_pattern();
+}
+
+/**
+ * @brief Initialize stress relief pattern (deep, slow pulses)
+ */
+static void init_stress_relief_pattern(void)
+{
+    strcpy(stress_relief_pattern.pattern_name, "StressRelief");
+    stress_relief_pattern.bilateral = true;
+    stress_relief_pattern.repeat_count = 6;  // 30 seconds total
+    stress_relief_pattern.step_count = 8;
+
+    /* Deep breathing simulation: 4 sec in, 4 sec out */
+    stress_relief_pattern.steps[0] = {0, 0, 500, true, false};      // Rest
+    stress_relief_pattern.steps[1] = {30, 30, 1000, true, false};   // Gentle start
+    stress_relief_pattern.steps[2] = {60, 60, 1500, false, false};  // Inhale guidance
+    stress_relief_pattern.steps[3] = {40, 40, 1000, false, true};   // Peak hold
+    stress_relief_pattern.steps[4] = {20, 20, 1500, false, false};  // Exhale guidance
+    stress_relief_pattern.steps[5] = {5, 5, 1000, false, true};     // Gentle end
+    stress_relief_pattern.steps[6] = {0, 0, 500, false, false};     // Rest
+    stress_relief_pattern.steps[7] = {0, 0, 1000, false, false};    // Pause
+}
+
+/**
+ * @brief Initialize anxiety reduction pattern (asymmetric, grounding)
+ */
+static void init_anxiety_reduction_pattern(void)
+{
+    strcpy(anxiety_reduction_pattern.pattern_name, "AnxietyReduce");
+    anxiety_reduction_pattern.bilateral = false;  // Alternating
+    anxiety_reduction_pattern.repeat_count = 9;   // 45 seconds total
+    anxiety_reduction_pattern.step_count = 10;
+
+    /* Grounding technique: alternating gentle pulses */
+    anxiety_reduction_pattern.steps[0] = {25, 0, 800, true, false};    // Left gentle
+    anxiety_reduction_pattern.steps[1] = {0, 0, 200, false, false};    // Gap
+    anxiety_reduction_pattern.steps[2] = {0, 25, 800, true, false};    // Right gentle
+    anxiety_reduction_pattern.steps[3] = {0, 0, 200, false, false};    // Gap
+    anxiety_reduction_pattern.steps[4] = {40, 0, 600, true, false};    // Left stronger
+    anxiety_reduction_pattern.steps[5] = {0, 0, 200, false, false};    // Gap
+    anxiety_reduction_pattern.steps[6] = {0, 40, 600, true, false};    // Right stronger
+    anxiety_reduction_pattern.steps[7] = {0, 0, 300, false, false};    // Longer gap
+    anxiety_reduction_pattern.steps[8] = {15, 15, 1200, true, true};   // Both gentle
+    anxiety_reduction_pattern.steps[9] = {0, 0, 800, false, false};    // Rest
+}
+
+/**
+ * @brief Initialize fatigue alertness pattern (sharp, energizing)
+ */
+static void init_fatigue_alertness_pattern(void)
+{
+    strcpy(fatigue_alertness_pattern.pattern_name, "FatigueAlert");
+    fatigue_alertness_pattern.bilateral = true;
+    fatigue_alertness_pattern.repeat_count = 4;   // 20 seconds total
+    fatigue_alertness_pattern.step_count = 6;
+
+    /* Energizing pattern: sharp bursts followed by building waves */
+    fatigue_alertness_pattern.steps[0] = {80, 80, 150, false, false};  // Sharp burst
+    fatigue_alertness_pattern.steps[1] = {0, 0, 100, false, false};    // Quick gap
+    fatigue_alertness_pattern.steps[2] = {90, 90, 150, false, false};  // Stronger burst
+    fatigue_alertness_pattern.steps[3] = {0, 0, 200, false, false};    // Gap
+    fatigue_alertness_pattern.steps[4] = {50, 50, 2000, true, false}; // Building wave
+    fatigue_alertness_pattern.steps[5] = {10, 10, 2400, false, true}; // Gentle decline
+}
+
+/**
+ * @brief Initialize focus enhancement pattern (rhythmic, attention-grabbing)
+ */
+static void init_focus_enhancement_pattern(void)
+{
+    strcpy(focus_enhancement_pattern.pattern_name, "FocusBoost");
+    focus_enhancement_pattern.bilateral = false;  // Alternating for attention
+    focus_enhancement_pattern.repeat_count = 3;   // 15 seconds total
+    focus_enhancement_pattern.step_count = 8;
+
+    /* Attention pattern: rhythmic alternating with increasing intensity */
+    focus_enhancement_pattern.steps[0] = {30, 0, 300, true, false};    // Left start
+    focus_enhancement_pattern.steps[1] = {0, 30, 300, true, false};    // Right
+    focus_enhancement_pattern.steps[2] = {45, 0, 400, false, false};   // Left stronger
+    focus_enhancement_pattern.steps[3] = {0, 45, 400, false, false};   // Right stronger
+    focus_enhancement_pattern.steps[4] = {60, 0, 500, false, false};   // Left peak
+    focus_enhancement_pattern.steps[5] = {0, 60, 500, false, false};   // Right peak
+    focus_enhancement_pattern.steps[6] = {75, 75, 1000, false, true}; // Both peak
+    focus_enhancement_pattern.steps[7] = {0, 0, 1600, false, false};  // Rest
+}
+
+/**
+ * @brief Initialize breathing guidance pattern (4-7-8 technique)
+ */
+static void init_breathing_guide_pattern(void)
+{
+    strcpy(breathing_guide_pattern.pattern_name, "BreathGuide");
+    breathing_guide_pattern.bilateral = true;
+    breathing_guide_pattern.repeat_count = 4;     // 4 breathing cycles
+    breathing_guide_pattern.step_count = 4;
+
+    /* 4-7-8 breathing technique */
+    breathing_guide_pattern.steps[0] = {0, 0, 1000, false, false};      // Prepare
+    breathing_guide_pattern.steps[1] = {40, 40, 4000, true, false};     // Inhale 4s
+    breathing_guide_pattern.steps[2] = {20, 20, 7000, false, false};    // Hold 7s
+    breathing_guide_pattern.steps[3] = {10, 10, 8000, false, true};     // Exhale 8s
+}
+
+/**
+ * @brief Set motor intensity with safety limits
+ */
+static void set_motor_intensity(uint8_t left_intensity, uint8_t right_intensity)
+{
+    /* Clamp intensities to safe range */
+    if (left_intensity > MAX_INTENSITY) left_intensity = MAX_INTENSITY;
+    if (right_intensity > MAX_INTENSITY) right_intensity = MAX_INTENSITY;
+
+    pwm_control.left_duty_cycle = left_intensity;
+    pwm_control.right_duty_cycle = right_intensity;
+    pwm_control.left_active = (left_intensity > 0);
+    pwm_control.right_active = (right_intensity > 0);
+
+    /* Update PWM outputs */
+    update_pwm_outputs();
+}
+
+/**
+ * @brief Update PWM outputs to vibration motors
+ */
+/**
+ * @brief Update PWM outputs to vibration motors
+ */
+static void update_pwm_outputs(void)
+{
+    #if defined(g_timer1_ctrl) && defined(g_timer2_ctrl)
+    /* Calculate duty cycle counts */
+    uint32_t period_counts = R_FSP_SystemClockHzGet() / PWM_FREQUENCY_HZ;
+    uint32_t left_duty_counts = (period_counts * pwm_control.left_duty_cycle) / 100;
+    uint32_t right_duty_counts = (period_counts * pwm_control.right_duty_cycle) / 100;
+
+    /* Update left motor PWM */
+    if (pwm_control.left_active && left_duty_counts > 0) {
+        R_GPT_DutyCycleSet(&g_timer1_ctrl, left_duty_counts, GPT_IO_PIN_GTIOCB);
+        if (!pwm_control.left_active) {
+            R_GPT_Start(&g_timer1_ctrl);
+        }
+    } else {
+        R_GPT_Stop(&g_timer1_ctrl);
+        #ifdef g_ioport_ctrl
+        R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_LEFT_PIN, BSP_IO_LEVEL_LOW);
+        #endif
+    }
+
+    /* Update right motor PWM */
+    if (pwm_control.right_active && right_duty_counts > 0) {
+        R_GPT_DutyCycleSet(&g_timer2_ctrl, right_duty_counts, GPT_IO_PIN_GTIOCB);
+        if (!pwm_control.right_active) {
+            R_GPT_Start(&g_timer2_ctrl);
+        }
+    } else {
+        R_GPT_Stop(&g_timer2_ctrl);
+        #ifdef g_ioport_ctrl
+        R_IOPORT_PinWrite(&g_ioport_ctrl, VIBRATION_MOTOR_RIGHT_PIN, BSP_IO_LEVEL_LOW);
+        #endif
+    }
+    #endif
+}
+
+/**
+ * @brief Start intervention pattern based on cognitive state
+ */
+static void start_intervention_pattern(cognitive_state_type_t state)
+{
+    haptic_pattern_t *selected_pattern = NULL;
+
+    /* Select appropriate pattern */
+    switch (state) {
+        case COGNITIVE_STATE_STRESS:
+            selected_pattern = &stress_relief_pattern;
+            break;
+        case COGNITIVE_STATE_ANXIETY:
+            selected_pattern = &anxiety_reduction_pattern;
+            break;
+        case COGNITIVE_STATE_FATIGUE:
+            selected_pattern = &fatigue_alertness_pattern;
+            break;
+        case COGNITIVE_STATE_FOCUS:
+            selected_pattern = &focus_enhancement_pattern;
+            break;
+        case COGNITIVE_STATE_BOREDOM:
+            selected_pattern = &breathing_guide_pattern;  // Use breathing for boredom
+            break;
+        default:
+            selected_pattern = &breathing_guide_pattern;  // Default to breathing
+            break;
+    }
+
+    /* Copy selected pattern to active pattern */
+    haptic_state.current_pattern = *selected_pattern;
+    haptic_state.current_step = 0;
+    haptic_state.step_timer_ms = 0;
+    haptic_state.repeat_counter = 0;
+    haptic_state.pattern_active = true;
+    haptic_state.pattern_paused = false;
+    haptic_state.active_intervention = state;
+    haptic_state.intervention_start_time = R_FSP_SystemClockHzGet() / 1000;
+    haptic_state.total_interventions++;
+}
+
+/**
+ * @brief Process current pattern step
+ */
+static void process_pattern_step(void)
+{
+    if (!haptic_state.pattern_active || haptic_state.pattern_paused) return;
+
+    haptic_step_t *current_step = &haptic_state.current_pattern.steps[haptic_state.current_step];
+
+    /* Handle fade effects */
+    static uint8_t fade_steps = 0;
+    static uint8_t target_left = 0, target_right = 0;
+
+    if (haptic_state.step_timer_ms == 0) {
+        /* Starting new step */
+        target_left = current_step->left_intensity;
+        target_right = current_step->right_intensity;
+
+        if (current_step->fade_in) {
+            fade_steps = current_step->duration_ms / (2 * PATTERN_RESOLUTION_MS);
+            set_motor_intensity(0, 0);  // Start from zero
+        } else {
+            set_motor_intensity(target_left, target_right);
+        }
+    }
+
+    /* Handle fading */
+    if (current_step->fade_in && haptic_state.step_timer_ms < current_step->duration_ms / 2) {
+        /* Fade in */
+        fade_intensity(&pwm_control.left_duty_cycle, target_left, fade_steps);
+        fade_intensity(&pwm_control.right_duty_cycle, target_right, fade_steps);
+        update_pwm_outputs();
+    } else if (current_step->fade_out && haptic_state.step_timer_ms > current_step->duration_ms / 2) {
+        /* Fade out */
+        fade_intensity(&pwm_control.left_duty_cycle, 0, fade_steps);
+        fade_intensity(&pwm_control.right_duty_cycle, 0, fade_steps);
+        update_pwm_outputs();
+    }
+
+    /* Advance timer */
+    haptic_state.step_timer_ms += PATTERN_RESOLUTION_MS;
+
+    /* Check if step is complete */
+    if (haptic_state.step_timer_ms >= current_step->duration_ms) {
+        /* Move to next step */
+        haptic_state.current_step++;
+        haptic_state.step_timer_ms = 0;
+
+        /* Check if pattern is complete */
+        if (haptic_state.current_step >= haptic_state.current_pattern.step_count) {
+            haptic_state.repeat_counter++;
+
+            if (haptic_state.repeat_counter >= haptic_state.current_pattern.repeat_count) {
+                /* Pattern complete */
+                haptic_state.pattern_active = false;
+                set_motor_intensity(0, 0);  // Stop motors
+
+                /* Calculate effectiveness */
+                haptic_state.effectiveness_score = is_intervention_effective(haptic_state.active_intervention) ? 0.8f : 0.3f;
+            } else {
+                /* Repeat pattern */
+                haptic_state.current_step = 0;
+            }
+        }
+    }
+}
+
+/**
+ * @brief Apply smooth intensity fading
+ */
+static void fade_intensity(uint8_t *current, uint8_t target, uint8_t steps)
+{
+    if (steps == 0) {
+        *current = target;
+        return;
+    }
+
+    int16_t difference = (int16_t)target - (int16_t)*current;
+    int16_t step_size = difference / (int16_t)steps;
+
+    if (step_size == 0 && difference != 0) {
+        step_size = (difference > 0) ? 1 : -1;
+    }
+
+    *current = (uint8_t)((int16_t)*current + step_size);
+
+    /* Ensure bounds */
+    if (*current > MAX_INTENSITY) *current = MAX_INTENSITY;
+}
+
+/**
+ * @brief Check if intervention was effective (simplified)
+ */
+static bool is_intervention_effective(cognitive_state_type_t state)
+{
+    /* In production, this would analyze EEG changes during/after intervention */
+    /* For now, return a basic effectiveness estimate */
+
+    cognitive_classification_t current_result;
+    if (get_classification_result(&current_result) == FSP_SUCCESS) {
+        /* Check if the problematic state confidence decreased */
+        switch (state) {
+            case COGNITIVE_STATE_STRESS:
+                return current_result.confidence_scores[COGNITIVE_STATE_STRESS] < 0.5f;
+            case COGNITIVE_STATE_ANXIETY:
+                return current_result.confidence_scores[COGNITIVE_STATE_ANXIETY] < 0.6f;
+            case COGNITIVE_STATE_FATIGUE:
+                return current_result.confidence_scores[COGNITIVE_STATE_FOCUS] > 0.4f;
+            default:
+                return true;  // Assume effective for other states
+        }
+    }
+
+    return false;  // Default to ineffective if no data
+}
+
+/**
+ * @brief μT-Kernel Task: Haptic Feedback (Variable Rate)
+ * Priority: 30
+ */
+void task_haptic_feedback_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    ER ercd;
+    cognitive_classification_t classification;
+
+    /* Initialize haptic system */
+    if (haptic_feedback_init() != FSP_SUCCESS) {
+        while(1) tk_dly_tsk(1000);
+    }
+
+    while(1) {
+        /* Wait for intervention trigger */
+        ercd = tk_wai_sem(haptic_semaphore, TMO_FEVR);
+        if (ercd != E_OK) continue;
+
+        /* Get latest classification */
+        if (get_classification_result(&classification) == FSP_SUCCESS) {
+            /* Only start new pattern if not currently active */
+            if (!haptic_state.pattern_active && classification.intervention_needed) {
+                start_intervention_pattern(classification.dominant_state);
+            }
+        }
+
+        /* Process active pattern at 20Hz (50ms intervals) */
+        while (haptic_state.pattern_active) {
+            process_pattern_step();
+            tk_dly_tsk(PATTERN_RESOLUTION_MS);
+        }
+    }
+}
+
+/**
+ * @brief Manual trigger for specific haptic pattern
+ */
+fsp_err_t trigger_haptic_pattern(cognitive_state_type_t state)
+{
+    if (!haptic_initialized) return FSP_ERR_NOT_INITIALIZED;
+
+    /* Stop current pattern if active */
+    if (haptic_state.pattern_active) {
+        haptic_state.pattern_active = false;
+        set_motor_intensity(0, 0);
+    }
+
+    /* Start requested pattern */
+    start_intervention_pattern(state);
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Get haptic system statistics
+ */
+fsp_err_t get_haptic_statistics(uint32_t *total_interventions, float *effectiveness, bool *is_active)
+{
+    if (total_interventions) *total_interventions = haptic_state.total_interventions;
+    if (effectiveness) *effectiveness = haptic_state.effectiveness_score;
+    if (is_active) *is_active = haptic_state.pattern_active;
+
+    return FSP_SUCCESS;
+}
+
+5) mtk3INTEGRATION.c file:
+
+#include "hal_data.h"
+#include "shravyaCONFIG.h"
+#include "eegTYPES.h"
+
+/* Include μT-Kernel 3.0 headers */
+#include "mtk3_bsp2/include/tk/tkernel.h"
+#include "mtk3_bsp2/include/tk/device.h"
+
+/* Task Control Blocks */
+static ID task_eeg_acquisition;
+static ID task_preprocessing;
+static ID task_feature_extraction;
+static ID task_classification;
+static ID task_haptic_feedback;
+static ID task_communication;
+static ID task_audio_interface;
+static ID task_power_management;
+static ID task_shravya_main;
+
+/* Synchronization Objects */
+static ID eeg_data_semaphore;
+static ID processed_data_mutex;
+static ID classification_event_flag;
+
+/* Task Stack Sizes */
+#define STACK_SIZE_EEG_ACQ        2048
+#define STACK_SIZE_PREPROCESSING  2048
+#define STACK_SIZE_FEATURE_EXTRACT 3072
+#define STACK_SIZE_CLASSIFICATION  4096
+#define STACK_SIZE_HAPTIC         1024
+#define STACK_SIZE_COMMUNICATION  2048
+
+/* Task Entry Points - Forward Declarations */
+void task_eeg_acquisition_entry(INT stacd, void *exinf);
+void task_preprocessing_entry(INT stacd, void *exinf);
+void task_feature_extraction_entry(INT stacd, void *exinf);
+void task_classification_entry(INT stacd, void *exinf);
+void task_haptic_feedback_entry(INT stacd, void *exinf);
+void task_communication_entry(INT stacd, void *exinf);
+
+extern void task_audio_interface_entry(INT stacd, void *exinf);
+extern void task_power_management_entry(INT stacd, void *exinf);
+extern void task_shravya_main_entry(INT stacd, void *exinf);
+/* Initialize μT-Kernel 3.0 System */
+ER mtk3_system_init(void)
+{
+    ER ercd = E_OK;
+
+    /* Create synchronization objects */
+    T_CSEM csem = {TA_TFIFO, 0, 1}; // Binary semaphore
+    eeg_data_semaphore = tk_cre_sem(&csem);
+
+    T_CMTX cmtx = {TA_TFIFO, 1}; // Mutex with priority ceiling
+    processed_data_mutex = tk_cre_mtx(&cmtx);
+
+    T_CFLG cflg = {TA_TFIFO | TA_WMUL, 0}; // Event flag
+    classification_event_flag = tk_cre_flg(&cflg);
+
+    /* Create tasks */
+    T_CTSK ctsk;
+
+    // EEG Acquisition Task (Highest Priority)
+    ctsk.tskatr = TA_HLNG | TA_RNG3;
+    ctsk.task = task_eeg_acquisition_entry;
+    ctsk.itskpri = TASK_PRIORITY_EEG_ACQ;
+    ctsk.stksz = STACK_SIZE_EEG_ACQ;
+    ctsk.stkadr = NULL; // Auto allocation
+    task_eeg_acquisition = tk_cre_tsk(&ctsk);
+
+    // Preprocessing Task
+    ctsk.task = task_preprocessing_entry;
+    ctsk.itskpri = TASK_PRIORITY_PREPROCESSING;
+    ctsk.stksz = STACK_SIZE_PREPROCESSING;
+    task_preprocessing = tk_cre_tsk(&ctsk);
+
+    // Feature Extraction Task
+    ctsk.task = task_feature_extraction_entry;
+    ctsk.itskpri = TASK_PRIORITY_FEATURE_EXTRACT;
+    ctsk.stksz = STACK_SIZE_FEATURE_EXTRACT;
+    task_feature_extraction = tk_cre_tsk(&ctsk);
+
+    // Classification Task
+    ctsk.task = task_classification_entry;
+    ctsk.itskpri = TASK_PRIORITY_CLASSIFICATION;
+    ctsk.stksz = STACK_SIZE_CLASSIFICATION;
+    task_classification = tk_cre_tsk(&ctsk);
+
+    // Haptic Feedback Task
+    ctsk.task = task_haptic_feedback_entry;
+    ctsk.itskpri = TASK_PRIORITY_HAPTIC;
+    ctsk.stksz = STACK_SIZE_HAPTIC;
+    task_haptic_feedback = tk_cre_tsk(&ctsk);
+
+    // Audio Interface Task
+    ctsk.task = task_audio_interface_entry;
+    ctsk.itskpri = 12;
+    ctsk.stksz = 2048;
+    task_audio_interface = tk_cre_tsk(&ctsk);
+
+    // Power Management Task
+    ctsk.task = task_power_management_entry;
+    ctsk.itskpri = 40;
+    ctsk.stksz = 1024;
+    task_power_management = tk_cre_tsk(&ctsk);
+
+    // Main Coordinator Task
+    ctsk.task = task_shravya_main_entry;
+    ctsk.itskpri = 5;
+    ctsk.stksz = 2048;
+    task_shravya_main = tk_cre_tsk(&ctsk);
+
+    // Communication Task
+    ctsk.task = task_communication_entry;
+    ctsk.itskpri = TASK_PRIORITY_COMMUNICATION;
+    ctsk.stksz = STACK_SIZE_COMMUNICATION;
+    task_communication = tk_cre_tsk(&ctsk);
+
+    return ercd;
+}
+
+/* Start μT-Kernel 3.0 Scheduler */
+ER mtk3_start_scheduler(void)
+{
+    /* Start all tasks */
+    tk_sta_tsk(task_eeg_acquisition, 0);
+    tk_sta_tsk(task_preprocessing, 0);
+    tk_sta_tsk(task_feature_extraction, 0);
+    tk_sta_tsk(task_classification, 0);
+    tk_sta_tsk(task_haptic_feedback, 0);
+    tk_sta_tsk(task_communication, 0);
+    tk_sta_tsk(task_audio_interface, 0);
+    tk_sta_tsk(task_power_management, 0);
+    tk_sta_tsk(task_shravya_main, 0);
+
+    /* Start μT-Kernel 3.0 system */
+    tk_set_pow(NORMAL_SPEED);
+
+    return E_OK;
+}
+
+6) powerMANAGEMENT.c file:
+
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "shravyaCONFIG.h"
+#include "mtk3_bsp2/include/tk/tkernel.h"
+
+#include <math.h>
+
+/* MAX17048 Register Addresses */
+#define MAX17048_I2C_ADDR           0x36
+#define MAX17048_VCELL_REG          0x02
+#define MAX17048_SOC_REG            0x04
+#define MAX17048_MODE_REG           0x06
+#define MAX17048_VERSION_REG        0x08
+#define MAX17048_CONFIG_REG         0x0C
+#define MAX17048_COMMAND_REG        0xFE
+
+/* Power Management Constants */
+#define BATTERY_FULL_VOLTAGE_MV     4200    // 4.2V full charge
+#define BATTERY_EMPTY_VOLTAGE_MV    3300    // 3.3V empty
+#define LOW_BATTERY_THRESHOLD       15      // 15% SOC
+#define CRITICAL_BATTERY_THRESHOLD  5       // 5% SOC
+#define POWER_SAVE_THRESHOLD        20      // 20% SOC
+
+/* Power Management State */
+typedef struct {
+    uint16_t battery_voltage_mv;
+    uint8_t battery_soc_percent;
+    bool charging_active;
+    bool low_battery_warning;
+    bool critical_battery_alert;
+    uint32_t power_save_mode_time;
+    uint32_t total_runtime_minutes;
+    float average_power_consumption_mw;
+} power_management_t;
+
+/* Global Variables */
+static power_management_t power_state;
+static volatile bool power_management_initialized = false;
+static uint32_t system_start_time;
+
+/* Private Function Prototypes */
+static fsp_err_t max17048_init(void);
+static fsp_err_t max17048_read_voltage(uint16_t *voltage_mv);
+static fsp_err_t max17048_read_soc(uint8_t *soc_percent);
+static void enter_power_save_mode(void);
+static void exit_power_save_mode(void);
+static void update_power_statistics(void);
+
+/**
+ * @brief Initialize power management system
+ */
+fsp_err_t power_management_init(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* Initialize I2C for MAX17048 */
+    err = R_IIC_MASTER_Open(&g_i2c_master0_ctrl, &g_i2c_master0_cfg);
+    if (FSP_SUCCESS != err) return err;
+
+    /* Initialize MAX17048 fuel gauge */
+    err = max17048_init();
+    if (FSP_SUCCESS != err) return err;
+
+    /* Initialize power state */
+    memset(&power_state, 0, sizeof(power_state));
+    system_start_time = R_FSP_SystemClockHzGet() / 1000;
+
+    /* Initial battery reading */
+    max17048_read_voltage(&power_state.battery_voltage_mv);
+    max17048_read_soc(&power_state.battery_soc_percent);
+
+    power_management_initialized = true;
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize MAX17048 fuel gauge
+ */
+static fsp_err_t max17048_init(void)
+{
+    fsp_err_t err;
+    uint8_t tx_data[3];
+
+    /* Reset MAX17048 */
+    tx_data[0] = MAX17048_COMMAND_REG;
+    tx_data[1] = 0x00; // Reset command high byte
+    tx_data[2] = 0x54; // Reset command low byte
+
+    err = R_IIC_MASTER_Write(&g_i2c_master0_ctrl, tx_data, 3, false);
+    if (FSP_SUCCESS != err) return err;
+
+    /* Wait for reset completion */
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Configure MAX17048 */
+    tx_data[0] = MAX17048_CONFIG_REG;
+    tx_data[1] = 0x97; // Alert threshold and configuration
+    tx_data[2] = 0x00;
+
+    err = R_IIC_MASTER_Write(&g_i2c_master0_ctrl, tx_data, 3, false);
+
+    return err;
+}
+
+/**
+ * @brief Read battery voltage from MAX17048
+ */
+static fsp_err_t max17048_read_voltage(uint16_t *voltage_mv)
+{
+    fsp_err_t err;
+    uint8_t tx_data[1];
+    uint8_t rx_data[2];
+
+    /* Read VCELL register */
+    tx_data[0] = MAX17048_VCELL_REG;
+
+    err = R_IIC_MASTER_Write(&g_i2c_master0_ctrl, tx_data, 1, true);
+    if (FSP_SUCCESS != err) return err;
+
+    err = R_IIC_MASTER_Read(&g_i2c_master0_ctrl, rx_data, 2, false);
+    if (FSP_SUCCESS != err) return err;
+
+    /* Convert to millivolts (resolution: 1.25mV/LSB) */
+    uint16_t raw_voltage = (rx_data[0] << 8) | rx_data[1];
+    *voltage_mv = (uint16_t)((raw_voltage >> 4) * 1.25f);
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Read state of charge from MAX17048
+ */
+static fsp_err_t max17048_read_soc(uint8_t *soc_percent)
+{
+    fsp_err_t err;
+    uint8_t tx_data[1];
+    uint8_t rx_data[2];
+
+    /* Read SOC register */
+    tx_data[0] = MAX17048_SOC_REG;
+
+    err = R_IIC_MASTER_Write(&g_i2c_master0_ctrl, tx_data, 1, true);
+    if (FSP_SUCCESS != err) return err;
+
+    err = R_IIC_MASTER_Read(&g_i2c_master0_ctrl, rx_data, 2, false);
+    if (FSP_SUCCESS != err) return err;
+
+    /* Extract SOC percentage (high byte = integer part) */
+    *soc_percent = rx_data[0];
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Enter power save mode
+ */
+static void enter_power_save_mode(void)
+{
+    /* Reduce EEG sampling rate */
+    // This would require coordination with EEG acquisition task
+
+    /* Disable non-essential peripherals */
+    // R_SPI_Close(&g_spi1_ctrl); // Close unused SPI
+    // R_ADC_Close(&g_adc1_ctrl); // Close unused ADC
+
+    /* Reduce CPU frequency */
+    R_CGC_SystemClockSet(CGC_SYSTEM_CLOCK_MODE_LOW_SPEED);
+
+    power_state.power_save_mode_time = R_FSP_SystemClockHzGet() / 1000;
+}
+
+/**
+ * @brief Exit power save mode
+ */
+static void exit_power_save_mode(void)
+{
+    /* Restore CPU frequency */
+    R_CGC_SystemClockSet(CGC_SYSTEM_CLOCK_MODE_HIGH_SPEED);
+
+    /* Re-enable peripherals */
+    // Re-initialization code here
+
+    /* Update power save statistics */
+    uint32_t current_time = R_FSP_SystemClockHzGet() / 1000;
+    // power_save_duration = current_time - power_state.power_save_mode_time;
+}
+
+/**
+ * @brief Update power consumption statistics
+ */
+static void update_power_statistics(void)
+{
+    uint32_t current_time = R_FSP_SystemClockHzGet() / 1000;
+    power_state.total_runtime_minutes = (current_time - system_start_time) / 60000;
+
+    /* Estimate power consumption based on voltage and current draw */
+    /* This is simplified - actual implementation would measure current */
+    float estimated_current_ma = 150.0f; // Approximate current draw
+    power_state.average_power_consumption_mw =
+        (power_state.battery_voltage_mv * estimated_current_ma) / 1000.0f;
+}
+
+/**
+ * @brief μT-Kernel Task: Power Management (1Hz)
+ * Priority: 40 (Low priority background task)
+ */
+void task_power_management_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    static bool power_save_active = false;
+
+    /* Initialize power management */
+    if (power_management_init() != FSP_SUCCESS) {
+        while(1) tk_dly_tsk(1000);
+    }
+
+    while(1) {
+        /* Read battery status */
+        max17048_read_voltage(&power_state.battery_voltage_mv);
+        max17048_read_soc(&power_state.battery_soc_percent);
+
+        /* Check charging status */
+        power_state.charging_active = (power_state.battery_voltage_mv > BATTERY_FULL_VOLTAGE_MV);
+
+        /* Battery level management */
+        if (power_state.battery_soc_percent <= CRITICAL_BATTERY_THRESHOLD) {
+            power_state.critical_battery_alert = true;
+            /* Could trigger emergency shutdown */
+
+        } else if (power_state.battery_soc_percent <= LOW_BATTERY_THRESHOLD) {
+            power_state.low_battery_warning = true;
+
+        } else {
+            power_state.low_battery_warning = false;
+            power_state.critical_battery_alert = false;
+        }
+
+        /* Power save mode management */
+        if (power_state.battery_soc_percent <= POWER_SAVE_THRESHOLD && !power_save_active) {
+            enter_power_save_mode();
+            power_save_active = true;
+
+        } else if (power_state.battery_soc_percent > POWER_SAVE_THRESHOLD && power_save_active) {
+            exit_power_save_mode();
+            power_save_active = false;
+        }
+
+        /* Update statistics */
+        update_power_statistics();
+
+        /* Sleep for 1 second */
+        tk_dly_tsk(1000);
+    }
+}
+
+/**
+ * @brief Get power management statistics
+ */
+fsp_err_t get_power_statistics(uint8_t *battery_soc, uint16_t *voltage_mv, bool *low_battery, float *power_mw)
+{
+    if (!power_management_initialized) return FSP_ERR_NOT_INITIALIZED;
+
+    if (battery_soc) *battery_soc = power_state.battery_soc_percent;
+    if (voltage_mv) *voltage_mv = power_state.battery_voltage_mv;
+    if (low_battery) *low_battery = power_state.low_battery_warning;
+    if (power_mw) *power_mw = power_state.average_power_consumption_mw;
+
+    return FSP_SUCCESS;
+}
+

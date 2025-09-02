@@ -23,6 +23,6 @@
 #define DEVICE_PATH_(a)		#a
 #define DEVICE_PATH(a)		DEVICE_PATH_(a)
 #define DEVICE_SYSDEP()		DEVICE_PATH(sysdepend/TARGET_GRP_DIR/device/device.h)
-#include DEVICE_SYSDEP()
+//#include DEVICE_SYSDEP()
 
 #endif /* _MTKBSP_TK_DEVICE_H_ */

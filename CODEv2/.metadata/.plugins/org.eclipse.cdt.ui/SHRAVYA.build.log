@@ -1,0 +1,212 @@
+02:49:25 **** Build of configuration Debug for project SHRAVYA ****
+make -r all 
+Building file: ../src/audioINTERFACE.c
+../src/audioINTERFACE.c: In function 'task_audio_interface_entry':
+../src/audioINTERFACE.c:180:18: warning: implicit declaration of function 'tk_dly_tsk' [-Wimplicit-function-declaration]
+  180 |         while(1) tk_dly_tsk(1000);
+      |                  ^~~~~~~~~~
+../src/audioINTERFACE.c:184:5: warning: implicit declaration of function 'R_SSI_Start'; did you mean 'R_SSI_Stop'? [-Wimplicit-function-declaration]
+  184 |     R_SSI_Start(&g_i2s0_ctrl);
+      |     ^~~~~~~~~~~
+      |     R_SSI_Stop
+Building file: ../src/cognitiveCLASSIFIER.c
+../src/cognitiveCLASSIFIER.c:433:14: warning: 'sigmoid_activation' defined but not used [-Wunused-function]
+  433 | static float sigmoid_activation(float x)
+      |              ^~~~~~~~~~~~~~~~~~
+Building file: ../src/communicationN8N.c
+Building file: ../src/eegACQUISITION.c
+../src/eegACQUISITION.c:416:6: warning: no previous declaration for 'task_eeg_acquisition_entry' [-Wmissing-declarations]
+  416 | void task_eeg_acquisition_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:253:18: warning: 'ads1263_read_register' defined but not used [-Wunused-function]
+  253 | static fsp_err_t ads1263_read_register(uint8_t reg_addr, uint8_t *data)
+      |                  ^~~~~~~~~~~~~~~~~~~~~
+Building file: ../src/hal_entry.c
+../src/hal_entry.c: In function 'hal_entry':
+../src/hal_entry.c:174:15: warning: unused variable 'fsp_err' [-Wunused-variable]
+  174 |     fsp_err_t fsp_err = FSP_SUCCESS;
+      |               ^~~~~~~
+../src/hal_entry.c: In function 'shravya_system_init':
+../src/hal_entry.c:216:15: warning: unused variable 'err' [-Wunused-variable]
+  216 |     fsp_err_t err = FSP_SUCCESS;
+      |               ^~~
+../src/hal_entry.c: In function 'shravya_start_application':
+../src/hal_entry.c:308:8: warning: unused variable 'ercd' [-Wunused-variable]
+  308 |     ER ercd = E_OK;
+      |        ^~~~
+Building file: ../src/hapticFEEDBACK.c
+../src/hapticFEEDBACK.c:127:11: warning: no previous declaration for 'haptic_feedback_init' [-Wmissing-declarations]
+  127 | fsp_err_t haptic_feedback_init(void)
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c: In function 'haptic_feedback_init':
+../src/hapticFEEDBACK.c:129:15: warning: unused variable 'err' [-Wunused-variable]
+  129 |     fsp_err_t err = FSP_SUCCESS;
+      |               ^~~
+../src/hapticFEEDBACK.c: At top level:
+../src/hapticFEEDBACK.c:476:6: warning: no previous declaration for 'task_haptic_feedback_entry' [-Wmissing-declarations]
+  476 | void task_haptic_feedback_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c:528:11: warning: no previous declaration for 'get_haptic_statistics' [-Wmissing-declarations]
+  528 | fsp_err_t get_haptic_statistics(uint32_t *total_interventions, float *effectiveness, bool *is_active)
+      |           ^~~~~~~~~~~~~~~~~~~~~
+Building file: ../src/mtk3INTEGRATION.c
+../src/mtk3INTEGRATION.c:111:4: warning: no previous declaration for 'mtk3_system_init' [-Wmissing-declarations]
+  111 | ER mtk3_system_init(void)
+      |    ^~~~~~~~~~~~~~~~
+../src/mtk3INTEGRATION.c:191:4: warning: no previous declaration for 'mtk3_start_scheduler' [-Wmissing-declarations]
+  191 | ER mtk3_start_scheduler(void)
+      |    ^~~~~~~~~~~~~~~~~~~~
+Building file: ../src/mtk3_stubs.c
+../src/mtk3_stubs.c:47:4: warning: no previous declaration for 'tk_ini_ker' [-Wmissing-declarations]
+   47 | ER tk_ini_ker(void) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:52:4: warning: no previous declaration for 'tk_ext_ker' [-Wmissing-declarations]
+   52 | ER tk_ext_ker(void) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:57:4: warning: no previous declaration for 'tk_dly_tsk' [-Wmissing-declarations]
+   57 | ER tk_dly_tsk(INT dlytim) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c: In function 'tk_dly_tsk':
+../src/mtk3_stubs.c:59:25: warning: conversion to 'uint32_t' {aka 'long unsigned int'} from 'INT' {aka 'int'} may change the sign of the result [-Wsign-conversion]
+   59 |     R_BSP_SoftwareDelay(dlytim, BSP_DELAY_UNITS_MILLISECONDS);
+      |                         ^~~~~~
+../src/mtk3_stubs.c: At top level:
+../src/mtk3_stubs.c:63:4: warning: no previous declaration for 'tk_cre_sem' [-Wmissing-declarations]
+   63 | ID tk_cre_sem(T_CSEM *pk_csem) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:69:4: warning: no previous declaration for 'tk_cre_mtx' [-Wmissing-declarations]
+   69 | ID tk_cre_mtx(T_CMTX *pk_cmtx) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:75:4: warning: no previous declaration for 'tk_cre_flg' [-Wmissing-declarations]
+   75 | ID tk_cre_flg(T_CFLG *pk_cflg) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:81:4: warning: no previous declaration for 'tk_cre_tsk' [-Wmissing-declarations]
+   81 | ID tk_cre_tsk(T_CTSK *pk_ctsk) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:87:4: warning: no previous declaration for 'tk_sta_tsk' [-Wmissing-declarations]
+   87 | ER tk_sta_tsk(ID tskid, INT stacd) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:94:4: warning: no previous declaration for 'tk_wai_sem' [-Wmissing-declarations]
+   94 | ER tk_wai_sem(ID semid, INT timeout) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:101:4: warning: no previous declaration for 'tk_sig_sem' [-Wmissing-declarations]
+  101 | ER tk_sig_sem(ID semid, INT cnt) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:108:4: warning: no previous declaration for 'tk_set_pow' [-Wmissing-declarations]
+  108 | ER tk_set_pow(INT powmode) {
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:115:5: warning: no previous declaration for '_read' [-Wmissing-declarations]
+  115 | int _read(int fd, char *ptr, int len) {
+      |     ^~~~~
+../src/mtk3_stubs.c:120:5: warning: no previous declaration for '_write' [-Wmissing-declarations]
+  120 | int _write(int fd, const char *ptr, int len) {
+      |     ^~~~~~
+../src/mtk3_stubs.c:125:5: warning: no previous declaration for '_close' [-Wmissing-declarations]
+  125 | int _close(int fd) {
+      |     ^~~~~~
+../src/mtk3_stubs.c:130:5: warning: no previous declaration for '_fstat' [-Wmissing-declarations]
+  130 | int _fstat(int fd, void *st) {
+      |     ^~~~~~
+../src/mtk3_stubs.c:135:5: warning: no previous declaration for '_isatty' [-Wmissing-declarations]
+  135 | int _isatty(int fd) {
+      |     ^~~~~~~
+../src/mtk3_stubs.c:140:5: warning: no previous declaration for '_lseek' [-Wmissing-declarations]
+  140 | int _lseek(int fd, int ptr, int dir) {
+      |     ^~~~~~
+Building file: ../src/powerMANAGEMENT.c
+../src/powerMANAGEMENT.c:77:11: warning: no previous declaration for 'power_management_init' [-Wmissing-declarations]
+   77 | fsp_err_t power_management_init(void)
+      |           ^~~~~~~~~~~~~~~~~~~~~
+../src/powerMANAGEMENT.c: In function 'power_management_init':
+../src/powerMANAGEMENT.c:79:15: warning: unused variable 'err' [-Wunused-variable]
+   79 |     fsp_err_t err = FSP_SUCCESS;
+      |               ^~~
+../src/powerMANAGEMENT.c: In function 'exit_power_save_mode':
+../src/powerMANAGEMENT.c:236:14: warning: unused variable 'current_time' [-Wunused-variable]
+  236 |     uint32_t current_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK) / 1000;
+      |              ^~~~~~~~~~~~
+../src/powerMANAGEMENT.c: At top level:
+../src/powerMANAGEMENT.c:260:6: warning: no previous declaration for 'task_power_management_entry' [-Wmissing-declarations]
+  260 | void task_power_management_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/powerMANAGEMENT.c:311:11: warning: no previous declaration for 'get_power_statistics' [-Wmissing-declarations]
+  311 | fsp_err_t get_power_statistics(uint8_t *battery_soc, uint16_t *voltage_mv, bool *low_battery, float *power_mw)
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/powerMANAGEMENT.c:113:18: warning: 'max17048_init' defined but not used [-Wunused-function]
+  113 | static fsp_err_t max17048_init(void)
+      |                  ^~~~~~~~~~~~~
+Building file: ../src/semaphoresGLOBAL.c
+Building file: ../src/shravyaMAIN.c
+../src/shravyaMAIN.c: In function 'initialize_all_subsystems':
+../src/shravyaMAIN.c:70:11: warning: implicit declaration of function 'eeg_acquisition_init' [-Wimplicit-function-declaration]
+   70 |     err = eeg_acquisition_init();
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:82:11: warning: implicit declaration of function 'haptic_feedback_init' [-Wimplicit-function-declaration]
+   82 |     err = haptic_feedback_init();
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:86:11: warning: implicit declaration of function 'communication_init' [-Wimplicit-function-declaration]
+   86 |     err = communication_init();
+      |           ^~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:90:11: warning: implicit declaration of function 'power_management_init' [-Wimplicit-function-declaration]
+   90 |     err = power_management_init();
+      |           ^~~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:94:11: warning: implicit declaration of function 'audio_interface_init' [-Wimplicit-function-declaration]
+   94 |     err = audio_interface_init();
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c: In function 'coordinate_data_flow':
+../src/shravyaMAIN.c:161:9: warning: implicit declaration of function 'get_power_statistics' [-Wimplicit-function-declaration]
+  161 |     if (get_power_statistics(&battery_soc, NULL, &low_battery, NULL) == FSP_SUCCESS) {
+      |         ^~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c: In function 'handle_system_events':
+../src/shravyaMAIN.c:197:13: warning: implicit declaration of function 'get_haptic_statistics' [-Wimplicit-function-declaration]
+  197 |             get_haptic_statistics(NULL, NULL, &haptic_active);
+      |             ^~~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c: At top level:
+../src/shravyaMAIN.c:254:6: warning: no previous declaration for 'task_shravya_main_entry' [-Wmissing-declarations]
+  254 | void task_shravya_main_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:288:11: warning: no previous declaration for 'get_system_status' [-Wmissing-declarations]
+  288 | fsp_err_t get_system_status(system_status_t *status)
+      |           ^~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:299:6: warning: no previous declaration for 'system_shutdown' [-Wmissing-declarations]
+  299 | void system_shutdown(void)
+      |      ^~~~~~~~~~~~~~~
+Building file: ../src/signalPROCESSING.c
+../src/signalPROCESSING.c:435:6: warning: no previous declaration for 'task_preprocessing_entry' [-Wmissing-declarations]
+  435 | void task_preprocessing_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~
+Building file: ../ra_gen/common_data.c
+Building file: ../ra_gen/hal_data.c
+Building file: ../ra_gen/main.c
+Building file: ../ra_gen/pin_data.c
+Building file: ../ra_gen/vector_data.c
+Building file: ../ra/fsp/src/r_ssi/r_ssi.c
+Building file: ../ra/fsp/src/r_spi_b/r_spi_b.c
+Building file: ../ra/fsp/src/r_ioport/r_ioport.c
+Building file: ../ra/fsp/src/r_icu/r_icu.c
+Building file: ../ra/fsp/src/r_dtc/r_dtc.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_clocks.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_common.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_delay.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_group_irq.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_guard.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_io.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_irq.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_macl.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_register_protection.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_rom_registers.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_sbrk.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_sdram.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_security.c
+Building file: ../ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/startup.c
+Building file: ../ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/system.c
+Building file: ../ra/board/ra8d1_ek/board_init.c
+Building file: ../ra/board/ra8d1_ek/board_leds.c
+Building target: SHRAVYA.elf
+arm-none-eabi-objcopy -O srec "SHRAVYA.elf"  "SHRAVYA.srec"
+arm-none-eabi-size --format=berkeley "SHRAVYA.elf"
+   text	   data	    bss	    dec	    hex	filename
+  26452	    104	  75312	 101868	  18dec	SHRAVYA.elf
+
+02:49:30 Build Finished. 0 errors, 49 warnings. (took 5s.593ms)
+

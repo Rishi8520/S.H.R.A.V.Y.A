@@ -2,7 +2,8 @@
 #define HARDWARE_DRIVERS_H
 
 #include "hal_data.h"
-#include "eeg_types.h"
+#include "eegTYPES.h"
+#include "audioINTERFACE.h"
 
 /* EEG Acquisition Functions */
 fsp_err_t eeg_acquisition_init(void);
@@ -11,6 +12,10 @@ void eeg_get_statistics(uint32_t *total_samples, uint32_t *error_count, bool *is
 
 /* Interrupt Callbacks */
 void ads1263_drdy_callback(external_irq_callback_args_t *p_args);
+/* ✅ ADD these function declarations */
+void task_haptic_feedback_entry(INT stacd, void *exinf);
+fsp_err_t trigger_haptic_pattern(cognitive_state_type_t state);
+fsp_err_t get_haptic_statistics(uint32_t *total_interventions, float *effectiveness, bool *is_active);
 
 /* External semaphore declarations */
 extern ID eeg_data_semaphore;

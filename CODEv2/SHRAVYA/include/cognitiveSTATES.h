@@ -1,7 +1,7 @@
 #ifndef COGNITIVE_STATES_H
 #define COGNITIVE_STATES_H
 
-#include "eeg_types.h"
+#include "eegTYPES.h"
 #include "hal_data.h"
 
 /* Complete Feature Vector Structure */
@@ -43,5 +43,6 @@ typedef struct {
 fsp_err_t cognitive_classifier_init(void);
 fsp_err_t get_classification_result(cognitive_classification_t *result);
 fsp_err_t get_feature_vector(feature_vector_t *features);
+extern fsp_err_t trigger_haptic_pattern(cognitive_state_type_t state);
 
 #endif /* COGNITIVE_STATES_H */

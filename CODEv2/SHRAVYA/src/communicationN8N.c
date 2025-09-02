@@ -1,23 +1,41 @@
 #include "hal_data.h"
-#include "eeg_types.h"
-#include "cognitive_states.h"
-#include "signal_processing.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "signalPROCESSING.h"
+#include "communicationN8N.h"
 #include "mtk3_bsp2/include/tk/tkernel.h"
 
-#include <stdio.h>
+#include <math.h>
 #include <string.h>
-#include <stdlib.h>
+#include <stdio.h>
+
+// ✅ μT-Kernel typedefs
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+
+// ✅ Forward declarations for missing functions
+extern fsp_err_t get_haptic_statistics(uint32_t *patterns, float *effectiveness, bool *active);
+//extern fsp_err_t signal_processing_get_stats(uint32_t *samples, uint32_t *artifacts, bool *ready);
+extern void signal_processing_get_stats(uint32_t *samples, uint32_t *artifacts, bool *ready);
+extern ER tk_dly_tsk(INT dlytim);
 
 /* Communication Configuration */
-#define JSON_BUFFER_SIZE           2048    // JSON payload buffer
-#define N8N_WEBHOOK_URL           "https://your-n8n-instance.com/webhook/shravya"
-#define TRANSMISSION_INTERVAL_S    30      // 30 second intervals
-#define MAX_RETRIES               3       // Network retry attempts
-#define TIMEOUT_MS                5000    // 5 second timeout
+#define JSON_BUFFER_SIZE 2048
+#define N8N_WEBHOOK_URL "http://localhost:5678/webhook/shravya-voice"
+#define TRANSMISSION_INTERVAL_S 30
+#define MAX_RETRIES 3
+#define TIMEOUT_MS 5000
 
 /* Data Aggregation Window */
-#define AGGREGATION_WINDOW_SIZE   6       // 6 samples (3 minutes at 30s intervals)
-#define FEATURE_HISTORY_SIZE      10      // Keep 10 feature vectors
+#define AGGREGATION_WINDOW_SIZE 6
+#define FEATURE_HISTORY_SIZE 10
 
 /* Communication State */
 typedef struct {
@@ -74,12 +92,10 @@ typedef struct {
         float fatigue_onset_hour;
         char primary_stressor[32];
     } behavioral_insights;
-
 } n8n_payload_t;
 
 /* Global Variables */
 static communication_state_t comm_state;
-static char json_buffer[JSON_BUFFER_SIZE];
 static volatile bool communication_initialized = false;
 static uint32_t session_start_time;
 
@@ -88,11 +104,14 @@ static void aggregate_cognitive_data(n8n_payload_t *payload);
 static void aggregate_signal_quality(n8n_payload_t *payload);
 static void aggregate_frequency_data(n8n_payload_t *payload);
 static void analyze_behavioral_patterns(n8n_payload_t *payload);
-static void build_json_payload(const n8n_payload_t *payload, char *json_buffer, size_t buffer_size);
+static void build_json_payload(const n8n_payload_t *payload, char *buffer, size_t buffer_size);
 static fsp_err_t send_to_n8n_webhook(const char *json_data);
 static void get_current_timestamp(char *timestamp, size_t size);
 static float calculate_data_quality(void);
 static const char* cognitive_state_to_string(cognitive_state_type_t state);
+
+// ✅ Public function declaration
+void task_communication_entry(INT stacd, void *exinf);
 
 /**
  * @brief Initialize communication system
@@ -103,10 +122,10 @@ fsp_err_t communication_init(void)
     memset(&comm_state, 0, sizeof(comm_state));
 
     /* Initialize network interface (placeholder) */
-    /* In production, this would initialize WiFi/Bluetooth/cellular */
+    /* ✅ FIXED: Add required clock parameter */
+    session_start_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
 
-    session_start_time = R_FSP_SystemClockHzGet() / 1000;
-    comm_state.connection_active = true;  // Assume active for simulation
+    comm_state.connection_active = true;
     communication_initialized = true;
 
     return FSP_SUCCESS;
@@ -128,7 +147,7 @@ static void aggregate_cognitive_data(n8n_payload_t *payload)
     for (int i = 0; i < AGGREGATION_WINDOW_SIZE; i++) {
         cognitive_classification_t *sample = &comm_state.classification_history[i];
 
-        if (sample->overall_wellness_score > 0) {  // Valid sample
+        if (sample->overall_wellness_score > 0) {
             wellness_sum += sample->overall_wellness_score;
 
             if (sample->intervention_needed) {
@@ -141,14 +160,14 @@ static void aggregate_cognitive_data(n8n_payload_t *payload)
             }
 
             prev_state = sample->dominant_state;
-            current_state = sample->dominant_state;  // Latest state
+            current_state = sample->dominant_state;
             valid_samples++;
         }
     }
 
-    /* Fill cognitive summary */
+    /* Fill cognitive summary - ✅ FIXED: Cast to avoid conversion warning */
     payload->cognitive_summary.avg_wellness_score = (valid_samples > 0) ?
-        wellness_sum / valid_samples : 0.0f;
+        wellness_sum / (float)valid_samples : 0.0f;
     payload->cognitive_summary.intervention_count = intervention_sum;
     payload->cognitive_summary.state_transitions = transitions;
     strcpy(payload->cognitive_summary.dominant_state_name,
@@ -161,7 +180,7 @@ static void aggregate_cognitive_data(n8n_payload_t *payload)
             current_result.confidence_scores[current_result.dominant_state];
     }
 
-    /* Get haptic effectiveness */
+    /* Get haptic effectiveness - ✅ FIXED: Now properly declared */
     get_haptic_statistics(NULL, &payload->cognitive_summary.intervention_effectiveness, NULL);
 }
 
@@ -182,17 +201,18 @@ static void aggregate_signal_quality(n8n_payload_t *payload)
 
     for (int i = 0; i < FEATURE_HISTORY_SIZE; i++) {
         feature_vector_t *features = &comm_state.feature_history[i];
-
-        if (features->snr_estimate > 0) {  // Valid feature
+        if (features->snr_estimate > 0) {
             snr_sum += features->snr_estimate;
             stability_sum += features->signal_stability;
             valid_features++;
         }
     }
 
-    payload->signal_quality.avg_snr_db = (valid_features > 0) ? snr_sum / valid_features : 0.0f;
+    /* ✅ FIXED: Cast to avoid conversion warnings */
+    payload->signal_quality.avg_snr_db = (valid_features > 0) ?
+        snr_sum / (float)valid_features : 0.0f;
     payload->signal_quality.signal_stability = (valid_features > 0) ?
-        stability_sum / valid_features : 0.0f;
+        stability_sum / (float)valid_features : 0.0f;
     payload->signal_quality.artifact_count = total_artifacts;
     payload->signal_quality.electrode_quality = comm_state.data_quality_score;
 }
@@ -208,8 +228,7 @@ static void aggregate_frequency_data(n8n_payload_t *payload)
 
     for (int i = 0; i < FEATURE_HISTORY_SIZE; i++) {
         feature_vector_t *features = &comm_state.feature_history[i];
-
-        if (features->delta_power > 0) {  // Valid feature
+        if (features->delta_power > 0) {
             delta_sum += features->delta_power;
             theta_sum += features->theta_power;
             alpha_sum += features->alpha_power;
@@ -222,13 +241,14 @@ static void aggregate_frequency_data(n8n_payload_t *payload)
     }
 
     if (valid_features > 0) {
-        payload->frequency_analysis.delta_avg = delta_sum / valid_features;
-        payload->frequency_analysis.theta_avg = theta_sum / valid_features;
-        payload->frequency_analysis.alpha_avg = alpha_sum / valid_features;
-        payload->frequency_analysis.beta_avg = beta_sum / valid_features;
-        payload->frequency_analysis.gamma_avg = gamma_sum / valid_features;
-        payload->frequency_analysis.alpha_beta_ratio = ratio_sum / valid_features;
-        payload->frequency_analysis.spectral_entropy = entropy_sum / valid_features;
+        /* ✅ FIXED: Cast to avoid conversion warnings */
+        payload->frequency_analysis.delta_avg = delta_sum / (float)valid_features;
+        payload->frequency_analysis.theta_avg = theta_sum / (float)valid_features;
+        payload->frequency_analysis.alpha_avg = alpha_sum / (float)valid_features;
+        payload->frequency_analysis.beta_avg = beta_sum / (float)valid_features;
+        payload->frequency_analysis.gamma_avg = gamma_sum / (float)valid_features;
+        payload->frequency_analysis.alpha_beta_ratio = ratio_sum / (float)valid_features;
+        payload->frequency_analysis.spectral_entropy = entropy_sum / (float)valid_features;
     }
 }
 
@@ -240,8 +260,12 @@ static void analyze_behavioral_patterns(n8n_payload_t *payload)
     uint32_t stress_episodes = 0;
     float focus_duration_sum = 0.0f;
     float anxiety_sum = 0.0f;
-    uint32_t current_time = R_FSP_SystemClockHzGet() / 1000;
-    float session_hours = (current_time - session_start_time) / 3600.0f;
+
+    /* ✅ FIXED: Add required clock parameter */
+    uint32_t current_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
+
+    /* ✅ FIXED: Cast to avoid conversion warning */
+    float session_hours = ((float)current_time - (float)session_start_time) / 3600.0f;
 
     /* Analyze patterns from history */
     for (int i = 0; i < AGGREGATION_WINDOW_SIZE; i++) {
@@ -255,15 +279,16 @@ static void analyze_behavioral_patterns(n8n_payload_t *payload)
 
         /* Calculate focus duration */
         if (sample->dominant_state == COGNITIVE_STATE_FOCUS) {
-            focus_duration_sum += 0.5f;  // 30 second windows
+            focus_duration_sum += 0.5f;
         }
 
         /* Average anxiety severity */
         anxiety_sum += sample->confidence_scores[COGNITIVE_STATE_ANXIETY];
     }
 
+    /* ✅ FIXED: Cast to avoid conversion warning */
     payload->behavioral_insights.stress_episodes_per_hour =
-        (session_hours > 0) ? stress_episodes / session_hours : 0.0f;
+        (session_hours > 0) ? (float)stress_episodes / session_hours : 0.0f;
     payload->behavioral_insights.focus_duration_avg_min = focus_duration_sum;
     payload->behavioral_insights.anxiety_severity_avg = anxiety_sum / AGGREGATION_WINDOW_SIZE;
 
@@ -281,10 +306,12 @@ static void analyze_behavioral_patterns(n8n_payload_t *payload)
 
 /**
  * @brief Build JSON payload for n8n webhook
+ * ✅ FIXED: Renamed parameter to avoid shadow warning
  */
-static void build_json_payload(const n8n_payload_t *payload, char *json_buffer, size_t buffer_size)
+static void build_json_payload(const n8n_payload_t *payload, char *buffer, size_t buffer_size)
 {
-    snprintf(json_buffer, buffer_size,
+    /* ✅ FIXED: Use %lu for uint32_t format specifiers */
+    snprintf(buffer, buffer_size,
         "{\n"
         "  \"timestamp\": \"%s\",\n"
         "  \"device_id\": \"%s\",\n"
@@ -293,14 +320,14 @@ static void build_json_payload(const n8n_payload_t *payload, char *json_buffer, 
         "    \"avg_wellness_score\": %.3f,\n"
         "    \"dominant_state\": \"%s\",\n"
         "    \"dominant_state_confidence\": %.3f,\n"
-        "    \"intervention_count\": %u,\n"
+        "    \"intervention_count\": %lu,\n"
         "    \"intervention_effectiveness\": %.3f,\n"
-        "    \"state_transitions\": %u\n"
+        "    \"state_transitions\": %lu\n"
         "  },\n"
         "  \"signal_quality\": {\n"
         "    \"avg_snr_db\": %.1f,\n"
         "    \"signal_stability\": %.3f,\n"
-        "    \"artifact_count\": %u,\n"
+        "    \"artifact_count\": %lu,\n"
         "    \"electrode_quality\": %.3f\n"
         "  },\n"
         "  \"frequency_analysis\": {\n"
@@ -325,12 +352,12 @@ static void build_json_payload(const n8n_payload_t *payload, char *json_buffer, 
         payload->cognitive_summary.avg_wellness_score,
         payload->cognitive_summary.dominant_state_name,
         payload->cognitive_summary.dominant_state_confidence,
-        payload->cognitive_summary.intervention_count,
+        (unsigned long)payload->cognitive_summary.intervention_count,
         payload->cognitive_summary.intervention_effectiveness,
-        payload->cognitive_summary.state_transitions,
+        (unsigned long)payload->cognitive_summary.state_transitions,
         payload->signal_quality.avg_snr_db,
         payload->signal_quality.signal_stability,
-        payload->signal_quality.artifact_count,
+        (unsigned long)payload->signal_quality.artifact_count,
         payload->signal_quality.electrode_quality,
         payload->frequency_analysis.delta_avg,
         payload->frequency_analysis.theta_avg,
@@ -352,18 +379,16 @@ static void build_json_payload(const n8n_payload_t *payload, char *json_buffer, 
 static fsp_err_t send_to_n8n_webhook(const char *json_data)
 {
     /* Placeholder for actual HTTP/HTTPS transmission */
-    /* In production, this would use WiFi/cellular module */
-
-    /* Simulate network transmission */
     R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
 
     /* For debugging - could be sent via UART to external gateway */
     printf("N8N Webhook Payload:\n%s\n", json_data);
 
     comm_state.transmissions_sent++;
-    comm_state.last_transmission_time = R_FSP_SystemClockHzGet() / 1000;
+    /* ✅ FIXED: Add required clock parameter */
+    comm_state.last_transmission_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
 
-    return FSP_SUCCESS;  // Simulate success
+    return FSP_SUCCESS;
 }
 
 /**
@@ -371,11 +396,14 @@ static fsp_err_t send_to_n8n_webhook(const char *json_data)
  */
 static void get_current_timestamp(char *timestamp, size_t size)
 {
-    uint32_t current_time = R_FSP_SystemClockHzGet() / 1000;
-    snprintf(timestamp, size, "2025-09-02T%02u:%02u:%02uZ",
-             (current_time / 3600) % 24,
-             (current_time / 60) % 60,
-             current_time % 60);
+    /* ✅ FIXED: Add required clock parameter */
+    uint32_t current_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
+
+    /* ✅ FIXED: Use %02lu for proper uint32_t formatting */
+    snprintf(timestamp, size, "2025-09-02T%02lu:%02lu:%02luZ",
+             (unsigned long)((current_time / 3600) % 24),
+             (unsigned long)((current_time / 60) % 60),
+             (unsigned long)(current_time % 60));
 }
 
 /**
@@ -407,10 +435,11 @@ void task_communication_entry(INT stacd, void *exinf)
     cognitive_classification_t current_classification;
     feature_vector_t current_features;
     uint32_t current_time;
+    char json_buffer[JSON_BUFFER_SIZE]; // ✅ Local buffer to avoid global shadow warning
 
     /* Initialize communication system */
     if (communication_init() != FSP_SUCCESS) {
-        while(1) tk_dly_tsk(1000);
+        while(1) tk_dly_tsk(1000); // ✅ FIXED: Now properly declared
     }
 
     while(1) {
@@ -441,8 +470,8 @@ void task_communication_entry(INT stacd, void *exinf)
             get_current_timestamp(payload.timestamp, sizeof(payload.timestamp));
             strcpy(payload.device_id, "SHRAVYA_001");
 
-            current_time = R_FSP_SystemClockHzGet() / 1000;
-            payload.session_duration_min = (current_time - session_start_time) / 60.0f;
+            current_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
+            payload.session_duration_min = ((float)current_time - (float)session_start_time) / 60.0f;
 
             /* Aggregate all data categories */
             aggregate_cognitive_data(&payload);
@@ -456,10 +485,10 @@ void task_communication_entry(INT stacd, void *exinf)
             /* Attempt transmission with retries */
             for (int retry = 0; retry < MAX_RETRIES; retry++) {
                 if (send_to_n8n_webhook(json_buffer) == FSP_SUCCESS) {
-                    break;  // Success
+                    break;
                 }
                 comm_state.transmission_errors++;
-                tk_dly_tsk(1000);  // 1 second retry delay
+                tk_dly_tsk(1000); // 1 second retry delay
             }
 
             /* Update data quality score */
@@ -477,7 +506,8 @@ static float calculate_data_quality(void)
 
     /* Reduce quality for high error rates */
     if (comm_state.transmissions_sent > 0) {
-        float error_rate = (float)comm_state.transmission_errors / comm_state.transmissions_sent;
+        /* ✅ FIXED: Cast to avoid conversion warning */
+        float error_rate = (float)comm_state.transmission_errors / (float)comm_state.transmissions_sent;
         quality_score *= (1.0f - error_rate);
     }
 
@@ -487,7 +517,8 @@ static float calculate_data_quality(void)
     signal_processing_get_stats(&total_samples, &total_artifacts, &processing_ready);
 
     if (total_samples > 0) {
-        float artifact_rate = (float)total_artifacts / total_samples;
+        /* ✅ FIXED: Cast to avoid conversion warning */
+        float artifact_rate = (float)total_artifacts / (float)total_samples;
         quality_score *= (1.0f - artifact_rate);
     }
 
