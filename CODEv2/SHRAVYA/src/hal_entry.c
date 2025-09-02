@@ -1,4 +1,3 @@
-/* hal_entry.c - SHRAVYA EEG System Entry Point */
 #include "hal_data.h"
 
 /* μT-Kernel 3.0 includes - adjust path based on your mtk3_bsp2 location */

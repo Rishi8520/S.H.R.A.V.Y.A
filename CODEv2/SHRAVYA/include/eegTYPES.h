@@ -1,4 +1,3 @@
-/* eeg_types.h - EEG data structures and types */
 #ifndef EEG_TYPES_H
 #define EEG_TYPES_H
 

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;SHARAVYA_1_0/OS/uT_Kernel3/knlinc/1.h&apos;" deleteContents="false" description="Delete resource &apos;SHARAVYA_1_0/OS/uT_Kernel3/knlinc/1.h&apos;" element1="/SHARAVYA_1_0/OS/uT_Kernel3/knlinc/1.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1755252401170"/>
-</session>

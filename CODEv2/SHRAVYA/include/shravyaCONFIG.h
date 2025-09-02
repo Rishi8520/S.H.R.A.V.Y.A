@@ -1,4 +1,3 @@
-/* shravya_config.h - System-wide configuration */
 #ifndef SHRAVYA_CONFIG_H
 #define SHRAVYA_CONFIG_H
 

@@ -1,4 +1,3 @@
-/* mtk3_integration.c - μT-Kernel 3.0 system integration */
 #include "hal_data.h"
 #include "shravya_config.h"
 #include "eeg_types.h"
@@ -14,6 +13,9 @@ static ID task_feature_extraction;
 static ID task_classification;
 static ID task_haptic_feedback;
 static ID task_communication;
+static ID task_audio_interface;
+static ID task_power_management;
+static ID task_shravya_main;
 
 /* Synchronization Objects */
 static ID eeg_data_semaphore;
@@ -36,6 +38,9 @@ void task_classification_entry(INT stacd, void *exinf);
 void task_haptic_feedback_entry(INT stacd, void *exinf);
 void task_communication_entry(INT stacd, void *exinf);
 
+extern void task_audio_interface_entry(INT stacd, void *exinf);
+extern void task_power_management_entry(INT stacd, void *exinf);
+extern void task_shravya_main_entry(INT stacd, void *exinf);
 /* Initialize μT-Kernel 3.0 System */
 ER mtk3_system_init(void)
 {
@@ -86,6 +91,24 @@ ER mtk3_system_init(void)
     ctsk.stksz = STACK_SIZE_HAPTIC;
     task_haptic_feedback = tk_cre_tsk(&ctsk);
 
+    // Audio Interface Task
+    ctsk.task = task_audio_interface_entry;
+    ctsk.itskpri = 12;
+    ctsk.stksz = 2048;
+    task_audio_interface = tk_cre_tsk(&ctsk);
+
+    // Power Management Task
+    ctsk.task = task_power_management_entry;
+    ctsk.itskpri = 40;
+    ctsk.stksz = 1024;
+    task_power_management = tk_cre_tsk(&ctsk);
+
+    // Main Coordinator Task
+    ctsk.task = task_shravya_main_entry;
+    ctsk.itskpri = 5;
+    ctsk.stksz = 2048;
+    task_shravya_main = tk_cre_tsk(&ctsk);
+
     // Communication Task
     ctsk.task = task_communication_entry;
     ctsk.itskpri = TASK_PRIORITY_COMMUNICATION;
@@ -105,6 +128,9 @@ ER mtk3_start_scheduler(void)
     tk_sta_tsk(task_classification, 0);
     tk_sta_tsk(task_haptic_feedback, 0);
     tk_sta_tsk(task_communication, 0);
+    tk_sta_tsk(task_audio_interface, 0);
+    tk_sta_tsk(task_power_management, 0);
+    tk_sta_tsk(task_shravya_main, 0);
 
     /* Start μT-Kernel 3.0 system */
     tk_set_pow(NORMAL_SPEED);
