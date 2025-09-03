@@ -3,10 +3,36 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<section name="java.lang.Class">
 		<item key="replaceBarOpen" value="false"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="feature_vector_t"/>
-			<item value="_I2S_Configure(&amp;g_i2s0_ctrl, &amp;i2s_config);"/>
-			<item value="R_I2S_Open(&amp;g_i2s0_ctrl, &amp;g_i2s0_cfg)"/>
+			<item value="void task_shravya_main_entry(INT stacd, void *exinf)"/>
+			<item value="static void update_system_statistics(void)"/>
+			<item value="uint32_t period_counts = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_HCLK) / PWM_FREQUENCY_HZ;"/>
+			<item value="haptic_state.intervention_start_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_HCLK) / 1000000;"/>
+			<item value="static void update_pwm_outputs(void)"/>
+			<item value="fsp_err_t haptic_feedback_init(void)"/>
+			<item value="extern fsp_err_t signal_processing_get_stats(uint32_t *samples, uint32_t *artifacts, bool *ready);"/>
+			<item value="shravya"/>
+			<item value="Building file: ../src/communicationN8N.c"/>
+			<item value="void task_audio_interface_entry(INT stacd, void *exinf)"/>
+			<item value="    float energy = 0.0f;"/>
+			<item value="fsp_err_t audio_interface_init(void)"/>
+			<item value="R_SSI"/>
+			<item value="fsp_err"/>
+			<item value="stacd"/>
 		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="743"/>
+		<item key="DIALOG_Y_ORIGIN" value="224"/>
+		<item key="DIALOG_WIDTH" value="363"/>
+		<item key="DIALOG_HEIGHT" value="444"/>
+		<item key="DIALOG_FONT_NAME" value="1|Ubuntu Sans|11.0|0|GTK|1|"/>
 	</section>
 </section>
