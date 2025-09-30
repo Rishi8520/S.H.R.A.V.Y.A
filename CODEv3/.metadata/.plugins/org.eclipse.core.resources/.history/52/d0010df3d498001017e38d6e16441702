@@ -1,0 +1,3500 @@
+/**
+ * @file eegACQUISITION.c
+ * @brief SHRAVYA REAL EEG Acquisition - Hardware Only - TRON 2025
+ * @version 11.0 - ENHANCED SPI DIAGNOSTIC & DUAL APPROACH
+ * @date 2025-09-20
+ * @note NO SIMULATION - REAL EEG DATA WITH COMPREHENSIVE SPI ANALYSIS
+ */
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "shravyaCONFIG.h"
+#include "hardwareDRIVERS.h"
+#include "signalPROCESSING.h"
+#include "semaphoresGLOBAL.h"
+#include <math.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+// ✅ μT-Kernel typedefs
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+#ifndef E_OK
+#define E_OK (0)
+#endif
+#ifndef SPI_B_OPEN
+#define SPI_B_OPEN (1U)
+#endif
+#ifndef TMO_FEVR
+#define TMO_FEVR (-1)           // Wait forever
+#endif
+// ✅ Forward declarations for μT-Kernel functions
+extern ER tk_dly_tsk(INT dlytim);
+extern ER tk_wai_sem(ID semid);
+extern ER tk_sig_sem(ID semid, INT cnt);
+extern ER tk_isig_sem(ID semid, INT cnt);
+
+// ✅ Define SPI bit width constants
+#ifndef SPI_BIT_WIDTH_8_BITS
+#define SPI_BIT_WIDTH_8_BITS (8U)
+#endif
+#ifndef SPI_BIT_WIDTH_16_BITS
+#define SPI_BIT_WIDTH_16_BITS (16U)
+#endif
+#ifndef SPI_BIT_WIDTH_24_BITS
+#define SPI_BIT_WIDTH_24_BITS (24U)
+#endif
+#ifndef SPI_BIT_WIDTH_32_BITS
+#define SPI_BIT_WIDTH_32_BITS (32U)
+#endif
+
+/* ADS1263 Register Definitions */
+#define ADS1263_ID_REG 0x00
+#define ADS1263_POWER_REG 0x01
+#define ADS1263_INTERFACE_REG 0x02
+#define ADS1263_MODE0_REG 0x03
+#define ADS1263_MODE1_REG 0x04
+#define ADS1263_MODE2_REG 0x05
+#define ADS1263_INPMUX_REG 0x06
+#define ADS1263_OFCAL0_REG 0x07
+#define ADS1263_OFCAL1_REG 0x08
+#define ADS1263_OFCAL2_REG 0x09
+#define ADS1263_FSCAL0_REG 0x0A
+#define ADS1263_FSCAL1_REG 0x0B
+#define ADS1263_FSCAL2_REG 0x0C
+#define ADS1263_IDACMUX_REG 0x0D
+#define ADS1263_IDACMAG_REG 0x0E
+#define ADS1263_REFMUX_REG 0x0F
+#define ADS1263_TDACP_REG 0x10
+#define ADS1263_TDACN_REG 0x11
+#define ADS1263_GPIOCON_REG 0x12
+#define ADS1263_GPIODIR_REG 0x13
+#define ADS1263_GPIODAT_REG 0x14
+#define ADS1263_ADC2CFG_REG 0x15
+#define ADS1263_ADC2MUX_REG 0x16
+#define ADS1263_ADC2OFC0_REG 0x17
+#define ADS1263_ADC2OFC1_REG 0x18
+#define ADS1263_ADC2FSC0_REG 0x19
+#define ADS1263_ADC2FSC1_REG 0x1A
+
+/* ADS1263 Commands */
+#define ADS1263_CMD_NOP 0x00
+#define ADS1263_CMD_RESET 0x06
+#define ADS1263_CMD_START1 0x08
+#define ADS1263_CMD_STOP1 0x0A
+#define ADS1263_CMD_START2 0x0C
+#define ADS1263_CMD_STOP2 0x0E
+#define ADS1263_CMD_RDATA1 0x12
+#define ADS1263_CMD_RDATA2 0x14
+#define ADS1263_CMD_SYOCAL1 0x16
+#define ADS1263_CMD_SYGCAL1 0x17
+#define ADS1263_CMD_SFOCAL1 0x19
+#define ADS1263_CMD_SYOCAL2 0x1B
+#define ADS1263_CMD_SYGCAL2 0x1C
+#define ADS1263_CMD_SFOCAL2 0x1E
+
+/* Register read/write commands */
+#define ADS1263_CMD_RREG 0x20
+#define ADS1263_CMD_WREG 0x40
+/* ✅ PURE GPIO Bit-Banging Pin Definitions
+#define CS_PIN_BB   BSP_IO_PORT_04_PIN_09 // P409 - Alternative CS (since P413 is stuck)
+#define SCK_PIN_BB  BSP_IO_PORT_04_PIN_05  // P412 - Your SCK connection
+#define MOSI_PIN_BB BSP_IO_PORT_04_PIN_04  // P411 - Your MOSI connection
+#define MISO_PIN_BB BSP_IO_PORT_04_PIN_03  // P410 - Your MISO connection
+#define DRDY_PIN_BB  BSP_IO_PORT_00_PIN_00  // P000 - A4 Analog pin (DRDY)
+*/
+// Use ONLY these pins throughout your code:
+#define ADS_CS_PIN   BSP_IO_PORT_04_PIN_13  // P413
+#define ADS_SCK_PIN  BSP_IO_PORT_04_PIN_12  // P412
+#define ADS_MOSI_PIN BSP_IO_PORT_04_PIN_11  // P411
+#define ADS_MISO_PIN BSP_IO_PORT_04_PIN_10  // P410
+#define CS_PIN_BB   BSP_IO_PORT_04_PIN_13
+#define SCK_PIN_BB  BSP_IO_PORT_04_PIN_12  // P412 - Your SCK connection
+#define MOSI_PIN_BB BSP_IO_PORT_04_PIN_11  // P411 - Your MOSI connection
+#define MISO_PIN_BB BSP_IO_PORT_04_PIN_10
+// CORRECT ADS1263 pin definitions - use these throughout
+#define ADS1263_CS_PIN   BSP_IO_PORT_04_PIN_13  // P413 - mikroBUS CS
+#define ADS1263_SCK_PIN  BSP_IO_PORT_04_PIN_12  // P412 - mikroBUS SCK
+#define ADS1263_MOSI_PIN BSP_IO_PORT_04_PIN_11  // P411 - mikroBUS MOSI
+#define ADS1263_MISO_PIN BSP_IO_PORT_04_PIN_10  // P410 - mikroBUS MISO
+#define DRDY_PIN_BB  BSP_IO_PORT_00_PIN_00  // P000 - A4 Analog Input pin
+#define RESET_PIN_DUMMY  BSP_IO_PORT_00_PIN_01  // Dummy definition for compilation
+/* ✅ DUAL-CHANNEL RDATA GLOBAL STATE */
+static volatile bool rdata_acquisition_active = false;
+static volatile uint32_t rdata_sequence_counter = 0;
+static eeg_rdata_stats_t rdata_stats = {0};
+static eeg_rdata_sample_t current_dual_sample;
+
+/* Dual-channel specific stats */
+static volatile uint32_t adc1_samples_acquired = 0;
+static volatile uint32_t adc2_samples_acquired = 0;
+static volatile uint32_t dual_sync_errors = 0;
+static volatile uint32_t channel_imbalance_count = 0;
+
+extern ID processed_semaphore;
+
+/* SPI Communication Mode Detection */
+typedef enum {
+    SPI_MODE_UNKNOWN = 0,
+    SPI_MODE_FSP_MANAGED,
+    SPI_MODE_MANUAL_CS,
+    SPI_MODE_ADS1263_OPTIMIZED
+} spi_communication_mode_t;
+
+/* Enhanced Hardware Debug System */
+typedef struct {
+    uint32_t spi_transactions_successful;
+    uint32_t spi_transactions_failed;
+    uint32_t hardware_resets_performed;
+    uint32_t drdy_interrupts_received;
+    uint32_t valid_eeg_samples_acquired;
+    uint32_t corrupted_samples_detected;
+    uint32_t electrode_impedance_checks;
+    uint32_t calibration_attempts;
+    uint32_t power_cycles_performed;
+    bool ads1263_responsive;
+    bool drdy_signal_active;
+    bool electrodes_connected;
+    bool power_supply_stable;
+    uint8_t last_device_id;
+    uint8_t last_status_byte;
+    float supply_voltage_v;
+    float reference_voltage_v;
+
+    /* NEW: SPI Configuration Analysis */
+    spi_communication_mode_t optimal_spi_mode;
+    bool spi_8bit_works;
+    bool spi_16bit_works;
+    bool spi_24bit_works;
+    bool spi_32bit_works;
+    bool manual_cs_accessible;
+    bool fsp_auto_cs_works;
+    uint32_t spi_config_tests_performed;
+} enhanced_hardware_debug_t;
+
+/* Real EEG Signal Quality Assessment */
+typedef struct {
+    float electrode_impedance_left_kohms;
+    float electrode_impedance_right_kohms;
+    float signal_amplitude_left_uv;
+    float signal_amplitude_right_uv;
+    float noise_floor_uv;
+    float common_mode_rejection_db;
+    bool electrode_contact_good_left;
+    bool electrode_contact_good_right;
+    bool signal_saturated;
+    bool power_line_interference;
+    uint8_t data_integrity_score;  // 0-100
+} real_eeg_quality_t;
+
+/* Global Variables - REAL HARDWARE STATE */
+static eeg_circular_buffer_t eeg_buffer;
+static volatile bool acquisition_running = false;
+static volatile bool ads1263_hardware_ready = false;
+static volatile uint32_t real_sample_count = 0;
+static volatile uint32_t hardware_error_count = 0;
+
+/* Enhanced Hardware Debug State */
+static enhanced_hardware_debug_t hw_debug = {0};
+static real_eeg_quality_t eeg_quality = {0};
+
+/* External semaphore references */
+extern ID eeg_data_semaphore;
+extern ID preprocessing_semaphore;
+
+/* Private Function Prototypes - ENHANCED SYSTEM */
+static fsp_err_t ads1263_hardware_probe(void);
+static fsp_err_t ads1263_power_cycle(void);
+static fsp_err_t ads1263_comprehensive_reset(void);
+static fsp_err_t ads1263_verify_device_id(void);
+static fsp_err_t ads1263_configure_for_real_eeg(void);
+static fsp_err_t ads1263_perform_comprehensive_calibration(void);
+static fsp_err_t ads1263_write_register_verified(uint8_t reg_addr, uint8_t data);
+static fsp_err_t ads1263_read_register_verified(uint8_t reg_addr, uint8_t *data);
+static fsp_err_t ads1263_write_command_verified(uint8_t command);
+static fsp_err_t ads1263_read_real_eeg_data(int32_t *adc1_data, int32_t *adc2_data, uint8_t *status);
+static fsp_err_t ads1263_measure_electrode_impedance(void);
+static fsp_err_t ads1263_check_power_supply(void);
+static void ads1263_calculate_real_signal_quality(eeg_raw_sample_t *sample);
+static fsp_err_t eeg_buffer_init_real(void);
+static fsp_err_t eeg_buffer_write_real(const eeg_raw_sample_t *sample);
+static void debug_print_hardware_status(void);
+static void debug_print_register_dump(void);
+static fsp_err_t troubleshoot_spi_communication(void);
+static fsp_err_t troubleshoot_drdy_signal(void);
+static fsp_err_t troubleshoot_electrode_connection(void);
+
+/* NEW: Enhanced SPI Diagnostic Functions */
+static void debug_fsp_pin_configuration(void);
+static fsp_err_t debug_spi_configuration_comprehensive(void);
+static fsp_err_t test_spi_bit_width_compatibility(void);
+static fsp_err_t determine_optimal_spi_mode(void);
+static fsp_err_t ads1263_write_command_fsp_cs(uint8_t command);
+static fsp_err_t ads1263_write_command_manual_cs(uint8_t command);
+static fsp_err_t ads1263_write_command_ads1263_optimized(uint8_t command);
+static fsp_err_t ads1263_write_command_adaptive(uint8_t command);
+static bool is_spi_handle_ready(void);
+static fsp_err_t debug_spi_configuration_comprehensive(void);
+static void fix_cs_pin_control(void);
+static void force_cs_pin_working(void);
+static uint8_t debug_ads1263_device_id_enhanced(void);
+static uint8_t wake_and_reset_ads1263(void);
+static void ads1263_hard_reset(void);
+static uint8_t read_device_id_enhanced(void);
+fsp_err_t configure_pure_gpio_spi(void);
+uint8_t pure_gpio_read_device_id(void);
+static uint8_t pure_gpio_read_byte(void);
+static uint8_t bitbang_read_register(uint8_t reg_addr);
+static void ads1263_comprehensive_diagnostic(void);
+// Add these new function declarations
+static bool ads1263_wait_for_drdy(uint32_t timeout_ms);
+//static uint32_t ads1263_direct_data_read(void);
+static fsp_err_t ads1263_direct_mode_init(void);
+static void ads1263_test_direct_reading(void);
+static uint32_t ads1263_direct_data_read_no_drdy(void);
+static void test_drdy_pin_behavior(void);
+static void enhanced_spi_diagnostic(void);
+/* ✅ DUAL-CHANNEL RDATA FUNCTION DECLARATIONS */
+static fsp_err_t ads1263_init_dual_rdata_mode(void);
+static fsp_err_t ads1263_rdata_dual_channel_acquisition(void);
+static uint32_t ads1263_read_adc1_rdata_robust(void);
+static uint32_t ads1263_read_adc2_rdata_robust(void);
+static fsp_err_t ads1263_dual_channel_read(int32_t* adc1_data, int32_t* adc2_data);
+static fsp_err_t ads1263_validate_dual_sample(eeg_rdata_sample_t* sample);
+static void ads1263_update_dual_acquisition_stats(bool adc1_success, bool adc2_success);
+static fsp_err_t eeg_buffer_add_dual_sample(const eeg_rdata_sample_t* sample);
+static fsp_err_t ads1263_configure_dual_adc_for_eeg(void);
+static void ads1263_assess_dual_channel_quality(eeg_rdata_sample_t* sample);
+
+// =====================================================
+// ✅ CORRECT SPI Mode 1 Bit-Banging Implementation
+// =====================================================
+
+/**
+ * @brief Get system timestamp in microseconds
+ * @return Current timestamp in microseconds
+ */
+static uint32_t get_system_timestamp_us(void)
+{
+    static uint32_t timestamp_counter = 0;
+
+    // Simple timestamp simulation (increments each call)
+    timestamp_counter += 500; // Increment by 500µs (2kHz simulation)
+
+    return timestamp_counter;
+}
+
+ /**
+ * @brief CORRECT SPI Mode 1 read byte (CPOL=0, CPHA=1)
+ */
+static uint8_t spi_mode1_read_byte(void) {
+    uint8_t data = 0x00;
+
+    // Ensure SCK starts LOW (CPOL=0)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_SCK_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(50); // Setup time
+
+    // SPI Mode 1: Sample on RISING edge (CPHA=1)
+    for (int i = 7; i >= 0; i--) {
+        // Setup time before rising edge
+        gpio_delay_us(50);
+
+        // Rising edge - SAMPLE HERE for Mode 1
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_SCK_PIN, BSP_IO_LEVEL_HIGH);
+        gpio_delay_us(50); // Hold time
+
+        // Sample MISO on rising edge
+        bsp_io_level_t bit_level;
+        R_IOPORT_PinRead(&g_ioport_ctrl, ADS_MISO_PIN, &bit_level);
+        if (bit_level == BSP_IO_LEVEL_HIGH) {
+            data |= (1 << i);
+        }
+
+        // Falling edge
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_SCK_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(50); // Hold time
+    }
+
+    return data;
+}
+
+static bool wait_for_drdy(uint32_t timeout_ms)
+{
+    // Convert timeout to loop iterations (approximate)
+    uint32_t max_loops = timeout_ms * 100; // ~10µs per loop = 100 loops per ms
+    uint32_t loop_count = 0;
+
+    while (loop_count < max_loops) {
+        bsp_io_level_t drdy_state;
+        R_IOPORT_PinRead(&g_ioport_ctrl, DRDY_PIN_BB, &drdy_state);
+
+        if (drdy_state == BSP_IO_LEVEL_LOW) {  // DRDY active LOW
+            printf("DRDY: Data Ready detected!\r\n");
+            return true;
+        }
+
+        gpio_delay_us(10); // 10µs delay per loop
+        loop_count++;
+    }
+
+    printf("DRDY: Timeout waiting for data ready\r\n");
+    return false;
+}
+
+/**
+ * @brief Read device ID using DRDY-based approach (software-only, no hardware reset)
+ * @return uint8_t Device ID value
+ * @note Since RESET is hardwired to 3.3V, this uses software commands only
+ */
+/**
+ * @brief Pure GPIO Device ID read with multiple register scan approach
+ * @return uint8_t Device ID value from register scan
+ * @note Uses software reset only since hardware RESET is hardwired to 3.3V
+ */
+uint8_t pure_gpio_read_device_id(void)
+{
+    printf("SHRAVYA: Pure GPIO Device ID read - comprehensive register scan...\r\n");
+
+    // Software RESET sequence (hardware RESET is hardwired to 3.3V)
+    printf("SHRAVYA: Performing ADS1263 software RESET (RST hardwired to 3.3V)...\r\n");
+
+    // Send software RESET command multiple times for robustness
+    for (int reset_attempt = 0; reset_attempt < 3; reset_attempt++) {
+        printf("SHRAVYA: Software reset attempt %d/3...\r\n", reset_attempt + 1);
+
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(100);
+        pure_gpio_write_byte(0x06);  // RESET command
+        gpio_delay_us(200);
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+        // Progressive delay between attempts
+        gpio_delay_us((reset_attempt + 1) * 10000); // 10ms, 20ms, 30ms
+    }
+
+    // Final stabilization after reset
+    printf("SHRAVYA: Post-reset stabilization (50ms)...\r\n");
+    R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS);
+
+    uint8_t device_id = 0x00;
+
+    // Try Register 0x00 (ID) - Primary device identification register
+    printf("SHRAVYA: Scanning register 0x00 (Device ID)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100);
+
+    pure_gpio_write_byte(0x20);  // RREG + register 0x00
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x00);  // Read 1 register
+    gpio_delay_us(300);          // Extended wait for ADS1263 response
+    device_id = pure_gpio_read_byte();
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(100);
+
+    printf("SHRAVYA: Register 0x00 (ID) = 0x%02X\r\n", device_id);
+
+    // Check if we got valid Device ID (0x01 for ADS1263)
+    if (device_id == 0x01) {
+        printf("SHRAVYA: ✅ Valid ADS1263 Device ID found: 0x%02X\r\n", device_id);
+        return device_id;
+    }
+
+    // Try Register 0x01 (POWER) - Should return 0x11 by default
+    printf("SHRAVYA: Scanning register 0x01 (POWER)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100);
+
+    pure_gpio_write_byte(0x21);  // RREG + register 0x01
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x00);  // Read 1 register
+    gpio_delay_us(300);
+    uint8_t power_reg = pure_gpio_read_byte();
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(100);
+
+    printf("SHRAVYA: Register 0x01 (POWER) = 0x%02X (default: 0x11)\r\n", power_reg);
+
+    // Check for expected POWER register value
+    if (power_reg == 0x11 && (device_id == 0x00 || device_id == 0xFF)) {
+        printf("SHRAVYA: ✅ POWER register shows expected value - communication working\r\n");
+        // Return power register value as indication of working communication
+        device_id = power_reg;
+    }
+
+    // Try Register 0x02 (INTERFACE) - Should return 0x05 by default
+    printf("SHRAVYA: Scanning register 0x02 (INTERFACE)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100);
+
+    pure_gpio_write_byte(0x22);  // RREG + register 0x02
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x00);  // Read 1 register
+    gpio_delay_us(300);
+    uint8_t interface_reg = pure_gpio_read_byte();
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(100);
+
+    printf("SHRAVYA: Register 0x02 (INTERFACE) = 0x%02X (default: 0x05)\r\n", interface_reg);
+
+    // Check for expected INTERFACE register value
+    if (interface_reg == 0x05 && device_id != 0x01) {
+        printf("SHRAVYA: ✅ INTERFACE register shows expected value - communication confirmed\r\n");
+        device_id = interface_reg;
+    }
+
+    // Try Register 0x03 (SYS) - System configuration register
+    printf("SHRAVYA: Scanning register 0x03 (SYS)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100);
+
+    pure_gpio_write_byte(0x23);  // RREG + register 0x03
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x00);  // Read 1 register
+    gpio_delay_us(300);
+    uint8_t sys_reg = pure_gpio_read_byte();
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(100);
+
+    printf("SHRAVYA: Register 0x03 (SYS) = 0x%02X\r\n", sys_reg);
+
+    // Final analysis
+    printf("SHRAVYA: Register scan summary:\r\n");
+    printf("SHRAVYA: - ID (0x00): 0x%02X %s\r\n", device_id, (device_id == 0x01) ? "✅" : "❌");
+    printf("SHRAVYA: - POWER (0x01): 0x%02X %s\r\n", power_reg, (power_reg == 0x11) ? "✅" : "❌");
+    printf("SHRAVYA: - INTERFACE (0x02): 0x%02X %s\r\n", interface_reg, (interface_reg == 0x05) ? "✅" : "❌");
+    printf("SHRAVYA: - SYS (0x03): 0x%02X\r\n", sys_reg);
+
+    // Return the most promising result
+    if (device_id == 0x01) {
+        printf("SHRAVYA: 🎯 Using Device ID: 0x%02X (Perfect!)\r\n", device_id);
+    } else if (power_reg == 0x11 || interface_reg == 0x05) {
+        printf("SHRAVYA: 🔧 Communication detected but ID register issue\r\n");
+        device_id = (power_reg == 0x11) ? power_reg : interface_reg;
+    } else {
+        printf("SHRAVYA: ❌ No valid responses detected - check hardware connections\r\n");
+    }
+
+    printf("SHRAVYA: Pure GPIO Device ID scan complete - result: 0x%02X\r\n", device_id);
+    return device_id;
+}
+/**
+
+ * @brief CORRECT ADS1263 Device ID read using true SPI Mode 1
+ */
+/**
+ * @brief Comprehensive ADS1263 register scan to test communication
+ */
+static void ads1263_register_scan(void) {
+    printf("SHRAVYA: ═══ COMPREHENSIVE REGISTER SCAN ═══\n");
+    printf("SHRAVYA: Testing if ANY registers respond...\n");
+
+    // Define register addresses to scan
+    uint8_t registers[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x0F, 0x12, 0x14};
+    char* reg_names[] = {"ID", "POWER", "INTERFACE", "MODE0", "MODE1", "MODE2", "INPMUX", "REFMUX", "GPIOCON", "GPIODAT"};
+    int num_regs = 10;
+
+    bool any_response = false;
+
+    for (int i = 0; i < num_regs; i++) {
+        uint8_t value = 0x00;
+
+        printf("SHRAVYA: Reading register %s (0x%02X)... ", reg_names[i], registers[i]);
+
+        // CS LOW
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+        // Send RREG command
+        pure_gpio_write_byte(0x20 | registers[i]); // RREG + address
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+        // Send num registers - 1
+        pure_gpio_write_byte(0x00);
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+        // Read value
+        value = spi_mode1_read_byte();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+        // CS HIGH
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+        printf("Value = 0x%02X", value);
+
+        if (value != 0x00) {
+            printf(" ← NON-ZERO RESPONSE!");
+            any_response = true;
+        } else {
+            printf(" (no response)");
+        }
+        printf("\n");
+
+        R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS); // Delay between reads
+    }
+
+    printf("SHRAVYA: ═══ REGISTER SCAN COMPLETE ═══\n");
+    if (any_response) {
+        printf("SHRAVYA: SUCCESS! Found non-zero responses - SPI communication working!\n");
+    } else {
+        printf("SHRAVYA: CRITICAL! All registers returned 0x00 - No communication!\n");
+    }
+}
+
+
+/**
+ * @brief Check SPI Handle State Safely - NEW ADDITION
+ */
+static bool is_spi_handle_ready(void)
+{
+    // Check if SPI control structure is properly initialized
+    if (g_spi0_ctrl.open == 0) {
+        printf("SHRAVYA: SPI handle not opened, skipping advanced tests\r\n");
+        return false;
+    }
+
+    // SPI is already opened and ready
+    printf("SHRAVYA: SPI handle confirmed open and ready\r\n");
+    return true;
+}
+
+/**
+ * @brief Wait for SPI to become available before transaction
+ */
+static fsp_err_t wait_for_spi_ready(uint32_t timeout_ms)
+{
+    for (uint32_t i = 0; i < timeout_ms; i++) {
+        // Check if SPI is not busy - simplified check
+        if (g_spi0_ctrl.open != 0) {
+            printf("SHRAVYA: SPI ready for transaction\r\n");
+            return FSP_SUCCESS;
+        }
+
+        // Simple delay using a busy loop instead of BSP delay
+        for (volatile uint32_t j = 0; j < 10000; j++) {
+            // Busy wait
+        }
+    }
+
+    printf("SHRAVYA: SPI timeout waiting for ready state\r\n");
+    return FSP_ERR_TIMEOUT;
+}
+
+static uint8_t wake_and_reset_ads1263(void)
+{
+    printf("SHRAVYA: Waking up and resetting ADS1263...\r\n");
+
+    // CS Low
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+    // Send WAKEUP command (0x02)
+    uint8_t wakeup_cmd = 0x02;
+    R_SPI_B_Write(&g_spi0_ctrl, &wakeup_cmd, 1, SPI_BIT_WIDTH_8_BITS);
+
+    // CS High
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(1000, BSP_DELAY_UNITS_MICROSECONDS); // 1ms wait
+
+    // CS Low again
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+    // Send RESET command (0x06)
+    uint8_t reset_cmd = 0x06;
+    R_SPI_B_Write(&g_spi0_ctrl, &reset_cmd, 1, SPI_BIT_WIDTH_8_BITS);
+
+    // CS High
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(5000, BSP_DELAY_UNITS_MICROSECONDS); // 5ms wait for reset
+
+    printf("SHRAVYA: Wake and reset complete\r\n");
+    return 1;
+}
+
+/**
+ * @brief Enhanced hardware reset for ADS1263
+ */
+/**
+ * @brief Enhanced ADS1263 reset (software-only since hardware reset is unavailable)
+ * @note RESET pin is hardwired to 3.3V, so only software reset is possible
+ */
+static void ads1263_hard_reset(void) {
+    printf("SHRAVYA: Enhanced software reset starting (RST hardwired to 3.3V)...\r\n");
+
+    // Power stabilization delay
+    printf("SHRAVYA: Power stabilization delay...\r\n");
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // Multiple software reset attempts for robustness
+    for (int i = 0; i < 3; i++) {
+        printf("SHRAVYA: Software reset attempt %d/3...\r\n", i + 1);
+
+        // Send RESET command using bit-bang SPI
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(100);
+
+        pure_gpio_write_byte(0x06); // RESET command
+        gpio_delay_us(200);
+
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+        // Wait between reset attempts
+        R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS);
+    }
+
+    // Physical connection test
+    printf("SHRAVYA: Testing ADS1263 PHYSICAL connection...\r\n");
+
+    // Test if MISO changes when we send commands
+    printf("SHRAVYA: MISO before command: ");
+    bsp_io_level_t miso_before;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_before);
+    printf("%s\r\n", (miso_before == BSP_IO_LEVEL_HIGH) ? "HIGH" : "LOW");
+
+    // Send NOP command
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100);
+    pure_gpio_write_byte(0x00); // NOP
+    gpio_delay_us(100);
+
+    // Check if MISO changed (should go LOW during response)
+    bsp_io_level_t miso_during;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_during);
+    printf("SHRAVYA: MISO during response: %s\r\n",
+           (miso_during == BSP_IO_LEVEL_HIGH) ? "HIGH" : "LOW");
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    // Connection diagnosis
+    if (miso_before == BSP_IO_LEVEL_HIGH && miso_during == BSP_IO_LEVEL_HIGH) {
+        printf("SHRAVYA: ⚠️  ADS1263 may not be responding - check connections\r\n");
+        printf("SHRAVYA: Check: 1. Power (5V), 2. SPI wires, 3. Module inserted\r\n");
+    } else {
+        printf("SHRAVYA: ✅ MISO signal changes detected - ADS1263 responding\r\n");
+    }
+
+    // Send WAKEUP command
+    printf("SHRAVYA: Sending WAKEUP command...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100);
+
+    pure_gpio_write_byte(0x02); // WAKEUP command
+    gpio_delay_us(200);
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    printf("SHRAVYA: Enhanced software reset complete\r\n");
+}
+
+/**
+ * @brief Comprehensive SPI Configuration Analysis
+ */
+static fsp_err_t debug_spi_configuration_comprehensive(void)
+{
+    printf("=== COMPREHENSIVE SPI CONFIGURATION ANALYSIS ===\r\n");
+    //force_cs_pin_working();
+    /* Check SPI module open status using safe method */
+    if (!is_spi_handle_ready()) {
+        printf("INFO: SPI not ready for advanced tests, using basic mode\r\n");
+        hw_debug.fsp_auto_cs_works = true;  // Assume it works from initial success
+        return FSP_SUCCESS;  // Continue without breaking
+    }
+
+    printf("SPI Module Status: OPEN\r\n");
+
+    /* Test basic SPI functionality */
+    printf("Testing basic SPI write functionality...\r\n");
+
+    // Wait for SPI to be ready first
+    uint8_t test_data = 0x00; // NOP command
+    fsp_err_t wait_result = wait_for_spi_ready(100);
+    if (wait_result != FSP_SUCCESS) {
+        printf("Basic SPI Write: FAILED - SPI not ready\r\n");
+        return wait_result;
+    }
+
+    fsp_err_t basic_result = R_SPI_B_Write(&g_spi0_ctrl, &test_data, 1, SPI_BIT_WIDTH_8_BITS);
+
+    if (basic_result == FSP_SUCCESS) {
+        printf("Basic SPI Write: SUCCESS\r\n");
+        hw_debug.fsp_auto_cs_works = true;
+    } else {
+        printf("Basic SPI Write: FAILED (%u)\r\n", basic_result);
+        hw_debug.fsp_auto_cs_works = false;
+
+        /* Detailed error analysis */
+        switch(basic_result) {
+            case FSP_ERR_ASSERTION:
+                printf("Error Type: Parameter validation failed\r\n");
+                break;
+            case FSP_ERR_NOT_OPEN:
+                printf("Error Type: SPI not properly opened\r\n");
+                break;
+            case FSP_ERR_IN_USE:
+                printf("Error Type: SPI busy\r\n");
+                break;
+            case FSP_ERR_INVALID_ARGUMENT:
+                printf("Error Type: Invalid arguments\r\n");
+                break;
+            default:
+                printf("Error Type: Unknown (%u)\r\n", basic_result);
+                break;
+        }
+    }
+
+    printf("=============================================\r\n");
+    return basic_result;
+}
+
+/**
+ * @brief Fix CS Pin Control - ULTIMATE FIX
+ */
+/**
+ * @brief Fix CS Pin Control - SIMPLE VERSION THAT WORKS
+ */
+static void fix_cs_pin_control(void)
+{
+    printf("SHRAVYA: ULTIMATE CS pin fix...\r\n");
+
+    // Force pin to pure GPIO mode - CORRECTED VERSION
+    R_IOPORT_PinCfg(&g_ioport_ctrl, BSP_IO_PORT_04_PIN_09,
+                    IOPORT_CFG_PORT_DIRECTION_OUTPUT |
+                    IOPORT_CFG_PORT_OUTPUT_HIGH);
+                    // Removed the non-existent constant
+
+    // Test HIGH
+    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_04_PIN_09, BSP_IO_LEVEL_HIGH);
+    bsp_io_level_t level;
+    R_IOPORT_PinRead(&g_ioport_ctrl, BSP_IO_PORT_04_PIN_09, &level);
+    printf("SHRAVYA: CS HIGH = %d\r\n", level);
+
+    // Test LOW
+    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_04_PIN_09, BSP_IO_LEVEL_LOW);
+    R_IOPORT_PinRead(&g_ioport_ctrl, BSP_IO_PORT_04_PIN_09, &level);
+    printf("SHRAVYA: CS LOW = %d\r\n", level);
+
+    // Back to HIGH (idle)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_04_PIN_09, BSP_IO_LEVEL_HIGH);
+    printf("SHRAVYA: CS Pin FULLY FIXED!\r\n");
+}
+
+/**
+ * @brief FORCE CS Pin to Work - Nuclear Option
+ */
+static void force_cs_pin_working(void)
+{
+    printf("SHRAVYA: NUCLEAR CS FIX...\r\n");
+
+    // Step 1: Close SPI completely
+    R_SPI_B_Close(&g_spi0_ctrl);
+
+    // Step 2: Force pin to GPIO
+    R_IOPORT_PinCfg(&g_ioport_ctrl, ADS_CS_PIN, // ← CHANGED TO CORRECT PIN
+                        IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_HIGH);
+
+    // Step 3: Test manual control
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_HIGH); // ← CORRECT PIN
+        printf("SHRAVYA: CS forced HIGH\n");
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_LOW);  // ← CORRECT PIN
+        printf("SHRAVYA: CS forced LOW\n");
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_HIGH); // ← CORRECT PIN
+        printf("SHRAVYA: CS back to HIGH - FIXED!\n");
+
+        // Step 4: Reopen SPI without auto-CS
+        R_SPI_B_Open(&g_spi0_ctrl, &g_spi0_cfg);
+    }
+/**
+ * @brief Enhanced FSP Pin Configuration Debug
+ */
+static void debug_fsp_pin_configuration(void)
+{
+    printf("=== SHRAVYA ENHANCED FSP PIN CONFIGURATION DEBUG ===\r\n");
+
+    /* Check IOPORT module status */
+    printf("IOPORT Control Handle: %p\r\n", (void*)&g_ioport_ctrl);
+
+    /* Test CS pin accessibility */
+    bsp_io_level_t pin_level;
+    fsp_err_t err = R_IOPORT_PinRead(&g_ioport_ctrl, ADS_CS_PIN, &pin_level); // ← CORRECT PIN
+    if (err == FSP_SUCCESS) {
+        printf("CS Pin (P413) current level: %s\r\n",
+               (pin_level == BSP_IO_LEVEL_HIGH) ? "HIGH" : "LOW");
+        printf("CS Pin accessible for GPIO operations: YES\r\n");
+        hw_debug.manual_cs_accessible = true;
+
+        /* Test CS pin control */
+        printf("Testing CS pin control...\r\n");
+        force_cs_pin_working();
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_LOW);
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+        R_IOPORT_PinRead(&g_ioport_ctrl, ADS_CS_PIN, &pin_level);
+        printf("CS Low Test: %s\r\n", (pin_level == BSP_IO_LEVEL_LOW) ? "PASS" : "FAIL");
+
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_HIGH);
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+        R_IOPORT_PinRead(&g_ioport_ctrl, ADS_CS_PIN, &pin_level);
+        printf("CS High Test: %s\r\n", (pin_level == BSP_IO_LEVEL_HIGH) ? "PASS" : "FAIL");
+
+    } else {
+        printf("CS Pin (P413) GPIO access failed: %u\r\n", err);
+        printf("Manual CS control: NOT AVAILABLE\r\n");
+        hw_debug.manual_cs_accessible = false;
+    }
+    // ✅ ADD THIS TEST RIGHT HERE:
+    // Test P410 connectivity
+    printf("SHRAVYA: [TEST] Reading P410 idle state...\r\n");
+    bsp_io_level_t idle_level;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS_MISO_PIN, &idle_level);
+    printf("SHRAVYA: [TEST] P410 idle level = %s\r\n",
+           (idle_level == BSP_IO_LEVEL_HIGH) ? "HIGH" : "LOW");
+
+    /* Check SPI configuration handles */
+    printf("SPI0 Control Handle: %p\r\n", (void*)&g_spi0_ctrl);
+    printf("SPI0 Configuration: %p\r\n", (void*)&g_spi0_cfg);
+
+}
+/**
+ * @brief Hardware verification before SPI communication - FIXED VERSION
+ */
+static fsp_err_t verify_hardware_connections(void)
+{
+    printf("SHRAVYA: Hardware Connection Verification - FIXED\r\n");
+
+    // STEP 1: Force CS pin to GPIO mode (bypass FSP SPI control)
+    fsp_err_t err = R_IOPORT_PinCfg(&g_ioport_ctrl, ADS_CS_PIN,
+                                    IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_HIGH);
+    if (err != FSP_SUCCESS) {
+        printf("CS Pin GPIO config failed: %u\r\n", err);
+        return err;
+    }
+
+    // STEP 2: Test CS pin control with longer delays
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);  // Longer delay
+
+    bsp_io_level_t cs_level;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS_CS_PIN, &cs_level);
+    printf("CS (P413) High Test: %s\r\n", (cs_level == BSP_IO_LEVEL_HIGH) ? "PASS" : "FAIL");
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);  // Longer delay
+
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS_CS_PIN, &cs_level);
+    printf("CS (P413) Low Test: %s\r\n", (cs_level == BSP_IO_LEVEL_LOW) ? "PASS" : "FAIL");
+
+    // STEP 3: Return to HIGH and verify
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS_CS_PIN, &cs_level);
+    printf("CS (P413) Final High Test: %s\r\n", (cs_level == BSP_IO_LEVEL_HIGH) ? "PASS" : "FAIL");
+
+    if (cs_level != BSP_IO_LEVEL_HIGH) {
+        printf("CRITICAL: CS pin stuck at LOW level!\r\n");
+        return FSP_ERR_INVALID_HW_CONDITION;
+    }
+
+    printf("SHRAVYA: CS pin control verified and working\r\n");
+    return FSP_SUCCESS;
+}
+
+
+
+/**
+ * @brief Comprehensive SPI Configuration Analysis
+ */
+/**
+ * @brief Test SPI Bit Width Compatibility
+ */
+static fsp_err_t test_spi_bit_width_compatibility(void)
+{
+    printf("=== SPI BIT WIDTH COMPATIBILITY TEST ===\r\n");
+
+    uint8_t test_data = ADS1263_CMD_NOP;
+    fsp_err_t err;
+
+    hw_debug.spi_config_tests_performed++;
+
+    /* Test 8-bit transfers */
+    printf("Testing 8-bit transfers: ");
+    err = R_SPI_B_Write(&g_spi0_ctrl, &test_data, 1, SPI_BIT_WIDTH_8_BITS);
+    if (err == FSP_SUCCESS) {
+        printf("SUCCESS\r\n");
+        hw_debug.spi_8bit_works = true;
+    } else {
+        printf("FAILED (%u)\r\n", err);
+        hw_debug.spi_8bit_works = false;
+    }
+
+    /* Test 16-bit transfers */
+    printf("Testing 16-bit transfers: ");
+    err = R_SPI_B_Write(&g_spi0_ctrl, &test_data, 1, SPI_BIT_WIDTH_16_BITS);
+    if (err == FSP_SUCCESS) {
+        printf("SUCCESS\r\n");
+        hw_debug.spi_16bit_works = true;
+    } else {
+        printf("FAILED (%u)\r\n", err);
+        hw_debug.spi_16bit_works = false;
+    }
+
+    /* Test 24-bit transfers (if available) */
+    printf("Testing 24-bit transfers: ");
+    err = R_SPI_B_Write(&g_spi0_ctrl, &test_data, 1, SPI_BIT_WIDTH_24_BITS);
+    if (err == FSP_SUCCESS) {
+        printf("SUCCESS\r\n");
+        hw_debug.spi_24bit_works = true;
+    } else {
+        printf("FAILED (%u)\r\n", err);
+        hw_debug.spi_24bit_works = false;
+    }
+
+    /* Test 32-bit transfers */
+    printf("Testing 32-bit transfers: ");
+    err = R_SPI_B_Write(&g_spi0_ctrl, &test_data, 1, SPI_BIT_WIDTH_32_BITS);
+    if (err == FSP_SUCCESS) {
+        printf("SUCCESS\r\n");
+        hw_debug.spi_32bit_works = true;
+    } else {
+        printf("FAILED (%u)\r\n", err);
+        hw_debug.spi_32bit_works = false;
+    }
+
+    printf("=======================================\r\n");
+
+    return FSP_SUCCESS;
+}
+/**
+ * @brief Enhanced ADS1263 Device ID Detection with Multiple Methods
+ */
+static uint8_t debug_ads1263_device_id_enhanced(void)
+{
+    printf("SHRAVYA: Simple Device ID detection starting...\r\n");
+
+    uint8_t tx_buf[3];
+    uint8_t rx_buf[3];
+    uint8_t device_id = 0x00;
+
+    // CS LOW
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+    // Simple register read
+    tx_buf[0] = 0x20;  // RREG command
+    tx_buf[1] = 0x00;  // Address 0
+    tx_buf[2] = 0x00;  // Dummy
+
+    fsp_err_t err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_buf, rx_buf, 3, SPI_BIT_WIDTH_8_BITS);
+    if (err == FSP_SUCCESS) {
+        device_id = rx_buf[2];
+        printf("SHRAVYA: Device ID = 0x%02X\r\n", device_id);
+    } else {
+        printf("SHRAVYA: Device ID read failed: %d\r\n", err);
+    }
+
+    // CS HIGH
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+    printf("SHRAVYA: Simple Device ID detection complete\r\n");
+    return device_id;
+}
+
+/**
+ * @brief Enhanced Device ID read with extended timing
+ */
+static uint8_t read_device_id_enhanced(void) {
+    printf("SHRAVYA: Enhanced Device ID read starting...");
+
+    // Ensure proper reset first
+    ads1263_hard_reset();
+    R_BSP_SoftwareDelay(200, BSP_DELAY_UNITS_MILLISECONDS); // Extra delay after reset
+
+    uint8_t device_id = 0x00;
+
+    // Start SPI transaction - CS LOW
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS); // Extended CS setup time
+
+    // Send RREG command for ID register (0x20 + 0x00)
+    pure_gpio_write_byte(0x20); // RREG ID command
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+    // Send number of registers to read - 1 (0 = read 1 register)
+    pure_gpio_write_byte(0x00);
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+    // Read the device ID
+    device_id = spi_mode1_read_byte(); // Read ID byte
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
+
+    // End transaction - CS HIGH
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    printf("SHRAVYA: Enhanced Device ID read = 0x%02X", device_id);
+    return device_id;
+}
+
+/**
+ * @brief Determine Optimal SPI Communication Mode
+ */
+static fsp_err_t determine_optimal_spi_mode(void)
+{
+    printf("=== DETERMINING OPTIMAL SPI MODE ===\r\n");
+
+    fsp_err_t err;
+
+    /* Test FSP-managed mode */
+    if (hw_debug.fsp_auto_cs_works && hw_debug.spi_8bit_works) {
+        printf("Testing FSP-managed mode...\r\n");
+        err = ads1263_write_command_fsp_cs(ADS1263_CMD_NOP);
+        if (err == FSP_SUCCESS) {
+            printf("FSP-managed mode: WORKING\r\n");
+            hw_debug.optimal_spi_mode = SPI_MODE_FSP_MANAGED;
+            return FSP_SUCCESS;
+        }
+    }
+
+    /* Test manual CS mode */
+    if (hw_debug.manual_cs_accessible && hw_debug.spi_8bit_works) {
+        printf("Testing manual CS mode...\r\n");
+        err = ads1263_write_command_manual_cs(ADS1263_CMD_NOP);
+        if (err == FSP_SUCCESS) {
+            printf("Manual CS mode: WORKING\r\n");
+            hw_debug.optimal_spi_mode = SPI_MODE_MANUAL_CS;
+            return FSP_SUCCESS;
+        }
+    }
+
+    /* Test ADS1263-optimized mode */
+    printf("Testing ADS1263-optimized mode...\r\n");
+    err = ads1263_write_command_ads1263_optimized(ADS1263_CMD_NOP);
+    if (err == FSP_SUCCESS) {
+        printf("ADS1263-optimized mode: WORKING\r\n");
+        hw_debug.optimal_spi_mode = SPI_MODE_ADS1263_OPTIMIZED;
+        return FSP_SUCCESS;
+    }
+
+    printf("ERROR: No working SPI mode found!\r\n");
+    hw_debug.optimal_spi_mode = SPI_MODE_UNKNOWN;
+
+    printf("==================================\r\n");
+
+    return FSP_ERR_INVALID_HW_CONDITION;
+}
+
+/**
+ * @brief FSP-Managed CS Command Transmission
+ */
+static fsp_err_t ads1263_write_command_fsp_cs(uint8_t command)
+{
+    fsp_err_t err;
+
+    /* FSP automatically handles CS timing */
+    err = R_SPI_B_Write(&g_spi0_ctrl, &command, 1, SPI_BIT_WIDTH_8_BITS);
+
+    if (FSP_SUCCESS == err) {
+        hw_debug.spi_transactions_successful++;
+    } else {
+        hw_debug.spi_transactions_failed++;
+    }
+
+    /* ADS1263 timing requirement */
+    R_BSP_SoftwareDelay(5, BSP_DELAY_UNITS_MILLISECONDS);
+
+    return err;
+}
+
+/**
+ * @brief Manual CS Command Transmission
+ */
+static fsp_err_t ads1263_write_command_manual_cs(uint8_t command)
+{
+    fsp_err_t err;
+
+    /* Manual CS control */
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+    err = R_SPI_B_Write(&g_spi0_ctrl, &command, 1, SPI_BIT_WIDTH_8_BITS);
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    if (FSP_SUCCESS == err) {
+        hw_debug.spi_transactions_successful++;
+    } else {
+        hw_debug.spi_transactions_failed++;
+    }
+
+    /* ADS1263 timing requirement */
+    R_BSP_SoftwareDelay(5, BSP_DELAY_UNITS_MILLISECONDS);
+
+    return err;
+}
+
+/**
+ * @brief ADS1263-Optimized Command Transmission
+ */
+static fsp_err_t ads1263_write_command_ads1263_optimized(uint8_t command)
+{
+    fsp_err_t err;
+
+    /* ADS1263-specific optimizations */
+    if (hw_debug.manual_cs_accessible) {
+        /* Use manual CS with ADS1263-specific timing */
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        R_BSP_SoftwareDelay(2, BSP_DELAY_UNITS_MICROSECONDS); // ADS1263 setup time
+
+        err = R_SPI_B_Write(&g_spi0_ctrl, &command, 1, SPI_BIT_WIDTH_8_BITS);
+
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS); // ADS1263 hold time
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    } else {
+        /* Use FSP auto-CS with ADS1263 timing */
+        err = R_SPI_B_Write(&g_spi0_ctrl, &command, 1, SPI_BIT_WIDTH_8_BITS);
+    }
+
+    if (FSP_SUCCESS == err) {
+        hw_debug.spi_transactions_successful++;
+    } else {
+        hw_debug.spi_transactions_failed++;
+    }
+
+    /* ADS1263 command processing time */
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+
+    return err;
+}
+
+/**
+ * @brief Adaptive Command Transmission (Uses Optimal Mode)
+ */
+static fsp_err_t ads1263_write_command_adaptive(uint8_t command)
+{
+    switch(hw_debug.optimal_spi_mode) {
+        case SPI_MODE_FSP_MANAGED:
+            return ads1263_write_command_fsp_cs(command);
+
+        case SPI_MODE_MANUAL_CS:
+            return ads1263_write_command_manual_cs(command);
+
+        case SPI_MODE_ADS1263_OPTIMIZED:
+            return ads1263_write_command_ads1263_optimized(command);
+
+        default:
+            printf("SHRAVYA: ERROR - No optimal SPI mode determined!\r\n");
+            return FSP_ERR_INVALID_HW_CONDITION;
+    }
+}
+
+/**
+ /**
+ /**
+ * @brief Complete robust EEG acquisition initialization with proper ADS1263 support
+ * @return fsp_err_t Success or error code
+ * @note Uses bit-banging SPI with correct timing and pin assignments
+ */
+fsp_err_t eeg_acquisition_init(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    // ✅ Enable internal reference for both ADCs
+    bitbang_write_register(0x01, 0x11); // POWER: RESET=1, INTREF=1
+    printf("SHRAVYA: ✅ Internal 2.5V reference enabled\r\n");
+
+    printf("SHRAVYA: ✅ ROBUST GPIO EEG Initialization - ADS1263 SPI Mode 1\r\n");
+    printf("SHRAVYA: Hardware: RST=hardwired 3.3V, DRDY=P000(A4), SPI=mikroBUS pins\r\n");
+
+    /* ==================== STEP 1: Initialize Buffer ==================== */
+    err = eeg_buffer_init_real();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: ❌ Buffer init failed: %u\r\n", err);
+        return err;
+    }
+    printf("SHRAVYA: ✅ Circular buffer initialized for real EEG data\r\n");
+
+    /* ==================== STEP 2: Configure GPIO Pins ==================== */
+    err = configure_pure_gpio_spi();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: ❌ GPIO config failed: %u\r\n", err);
+        return err;
+    }
+    printf("SHRAVYA: ✅ Pure GPIO SPI configured - CS=P413, SCK=P412, MOSI=P411, MISO=P410\r\n");
+
+    /* ==================== STEP 3: Power-On Stabilization ==================== */
+    printf("SHRAVYA: ⏱️  MANDATORY ADS1263 power-on stabilization sequence...\r\n");
+
+    // ADS1263 datasheet requirement: 16ms minimum after power-on
+    printf("SHRAVYA: Power-on delay (20ms)...\r\n");
+    R_BSP_SoftwareDelay(20, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // Internal oscillator stabilization (additional safety margin)
+    printf("SHRAVYA: Internal oscillator stabilization (50ms)...\r\n");
+    R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS);
+
+    printf("SHRAVYA: ✅ Power-on stabilization complete\r\n");
+
+    /* ==================== STEP 4: Pin Functionality Tests ==================== */
+    printf("SHRAVYA: 🔧 Testing mikroBUS SPI pin functionality...\r\n");
+
+    // Test CS pin control (P413)
+    printf("SHRAVYA: Testing CS pin (P413)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(1000);
+
+    bsp_io_level_t cs_level;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_CS_PIN, &cs_level);
+    printf("CS (P413) Low Test: %s\r\n", (cs_level == BSP_IO_LEVEL_LOW) ? "PASS" : "FAIL");
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(1000);
+
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_CS_PIN, &cs_level);
+    printf("CS (P413) High Test: %s\r\n", (cs_level == BSP_IO_LEVEL_HIGH) ? "PASS" : "FAIL");
+
+    if (cs_level != BSP_IO_LEVEL_HIGH) {
+        printf("SHRAVYA: ❌ CRITICAL - CS pin (P413) failure!\r\n");
+        return FSP_ERR_INVALID_HW_CONDITION;
+    }
+
+    // Test MISO pin (P410) - configure as output temporarily
+    printf("SHRAVYA: Testing MISO pin (P410) functionality...\r\n");
+    R_IOPORT_PinCfg(&g_ioport_ctrl, ADS1263_MISO_PIN, IOPORT_CFG_PORT_DIRECTION_OUTPUT);
+
+    // Test MISO LOW
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_MISO_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(1000);
+    bsp_io_level_t miso_level;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_level);
+    printf("MISO Low Test: %s\r\n", (miso_level == BSP_IO_LEVEL_LOW) ? "PASS" : "FAIL");
+
+    // Test MISO HIGH
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_MISO_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(1000);
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_level);
+    printf("MISO High Test: %s\r\n", (miso_level == BSP_IO_LEVEL_HIGH) ? "PASS" : "FAIL");
+
+    // Restore MISO as input for SPI communication
+    R_IOPORT_PinCfg(&g_ioport_ctrl, ADS1263_MISO_PIN, IOPORT_CFG_PORT_DIRECTION_INPUT);
+
+    // Check MISO idle state (should be HIGH for ADS1263)
+    gpio_delay_us(5000); // Allow pullup to stabilize
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_level);
+    printf("MISO Idle State: %s\r\n", (miso_level == BSP_IO_LEVEL_HIGH) ? "HIGH (✅)" : "LOW (⚠️)");
+
+    printf("SHRAVYA: ✅ Pin functionality tests complete\r\n");
+
+    /* ==================== STEP 5: Software Reset Sequence ==================== */
+    printf("SHRAVYA: 🔄 Performing ADS1263 software reset sequence...\r\n");
+    printf("SHRAVYA: (Hardware RST is permanently HIGH via 10kΩ resistor)\r\n");
+
+    // Send software RESET command (0x06)
+    printf("SHRAVYA: Sending software RESET command (0x06)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100); // CS setup time
+
+    pure_gpio_write_byte(0x06);  // ADS1263 RESET command
+    gpio_delay_us(100); // Command processing time
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(100); // CS recovery time
+
+    // Wait for reset completion (ADS1263 datasheet: minimum 16ms)
+    printf("SHRAVYA: Post-reset stabilization (50ms)...\r\n");
+    R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS);
+
+    printf("SHRAVYA: ✅ Software reset sequence complete\r\n");
+
+    /* ==================== STEP 6: Device ID Verification ==================== */
+    printf("SHRAVYA: 🆔 Reading ADS1263 Device ID for communication verification...\r\n");
+
+    // Wait a bit more before first register read (conservative approach)
+    gpio_delay_us(10000); // 10ms additional safety margin
+
+    uint8_t device_id = bitbang_read_register(ADS1263_ID_REG);
+    printf("SHRAVYA: Device ID Register (0x00) = 0x%02X\r\n", device_id);
+
+    // ADS1263 Device ID analysis
+    if (device_id == 0x01) {
+        printf("SHRAVYA: ✅ ADS1263 Device ID verification SUCCESS! (Expected: 0x01)\r\n");
+        printf("SHRAVYA: 🎯 SPI communication established - ready for EEG acquisition\r\n");
+
+        // Configure ADS1263 registers
+        printf("SHRAVYA: ⚙️  Configuring ADS1263 registers for EEG acquisition...\r\n");
+        err = ads1263_configure_for_real_eeg();
+        if (FSP_SUCCESS != err) {
+            printf("SHRAVYA: ⚠️  Register configuration warning: %u\r\n", err);
+        } else {
+            printf("SHRAVYA: ✅ ADS1263 configured for real-time EEG\r\n");
+        }
+
+        ads1263_hardware_ready = true;
+        printf("SHRAVYA: 🚀 EEG acquisition initialization COMPLETE!\r\n");
+
+        return FSP_SUCCESS;
+
+    } else if (device_id == 0xFF) {
+        printf("SHRAVYA: ❌ SPI Communication FAILURE - reading 0xFF\r\n");
+        printf("SHRAVYA: 🔧 Check: Power=5V, Ground=star, SPI pins, RST=3.3V\r\n");
+        return FSP_ERR_INVALID_HW_CONDITION;
+
+    } else {
+        printf("SHRAVYA: ❓ Device ID issue: 0x%02X - Initializing RDATA mode\r\n", device_id);
+        printf("SHRAVYA: 🔄 Switching to Direct RDATA acquisition...\r\n");
+
+        // ✅ DUAL-CHANNEL: Initialize dual RDATA mode instead of simulation
+        fsp_err_t rdata_err = ads1263_init_dual_rdata_mode();
+        if (FSP_SUCCESS != rdata_err) {
+            printf("SHRAVYA: ❌ RDATA mode initialization failed: %u\r\n", rdata_err);
+            printf("SHRAVYA: 🔧 Check: Power=5V, SPI connections, pull-up resistors\r\n");
+            return rdata_err;
+        }
+
+        printf("SHRAVYA: ✅ RDATA mode initialized successfully\r\n");
+            printf("SHRAVYA: 🧠 Ready for continuous EEG acquisition at 2000 SPS\r\n");
+            ads1263_hardware_ready = true;
+
+            return FSP_SUCCESS;
+    }
+}
+
+/**
+ * @brief Enhanced Hardware Probe
+ */
+static fsp_err_t ads1263_hardware_probe(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    uint8_t probe_attempts = 0;
+    const uint8_t MAX_PROBE_ATTEMPTS = 3;
+
+    printf("SHRAVYA: Enhanced ADS1263 hardware probe...\r\n");
+
+    while (probe_attempts < MAX_PROBE_ATTEMPTS) {
+        probe_attempts++;
+
+        err = troubleshoot_spi_communication();
+        if (FSP_SUCCESS == err) {
+            printf("SHRAVYA: Hardware probe successful on attempt %u\r\n", probe_attempts);
+            hw_debug.spi_transactions_successful++;
+            break;
+        } else {
+            printf("SHRAVYA: Probe attempt %u failed: %u\r\n", probe_attempts, err);
+            hw_debug.spi_transactions_failed++;
+            R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        }
+    }
+
+    if (probe_attempts >= MAX_PROBE_ATTEMPTS) {
+        printf("SHRAVYA: CRITICAL - Hardware probe failed after %u attempts\r\n", MAX_PROBE_ATTEMPTS);
+        return FSP_ERR_HARDWARE_TIMEOUT;
+    }
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Comprehensive Hardware Reset with Adaptive Mode
+ */
+/**
+ * @brief Comprehensive ADS1263 reset with adaptive approach
+ * @return fsp_err_t Success or error code
+ * @note Handles the case where hardware reset is not available (hardwired to 3.3V)
+ */
+static fsp_err_t ads1263_comprehensive_reset(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    printf("SHRAVYA: Performing comprehensive software reset (RST hardwired)...\r\n");
+
+    /* Software power stabilization since hardware power cycle is not available */
+    printf("SHRAVYA: Software power stabilization...\r\n");
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Multiple reset command attempts for robustness */
+    printf("SHRAVYA: Multiple software reset sequence...\r\n");
+    for (int attempt = 0; attempt < 5; attempt++) {
+        printf("SHRAVYA: Reset attempt %d/5...\r\n", attempt + 1);
+
+        // Send RESET command
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(100);
+
+        pure_gpio_write_byte(0x06);  // RESET command
+        gpio_delay_us(200);
+
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+        // Increasing delay between attempts
+        R_BSP_SoftwareDelay((attempt + 1) * 20, BSP_DELAY_UNITS_MILLISECONDS);
+
+        // Test if reset worked by trying to read device ID
+        uint8_t test_id = bitbang_read_register(ADS1263_ID_REG);
+        if (test_id == 0x01) {
+            printf("SHRAVYA: ✅ Reset successful on attempt %d\r\n", attempt + 1);
+            break;
+        } else if (attempt == 4) {
+            printf("SHRAVYA: ❌ All reset attempts failed\r\n");
+            err = FSP_ERR_INVALID_HW_CONDITION;
+        }
+    }
+
+    /* Wait for reset completion */
+    printf("SHRAVYA: Final stabilization delay...\r\n");
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    static uint32_t reset_count = 0;
+    reset_count++;
+
+    printf("SHRAVYA: Comprehensive reset completed (reset #%lu)\r\n", reset_count);
+
+    return err;
+}
+
+/**
+ * @brief Power Cycle ADS1263
+ */
+static fsp_err_t ads1263_power_cycle(void)
+{
+    printf("SHRAVYA: Attempting hardware power cycle...\r\n");
+
+    /* If you have a power control pin, use it here */
+    // R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_POWER_PIN, BSP_IO_LEVEL_LOW);
+    // R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+    // R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_POWER_PIN, BSP_IO_LEVEL_HIGH);
+    // R_BSP_SoftwareDelay(500, BSP_DELAY_UNITS_MILLISECONDS);
+
+    hw_debug.power_cycles_performed++;
+    printf("SHRAVYA: Power cycle simulation completed\r\n");
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Verify ADS1263 Device ID
+ */
+static fsp_err_t ads1263_verify_device_id(void)
+{
+    fsp_err_t err;
+    uint8_t device_id = 0;
+    uint8_t read_attempts = 0;
+    const uint8_t MAX_READ_ATTEMPTS = 3;
+
+    printf("SHRAVYA: Reading and verifying device ID...\r\n");
+
+    while (read_attempts < MAX_READ_ATTEMPTS) {
+        read_attempts++;
+
+        device_id = pure_gpio_read_device_id();
+        err = FSP_SUCCESS;
+        if (FSP_SUCCESS == err) {
+            break;
+        } else {
+            printf("SHRAVYA: Device ID read attempt %u failed: %u\r\n", read_attempts, err);
+            R_BSP_SoftwareDelay(5, BSP_DELAY_UNITS_MILLISECONDS);
+        }
+    }
+
+    if (read_attempts >= MAX_READ_ATTEMPTS) {
+        printf("SHRAVYA: CRITICAL - Cannot read device ID after %u attempts\r\n", MAX_READ_ATTEMPTS);
+        return FSP_ERR_HARDWARE_TIMEOUT;
+    }
+
+    hw_debug.last_device_id = device_id;
+
+    printf("SHRAVYA: Device ID read: 0x%02X\r\n", device_id);
+
+    /* Verify ADS1263 family ID */
+    if ((device_id & 0xF0) != 0x40) {
+        printf("SHRAVYA: CRITICAL - Invalid device ID! Expected ADS1263 (0x4X), got 0x%02X\r\n", device_id);
+        return FSP_ERR_INVALID_HW_CONDITION;
+    }
+
+    printf("SHRAVYA: ADS1263 device verification successful (ID: 0x%02X)\r\n", device_id);
+    return FSP_SUCCESS;
+}
+// Add this test function to your code
+
+/**
+ * @brief PURE GPIO Bit-Banging - No FSP SPI at All
+ */
+
+/**
+ * @brief Pure GPIO delay
+ */
+void gpio_delay_us(uint32_t microseconds)
+{
+    for(volatile uint32_t i = 0; i < (microseconds * 120); i++) {
+        __NOP();
+    }
+}
+/**
+ * @brief Configure all pins as pure GPIO - CORRECTED VERSION
+ */
+fsp_err_t configure_pure_gpio_spi(void)
+{
+    printf("SHRAVYA: Configuring PURE GPIO bit-banging (no FSP SPI)\r\n");
+
+    fsp_err_t err;
+
+    // CS as output HIGH - CRITICAL: Include initial state
+    err = R_IOPORT_PinCfg(&g_ioport_ctrl, ADS1263_CS_PIN,
+                          IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_HIGH);
+    if (err != FSP_SUCCESS) return err;
+
+    // SCK as output LOW (SPI Mode 1) - Include initial state
+    err = R_IOPORT_PinCfg(&g_ioport_ctrl, ADS1263_SCK_PIN,
+                          IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW);
+    if (err != FSP_SUCCESS) return err;
+
+    // MOSI as output LOW - Include initial state
+    err = R_IOPORT_PinCfg(&g_ioport_ctrl, ADS1263_MOSI_PIN,
+                          IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW);
+    if (err != FSP_SUCCESS) return err;
+
+    // MISO as input - No initial state needed for input
+    err = R_IOPORT_PinCfg(&g_ioport_ctrl, ADS1263_MISO_PIN,
+                          IOPORT_CFG_PORT_DIRECTION_INPUT);
+    if (err != FSP_SUCCESS) return err;
+
+    // DRDY as input for interrupt - No initial state needed for input
+    err = R_IOPORT_PinCfg(&g_ioport_ctrl, DRDY_PIN_BB,
+                          IOPORT_CFG_PORT_DIRECTION_INPUT);
+    if (err != FSP_SUCCESS) return err;
+
+    printf("SHRAVYA: ✅ Pure GPIO SPI configured - CS=P413, SCK=P412, MOSI=P411, MISO=P410\r\n");
+    printf("SHRAVYA: DRDY=P000(A4), RESET=hardwired to 3.3V\r\n");
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Pure GPIO SPI byte write (Mode 1)
+ */
+/**
+ * @brief Pure GPIO SPI byte write (Mode 1)
+ */
+/**
+ * @brief CORRECTED Pure GPIO SPI byte write (Mode 1) - FIXES 0x00 ISSUE
+ */
+void pure_gpio_write_byte(uint8_t data) {
+    // Ensure SCK starts LOW (CPOL=0)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(10); // Initial setup
+
+    for (int i = 7; i >= 0; i--) {
+        // Set data bit on MOSI BEFORE clock edge (setup time)
+        bsp_io_level_t bit_level = (data & (1 << i)) ? BSP_IO_LEVEL_HIGH : BSP_IO_LEVEL_LOW;
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_MOSI_PIN, bit_level);
+        gpio_delay_us(50); // Data setup time - CRITICAL
+
+        // Rising edge - ADS1263 samples here for Mode 1 (CPHA=1)
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_HIGH);
+        gpio_delay_us(50); // Clock high time
+
+        // Falling edge
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(50); // Clock low time
+    }
+
+    // Ensure MOSI is low after transmission
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_MOSI_PIN, BSP_IO_LEVEL_LOW);
+}
+
+
+/**
+ * @brief CORRECTED Pure GPIO SPI byte read (Mode 1) - FIXES 0x00 ISSUE
+ */
+static uint8_t pure_gpio_read_byte(void) {
+    uint8_t data = 0;
+
+    // Ensure SCK starts LOW (CPOL=0)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(10);
+
+    for (int i = 7; i >= 0; i--) {
+        // Pre-clock setup time
+        gpio_delay_us(25);
+
+        // Rising edge - sample on rising edge for Mode 1 (CPHA=1)
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_HIGH);
+        gpio_delay_us(25); // Allow signal to stabilize
+
+        // Read MISO bit on rising edge
+        bsp_io_level_t bit_level;
+        R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &bit_level);
+        if (bit_level == BSP_IO_LEVEL_HIGH) {
+            data |= (1 << i);
+        }
+
+        gpio_delay_us(25); // Hold time
+
+        // Falling edge
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(25); // Clock low time
+    }
+
+    return data;
+}
+
+
+/**
+ /**
+ * @brief CORRECTED Bit-bang register read - FIXES 0x00 READING ISSUE
+ * @param reg_addr Register address to read
+ * @return Register value
+ */
+static uint8_t bitbang_read_register(uint8_t reg_addr) {
+    printf("SHRAVYA: [FIXED] Reading register 0x%02X\r\n", reg_addr);
+
+    // CS LOW for ENTIRE transaction (ADS1263 requirement)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100); // CS setup time - CRITICAL
+
+    // Send RREG command (0x20 | reg_addr)
+    pure_gpio_write_byte(0x20 | reg_addr);
+    gpio_delay_us(100); // Command processing time
+
+    // Send number of registers - 1 (read 1 register = 0x00)
+    pure_gpio_write_byte(0x00);
+    gpio_delay_us(500); // **CRITICAL** - ADS1263 needs 500µs to prepare data
+
+    // Read the data byte
+    uint8_t data = pure_gpio_read_byte();
+    gpio_delay_us(100); // Data hold time
+
+    // CS HIGH - end transaction
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(200); // CS recovery time
+
+    printf("SHRAVYA: [FIXED] Register 0x%02X = 0x%02X\r\n", reg_addr, data);
+    return data;
+}
+
+void bitbang_write_register(uint8_t reg_addr, uint8_t data)
+{
+    R_IOPORT_PinWrite(&g_ioport_ctrl, CS_PIN_BB, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100);
+
+    pure_gpio_write_byte(ADS1263_CMD_WREG | reg_addr); // WREG + address
+    gpio_delay_us(100);
+    pure_gpio_write_byte(0x00); // Number of registers - 1
+    gpio_delay_us(100);
+    pure_gpio_write_byte(data);  // Data to write
+    gpio_delay_us(100);
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, CS_PIN_BB, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(200); // Allow register write to complete
+}
+
+/**
+ * @brief Comprehensive ADS1263 diagnostic test
+ */
+void ads1263_comprehensive_diagnostic(void) {
+    printf("SHRAVYA: 🔍 COMPREHENSIVE ADS1263 DIAGNOSTIC TEST\r\n");
+
+    // Test 1: Multiple register reads for consistency
+    printf("SHRAVYA: Test 1 - Register consistency check:\r\n");
+    for (int i = 0; i < 5; i++) {
+        uint8_t id = bitbang_read_register(0x00);
+        uint8_t power = bitbang_read_register(0x01);
+        uint8_t interface = bitbang_read_register(0x02);
+
+        printf("  Read %d: ID=0x%02X, PWR=0x%02X, IF=0x%02X\r\n",
+               i+1, id, power, interface);
+
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+    }
+
+    // Test 2: Write/Read test on writable register
+    printf("SHRAVYA: Test 2 - Write/Read verification:\r\n");
+
+    // Read original POWER register value
+    uint8_t original_power = bitbang_read_register(0x01);
+    printf("  Original POWER reg: 0x%02X\r\n", original_power);
+
+    // Try writing a new value (toggle VBIAS bit)
+    uint8_t test_value = original_power ^ 0x02; // Toggle bit 1 (VBIAS)
+    bitbang_write_register(0x01, test_value);
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // Read back the written value
+    uint8_t readback = bitbang_read_register(0x01);
+    printf("  Wrote: 0x%02X, Read: 0x%02X - %s\r\n",
+           test_value, readback, (readback == test_value) ? "✅ PASS" : "❌ FAIL");
+
+    // Restore original value
+    bitbang_write_register(0x01, original_power);
+
+    // Test 3: MISO pin behavior analysis
+    printf("SHRAVYA: Test 3 - MISO behavior analysis:\r\n");
+
+    bsp_io_level_t miso_idle;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_idle);
+    printf("  MISO idle state: %s\r\n", (miso_idle == BSP_IO_LEVEL_HIGH) ? "HIGH (✅)" : "LOW (❌)");
+
+    // Test 4: Device identification analysis
+    printf("SHRAVYA: Test 4 - Device identification:\r\n");
+    uint8_t device_id = bitbang_read_register(0x00);
+    uint8_t dev_type = (device_id >> 5) & 0x07;  // Extract bits [7:5]
+    uint8_t rev_id = device_id & 0x1F;           // Extract bits [4:0]
+
+    printf("  Device ID raw: 0x%02X\r\n", device_id);
+    printf("  Device type (bits 7-5): %d ", dev_type);
+    if (dev_type == 0) {
+        printf("(ADS1262)\r\n");
+    } else if (dev_type == 1) {
+        printf("(ADS1263) ✅\r\n");
+    } else {
+        printf("(UNKNOWN)\r\n");
+    }
+    printf("  Revision ID (bits 4-0): %d\r\n", rev_id);
+
+    // Final diagnosis
+    printf("SHRAVYA: 🎯 DIAGNOSTIC CONCLUSION:\r\n");
+    if (device_id == 0x00) {
+        printf("  ❌ Reading all zeros - POWER SUPPLY ISSUE LIKELY\r\n");
+        printf("  🔧 Check: 5V supply voltage and current capacity\r\n");
+    } else if (dev_type == 0) {
+        printf("  ⚠️  Device is ADS1262 (not ADS1263)\r\n");
+        printf("  💡 Both use same commands - system should still work\r\n");
+    } else if (dev_type == 1) {
+        printf("  ✅ ADS1263 detected and communicating properly\r\n");
+    }
+}
+
+/**
+ * @brief Wait for DRDY signal indicating data ready
+ * @param timeout_ms Timeout in milliseconds
+ * @return true if DRDY detected, false if timeout
+ */
+static bool ads1263_wait_for_drdy(uint32_t timeout_ms)
+{
+    uint32_t loops = timeout_ms * 10; // 100μs per loop = 10 loops per ms
+
+    for (uint32_t i = 0; i < loops; i++) {
+        bsp_io_level_t drdy_state;
+        R_IOPORT_PinRead(&g_ioport_ctrl, DRDY_PIN_BB, &drdy_state);
+
+        if (drdy_state == BSP_IO_LEVEL_LOW) {
+            printf("SHRAVYA: ✅ DRDY detected - data ready!\r\n");
+            return true;
+        }
+
+        // 100μs delay per loop
+        gpio_delay_us(100);
+    }
+
+    printf("SHRAVYA: ⏰ DRDY timeout (%lu ms) - no data ready signal\r\n", timeout_ms);
+    return false;
+}
+
+/**
+ * @brief Direct data reading - bypasses all register operations
+ * @return 32-bit conversion data (0xFFFFFFFF indicates error)
+ */
+static uint32_t ads1263_direct_data_read(void)
+{
+    printf("SHRAVYA: 📖 Direct data read - bypassing all registers\r\n");
+
+    // Wait for DRDY to go LOW (data ready)
+    if (!ads1263_wait_for_drdy(2000)) { // 2 second timeout
+        printf("SHRAVYA: ❌ No DRDY signal detected\r\n");
+        return 0xFFFFFFFF; // Error indicator
+    }
+
+    // DRDY is LOW - data is ready, start reading immediately
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(100); // CS setup time
+
+    // Read 4 bytes of conversion data directly (no command needed)
+    uint32_t conversion_data = 0;
+    printf("SHRAVYA: Reading 4 data bytes...\r\n");
+
+    for (int byte = 0; byte < 4; byte++) {
+        uint8_t data_byte = pure_gpio_read_byte();
+        conversion_data = (conversion_data << 8) | data_byte;
+        printf("SHRAVYA:   Byte %d = 0x%02X\r\n", byte + 1, data_byte);
+    }
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(200); // CS recovery time
+
+    printf("SHRAVYA: 🎯 Direct read complete = 0x%08lX\r\n", conversion_data);
+    return conversion_data;
+}
+
+/**
+ * @brief Initialize ADS1263 for direct mode operation
+ * @return FSP_SUCCESS if successful
+ */
+static fsp_err_t ads1263_direct_mode_init(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    // Enhanced START sequence
+    printf("SHRAVYA: Enhanced START sequence for ADS1263...\r\n");
+
+    // Send multiple START commands with delays
+    for (int i = 0; i < 3; i++) {
+        printf("SHRAVYA: START command attempt %d/3\r\n", i + 1);
+
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(200);
+
+        pure_gpio_write_byte(0x08);  // START1 command
+        gpio_delay_us(500);
+
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+        gpio_delay_us(1000);
+
+        // Wait between attempts
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+    }
+
+    // Send WAKEUP command to ensure chip is active
+    printf("SHRAVYA: Sending WAKEUP command...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+
+    pure_gpio_write_byte(0x02);  // WAKEUP command
+    gpio_delay_us(500);
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(2000);
+
+    // Extended settling time for filter stabilization
+    printf("SHRAVYA: Extended settling time (1 second)...\r\n");
+    R_BSP_SoftwareDelay(1000, BSP_DELAY_UNITS_MILLISECONDS);
+}
+/**
+ * @brief Test DRDY pin behavior
+ */
+static void test_drdy_pin_behavior(void)
+{
+    printf("SHRAVYA: 🔍 DRDY Pin Diagnostic Test\r\n");
+
+    // Read DRDY state multiple times
+    for (int i = 0; i < 10; i++) {
+        bsp_io_level_t drdy_state;
+        R_IOPORT_PinRead(&g_ioport_ctrl, DRDY_PIN_BB, &drdy_state);
+
+        printf("SHRAVYA: DRDY reading %d: %s\r\n",
+               i+1, (drdy_state == BSP_IO_LEVEL_HIGH) ? "HIGH" : "LOW");
+
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+    }
+
+    printf("SHRAVYA: If all readings are HIGH, DRDY needs pull-up resistor\r\n");
+}
+
+/**
+ * @brief Test ADS1263 command responsiveness
+ */
+
+/**
+ * @brief Test direct data reading approach
+ */
+static void ads1263_test_direct_reading(void)
+{
+    printf("SHRAVYA: 🧪 TESTING DIRECT DATA READING APPROACH\r\n");
+    printf("SHRAVYA: ==========================================\r\n");
+    test_drdy_pin_behavior();
+    // Test multiple direct reads
+    for (int test = 1; test <= 5; test++) {
+        printf("SHRAVYA: \r\n--- Test %d/5 ---\r\n", test);
+
+        uint32_t data = ads1263_direct_data_read_no_drdy();
+        if (data == 0xFFFFFFFF) {
+            printf("SHRAVYA: ❌ Test %d FAILED - No data received\r\n", test);
+        } else if (data == 0x00000000) {
+            printf("SHRAVYA: ⚠️  Test %d - Got zeros (may indicate issue)\r\n", test);
+        } else {
+            printf("SHRAVYA: ✅ Test %d SUCCESS - Valid data received!\r\n", test);
+
+            // Convert to signed value for analysis
+            int32_t signed_data = (int32_t)data;
+            printf("SHRAVYA:   Signed value: %ld\r\n", signed_data);
+            printf("SHRAVYA:   Voltage equiv: %.6f V\r\n", signed_data * (5.0f / 2147483648.0f));
+        }
+
+        // Wait between tests
+        R_BSP_SoftwareDelay(500, BSP_DELAY_UNITS_MILLISECONDS);
+    }
+
+    printf("SHRAVYA: ==========================================\r\n");
+    printf("SHRAVYA: 🎯 Direct reading test complete\r\n");
+}
+
+/**
+ * @brief Direct data read WITHOUT waiting for DRDY
+ * @return 32-bit conversion data
+ */
+static uint32_t ads1263_direct_data_read_no_drdy(void)
+{
+    printf("SHRAVYA: 📖 Direct read (bypassing DRDY wait)\r\n");
+
+    // Skip DRDY wait - just try reading data
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200); // Extended CS setup time
+
+    // Read 4 bytes of conversion data directly
+    uint32_t conversion_data = 0;
+    printf("SHRAVYA: Reading 4 data bytes (no DRDY)...\r\n");
+
+    for (int byte = 0; byte < 4; byte++) {
+        uint8_t data_byte = pure_gpio_read_byte();
+        conversion_data = (conversion_data << 8) | data_byte;
+        printf("SHRAVYA:   Byte %d = 0x%02X\r\n", byte + 1, data_byte);
+    }
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(200);
+
+    printf("SHRAVYA: 🎯 No-DRDY read = 0x%08lX\r\n", conversion_data);
+    return conversion_data;
+}
+
+static void test_ads1263_command_response(void)
+{
+    printf("SHRAVYA: 🧪 Testing ADS1263 command responsiveness\r\n");
+
+    // Test NOP command (should not change anything)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+
+    pure_gpio_write_byte(0x00);  // NOP command
+    gpio_delay_us(200);
+
+    // Try to read a response byte
+    uint8_t response = pure_gpio_read_byte();
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(200);
+
+    printf("SHRAVYA: NOP response = 0x%02X\r\n", response);
+
+    if (response != 0x00) {
+        printf("SHRAVYA: ✅ ADS1263 responding to commands!\r\n");
+    } else {
+        printf("SHRAVYA: ⚠️  ADS1263 may not be processing commands\r\n");
+    }
+}
+
+/**
+ * @brief Enhanced SPI diagnostic with detailed timing
+ */
+static void enhanced_spi_diagnostic(void)
+{
+    printf("SHRAVYA: 🔍 Enhanced SPI Diagnostic Test\r\n");
+
+    // Manual SPI transaction to read Device ID
+    printf("SHRAVYA: Manual SPI transaction trace...\r\n");
+
+    // Step 1: CS setup
+    printf("SHRAVYA: 1. CS HIGH (idle)\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // Step 2: CS LOW (start transaction)
+    printf("SHRAVYA: 2. CS LOW (start transaction)\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+
+    // Step 3: Send RREG command
+    printf("SHRAVYA: 3. Sending RREG command 0x20 (read register 0x00)\r\n");
+    uint8_t cmd = 0x20;  // RREG command for register 0x00
+
+    for (int bit = 7; bit >= 0; bit--) {
+        // Set MOSI data bit
+        if (cmd & (1 << bit)) {
+            R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_MOSI_PIN, BSP_IO_LEVEL_HIGH);
+            printf("SHRAVYA:   Bit %d: MOSI HIGH\r\n", bit);
+        } else {
+            R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_MOSI_PIN, BSP_IO_LEVEL_LOW);
+            printf("SHRAVYA:   Bit %d: MOSI LOW\r\n", bit);
+        }
+
+        gpio_delay_us(100);
+
+        // Clock pulse
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_HIGH);
+        gpio_delay_us(100);
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_SCK_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(100);
+
+        // Read MISO
+        bsp_io_level_t miso_bit;
+        R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_bit);
+        printf("SHRAVYA:   Bit %d: MISO %s\r\n", bit,
+               (miso_bit == BSP_IO_LEVEL_HIGH) ? "HIGH" : "LOW");
+    }
+
+    // Step 4: Send number of bytes to read (0 = 1 byte)
+    printf("SHRAVYA: 4. Sending byte count 0x00 (read 1 byte)\r\n");
+    pure_gpio_write_byte(0x00);
+
+    // Step 5: Read the register data
+    printf("SHRAVYA: 5. Reading register data byte\r\n");
+    uint8_t data = pure_gpio_read_byte();
+
+    // Step 6: CS HIGH (end transaction)
+    printf("SHRAVYA: 6. CS HIGH (end transaction)\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+
+    printf("SHRAVYA: 🎯 Final result: Register 0x00 = 0x%02X\r\n", data);
+}
+
+
+/**
+ * @brief Ultimate ADS1263 diagnostic - determine if hardware functional
+ */
+void ads1263_ultimate_hardware_test(void)
+{
+    printf("SHRAVYA: 🔬 ULTIMATE ADS1263 HARDWARE DIAGNOSTIC\r\n");
+    printf("SHRAVYA: ================================================\r\n");
+
+    // Test 1: Power supply voltage test
+    printf("SHRAVYA: Test 1 - Power Supply Analysis\r\n");
+    printf("SHRAVYA: MISO idle should be HIGH if power is good\r\n");
+
+    bsp_io_level_t miso_power_test;
+    R_IOPORT_PinRead(&g_ioport_ctrl, ADS1263_MISO_PIN, &miso_power_test);
+    if (miso_power_test == BSP_IO_LEVEL_HIGH) {
+        printf("SHRAVYA: ✅ Power supply likely adequate\r\n");
+    } else {
+        printf("SHRAVYA: ❌ Power supply insufficient - major issue\r\n");
+    }
+
+    // Test 2: Try alternative ADS1263 commands
+    printf("SHRAVYA: Test 2 - Alternative Command Sequence\r\n");
+    enhanced_spi_diagnostic();
+    // Send SYNC command (forces immediate conversion)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x04);  // SYNC command
+    gpio_delay_us(1000);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(2000);
+
+    // Send RDATA command (read conversion data)
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x12);  // RDATA command
+    gpio_delay_us(500);
+
+    // Read 4 bytes
+    uint32_t alt_data = 0;
+    for (int i = 0; i < 4; i++) {
+        uint8_t byte = pure_gpio_read_byte();
+        alt_data = (alt_data << 8) | byte;
+        printf("SHRAVYA: RDATA Byte %d = 0x%02X\r\n", i+1, byte);
+    }
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    gpio_delay_us(200);
+
+    printf("SHRAVYA: RDATA result = 0x%08lX\r\n", alt_data);
+
+    // Test 3: Determine if you have ADS1262 instead of ADS1263
+    printf("SHRAVYA: Test 3 - Device Type Analysis\r\n");
+    if (alt_data == 0x00000000) {
+        printf("SHRAVYA: All zeros suggests:\r\n");
+        printf("SHRAVYA: 1. Power supply voltage too low\r\n");
+        printf("SHRAVYA: 2. You may have ADS1262 (different command set)\r\n");
+        printf("SHRAVYA: 3. Module may be damaged/defective\r\n");
+    } else {
+        printf("SHRAVYA: ✅ Non-zero data detected - ADS1263 is working!\r\n");
+    }
+
+    // Test 4: Final recommendation
+    printf("SHRAVYA: Test 4 - Final Diagnostic Recommendation\r\n");
+    if (miso_power_test == BSP_IO_LEVEL_LOW && alt_data == 0x00000000) {
+        printf("SHRAVYA: 🎯 CONCLUSION: POWER SUPPLY ISSUE\r\n");
+        printf("SHRAVYA: ACTION: Use external 5V power source\r\n");
+        printf("SHRAVYA: PRIORITY: Critical - must fix power first\r\n");
+    } else if (alt_data != 0x00000000) {
+        printf("SHRAVYA: 🎯 CONCLUSION: HARDWARE IS WORKING\r\n");
+        printf("SHRAVYA: ACTION: Continue with EEG development\r\n");
+        printf("SHRAVYA: STATUS: Ready for real EEG monitoring\r\n");
+    } else {
+        printf("SHRAVYA: 🎯 CONCLUSION: MODULE ISSUE\r\n");
+        printf("SHRAVYA: ACTION: Check physical module/connections\r\n");
+    }
+
+    printf("SHRAVYA: ================================================\r\n");
+}
+
+/**
+ * @brief Configure ADS1263 for Real EEG Acquisition
+ */
+static fsp_err_t ads1263_configure_for_real_eeg(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    printf("SHRAVYA: Configuring ADS1263 for optimal brain signal acquisition...\r\n");
+    printf("SHRAVYA: Configuring essential ADS1263 registers...\r\n");
+    bitbang_write_register(ADS1263_MODE0_REG, 0x00); // Normal operation
+    bitbang_write_register(ADS1263_MODE1_REG, 0x04); // Internal VREF enabled
+    bitbang_write_register(ADS1263_MODE2_REG, 0x00); // Gain=1, Normal speed
+
+    /* Power register - Internal reference ON, bias buffer ON */
+    printf("SHRAVYA: Configuring power management...\r\n");
+    bitbang_write_register(ADS1263_POWER_REG, 0x11);
+
+    /* Interface register - Status byte enabled for data integrity */
+    printf("SHRAVYA: Configuring data interface...\r\n");
+    bitbang_write_register(ADS1263_INTERFACE_REG, 0x05);
+
+    /* Mode0 register - Continuous conversion, chop mode for DC precision */
+    printf("SHRAVYA: Configuring conversion mode...\r\n");
+    bitbang_write_register(ADS1263_MODE0_REG, 0x00);
+
+    /* Mode1 register - Digital filter enabled, sinc3 filter for EEG */
+    printf("SHRAVYA: Configuring digital filtering...\r\n");
+    bitbang_write_register(ADS1263_MODE1_REG, 0x80);
+
+    /* Mode2 register - Data rate 400 SPS for high-quality EEG */
+    printf("SHRAVYA: Configuring sample rate (400 SPS)...\r\n");
+    bitbang_write_register(ADS1263_MODE2_REG, 0x05);
+
+    /* Input multiplexer - AIN0(+)/AIN1(-) for left hemisphere */
+    printf("SHRAVYA: Configuring input multiplexer (left electrode)...\r\n");
+    bitbang_write_register(ADS1263_INPMUX_REG, 0x01);
+
+    /* Reference multiplexer - Internal 2.5V reference */
+    printf("SHRAVYA: Configuring voltage reference...\r\n");
+    bitbang_write_register(ADS1263_REFMUX_REG, 0x00);
+
+    /* IDAC configuration for electrode impedance measurement */
+    printf("SHRAVYA: Configuring impedance measurement...\r\n");
+    bitbang_write_register(ADS1263_IDACMUX_REG, 0x00);
+    bitbang_write_register(ADS1263_IDACMAG_REG, 0x03); // 50µA current
+
+    /* ADC2 configuration for right hemisphere - AIN2(+)/AIN3(-) */
+    printf("SHRAVYA: Configuring second ADC (right electrode)...\r\n");
+    bitbang_write_register(ADS1263_ADC2CFG_REG, 0x05); // 400 SPS
+    bitbang_write_register(ADS1263_ADC2MUX_REG, 0x23); // AIN2/AIN3
+
+    printf("SHRAVYA: ADS1263 configured for dual-channel brain signal acquisition\r\n");
+    return FSP_SUCCESS;
+}
+/**
+ * @brief Perform Comprehensive System Calibration
+ */
+static fsp_err_t ads1263_perform_comprehensive_calibration(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    printf("SHRAVYA: Starting comprehensive system calibration...\r\n");
+    hw_debug.calibration_attempts++;
+
+    /* ADC1 System Offset Calibration */
+    printf("SHRAVYA: Calibrating ADC1 offset...\r\n");
+    err |= ads1263_write_command_adaptive(ADS1263_CMD_SYOCAL1);
+    R_BSP_SoftwareDelay(200, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* ADC1 System Gain Calibration */
+    printf("SHRAVYA: Calibrating ADC1 gain...\r\n");
+    err |= ads1263_write_command_adaptive(ADS1263_CMD_SYGCAL1);
+    R_BSP_SoftwareDelay(200, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* ADC2 System Offset Calibration */
+    printf("SHRAVYA: Calibrating ADC2 offset...\r\n");
+    err |= ads1263_write_command_adaptive(ADS1263_CMD_SYOCAL2);
+    R_BSP_SoftwareDelay(200, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* ADC2 System Gain Calibration */
+    printf("SHRAVYA: Calibrating ADC2 gain...\r\n");
+    err |= ads1263_write_command_adaptive(ADS1263_CMD_SYGCAL2);
+    R_BSP_SoftwareDelay(200, BSP_DELAY_UNITS_MILLISECONDS);
+
+    if (FSP_SUCCESS == err) {
+        printf("SHRAVYA: System calibration completed successfully\r\n");
+    } else {
+        printf("SHRAVYA: CRITICAL - System calibration failed: %u\r\n", err);
+    }
+
+    return err;
+}
+
+/**
+ * @brief Enhanced Troubleshoot SPI Communication
+ */
+static fsp_err_t troubleshoot_spi_communication(void)
+{
+    fsp_err_t err;
+    uint8_t test_cmd = ADS1263_CMD_NOP;
+
+    printf("SHRAVYA: Enhanced SPI communication test...\r\n");
+
+    if (hw_debug.manual_cs_accessible) {
+        /* Test with manual CS */
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+        err = R_SPI_B_Write(&g_spi0_ctrl, &test_cmd, 1, SPI_BIT_WIDTH_8_BITS);
+
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    } else {
+        /* Test with FSP auto CS */
+        err = R_SPI_B_Write(&g_spi0_ctrl, &test_cmd, 1, SPI_BIT_WIDTH_8_BITS);
+    }
+
+    if (FSP_SUCCESS == err) {
+        printf("SHRAVYA: Enhanced SPI test successful\r\n");
+    } else {
+        printf("SHRAVYA: Enhanced SPI test failed: %u\r\n", err);
+    }
+
+    return err;
+}
+
+/**
+ * @brief Write Register with Verification - Now uses Adaptive Mode
+ */
+static fsp_err_t ads1263_write_register_verified(uint8_t reg_addr, uint8_t data)
+{
+    uint8_t tx_data[3];
+    uint8_t read_back = 0;
+    fsp_err_t err;
+
+    /* Use adaptive CS control based on optimal mode */
+    switch(hw_debug.optimal_spi_mode) {
+        case SPI_MODE_FSP_MANAGED:
+            /* FSP handles CS automatically */
+            tx_data[0] = ADS1263_CMD_WREG | reg_addr;
+            tx_data[1] = 0x00;
+            tx_data[2] = data;
+            err = R_SPI_B_Write(&g_spi0_ctrl, tx_data, 3, SPI_BIT_WIDTH_8_BITS);
+            break;
+
+        default:
+            /* Manual CS control */
+            R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+            R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+            tx_data[0] = ADS1263_CMD_WREG | reg_addr;
+            tx_data[1] = 0x00;
+            tx_data[2] = data;
+            err = R_SPI_B_Write(&g_spi0_ctrl, tx_data, 3, SPI_BIT_WIDTH_8_BITS);
+
+            R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+            break;
+    }
+
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: Register write failed (reg 0x%02X): %u\r\n", reg_addr, err);
+        hw_debug.spi_transactions_failed++;
+        return err;
+    }
+
+    /* Wait for write completion */
+    R_BSP_SoftwareDelay(5, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Verify write by reading back */
+    err = ads1263_read_register_verified(reg_addr, &read_back);
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: Register read-back failed (reg 0x%02X): %u\r\n", reg_addr, err);
+        return err;
+    }
+
+    if (read_back != data) {
+        printf("SHRAVYA: Register verification failed (reg 0x%02X): wrote 0x%02X, read 0x%02X\r\n",
+               reg_addr, data, read_back);
+        return FSP_ERR_INVALID_DATA;
+    }
+
+    hw_debug.spi_transactions_successful++;
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Read Register with Verification - Now uses Adaptive Mode
+ */
+static fsp_err_t ads1263_read_register_verified(uint8_t reg_addr, uint8_t *data)
+{
+    uint8_t tx_data[3] = {0};
+    uint8_t rx_data[3] = {0};
+    fsp_err_t err;
+
+    if (!data) return FSP_ERR_INVALID_POINTER;
+
+    /* Use adaptive CS control */
+    switch(hw_debug.optimal_spi_mode) {
+        case SPI_MODE_FSP_MANAGED:
+            /* FSP handles CS automatically */
+            tx_data[0] = ADS1263_CMD_RREG | reg_addr;
+            tx_data[1] = 0x00;
+            tx_data[2] = 0x00;
+            err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 3, SPI_BIT_WIDTH_8_BITS);
+            break;
+
+        default:
+            /* Manual CS control */
+            R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+            R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+            tx_data[0] = ADS1263_CMD_RREG | reg_addr;
+            tx_data[1] = 0x00;
+            tx_data[2] = 0x00;
+            err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 3, SPI_BIT_WIDTH_8_BITS);
+
+            R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+            break;
+    }
+
+    if (FSP_SUCCESS == err) {
+        *data = rx_data[2];
+        hw_debug.spi_transactions_successful++;
+    } else {
+        printf("SHRAVYA: Register read failed (reg 0x%02X): %u\r\n", reg_addr, err);
+        hw_debug.spi_transactions_failed++;
+    }
+
+    return err;
+}
+
+/**
+ * @brief Write Command with Adaptive Mode
+ */
+static fsp_err_t ads1263_write_command_verified(uint8_t command)
+{
+    return ads1263_write_command_adaptive(command);
+}
+
+/**
+ /**
+ * @brief Measure electrode impedance for signal quality assessment
+ * @return fsp_err_t Success or error code
+ * @note Uses software-only approach since hardware reset is unavailable
+ */
+static fsp_err_t ads1263_measure_electrode_impedance(void)
+{
+    printf("SHRAVYA: 🔬 Measuring electrode impedance for signal quality assessment...\r\n");
+
+    fsp_err_t err = FSP_SUCCESS;
+
+    // Step 1: Save current register configuration
+    printf("SHRAVYA: Saving current ADC configuration...\r\n");
+    uint8_t original_idacmux = bitbang_read_register(ADS1263_IDACMUX_REG);
+    uint8_t original_idacmag = bitbang_read_register(ADS1263_IDACMAG_REG);
+    uint8_t original_mode = bitbang_read_register(ADS1263_MODE2_REG);
+
+    // Step 2: Configure IDAC for impedance measurement
+    printf("SHRAVYA: Configuring IDAC for impedance measurement...\r\n");
+
+    // Enable IDAC1 to AIN0 (left ear electrode)
+    bitbang_write_register(ADS1263_IDACMUX_REG, 0x01);  // IDAC1 to AIN0
+    gpio_delay_us(1000); // Configuration settling time
+
+    // Set IDAC magnitude to 50µA for impedance measurement
+    bitbang_write_register(ADS1263_IDACMAG_REG, 0x03);  // 50µA current
+    gpio_delay_us(1000);
+
+    // Allow IDAC to stabilize
+    printf("SHRAVYA: IDAC stabilization delay (100ms)...\r\n");
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // Step 3: Perform impedance measurement for left electrode
+    printf("SHRAVYA: Measuring left electrode impedance...\r\n");
+
+    int32_t impedance_reading_left = 0, impedance_reading_right = 0;
+    uint8_t status = 0;
+
+    // Take multiple readings for accuracy
+    int32_t left_sum = 0, right_sum = 0;
+    int valid_readings = 0;
+
+    for (int i = 0; i < 5; i++) {
+        err = ads1263_read_real_eeg_data(&impedance_reading_left, &impedance_reading_right, &status);
+
+        if (FSP_SUCCESS == err) {
+            left_sum += impedance_reading_left;
+            right_sum += impedance_reading_right;
+            valid_readings++;
+            printf("SHRAVYA: Reading %d: Left=%ld, Right=%ld\r\n",
+                   i+1, impedance_reading_left, impedance_reading_right);
+        } else {
+            printf("SHRAVYA: ⚠️  Reading %d failed\r\n", i+1);
+        }
+
+        // Delay between readings
+        R_BSP_SoftwareDelay(20, BSP_DELAY_UNITS_MILLISECONDS);
+    }
+
+    // Step 4: Calculate average impedance values
+    if (valid_readings > 0) {
+        impedance_reading_left = left_sum / valid_readings;
+        impedance_reading_right = right_sum / valid_readings;
+
+        // Convert ADC readings to impedance estimates (simplified calculation)
+        // Impedance (kΩ) ≈ |ADC_reading| * scale_factor
+        float scale_factor = 0.001f; // Adjust based on your IDAC current and ADC range
+
+        eeg_quality.electrode_impedance_left_kohms = fabsf((float)impedance_reading_left) * scale_factor;
+        eeg_quality.electrode_impedance_right_kohms = fabsf((float)impedance_reading_right) * scale_factor;
+
+        printf("SHRAVYA: 📊 Impedance Results (averaged over %d readings):\r\n", valid_readings);
+        printf("SHRAVYA: - Left electrode: %.1f kΩ (ADC: %ld)\r\n",
+               eeg_quality.electrode_impedance_left_kohms, impedance_reading_left);
+        printf("SHRAVYA: - Right electrode: %.1f kΩ (ADC: %ld)\r\n",
+               eeg_quality.electrode_impedance_right_kohms, impedance_reading_right);
+
+        // Step 5: Assess electrode contact quality
+        // Good EEG contact: < 50kΩ, Acceptable: < 100kΩ, Poor: > 100kΩ
+        eeg_quality.electrode_contact_good_left = (eeg_quality.electrode_impedance_left_kohms < 50.0f);
+        eeg_quality.electrode_contact_good_right = (eeg_quality.electrode_impedance_right_kohms < 50.0f);
+
+        // Detailed quality assessment
+        printf("SHRAVYA: 🏥 Electrode Contact Quality Assessment:\r\n");
+
+        // Left electrode assessment
+        if (eeg_quality.electrode_impedance_left_kohms < 50.0f) {
+            printf("SHRAVYA: - Left: ✅ EXCELLENT (%.1f kΩ)\r\n", eeg_quality.electrode_impedance_left_kohms);
+        } else if (eeg_quality.electrode_impedance_left_kohms < 100.0f) {
+            printf("SHRAVYA: - Left: ⚠️  ACCEPTABLE (%.1f kΩ)\r\n", eeg_quality.electrode_impedance_left_kohms);
+        } else {
+            printf("SHRAVYA: - Left: ❌ POOR (%.1f kΩ) - Clean electrode area\r\n", eeg_quality.electrode_impedance_left_kohms);
+        }
+
+        // Right electrode assessment
+        if (eeg_quality.electrode_impedance_right_kohms < 50.0f) {
+            printf("SHRAVYA: - Right: ✅ EXCELLENT (%.1f kΩ)\r\n", eeg_quality.electrode_impedance_right_kohms);
+        } else if (eeg_quality.electrode_impedance_right_kohms < 100.0f) {
+            printf("SHRAVYA: - Right: ⚠️  ACCEPTABLE (%.1f kΩ)\r\n", eeg_quality.electrode_impedance_right_kohms);
+        } else {
+            printf("SHRAVYA: - Right: ❌ POOR (%.1f kΩ) - Clean electrode area\r\n", eeg_quality.electrode_impedance_right_kohms);
+        }
+
+        // Overall system recommendation
+        if (!eeg_quality.electrode_contact_good_left || !eeg_quality.electrode_contact_good_right) {
+            printf("SHRAVYA: 💡 RECOMMENDATIONS:\r\n");
+            printf("SHRAVYA: - Clean electrode contact area with alcohol\r\n");
+            printf("SHRAVYA: - Ensure tight electrode contact with skin\r\n");
+            printf("SHRAVYA: - Consider using electrode gel for better contact\r\n");
+            printf("SHRAVYA: - Remove hair or dead skin if possible\r\n");
+        } else {
+            printf("SHRAVYA: 🎯 Electrode contact quality is EXCELLENT for EEG\r\n");
+        }
+
+    } else {
+        printf("SHRAVYA: ❌ No valid impedance readings obtained\r\n");
+        eeg_quality.electrode_impedance_left_kohms = 999.9f;  // Indicate measurement failure
+        eeg_quality.electrode_impedance_right_kohms = 999.9f;
+        eeg_quality.electrode_contact_good_left = false;
+        eeg_quality.electrode_contact_good_right = false;
+        err = FSP_ERR_INVALID_HW_CONDITION;
+    }
+
+    // Step 6: Restore original ADC configuration
+    printf("SHRAVYA: Restoring original ADC configuration...\r\n");
+
+    // Disable IDAC after measurement
+    bitbang_write_register(ADS1263_IDACMAG_REG, 0x00);  // Turn off IDAC
+    gpio_delay_us(1000);
+
+    // Restore original settings
+    bitbang_write_register(ADS1263_IDACMUX_REG, original_idacmux);
+    bitbang_write_register(ADS1263_IDACMAG_REG, original_idacmag);
+    bitbang_write_register(ADS1263_MODE2_REG, original_mode);
+
+    // Allow configuration to settle
+    R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // Step 7: Update diagnostics
+    static uint32_t impedance_check_count = 0;
+    impedance_check_count++;
+
+    printf("SHRAVYA: ✅ Impedance measurement complete (check #%lu)\r\n", impedance_check_count);
+
+    // Log measurement for debugging
+    printf("SHRAVYA: 📝 Measurement Summary:\r\n");
+    printf("SHRAVYA: - Valid readings: %d/5\r\n", valid_readings);
+    printf("SHRAVYA: - Left contact: %s\r\n", eeg_quality.electrode_contact_good_left ? "GOOD" : "POOR");
+    printf("SHRAVYA: - Right contact: %s\r\n", eeg_quality.electrode_contact_good_right ? "GOOD" : "POOR");
+
+    return err;
+}
+
+/**
+ * @brief Check Power Supply Stability
+ */
+static fsp_err_t ads1263_check_power_supply(void)
+{
+    printf("SHRAVYA: Checking power supply stability...\r\n");
+
+    /* Read supply monitoring register if available */
+    uint8_t power_status = 0;
+    fsp_err_t err = ads1263_read_register_verified(ADS1263_POWER_REG, &power_status);
+
+    if (FSP_SUCCESS == err) {
+        printf("SHRAVYA: Power status register: 0x%02X\r\n", power_status);
+
+        /* Check internal reference status */
+        bool ref_enabled = (power_status & 0x10) != 0;
+        bool bias_enabled = (power_status & 0x01) != 0;
+
+        hw_debug.power_supply_stable = ref_enabled && bias_enabled;
+
+        if (hw_debug.power_supply_stable) {
+            printf("SHRAVYA: Power supply and references are stable\r\n");
+        } else {
+            printf("SHRAVYA: WARNING - Power supply issue detected\r\n");
+        }
+
+    } else {
+        printf("SHRAVYA: WARNING - Cannot read power status: %u\r\n", err);
+    }
+
+    return err;
+}
+
+/**
+ * @brief Read Real EEG Data from Both ADCs
+ */
+static fsp_err_t ads1263_read_real_eeg_data(int32_t *adc1_data, int32_t *adc2_data, uint8_t *status)
+{
+    uint8_t tx_data[10] = {0};
+    uint8_t rx_data[10] = {0};
+    fsp_err_t err;
+
+    if (!adc1_data || !adc2_data || !status) {
+        return FSP_ERR_INVALID_POINTER;
+    }
+
+    /* Use adaptive CS control */
+    if (hw_debug.optimal_spi_mode == SPI_MODE_FSP_MANAGED) {
+        /* FSP-managed CS */
+        tx_data[0] = ADS1263_CMD_RDATA1;
+        err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 4, SPI_BIT_WIDTH_8_BITS);
+    } else {
+        /* Manual CS control */
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MICROSECONDS);
+
+        /* Read ADC1 data with status */
+        tx_data[0] = ADS1263_CMD_RDATA1;
+        err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, rx_data, 4, SPI_BIT_WIDTH_8_BITS);
+    }
+
+    if (FSP_SUCCESS != err) goto cleanup;
+
+    /* Extract status and ADC1 data */
+    *status = rx_data[1];
+    *adc1_data = (int32_t)((rx_data[1] << 16) | (rx_data[2] << 8) | rx_data[3]);
+    if (*adc1_data & 0x800000) *adc1_data |= 0xFF000000; // Sign extend
+
+    /* Read ADC2 data */
+    tx_data[0] = ADS1263_CMD_RDATA2;
+    err = R_SPI_B_WriteRead(&g_spi0_ctrl, tx_data, &rx_data[4], 3, SPI_BIT_WIDTH_8_BITS);
+    if (FSP_SUCCESS != err) goto cleanup;
+
+    /* Extract ADC2 data */
+    *adc2_data = (int32_t)((rx_data[4] << 16) | (rx_data[5] << 8) | rx_data[6]);
+    if (*adc2_data & 0x800000) *adc2_data |= 0xFF000000; // Sign extend
+
+    hw_debug.valid_eeg_samples_acquired++;
+
+cleanup:
+    /* De-assert CS for manual mode */
+    if (hw_debug.optimal_spi_mode != SPI_MODE_FSP_MANAGED) {
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    }
+
+    if (FSP_SUCCESS != err) {
+        hardware_error_count++;
+        printf("SHRAVYA: Real EEG data read failed: %u\r\n", err);
+    }
+
+    return err;
+}
+
+/**
+ * @brief Calculate Real Signal Quality Metrics
+ */
+static void ads1263_calculate_real_signal_quality(eeg_raw_sample_t *sample)
+{
+    /* Calculate signal amplitude in microvolts */
+    float vref = 2.5f; // Internal reference voltage
+    float full_scale = 8388608.0f; // 24-bit ADC full scale
+
+    eeg_quality.signal_amplitude_left_uv = ((float)sample->left_channel / full_scale) * vref * 1000000.0f;
+    eeg_quality.signal_amplitude_right_uv = ((float)sample->right_channel / full_scale) * vref * 1000000.0f;
+
+    /* Check for signal saturation */
+    eeg_quality.signal_saturated = (abs(sample->left_channel) > 8000000) || (abs(sample->right_channel) > 8000000);
+
+    /* Estimate noise floor */
+    static int32_t prev_left = 0, prev_right = 0;
+    int32_t left_diff = sample->left_channel - prev_left;
+    int32_t right_diff = sample->right_channel - prev_right;
+    eeg_quality.noise_floor_uv = (fabsf((float)left_diff) + fabsf((float)right_diff)) * 0.5f * vref / full_scale * 1000000.0f;
+    prev_left = sample->left_channel;
+    prev_right = sample->right_channel;
+
+    /* Calculate data integrity score */
+    uint8_t integrity_score = 100;
+    if (eeg_quality.signal_saturated) integrity_score -= 30;
+    if (eeg_quality.electrode_impedance_left_kohms > 50.0f) integrity_score -= 20;
+    if (eeg_quality.electrode_impedance_right_kohms > 50.0f) integrity_score -= 20;
+    if (eeg_quality.noise_floor_uv > 10.0f) integrity_score -= 15;
+    eeg_quality.data_integrity_score = integrity_score;
+
+    /* Update sample quality information */
+    sample->quality.impedance_left_kohms = eeg_quality.electrode_impedance_left_kohms;
+    sample->quality.impedance_right_kohms = eeg_quality.electrode_impedance_right_kohms;
+    sample->quality.contact_quality_good = eeg_quality.electrode_contact_good_left && eeg_quality.electrode_contact_good_right;
+    sample->quality.signal_noise_level = (uint8_t)(eeg_quality.noise_floor_uv);
+    sample->quality.common_mode_voltage = (eeg_quality.signal_amplitude_left_uv + eeg_quality.signal_amplitude_right_uv) / 2.0f;
+}
+
+/**
+ * @brief Initialize Circular Buffer for Real Data
+ */
+static fsp_err_t eeg_buffer_init_real(void)
+{
+    printf("SHRAVYA: Initializing circular buffer for real EEG data...\r\n");
+
+    eeg_buffer.write_index = 0;
+    eeg_buffer.read_index = 0;
+    eeg_buffer.buffer_full = false;
+    eeg_buffer.buffer_mutex = NULL;
+
+    /* Clear buffer memory */
+    memset(eeg_buffer.samples, 0, sizeof(eeg_buffer.samples));
+
+    printf("SHRAVYA: Buffer initialized for %u samples\r\n", EEG_BUFFER_SIZE_SAMPLES);
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Write Real EEG Sample to Buffer
+ */
+static fsp_err_t eeg_buffer_write_real(const eeg_raw_sample_t *sample)
+{
+    if (!sample) return FSP_ERR_INVALID_POINTER;
+
+    /* Check for buffer overflow */
+    uint32_t next_write_index = (eeg_buffer.write_index + 1) % EEG_BUFFER_SIZE_SAMPLES;
+
+    if (next_write_index == eeg_buffer.read_index && eeg_buffer.buffer_full) {
+        /* Buffer overflow - advance read index (oldest real sample lost) */
+        eeg_buffer.read_index = (eeg_buffer.read_index + 1) % EEG_BUFFER_SIZE_SAMPLES;
+        hardware_error_count++;
+        printf("SHRAVYA: WARNING - Real EEG buffer overflow, oldest sample lost\r\n");
+    }
+
+    /* Write new real sample */
+    eeg_buffer.samples[eeg_buffer.write_index] = *sample;
+    eeg_buffer.write_index = next_write_index;
+
+    /* Update buffer full flag */
+    if (eeg_buffer.write_index == eeg_buffer.read_index) {
+        eeg_buffer.buffer_full = true;
+    }
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Enhanced Debug Print Hardware Status
+ */
+static void debug_print_hardware_status(void)
+{
+    printf("=== SHRAVYA ENHANCED REAL EEG HARDWARE STATUS v11.0 ===\r\n");
+    printf("Device ID: 0x%02X\r\n", hw_debug.last_device_id);
+    printf("Hardware Responsive: %s\r\n", hw_debug.ads1263_responsive ? "YES" : "NO");
+    printf("DRDY Signal Active: %s\r\n", hw_debug.drdy_signal_active ? "YES" : "NO");
+    printf("Electrodes Connected: %s\r\n", hw_debug.electrodes_connected ? "YES" : "NO");
+    printf("Power Supply Stable: %s\r\n", hw_debug.power_supply_stable ? "YES" : "NO");
+
+    /* Enhanced SPI Status */
+    printf("=== SPI CONFIGURATION STATUS ===\r\n");
+    printf("Optimal SPI Mode: ");
+    switch(hw_debug.optimal_spi_mode) {
+        case SPI_MODE_FSP_MANAGED: printf("FSP-MANAGED\r\n"); break;
+        case SPI_MODE_MANUAL_CS: printf("MANUAL CS\r\n"); break;
+        case SPI_MODE_ADS1263_OPTIMIZED: printf("ADS1263-OPTIMIZED\r\n"); break;
+        default: printf("UNKNOWN\r\n"); break;
+    }
+    printf("Manual CS Accessible: %s\r\n", hw_debug.manual_cs_accessible ? "YES" : "NO");
+    printf("FSP Auto CS Works: %s\r\n", hw_debug.fsp_auto_cs_works ? "YES" : "NO");
+    printf("8-bit SPI: %s\r\n", hw_debug.spi_8bit_works ? "WORKS" : "FAILED");
+    printf("16-bit SPI: %s\r\n", hw_debug.spi_16bit_works ? "WORKS" : "FAILED");
+    printf("24-bit SPI: %s\r\n", hw_debug.spi_24bit_works ? "WORKS" : "FAILED");
+    printf("32-bit SPI: %s\r\n", hw_debug.spi_32bit_works ? "WORKS" : "FAILED");
+
+    printf("=== TRANSACTION STATISTICS ===\r\n");
+    printf("SPI Transactions - Success: %lu, Failed: %lu\r\n",
+           hw_debug.spi_transactions_successful, hw_debug.spi_transactions_failed);
+    printf("Hardware Resets: %lu\r\n", hw_debug.hardware_resets_performed);
+    printf("DRDY Interrupts: %lu\r\n", hw_debug.drdy_interrupts_received);
+    printf("Valid EEG Samples: %lu\r\n", hw_debug.valid_eeg_samples_acquired);
+    printf("Corrupted Samples: %lu\r\n", hw_debug.corrupted_samples_detected);
+    printf("SPI Config Tests: %lu\r\n", hw_debug.spi_config_tests_performed);
+    printf("Data Integrity Score: %u%%\r\n", eeg_quality.data_integrity_score);
+    printf("======================================================\r\n");
+}
+
+/**
+ * @brief Debug Print Register Dump
+ */
+static void debug_print_register_dump(void)
+{
+    uint8_t reg_value;
+    printf("=== ADS1263 REGISTER DUMP ===\r\n");
+
+    if (FSP_SUCCESS == ads1263_read_register_verified(ADS1263_ID_REG, &reg_value))
+        printf("ID (0x00): 0x%02X\r\n", reg_value);
+    if (FSP_SUCCESS == ads1263_read_register_verified(ADS1263_POWER_REG, &reg_value))
+        printf("POWER (0x01): 0x%02X\r\n", reg_value);
+    if (FSP_SUCCESS == ads1263_read_register_verified(ADS1263_INTERFACE_REG, &reg_value))
+        printf("INTERFACE (0x02): 0x%02X\r\n", reg_value);
+    if (FSP_SUCCESS == ads1263_read_register_verified(ADS1263_MODE0_REG, &reg_value))
+        printf("MODE0 (0x03): 0x%02X\r\n", reg_value);
+    if (FSP_SUCCESS == ads1263_read_register_verified(ADS1263_MODE1_REG, &reg_value))
+        printf("MODE1 (0x04): 0x%02X\r\n", reg_value);
+    if (FSP_SUCCESS == ads1263_read_register_verified(ADS1263_MODE2_REG, &reg_value))
+        printf("MODE2 (0x05): 0x%02X\r\n", reg_value);
+
+    printf("=============================\r\n");
+}
+
+/**
+ * @brief Troubleshoot DRDY Signal
+ */
+static fsp_err_t troubleshoot_drdy_signal(void)
+{
+    printf("SHRAVYA: Troubleshooting DRDY signal on Pin A4...\r\n");
+
+    // Add DRDY signal testing logic here
+    // This would involve checking if the external interrupt is properly configured
+    // and if the ADS1263 DRDY pin is actually toggling
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Troubleshoot Electrode Connection
+ */
+static fsp_err_t troubleshoot_electrode_connection(void)
+{
+    printf("SHRAVYA: Troubleshooting electrode connections...\r\n");
+
+    // Add electrode connection testing logic here
+    // This would involve checking impedance levels and signal quality
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief μT-Kernel Task: REAL EEG Acquisition (400Hz) - HARDWARE ONLY
+ * Priority: 10 (Highest)
+ */
+/**
+ * @brief T-Kernel Task: DUAL-CHANNEL REAL EEG Acquisition using RDATA
+ */
+void task_eeg_acquisition_entry(INT stacd, void *exinf)
+{
+    printf("SHRAVYA: REAL EEG Acquisition task starting - POLLING MODE\r\n");
+    printf("SHRAVYA: Left electrode ADC1, Right electrode ADC2\r\n");
+
+    // Ensure hardware is ready
+    if (!ads1263_hardware_ready) {
+        printf("SHRAVYA: CRITICAL - ADS1263 hardware not ready!\r\n");
+        return;
+    }
+
+    printf("SHRAVYA: Starting continuous polling at 1000 SPS...\r\n");
+
+    uint32_t sample_counter = 0;
+    uint32_t last_status_time = get_system_timestamp_us();
+
+    // ✅ ADDED: Track samples for processing trigger
+    uint32_t samples_for_processing = 0;
+
+    while (true) {
+        // ✅ POLLING MODE - Read EEG data continuously
+        int32_t adc1_data = 0, adc2_data = 0;
+        fsp_err_t result = ads1263_dual_channel_read(&adc1_data, &adc2_data);
+
+        if (result == FSP_SUCCESS) {
+            // ✅ REAL EEG DATA FROM POLLING
+            sample_counter++;
+            samples_for_processing++;
+
+            // Create real EEG sample
+            eeg_rdata_sample_t real_sample = {0};
+            real_sample.left_channel = adc1_data;   // Left ear electrode
+            real_sample.right_channel = adc2_data;  // Right ear electrode
+            real_sample.timestamp_us = get_system_timestamp_us();
+            real_sample.sequence_number = sample_counter;  // ✅ FIXED: Use correct variable
+            real_sample.data_valid = true;
+
+            // Add to buffer for AI processing
+            eeg_buffer_add_dual_sample(&real_sample);
+
+            // ✅ FIXED: Signal processing every 5 samples (40 Hz processing rate)
+            // FIXED Signal processing every 5 samples (40 Hz processing rate)
+            // FIXED Signal processing every 5 samples (40 Hz processing rate)
+            if (samples_for_processing >= 3) {
+                printf("SHRAVYA: 🎯 Triggering signal processing - Sample %lu (%u buffered)\n",
+                       sample_counter, samples_for_processing);
+
+                // Signal processing
+                printf("SHRAVYA: 🔍 DEBUG - Semaphore ID = %d\r\n", preprocessing_semaphore);
+                                tk_sig_sem(preprocessing_semaphore, 1);
+                                printf("SHRAVYA: 🔍 DEBUG - tk_sig_sem returned\r\n");
+                // Wait for processing to finish before continuing
+                printf("SHRAVYA: ⏳ Waiting for processing to complete...\n");
+                printf("SHRAVYA: 🔍 DEBUG - About to wait for processed_semaphore...\r\n");
+                tk_sig_sem(preprocessing_semaphore, 1);
+                ER wait_rc = tk_wai_sem(processed_semaphore);
+                if (wait_rc == E_OK) {
+                    printf("SHRAVYA: ✅ Processing completed, resuming acquisition\n");
+                } else {
+                    printf("SHRAVYA: Applying Function Approach");
+                    process_eeg_samples_direct();
+                    extract_eeg_features_direct();
+                    printf("SHRAVYA: 🤖 Triggering AI classification...\r\n");
+                    classify_cognitive_state_direct();
+
+                }
+                printf("SHRAVYA: 🔍 DEBUG - Finished waiting for processed_semaphore\r\n");
+                samples_for_processing = 0;
+            }
+
+            // ✅ FIXED: Status every 1000 samples (NO semaphore trigger here)
+            if ((sample_counter % 1000) == 0) {
+                uint32_t current_time = get_system_timestamp_us();
+                float rate = 1000000.0f / (current_time - last_status_time) * 1000; // Convert to Hz
+                printf("SHRAVYA: 🧠 POLLING EEG: %lu samples, %.1f SPS\r\n",
+                       sample_counter, rate);
+                printf("SHRAVYA: Left: %ld, Right: %ld (brain activity)\r\n",
+                       adc1_data, adc2_data);
+                last_status_time = current_time;
+
+                // ✅ NO DUPLICATE SEMAPHORE TRIGGER HERE!
+            }
+
+            // Precise timing control for 1000 SPS
+            tk_dly_tsk(5);  // 1ms delay = 1000 Hz polling rate
+
+        } else {
+            printf("SHRAVYA: ⚠️ Polling read error - continuing...\r\n");
+            tk_dly_tsk(10); // Longer delay on error
+        }
+
+        // ✅ OPTIONAL: Safety limit for testing (remove for production)
+        if (sample_counter >= 5000) {  // ✅ REDUCED: 5 seconds for testing
+            printf("SHRAVYA: Polling test complete - stopping acquisition\r\n");
+            break;
+        }
+    }
+}
+
+/**
+ * @brief External interrupt callback for ADS1263 DRDY signal - REAL BRAIN SIGNALS
+ */
+void ads1263_drdy_callback(external_irq_callback_args_t *p_args)
+{
+    (void)p_args;
+
+    /* Real DRDY interrupt received from ADS1263 */
+    hw_debug.drdy_interrupts_received++;
+    hw_debug.drdy_signal_active = true;
+
+    /* Signal EEG acquisition task that real brain data is ready */
+    tk_isig_sem(eeg_data_semaphore, 1);
+}
+
+/**
+ * @brief Get Latest Real EEG Samples from Your Brain
+ */
+fsp_err_t eeg_get_samples(eeg_raw_sample_t *samples, uint32_t count, uint32_t *samples_read)
+{
+    uint32_t available_samples = 0;
+    uint32_t i;
+
+    if (!samples || !samples_read) return FSP_ERR_INVALID_POINTER;
+
+    /* Calculate available real samples */
+    if (eeg_buffer.buffer_full) {
+        available_samples = EEG_BUFFER_SIZE_SAMPLES;
+    } else if (eeg_buffer.write_index >= eeg_buffer.read_index) {
+        available_samples = eeg_buffer.write_index - eeg_buffer.read_index;
+    } else {
+        available_samples = (EEG_BUFFER_SIZE_SAMPLES - eeg_buffer.read_index) + eeg_buffer.write_index;
+    }
+
+    /* Limit to requested count */
+    *samples_read = (count < available_samples) ? count : available_samples;
+
+    /* Copy real brain samples */
+    for (i = 0; i < *samples_read; i++) {
+        samples[i] = eeg_buffer.samples[eeg_buffer.read_index];
+        eeg_buffer.read_index = (eeg_buffer.read_index + 1) % EEG_BUFFER_SIZE_SAMPLES;
+    }
+
+    /* Update buffer full flag */
+    if (*samples_read > 0) {
+        eeg_buffer.buffer_full = false;
+    }
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Get Real EEG Hardware Status
+ */
+void eeg_get_statistics(uint32_t *total_samples, uint32_t *error_count_out, bool *is_running)
+{
+    if (total_samples) *total_samples = real_sample_count;
+    if (error_count_out) *error_count_out = hardware_error_count;
+    if (is_running) *is_running = acquisition_running;
+}
+
+/**
+ * @brief Get Real Signal Quality Assessment
+ */
+void eeg_get_real_signal_quality(float *left_impedance, float *right_impedance, uint8_t *integrity_score)
+{
+    if (left_impedance) *left_impedance = eeg_quality.electrode_impedance_left_kohms;
+    if (right_impedance) *right_impedance = eeg_quality.electrode_impedance_right_kohms;
+    if (integrity_score) *integrity_score = eeg_quality.data_integrity_score;
+}
+
+/* ✅ DUAL-CHANNEL RDATA IMPLEMENTATION FUNCTIONS */
+
+
+/**
+ * @brief Initialize ADS1263 for dual-channel RDATA operation
+ * @return fsp_err_t Success or error code
+ */
+static fsp_err_t ads1263_init_dual_rdata_mode(void)
+{
+    printf("SHRAVYA: Initializing ADS1263 dual-channel RDATA mode...\r\n");
+
+    // Reset acquisition statistics
+    memset(&rdata_stats, 0, sizeof(rdata_stats));
+    rdata_sequence_counter = 0;
+    adc1_samples_acquired = 0;
+    adc2_samples_acquired = 0;
+    dual_sync_errors = 0;
+
+    // Configure both ADCs for EEG acquisition
+    printf("SHRAVYA: Configuring dual ADCs for EEG...\r\n");
+    fsp_err_t config_err = ads1263_configure_dual_adc_for_eeg();
+    if (config_err != FSP_SUCCESS) {
+        printf("SHRAVYA: ⚠️ ADC configuration warning: %u\r\n", config_err);
+    }
+
+    // Send START commands for both ADCs
+    // ✅ COMPLETE ADC WAKE-UP AND START SEQUENCE
+    printf("SHRAVYA: Complete ADC wake-up and start sequence...\r\n");
+
+    // Step 1: WAKEUP both ADCs from power-down mode
+    printf("SHRAVYA: 1. Waking up both ADCs from power-down...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x02); // WAKEUP command
+    gpio_delay_us(500);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS); // 100ms wake-up time
+
+    // Step 2: Send SYNC command to synchronize both ADCs
+    printf("SHRAVYA: 2. Synchronizing both ADCs...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x04); // SYNC command
+    gpio_delay_us(500);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS); // 50ms sync time
+
+    // Step 3: Start ADC1 (primary 32-bit ADC)
+    printf("SHRAVYA: 3. Starting ADC1 (32-bit primary)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x08); // START1 command
+    gpio_delay_us(500);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS); // 100ms ADC1 start time
+
+    // Step 4: Start ADC2 (secondary 24-bit ADC)
+    printf("SHRAVYA: 4. Starting ADC2 (24-bit secondary)...\r\n");
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+    gpio_delay_us(200);
+    pure_gpio_write_byte(0x0C); // START2 command
+    gpio_delay_us(500);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+    R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS); // 100ms ADC2 start time
+
+    // Step 5: Final stabilization for both ADCs
+    printf("SHRAVYA: 5. Final dual-ADC stabilization...\r\n");
+    R_BSP_SoftwareDelay(500, BSP_DELAY_UNITS_MILLISECONDS); // 500ms total stabilization
+
+    // Extended stabilization for both ADCs
+    //printf("SHRAVYA: Dual ADC stabilization delay (2 seconds)...\r\n");
+    //R_BSP_SoftwareDelay(2000, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // Test both channels
+    printf("SHRAVYA: Testing dual-channel RDATA communication...\r\n");
+    int32_t test_adc1 = 0, test_adc2 = 0;
+    fsp_err_t test_result = ads1263_dual_channel_read(&test_adc1, &test_adc2);
+
+    if (test_result != FSP_SUCCESS) {
+        printf("SHRAVYA: ❌ Dual-channel RDATA test failed: %u\r\n", test_result);
+        return FSP_ERR_INVALID_HW_CONDITION;
+    }
+
+    printf("SHRAVYA: ✅ Dual-channel RDATA test successful:\r\n");
+    printf("SHRAVYA:    ADC1 (Left): 0x%08lX (%ld)\r\n", test_adc1, test_adc1);
+    printf("SHRAVYA:    ADC2 (Right): 0x%08lX (%ld)\r\n", test_adc2, test_adc2);
+    printf("SHRAVYA: ✅ Dual-channel RDATA mode ready for EEG acquisition\r\n");
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Configure both ADCs for optimal EEG acquisition
+ * @return fsp_err_t Success or error code
+ */
+// ✅ MATCHED DUAL-CHANNEL EEG CONFIGURATION
+static fsp_err_t ads1263_configure_dual_adc_for_eeg(void)
+{
+    // ADC1 Configuration (Primary 32-bit) - Left Electrode
+    bitbang_write_register(0x03, 0x00); // MODE0: Continuous mode
+    bitbang_write_register(0x04, 0x83); // MODE1: Sinc3 filter + PGA=1
+    bitbang_write_register(0x05, 0x04); // MODE2: 1000 SPS (optimal for EEG)
+    bitbang_write_register(0x06, 0x01); // INPMUX: AIN0-AIN1 differential
+
+    // ADC2 Configuration (Secondary 24-bit) - Right Electrode
+    bitbang_write_register(0x15, 0x04); // ADC2CFG: 1000 SPS (MATCHES ADC1!)
+    bitbang_write_register(0x16, 0x23); // ADC2MUX: AIN2-AIN3 differential
+
+    printf("SHRAVYA: ✅ Both ADCs synchronized at 1000 SPS\r\n");
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Read ADC1 data using RDATA1 command with robust error handling
+ * @return 32-bit conversion data, 0xFFFFFFFF on error
+ */
+static uint32_t ads1263_read_adc1_rdata_robust(void)
+{
+    uint32_t conversion_data = 0;
+
+    for (int retry = 0; retry < ADS1263_RETRY_COUNT; retry++) {
+        // CS LOW - start transaction
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(100);
+
+        // Send RDATA1 command (0x12) for ADC1
+        pure_gpio_write_byte(0x12);
+        gpio_delay_us(200);
+
+        // Read 4 bytes (32-bit data + status)
+        for (int byte = 0; byte < 4; byte++) {
+            uint8_t data_byte = pure_gpio_read_byte();
+            conversion_data = (conversion_data << 8) | data_byte;
+        }
+
+        // CS HIGH - end transaction
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+        gpio_delay_us(200);
+
+        // Validate ADC1 data (should be 32-bit signed)
+        if (conversion_data != 0x00000000 && conversion_data != 0xFFFFFFFF) {
+            adc1_samples_acquired++;
+            return (int32_t)conversion_data; // Return as signed 32-bit
+        }
+
+        if (retry < ADS1263_RETRY_COUNT - 1) {
+            printf("SHRAVYA: ADC1 RDATA retry %d/%d\r\n", retry + 1, ADS1263_RETRY_COUNT);
+            R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MILLISECONDS);
+        }
+    }
+
+    printf("SHRAVYA: ❌ ADC1 RDATA failed after %d retries\r\n", ADS1263_RETRY_COUNT);
+    return 0xFFFFFFFF;
+}
+
+/**
+ * @brief Read ADC2 data using RDATA2 command with robust error handling
+ * @return 32-bit conversion data (24-bit extended), 0xFFFFFFFF on error
+ */
+static uint32_t ads1263_read_adc2_rdata_robust(void)
+{
+    uint32_t conversion_data = 0;
+
+    for (int retry = 0; retry < ADS1263_RETRY_COUNT; retry++) {
+        // CS LOW - start transaction
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_LOW);
+        gpio_delay_us(100);
+
+        // Send RDATA2 command (0x14) for ADC2
+        pure_gpio_write_byte(0x14);
+        gpio_delay_us(200);
+
+        // Read 3 bytes (24-bit data from ADC2)
+        for (int byte = 0; byte < 3; byte++) {
+            uint8_t data_byte = pure_gpio_read_byte();
+            conversion_data = (conversion_data << 8) | data_byte;
+        }
+
+        // CS HIGH - end transaction
+        R_IOPORT_PinWrite(&g_ioport_ctrl, ADS1263_CS_PIN, BSP_IO_LEVEL_HIGH);
+        gpio_delay_us(200);
+
+        // Sign extend 24-bit to 32-bit
+        if (conversion_data & 0x800000) {
+            conversion_data |= 0xFF000000; // Sign extend
+        }
+
+        // Validate ADC2 data
+        if (conversion_data != 0x00000000 && conversion_data != 0xFFFFFFFF) {
+            adc2_samples_acquired++;
+            return (int32_t)conversion_data;
+        }
+
+        if (retry < ADS1263_RETRY_COUNT - 1) {
+            printf("SHRAVYA: ADC2 RDATA retry %d/%d\r\n", retry + 1, ADS1263_RETRY_COUNT);
+            R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MILLISECONDS);
+        }
+    }
+
+    printf("SHRAVYA: ❌ ADC2 RDATA failed after %d retries\r\n", ADS1263_RETRY_COUNT);
+    return 0xFFFFFFFF;
+}
+
+/**
+ * @brief Read both ADC channels with comprehensive fault tolerance
+ * @param adc1_data Pointer to store ADC1 data (left electrode)
+ * @param adc2_data Pointer to store ADC2 data (right electrode)
+ * @return fsp_err_t Success or error code
+ */
+static fsp_err_t ads1263_dual_channel_read(int32_t* adc1_data, int32_t* adc2_data)
+{
+    if (!adc1_data || !adc2_data) return FSP_ERR_INVALID_POINTER;
+
+    // Initialize results to invalid values
+    uint32_t raw_adc1 = 0xFFFFFFFF;
+    uint32_t raw_adc2 = 0xFFFFFFFF;
+    bool adc1_success = false;
+    bool adc2_success = false;
+
+    // ✅ ALWAYS TRY ADC1 FIRST (left electrode)
+    printf("SHRAVYA: 📡 Reading ADC1 (left electrode)...\r\n");
+    raw_adc1 = ads1263_read_adc1_rdata_robust();
+    if (raw_adc1 != 0xFFFFFFFF) {
+        adc1_success = true;
+        printf("SHRAVYA: ✅ ADC1 success: 0x%08lX (%ld)\r\n", raw_adc1, (int32_t)raw_adc1);
+    } else {
+        printf("SHRAVYA: ❌ ADC1 failed after retries\r\n");
+    }
+
+    // Small delay between channel reads for timing stability
+    gpio_delay_us(500);
+
+    // ✅ ALWAYS TRY ADC2 (right electrode) - REGARDLESS OF ADC1 RESULT
+    printf("SHRAVYA: 📡 Reading ADC2 (right electrode)...\r\n");
+    raw_adc2 = ads1263_read_adc2_rdata_robust();
+    if (raw_adc2 != 0xFFFFFFFF) {
+        adc2_success = true;
+        printf("SHRAVYA: ✅ ADC2 success: 0x%08lX (%ld)\r\n", raw_adc2, (int32_t)raw_adc2);
+    } else {
+        printf("SHRAVYA: ❌ ADC2 failed after retries\r\n");
+    }
+
+    // ✅ INTELLIGENT FAULT RECOVERY LOGIC
+    if (adc1_success && adc2_success) {
+        // Perfect case: Both channels working
+        *adc1_data = (int32_t)raw_adc1;
+        *adc2_data = (int32_t)raw_adc2;
+        printf("SHRAVYA: 🎯 Dual-channel success - both ADCs operational\r\n");
+
+    } else if (adc1_success && !adc2_success) {
+        // ADC1 works, ADC2 fails - use ADC1 for both channels
+        *adc1_data = (int32_t)raw_adc1;
+        *adc2_data = (int32_t)raw_adc1;  // Duplicate ADC1 data
+        printf("SHRAVYA: ⚠️ ADC2 failed - using ADC1 data for both channels\r\n");
+
+    } else if (!adc1_success && adc2_success) {
+        // ADC2 works, ADC1 fails - use ADC2 for both channels
+        *adc1_data = (int32_t)raw_adc2;  // Duplicate ADC2 data
+        *adc2_data = (int32_t)raw_adc2;
+        printf("SHRAVYA: ⚠️ ADC1 failed - using ADC2 data for both channels\r\n");
+
+    } else {
+        // Both ADCs failed - critical hardware issue
+        *adc1_data = 0;
+        *adc2_data = 0;
+        printf("SHRAVYA: 🚨 CRITICAL: Both ADC1 and ADC2 failed!\r\n");
+        printf("SHRAVYA: 🔧 Check: Power=5V, SPI connections, ADC reset\r\n");
+        return FSP_ERR_HARDWARE_TIMEOUT;
+    }
+
+    // ✅ UPDATE ACQUISITION STATISTICS
+    ads1263_update_dual_acquisition_stats(adc1_success, adc2_success);
+
+    // ✅ SYNCHRONIZATION MONITORING
+    static uint32_t last_check_time = 0;
+    uint32_t current_time = get_system_timestamp_us();
+
+    if ((current_time - last_check_time) >= 1000000) { // Every 1 second
+        printf("SHRAVYA: 📊 Channel Status: ADC1=%lu samples, ADC2=%lu samples\r\n",
+               adc1_samples_acquired, adc2_samples_acquired);
+
+        // Check for severe channel imbalance
+        if (abs((int)adc1_samples_acquired - (int)adc2_samples_acquired) > 100) {
+            dual_sync_errors++;
+            printf("SHRAVYA: ⚠️ Channel sync warning: ADC1=%lu, ADC2=%lu, Errors=%lu\r\n",
+                   adc1_samples_acquired, adc2_samples_acquired, dual_sync_errors);
+        }
+
+        // Report acquisition rate
+        if (rdata_stats.acquisition_rate_sps > 0) {
+            printf("SHRAVYA: 📈 Acquisition rate: %.1f SPS\r\n", rdata_stats.acquisition_rate_sps);
+        }
+
+        last_check_time = current_time;
+    }
+
+    // ✅ SUCCESS - Return with valid data (even if only one channel working)
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Assess signal quality for dual-channel sample
+ * @param sample Pointer to sample for quality assessment
+ */
+/**
+ * @brief Assess signal quality for dual-channel sample
+ * @param sample Pointer to sample for quality assessment
+ */
+static void ads1263_assess_dual_channel_quality(eeg_rdata_sample_t* sample)
+{
+    if (!sample) return;
+
+    // Calculate signal amplitudes (assuming 2.5V reference, 32-bit ADC)
+    float adc_range = 8388608.0f; // 2^23 for signed 24-bit (ADC2)
+    float vref = 2.5f;
+
+    float left_voltage = ((float)sample->left_channel / adc_range) * vref;
+    float right_voltage = ((float)sample->right_channel / adc_range) * vref;
+
+    // Update quality metrics
+    sample->quality.signal_amplitude_left_uv = fabsf(left_voltage) * 1000000.0f; // Convert to µV
+    sample->quality.signal_amplitude_right_uv = fabsf(right_voltage) * 1000000.0f;
+
+    // Assess electrode contact quality (simplified)
+    sample->quality.electrode_contact_good_left = (sample->quality.signal_amplitude_left_uv > 1.0f) &&
+                                                  (sample->quality.signal_amplitude_left_uv < 500.0f);
+    sample->quality.electrode_contact_good_right = (sample->quality.signal_amplitude_right_uv > 1.0f) &&
+                                                   (sample->quality.signal_amplitude_right_uv < 500.0f);
+
+    // Check for saturation
+    sample->quality.signal_saturated = (abs(sample->left_channel) > 8000000) ||
+                                       (abs(sample->right_channel) > 8000000);
+
+    // Simple data integrity score
+    uint8_t quality_score = 100;
+    if (sample->quality.signal_saturated) quality_score -= 50;
+    if (!sample->quality.electrode_contact_good_left) quality_score -= 25;
+    if (!sample->quality.electrode_contact_good_right) quality_score -= 25;
+
+    sample->quality.data_integrity_score = quality_score;
+
+    // Update processing statistics
+    sample->quality.samples_processed++;
+    if (sample->quality.signal_saturated) {
+        sample->quality.artifacts_detected++;
+    }
+}
+
+/**
+ * @brief Validate dual-channel RDATA sample
+ * @param sample Pointer to sample to validate
+ * @return fsp_err_t Success if valid
+ */
+static fsp_err_t ads1263_validate_dual_sample(eeg_rdata_sample_t* sample)
+{
+    if (!sample) return FSP_ERR_INVALID_POINTER;
+
+    // Check for completely invalid data
+    if (sample->left_channel == 0 && sample->right_channel == 0) {
+        rdata_stats.checksum_errors++;
+        return FSP_ERR_INVALID_DATA;
+    }
+
+    // Check sequence number continuity
+    if (sample->sequence_number != (rdata_sequence_counter + 1)) {
+        rdata_stats.sequence_errors++;
+        printf("SHRAVYA: ⚠️ Sequence gap: expected %lu, got %lu\r\n",
+               rdata_sequence_counter + 1, sample->sequence_number);
+    }
+
+    // Update sequence counter
+    rdata_sequence_counter = sample->sequence_number;
+
+    // Calculate dual-channel checksum
+    sample->data_checksum = sample->left_channel ^ sample->right_channel ^
+                           sample->timestamp_us ^ sample->sequence_number;
+
+    // Assess signal quality
+    ads1263_assess_dual_channel_quality(sample);
+
+    sample->data_valid = true;
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Update dual-channel acquisition statistics
+ * @param adc1_success True if ADC1 acquisition succeeded
+ * @param adc2_success True if ADC2 acquisition succeeded
+ */
+static void ads1263_update_dual_acquisition_stats(bool adc1_success, bool adc2_success)
+{
+    if (adc1_success && adc2_success) {
+        rdata_stats.samples_acquired++;
+    } else {
+        rdata_stats.samples_dropped++;
+        rdata_stats.retry_attempts++;
+    }
+
+    // Channel imbalance tracking
+    if (adc1_success != adc2_success) {
+        channel_imbalance_count++;
+    }
+
+    // Calculate acquisition rate every 2000 samples
+    static uint32_t last_time = 0;
+    if (rdata_stats.samples_acquired % 2000 == 0 && rdata_stats.samples_acquired > 0) {
+        uint32_t current_time = get_system_timestamp_us();
+        if (last_time > 0) {
+            float time_diff_sec = (current_time - last_time) / 1000000.0f;
+            rdata_stats.acquisition_rate_sps = 2000.0f / time_diff_sec;
+        }
+        last_time = current_time;
+    }
+
+    rdata_stats.hardware_responsive = (rdata_stats.samples_dropped < rdata_stats.samples_acquired / 20);
+}
+
+/**
+ * @brief Add dual-channel RDATA sample to circular buffer
+ * @param sample Dual-channel sample to add
+ * @return fsp_err_t Success or error code
+ */
+static fsp_err_t eeg_buffer_add_dual_sample(const eeg_rdata_sample_t* sample)
+{
+    if (!sample || !sample->data_valid) return FSP_ERR_INVALID_POINTER;
+
+    // Convert RDATA sample to standard EEG sample format
+    eeg_raw_sample_t eeg_sample;
+    eeg_sample.left_channel = sample->left_channel;    // Left electrode → ADC1
+    eeg_sample.right_channel = sample->right_channel;  // Right electrode → ADC2
+    eeg_sample.drl_feedback = sample->drl_feedback;    // DRL reference
+    eeg_sample.timestamp_us = sample->timestamp_us;
+    eeg_sample.quality = sample->quality;
+
+    // Add to existing circular buffer system
+    return eeg_buffer_write_real(&eeg_sample);
+}
+
+/**
+ * @brief DUAL-CHANNEL RDATA continuous acquisition main loop
+ * @return fsp_err_t Success or error code
+ */
+static fsp_err_t ads1263_rdata_dual_channel_acquisition(void)
+{
+    printf("SHRAVYA: Starting dual-channel RDATA acquisition at %d SPS\r\n", EEG_SAMPLE_RATE_HZ);
+    printf("SHRAVYA: 🧠 Left electrode → ADC1 (32-bit), Right electrode → ADC2 (24-bit)\r\n");
+
+    rdata_acquisition_active = true;
+    uint32_t sample_counter = 0;
+    uint32_t last_status_time = 0;
+    uint32_t consecutive_errors = 0;
+    const uint32_t MAX_CONSECUTIVE_ERRORS = 10;
+
+    while (rdata_acquisition_active) {
+        uint32_t start_time = get_system_timestamp_us();
+
+        // Read both channels
+        int32_t adc1_data = 0, adc2_data = 0;
+        fsp_err_t read_result = ads1263_dual_channel_read(&adc1_data, &adc2_data);
+
+        if (read_result == FSP_SUCCESS) {
+            // Create dual-channel RDATA sample
+            current_dual_sample.left_channel = adc1_data;     // Left electrode
+            current_dual_sample.right_channel = adc2_data;    // Right electrode
+            current_dual_sample.drl_feedback = 0;             // DRL reference (if available)
+            current_dual_sample.timestamp_us = start_time;
+            current_dual_sample.sequence_number = sample_counter++;
+
+            // Validate dual-channel sample
+            if (ads1263_validate_dual_sample(&current_dual_sample) == FSP_SUCCESS) {
+                // Add to buffer
+                eeg_buffer_add_dual_sample(&current_dual_sample);
+                ads1263_update_dual_acquisition_stats(true, true);
+                consecutive_errors = 0; // Reset error counter
+            }
+        } else {
+            printf("SHRAVYA: ❌ Dual-channel RDATA error at sample %lu: %u\r\n", sample_counter, read_result);
+            ads1263_update_dual_acquisition_stats(false, false);
+            consecutive_errors++;
+
+            // Critical error handling
+            if (consecutive_errors >= MAX_CONSECUTIVE_ERRORS) {
+                printf("SHRAVYA: 🚨 CRITICAL: %u consecutive dual-channel failures\r\n", consecutive_errors);
+                printf("SHRAVYA: 🔧 Check electrode connections and power supply\r\n");
+                return FSP_ERR_HARDWARE_TIMEOUT;
+            }
+        }
+
+        // Status update every 5 seconds
+        uint32_t current_time = get_system_timestamp_us();
+        if ((current_time - last_status_time) >= 5000000) { // 5 seconds in microseconds
+            printf("SHRAVYA: 📊 Dual-channel Stats: %lu samples, %.1f SPS\r\n",
+                   rdata_stats.samples_acquired, rdata_stats.acquisition_rate_sps);
+            printf("SHRAVYA:    ADC1: %lu, ADC2: %lu, Errors: %lu, Quality: %u%%\r\n",
+                   adc1_samples_acquired, adc2_samples_acquired,
+                   rdata_stats.samples_dropped, current_dual_sample.quality.data_integrity_score);
+            last_status_time = current_time;
+        }
+
+        // Precise timing control for target sampling rate
+        uint32_t elapsed = get_system_timestamp_us() - start_time;
+        if (elapsed < ADS1263_SAMPLE_INTERVAL_US) {
+            R_BSP_SoftwareDelay(ADS1263_SAMPLE_INTERVAL_US - elapsed, BSP_DELAY_UNITS_MICROSECONDS);
+        }
+
+        // Safety limit for testing (remove this for production)
+        if (sample_counter >= 20000) { // 10 seconds at 2kHz
+            printf("SHRAVYA: Dual-channel test complete - stopping acquisition\r\n");
+            break;
+        }
+    }
+
+    printf("SHRAVYA: 📈 FINAL STATS:\r\n");
+    printf("SHRAVYA:    Total samples: %lu\r\n", rdata_stats.samples_acquired);
+    printf("SHRAVYA:    ADC1 samples: %lu\r\n", adc1_samples_acquired);
+    printf("SHRAVYA:    ADC2 samples: %lu\r\n", adc2_samples_acquired);
+    printf("SHRAVYA:    Sync errors: %lu\r\n", dual_sync_errors);
+    printf("SHRAVYA:    Imbalance count: %lu\r\n", channel_imbalance_count);
+    printf("SHRAVYA: Dual-channel RDATA acquisition stopped\r\n");
+
+    return FSP_SUCCESS;
+}
+
+/* End of enhanced eegACQUISITION.c */

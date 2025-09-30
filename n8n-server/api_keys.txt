@@ -20,3 +20,30 @@ deepgram tts api = 1723e5ceee2b9d78799278e418750a7924639080
 Murf ai
 {"voice_id":"en-UK-hazel","style":"Conversational"}
 api key = ap2_d7eaf76c-2a6e-46da-91fc-407e482ece5e
+
+unreal speech api = a7rUvktqL6qU3j7SPo5ztrx9sMClUuCD5bTopuNp6WdVnPegzJ5P70
+
+
+Atlas account (mongoDB)
+Save API Key Information
+Public Key
+ctxmzqgt
+Private Key
+f3c502a4-0f1e-4436-8b39-78444e3c9027
+
+mongodb+srv://rishiraj2003kop_db_user:2EKQv3aQ3VxIi6Fg@shravya.ogug69o.mongodb.net/?retryWrites=true&w=majority&appName=SHRAVYA
+serp api key : b76f8af803f1468cc229553976b3b40567db3dbb5e488eb13653426c0f535a1e
+
+twilio recovery key : 2FEKMJ9K4BNZ2LZ4ETCABEFF
+
+OAuth Client id : 280645941870-00m72t31eo7nqfjqm2bnh6e9mtb97u4g.apps.googleusercontent.com
+
+github token : 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
+
+supabase anon public key = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwZGt2ZHRubmh3eHB0ZHJocHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMDQ1NjksImV4cCI6MjA3Mzg4MDU2OX0.5fHSUZxjreO9KPHn_mLONggEgVO7Ut-jk9nLKuJOl6I
+
+supabase service role secret = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwZGt2ZHRubmh3eHB0ZHJocHlqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1ODMwNDU2OSwiZXhwIjoyMDczODgwNTY5fQ.YWkNBuM-s2ZsvyAQW3e9vtSyMS3EZCyH93nfzRdilOY
+
+supabase project id = bpdkvdtnnhwxptdrhpyj
+
+openRouter learner's id api = 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

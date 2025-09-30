@@ -1,0 +1,109 @@
+#ifndef EEG_TYPES_H
+#define EEG_TYPES_H
+
+#include <stdint.h>
+#include <stdbool.h>
+#include "shravyaCONFIG.h"  // Add this for buffer size constants
+
+/* EEG Signal Quality Structure */
+typedef struct {
+    float impedance_left_kohms;
+    float impedance_right_kohms;
+    bool contact_quality_good;
+    uint8_t signal_noise_level;
+    float common_mode_voltage;
+    float signal_amplitude_left_uv;        // Left channel amplitude in microvolts
+        float signal_amplitude_right_uv;       // Right channel amplitude in microvolts
+        bool electrode_contact_good_left;      // Left electrode contact quality
+        bool electrode_contact_good_right;     // Right electrode contact quality
+        bool signal_saturated;                 // Signal saturation flag
+        uint8_t data_integrity_score;          // Overall data integrity (0-100%)
+        uint32_t samples_processed;            // Number of samples processed
+        uint32_t artifacts_detected;          // Artifact count
+} eeg_signal_quality_t;
+
+/* EEG Raw Data Structure */
+typedef struct {
+    int32_t left_channel;     // Left electrode raw ADC value
+    int32_t right_channel;    // Right electrode raw ADC value
+    int32_t drl_feedback;     // DRL circuit feedback
+    uint32_t timestamp_us;    // Microsecond timestamp
+    eeg_signal_quality_t quality;
+} eeg_raw_sample_t;
+
+/* EEG Circular Buffer */
+typedef struct {
+    eeg_raw_sample_t samples[EEG_BUFFER_SIZE_SAMPLES];
+    uint32_t write_index;
+    uint32_t read_index;
+    bool buffer_full;
+    void* buffer_mutex;       // μT-Kernel mutex
+} eeg_circular_buffer_t;
+
+/* Enhanced EEG Raw Sample with RDATA metadata */
+typedef struct {
+    int32_t left_channel;           // Left electrode from ADS1263 RDATA
+    int32_t right_channel;          // Right electrode from ADS1263 RDATA
+    int32_t drl_feedback;           // DRL reference electrode
+    uint32_t timestamp_us;          // Microsecond timestamp
+    uint32_t sequence_number;       // Sample sequence number
+    bool data_valid;                // Data integrity flag
+    uint32_t data_checksum;         // CRC32 for integrity
+    eeg_signal_quality_t quality;   // Signal quality assessment
+} eeg_rdata_sample_t;
+
+/* RDATA Acquisition Statistics */
+typedef struct {
+    uint32_t samples_acquired;      // Total samples from RDATA
+    uint32_t samples_dropped;       // Dropped due to errors
+    uint32_t retry_attempts;        // Communication retry count
+    uint32_t sequence_errors;       // Sequence number mismatches
+    uint32_t checksum_errors;       // Data integrity failures
+    float acquisition_rate_sps;     // Actual sampling rate achieved
+    bool hardware_responsive;       // ADS1263 responding to RDATA
+} eeg_rdata_stats_t;
+
+
+/* Frequency Domain Features */
+typedef struct {
+    float delta_power;        // 0.5-4Hz (deep sleep, attention)
+    float theta_power;        // 4-8Hz (drowsiness, meditation)
+    float alpha_power;        // 8-13Hz (relaxed awareness)
+    float beta_power;         // 13-30Hz (active concentration)
+    float gamma_power;        // 30-45Hz (high-level cognition)
+    float spectral_entropy;
+    float peak_frequency;
+    float band_power_ratios[4]; // Alpha/Beta, Theta/Alpha, etc.
+} eeg_frequency_features_t;
+
+/* Time Domain Features */
+typedef struct {
+    float hjorth_activity;    // Signal variance
+    float hjorth_mobility;    // Mean frequency
+    float hjorth_complexity;  // Bandwidth measure
+    float zero_crossing_rate;
+    float signal_energy;
+    float fractal_dimension;
+} eeg_time_features_t;
+
+/* Cognitive States (6 states as per requirements) */
+typedef enum {
+    COGNITIVE_STATE_FOCUS = 0,
+    COGNITIVE_STATE_STRESS,
+    COGNITIVE_STATE_ANXIETY,
+    COGNITIVE_STATE_FATIGUE,
+    COGNITIVE_STATE_CALM,
+    COGNITIVE_STATE_BOREDOM,
+    COGNITIVE_STATE_COUNT
+} cognitive_state_type_t;
+
+/* Cognitive State Classification Result */
+typedef struct {
+    float confidence_scores[COGNITIVE_STATE_COUNT]; // 0.0 to 1.0
+    cognitive_state_type_t dominant_state;
+    float overall_wellness_score;
+    uint32_t inference_time_ms;
+    bool intervention_needed;
+} cognitive_classification_t;
+
+#endif /* EEG_TYPES_H */

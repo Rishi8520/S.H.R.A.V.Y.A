@@ -388,6 +388,24 @@ static fsp_err_t send_to_n8n_webhook(const char *json_data)
     /* ✅ FIXED: Add required clock parameter */
     comm_state.last_transmission_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / 1000;
 
+    // Enhanced payload with all required data
+    snprintf(http_payload, sizeof(http_payload),
+        "POST /webhook/shravya-eeg-stream HTTP/1.1\r\n"
+        "Host: localhost:5678\r\n"
+        "Content-Type: application/json\r\n"
+        "Content-Length: %d\r\n"
+        "Connection: keep-alive\r\n"
+        "\r\n"
+        "%s", strlen(json_data), json_data);
+    
+    // Send with retry logic
+    for (int retry = 0; retry < 3; retry++) {
+        if (send_http_request(http_payload) == FSP_SUCCESS) {
+            break;
+        }
+        tk_dly_tsk(1000); // 1 second retry delay
+    }
+    
     return FSP_SUCCESS;
 }
 

@@ -1,0 +1,438 @@
+#include "hal_data.h"
+#include "shravyaCONFIG.h"
+#include "eegTYPES.h"
+#include "semaphoresGLOBAL.h"
+
+/* ✅ COMPLETE μT-Kernel 3.0 Type System - ESSENTIAL FOR TRON CONTEST */
+#ifndef INT
+typedef int INT;
+#endif
+
+#ifndef ER
+typedef int ER;
+#endif
+
+#ifndef ID
+typedef int ID;
+#endif
+
+#ifndef E_OK
+#define E_OK (0)
+#endif
+
+#ifndef E_SYS
+#define E_SYS (-5) // System error
+#endif
+
+#ifndef E_NOMEM
+#define E_NOMEM (-10) // Insufficient memory
+#endif
+
+#ifndef E_LIMIT
+#define E_LIMIT (-4) // Exceeded system limit
+#endif
+
+#ifndef E_PAR
+#define E_PAR (-17) // Parameter error
+#endif
+
+#ifndef E_NOEXS
+#define E_NOEXS (-2) // Object does not exist
+#endif
+
+/* Task Attributes */
+#ifndef TA_HLNG
+#define TA_HLNG (0x00000001U)
+#endif
+
+#ifndef TA_RNG3
+#define TA_RNG3 (0x00000300U)
+#endif
+
+/* μT-Kernel Task Structure */
+typedef struct {
+    uint32_t tskatr; // Task attributes
+    void *task; // Task entry point
+    int itskpri; // Task priority
+    uint32_t stksz; // Stack size
+    void *stkadr; // Stack address
+} T_CTSK;
+
+/* Function Prototypes */
+extern ER tk_ini_ker(void);
+extern ER tk_ext_ker(void);
+extern ID tk_cre_tsk(T_CTSK *pk_ctsk);
+extern ER tk_sta_tsk(ID tskid, INT stacd);
+extern ER initialize_global_semaphores(void);
+
+/* SHRAVYA Task Entry Points */
+extern void task_eeg_acquisition_entry(INT stacd, void *exinf);
+extern void task_signal_processing_entry(INT stacd, void *exinf);
+extern void task_feature_extraction_entry(INT stacd, void *exinf);
+extern void task_classification_entry(INT stacd, void *exinf);
+extern void task_haptic_feedback_entry(INT stacd, void *exinf);
+extern void task_communication_entry(INT stacd, void *exinf);
+extern void task_shravya_main_entry(INT stacd, void *exinf);
+
+/* SHRAVYA System Initialization */
+extern fsp_err_t eeg_acquisition_init(void);
+extern fsp_err_t signal_processing_init(void);
+extern fsp_err_t cognitive_classifier_init(void);
+extern fsp_err_t haptic_feedback_init(void);
+extern fsp_err_t communication_init(void);
+extern fsp_err_t power_management_init(void);
+
+/*Session control function prototypes */
+extern fsp_err_t trigger_session_start(void);
+extern fsp_err_t trigger_system_ready(void);
+
+/* Task Stack Sizes */
+#define TASK_STACK_SIZE_EEG 2048 // High-frequency data acquisition
+#define TASK_STACK_SIZE_SIGNAL 2048 // FFT and signal processing
+#define TASK_STACK_SIZE_FEATURE 1024 // Feature extraction
+#define TASK_STACK_SIZE_CLASSIFY 2048 // Neural network inference
+#define TASK_STACK_SIZE_HAPTIC 1024 // Motor control
+#define TASK_STACK_SIZE_COMM 1024 // N8N communication
+#define TASK_STACK_SIZE_MAIN 1024 // System coordinator
+
+/* Global Task IDs */
+static ID eeg_acquisition_task_id;
+static ID signal_processing_task_id;
+static ID feature_extraction_task_id;
+static ID classification_task_id;
+static ID haptic_feedback_task_id;
+static ID communication_task_id;
+static ID shravya_main_task_id;
+
+/**
+ * @brief Initialize FSP SPI Interface for EEG ADC
+ */
+static fsp_err_t initialize_spi_interface(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    printf("SHRAVYA: Initializing SPI for EEG ADC...\r\n");
+
+    /* Open SPI module */
+    err = R_SPI_B_Open(&g_spi0_ctrl, &g_spi0_cfg);
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: CRITICAL - SPI open failed: %u\r\n", err);
+        return err;
+    }
+
+    printf("SHRAVYA: SPI interface ready for ADS1263\r\n");
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize IOPORT for GPIO control
+ */
+static fsp_err_t initialize_ioport_interface(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    printf("SHRAVYA: Initializing IOPORT for GPIO control...\r\n");
+
+    /* Open IOPORT module if not already opened by FSP */
+    err = R_IOPORT_Open(&g_ioport_ctrl, &g_ioport_cfg);
+    if (FSP_SUCCESS != err && err != FSP_ERR_ALREADY_OPEN) {
+        printf("SHRAVYA: CRITICAL - IOPORT open failed: %u\r\n", err);
+        return err;
+    }
+
+    printf("SHRAVYA: IOPORT interface ready for pin control\r\n");
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize FSP External IRQ for EEG Data Ready
+ */
+static fsp_err_t initialize_external_irq(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    printf("SHRAVYA: Setting up FSP External IRQ for Pin A4 DRDY...\r\n");
+
+    /* Open External IRQ */
+    err = R_ICU_ExternalIrqOpen(&g_external_irq0_ctrl, &g_external_irq0_cfg);
+    if (FSP_SUCCESS != err && err != FSP_ERR_ALREADY_OPEN) {
+        printf("SHRAVYA: External IRQ open failed: %u\r\n", err);
+        return err;
+    }
+
+    /* Enable External IRQ */
+    err = R_ICU_ExternalIrqEnable(&g_external_irq0_ctrl);
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: External IRQ enable failed: %u\r\n", err);
+        return err;
+    }
+
+    printf("SHRAVYA: FSP External IRQ0 enabled for Pin A4 DRDY - ready for real EEG!\r\n");
+    printf("SHRAVYA: Pin A4 DRDY interrupt ready via FSP configuration\r\n");
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize SHRAVYA hardware subsystems
+ */
+static fsp_err_t shravya_hardware_init(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    printf("SHRAVYA: Starting FSP-managed hardware initialization...\r\n");
+
+    /* ✅ CRITICAL: Initialize IOPORT first */
+    err = initialize_ioport_interface();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: IOPORT initialization failed: %u\r\n", err);
+        return err;
+    }
+
+    /* ✅ CRITICAL: Initialize SPI before EEG acquisition */
+    err = initialize_spi_interface();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: SPI initialization failed: %u\r\n", err);
+        return err;
+    }
+
+    /* ✅ CRITICAL: Initialize External IRQ for DRDY */
+    err = initialize_external_irq();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: External IRQ initialization failed: %u\r\n", err);
+        /* Continue without external IRQ - polling mode */
+    }
+
+    printf("SHRAVYA: Initializing REAL hardware with FSP configuration...\r\n");
+
+    /* Initialize EEG acquisition hardware */
+    printf("SHRAVYA: Initializing EEG acquisition (ADS1263)...\r\n");
+    err = eeg_acquisition_init();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: EEG hardware init failed: %u - will adapt to simulation\r\n", err);
+        /* Don't return error - allow system to continue in simulation mode */
+    }
+
+    /* Initialize signal processing */
+    err = signal_processing_init();
+    if (FSP_SUCCESS != err) return err;
+
+    /* Initialize haptic feedback hardware */
+    printf("SHRAVYA: Initializing haptic feedback system...\r\n");
+    err = haptic_feedback_init();
+    if (FSP_SUCCESS != err) return err;
+    printf("SHRAVYA: Haptic feedback system ready\r\n");
+
+    /* Initialize communication */
+    printf("SHRAVYA: Initializing N8N communication...\r\n");
+    err = communication_init();
+    if (FSP_SUCCESS != err) return err;
+    printf("SHRAVYA: N8N communication ready\r\n");
+
+    /* Initialize power management */
+    printf("SHRAVYA: Initializing power management...\r\n");
+    err = power_management_init();
+    if (FSP_SUCCESS != err) return err;
+    printf("SHRAVYA: Power management ready\r\n");
+
+    printf("SHRAVYA: Hardware initialization complete - FSP managed system ready!\r\n");
+
+    /* ✅ Test system ready notification */
+    if (haptic_feedback_init() == FSP_SUCCESS) {
+        trigger_system_ready(); // Brief vibration to indicate system ready
+    }
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Create and start μT-Kernel tasks
+ */
+static ER create_shravya_tasks(void)
+{
+    T_CTSK ctsk;
+    ER ercd;
+
+    /* 1. EEG Acquisition Task (Highest Priority) */
+    ctsk.tskatr = TA_HLNG | TA_RNG3;
+    ctsk.task = (void*)task_eeg_acquisition_entry;
+    ctsk.itskpri = TASK_PRIORITY_EEG_ACQ;
+    ctsk.stksz = TASK_STACK_SIZE_EEG;
+    ctsk.stkadr = NULL;
+
+    eeg_acquisition_task_id = tk_cre_tsk(&ctsk);
+    if (eeg_acquisition_task_id <= 0) return E_SYS;
+    ercd = tk_sta_tsk(eeg_acquisition_task_id, 0);
+    if (ercd != E_OK) return ercd;
+
+    /* 2. Signal Processing Task */
+    ctsk.task = (void*)task_signal_processing_entry;
+    ctsk.itskpri = TASK_PRIORITY_PREPROCESSING;
+    ctsk.stksz = TASK_STACK_SIZE_SIGNAL;
+
+    signal_processing_task_id = tk_cre_tsk(&ctsk);
+    if (signal_processing_task_id <= 0) return E_SYS;
+    ercd = tk_sta_tsk(signal_processing_task_id, 0);
+    if (ercd != E_OK) return ercd;
+
+    /* 3. Feature Extraction Task */
+    ctsk.task = (void*)task_feature_extraction_entry;
+    ctsk.itskpri = TASK_PRIORITY_FEATURE_EXTRACT;
+    ctsk.stksz = TASK_STACK_SIZE_FEATURE;
+
+    feature_extraction_task_id = tk_cre_tsk(&ctsk);
+    if (feature_extraction_task_id <= 0) return E_SYS;
+    ercd = tk_sta_tsk(feature_extraction_task_id, 0);
+    if (ercd != E_OK) return ercd;
+
+    /* 4. Cognitive Classification Task */
+    ctsk.task = (void*)task_classification_entry;
+    ctsk.itskpri = TASK_PRIORITY_CLASSIFICATION;
+    ctsk.stksz = TASK_STACK_SIZE_CLASSIFY;
+
+    classification_task_id = tk_cre_tsk(&ctsk);
+    if (classification_task_id <= 0) return E_SYS;
+    ercd = tk_sta_tsk(classification_task_id, 0);
+    if (ercd != E_OK) return ercd;
+
+    /* 5. Haptic Feedback Task */
+    ctsk.task = (void*)task_haptic_feedback_entry;
+    ctsk.itskpri = TASK_PRIORITY_HAPTIC;
+    ctsk.stksz = TASK_STACK_SIZE_HAPTIC;
+
+    haptic_feedback_task_id = tk_cre_tsk(&ctsk);
+    if (haptic_feedback_task_id <= 0) return E_SYS;
+    ercd = tk_sta_tsk(haptic_feedback_task_id, 0);
+    if (ercd != E_OK) return ercd;
+
+    /* 6. N8N Communication Task */
+    ctsk.task = (void*)task_communication_entry;
+    ctsk.itskpri = TASK_PRIORITY_COMMUNICATION;
+    ctsk.stksz = TASK_STACK_SIZE_COMM;
+
+    communication_task_id = tk_cre_tsk(&ctsk);
+    if (communication_task_id <= 0) return E_SYS;
+    ercd = tk_sta_tsk(communication_task_id, 0);
+    if (ercd != E_OK) return ercd;
+
+    /* 7. SHRAVYA Main Coordinator Task */
+    ctsk.task = (void*)task_shravya_main_entry;
+    ctsk.itskpri = 5; // High priority system coordinator
+    ctsk.stksz = TASK_STACK_SIZE_MAIN;
+
+    shravya_main_task_id = tk_cre_tsk(&ctsk);
+    if (shravya_main_task_id <= 0) return E_SYS;
+    ercd = tk_sta_tsk(shravya_main_task_id, 0);
+    if (ercd != E_OK) return ercd;
+
+    return E_OK;
+}
+
+FSP_CPP_HEADER
+void R_BSP_WarmStart(bsp_warm_start_event_t event);
+FSP_CPP_FOOTER
+
+/**
+ * @brief SHRAVYA Main Entry Point - TRON Contest 2025
+ * This is where μT-Kernel 3.0 and AI integration begins
+ */
+void hal_entry(void)
+{
+    ER ercd;
+
+    printf("SHRAVYA: System starting - TRON Contest 2025\r\n");
+    printf("SHRAVYA: hal_entry() called - FSP managed hardware with all callbacks!\r\n");
+
+    /* FSP Hardware Initialization */
+#if BSP_TZ_SECURE_BUILD
+    R_BSP_NonSecureEnter();
+#endif
+
+    /* Initialize SHRAVYA Hardware Subsystems */
+    if (shravya_hardware_init() != FSP_SUCCESS) {
+        /* Hardware initialization failed - halt system */
+        printf("SHRAVYA: CRITICAL - Hardware initialization failed!\r\n");
+        while(1) {
+            __NOP();
+        }
+    }
+
+    /* Initialize μT-Kernel 3.0 */
+    printf("SHRAVYA: Initializing μT-Kernel 3.0...\r\n");
+    ercd = tk_ini_ker();
+    if (ercd != E_OK) {
+        /* Kernel initialization failed */
+        printf("SHRAVYA: CRITICAL - μT-Kernel initialization failed: %d\r\n", ercd);
+        while(1) {
+            __NOP();
+        }
+    }
+    printf("SHRAVYA: μT-Kernel 3.0 initialized successfully\r\n");
+
+    /* Create Global Semaphores for Task Coordination */
+    printf("SHRAVYA: Creating global semaphores...\r\n");
+    ercd = initialize_global_semaphores();
+    if (ercd != E_OK) {
+        /* Semaphore creation failed */
+        printf("SHRAVYA: CRITICAL - Global semaphore creation failed: %d\r\n", ercd);
+        tk_ext_ker();
+        while(1) {
+            __NOP();
+        }
+    }
+    printf("SHRAVYA: Creating global semaphore\r\n");
+
+    /* Create and Start All SHRAVYA Tasks */
+    printf("SHRAVYA: Creating and starting all tasks...\r\n");
+    ercd = create_shravya_tasks();
+    if (ercd != E_OK) {
+        /* Task creation failed */
+        printf("SHRAVYA: CRITICAL - Task creation failed: %d\r\n", ercd);
+        tk_ext_ker();
+        while(1) {
+            __NOP();
+        }
+    }
+    printf("SHRAVYA: All tasks created and started successfully\r\n");
+
+    /* ✅ CRITICAL: Start session notification */
+    trigger_session_start();
+
+    /* Start μT-Kernel 3.0 Scheduler - This should never return */
+    printf("SHRAVYA: Starting μT-Kernel scheduler...\r\n");
+    tk_ext_ker();
+
+    /* Should never reach here - system error */
+    printf("SHRAVYA: CRITICAL - System error - scheduler returned!\r\n");
+    while(1) {
+        __NOP();
+    }
+}
+
+/**
+ * @brief FSP Warm Start Handler
+ */
+void R_BSP_WarmStart(bsp_warm_start_event_t event)
+{
+    if (BSP_WARM_START_RESET == event) {
+#if BSP_FEATURE_FLASH_LP_VERSION != 0
+        R_FACI_LP->DFLCTL = 1U;
+#endif
+    }
+
+    if (BSP_WARM_START_POST_C == event) {
+        R_IOPORT_Open(&IOPORT_CFG_CTRL, &IOPORT_CFG_NAME);
+#if BSP_CFG_SDRAM_ENABLED
+        R_BSP_SdramInit(true);
+#endif
+    }
+}
+
+#if BSP_TZ_SECURE_BUILD
+FSP_CPP_HEADER
+BSP_CMSE_NONSECURE_ENTRY void template_nonsecure_callable();
+BSP_CMSE_NONSECURE_ENTRY void template_nonsecure_callable() {
+
+}
+FSP_CPP_FOOTER
+#endif

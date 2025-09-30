@@ -1,0 +1,49 @@
+[Header]
+Type=External Loader Configuration File
+Version=1
+ 
+[ExternalLoaderParameter 0]
+Name=EK-RA8M1
+LoaderFileName=EKRA8M1.hex
+DeviceName=R7FA8M1AHECBD
+StartAddress=90000000
+ExternalMemoryName=S28HL512T
+ExternalMemorySize=4000000
+WriteUnit=40
+Sector0=1000,32
+Sector1=20000,1
+Sector2=40000,255
+
+[ExternalLoaderParameter 1]
+Name=EK-RA8D1
+LoaderFileName=EKRA8D1.hex
+DeviceName=R7FA8D1BHECBD
+StartAddress=90000000
+ExternalMemoryName=S28HL512T
+ExternalMemorySize=4000000
+WriteUnit=40
+Sector0=1000,32
+Sector1=20000,1
+Sector2=40000,255
+ 
+[ExternalLoaderParameter 2]
+Name=EK-RA8P1
+LoaderFileName=EKRA8x2.hex
+DeviceName=R7KA8P1KFLCAC
+StartAddress=90000000
+ExternalMemoryName=MX25LW51245G
+ExternalMemorySize=4000000
+WriteUnit=40
+Sector0=10000,1024
+
+[ExternalLoaderParameter 3]
+Name=EK-RA8E2
+LoaderFileName=EKRA8E2.hex
+DeviceName=R7KA8D2KFLCAC
+StartAddress=90000000
+ExternalMemoryName=MX25LW51245G
+ExternalMemorySize=4000000
+WriteUnit=40
+Sector0=10000,1024
+
+[EOF]

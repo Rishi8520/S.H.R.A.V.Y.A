@@ -1,0 +1,594 @@
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "shravyaCONFIG.h"
+#include "signalPROCESSING.h"
+#include "semaphoresGLOBAL.h"
+//#include "mtk3_bsp2/include/tk/tkernel.h"
+#include <math.h>     // For sinf(), cosf(), fabsf(), sqrtf()
+#include <string.h>   // For memset(), memmove()
+
+#include <stdio.h>    // For printf()
+#include <string.h>   // For memset(), strcpy()
+
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+#ifndef E_OK
+#define E_OK (0)
+#endif
+#ifndef TMO_FEVR
+#define TMO_FEVR (-1)           // Wait forever
+#endif
+#ifndef E_TMOUT
+#define E_TMOUT (-7)    /* Timeout error */
+#endif
+
+/* ✅ Missing FSP Error Codes */
+#ifndef FSP_ERR_NOT_READY
+#define FSP_ERR_NOT_READY (-12) // Standard FSP error code
+#endif
+#ifndef FSP_ERR_INVALID_POINTER
+#define FSP_ERR_INVALID_POINTER (-6)
+#endif
+
+/* ✅ μT-Kernel Function Prototypes */
+extern ER tk_wai_sem(ID semid, INT timeout);
+extern ER tk_sig_sem(ID semid, INT cnt);
+extern ER tk_dly_tsk(INT dlytim);
+extern ID preprocessing_semaphore;
+
+/* DSP Constants */
+#define PI                          3.14159265358979323846f
+#define TWOPI                       6.28318530717958647692f
+#define SQRT2                       1.41421356237309504880f
+
+/* Filter Parameters */
+#define NOTCH_FREQ_50HZ             50.0f
+#define NOTCH_FREQ_60HZ             60.0f
+#define NOTCH_BANDWIDTH             2.0f
+#define BANDPASS_LOW_CUTOFF         0.5f    // EEG lower bound
+#define BANDPASS_HIGH_CUTOFF        45.0f   // EEG upper bound
+#define FILTER_ORDER                4       // 4th order filters
+
+/* Artifact Detection Thresholds */
+#define AMPLITUDE_THRESHOLD_UV      150.0f  // ±150μV amplitude limit
+#define GRADIENT_THRESHOLD          50.0f   // Max gradient between samples
+#define SATURATION_THRESHOLD        0x7F0000 // 24-bit ADC near saturation
+#define BASELINE_DRIFT_THRESHOLD    20.0f   // Baseline drift limit
+
+/* Processing Window Sizes */
+#define PROCESSING_WINDOW_SIZE      5     // 512ms at 500Hz (power of 2)
+#define OVERLAP_SIZE               1     // 50% overlap
+#define ARTIFACT_HISTORY_SIZE      10      // Track last 10 windows
+
+/* IIR Filter Structure (Biquad sections) */
+typedef struct {
+    float b0, b1, b2;  // Numerator coefficients
+    float a1, a2;      // Denominator coefficients (a0 = 1.0)
+    float x1, x2;      // Input history
+    float y1, y2;      // Output history
+} biquad_filter_t;
+
+/* Complete Filter Bank */
+typedef struct {
+    biquad_filter_t notch_50hz[2];      // 50Hz notch (2 cascaded biquads)
+    biquad_filter_t notch_60hz[2];      // 60Hz notch (2 cascaded biquads)
+    biquad_filter_t highpass[2];        // 0.5Hz highpass (2 cascaded biquads)
+    biquad_filter_t lowpass[2];         // 45Hz lowpass (2 cascaded biquads)
+} eeg_filter_bank_t;
+
+/* Signal Processing State */
+typedef struct {
+    eeg_filter_bank_t left_filters;
+    eeg_filter_bank_t right_filters;
+    float processing_buffer_left[PROCESSING_WINDOW_SIZE];
+    float processing_buffer_right[PROCESSING_WINDOW_SIZE];
+    uint32_t buffer_index;
+    bool buffer_ready;
+    uint32_t artifact_count[ARTIFACT_HISTORY_SIZE];
+    uint32_t artifact_index;
+    float baseline_left;
+    float baseline_right;
+    uint32_t samples_processed;
+} signal_processing_state_t;
+
+/* Global Variables */
+static signal_processing_state_t processing_state;
+static volatile bool processing_initialized = false;
+
+/* External semaphore references */
+extern ID preprocessing_semaphore;
+extern ID feature_extraction_semaphore;
+
+/* Private Function Prototypes */
+static void init_biquad_filter(biquad_filter_t *filter, float b0, float b1, float b2, float a1, float a2);
+static void design_notch_filter(biquad_filter_t filters[2], float freq_hz, float sample_rate_hz, float bandwidth);
+static void design_highpass_filter(biquad_filter_t filters[2], float cutoff_hz, float sample_rate_hz);
+static void design_lowpass_filter(biquad_filter_t filters[2], float cutoff_hz, float sample_rate_hz);
+static float process_biquad_cascade(biquad_filter_t filters[2], float input);
+static void init_filter_bank(eeg_filter_bank_t *bank);
+static float convert_adc_to_voltage(int32_t adc_value);
+static bool detect_artifacts(float left_sample, float right_sample, float prev_left, float prev_right);
+static void update_baseline(float left_sample, float right_sample);
+static void apply_signal_conditioning(float *left_sample, float *right_sample);
+void task_signal_processing_entry(INT stacd, void *exinf);
+
+/**
+ * @brief Initialize signal processing system
+ */
+fsp_err_t signal_processing_init(void)
+{
+    /* Clear processing state */
+    memset(&processing_state, 0, sizeof(processing_state));
+
+    /* Initialize filter banks for both channels */
+    init_filter_bank(&processing_state.left_filters);
+    init_filter_bank(&processing_state.right_filters);
+
+    /* Initialize baseline estimates */
+    processing_state.baseline_left = 0.0f;
+    processing_state.baseline_right = 0.0f;
+    processing_state.buffer_index = 0;
+    processing_state.buffer_ready = false;
+    processing_state.artifact_index = 0;
+    processing_state.samples_processed = 0;
+
+    processing_initialized = true;
+
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize complete filter bank
+ */
+static void init_filter_bank(eeg_filter_bank_t *bank)
+{
+    /* Design 50Hz notch filter (2nd order, cascaded for 4th order) */
+    design_notch_filter(bank->notch_50hz, NOTCH_FREQ_50HZ, EEG_SAMPLE_RATE_HZ, NOTCH_BANDWIDTH);
+
+    /* Design 60Hz notch filter (2nd order, cascaded for 4th order) */
+    design_notch_filter(bank->notch_60hz, NOTCH_FREQ_60HZ, EEG_SAMPLE_RATE_HZ, NOTCH_BANDWIDTH);
+
+    /* Design highpass filter for DC blocking (0.5Hz cutoff) */
+    design_highpass_filter(bank->highpass, BANDPASS_LOW_CUTOFF, EEG_SAMPLE_RATE_HZ);
+
+    /* Design lowpass filter for anti-aliasing (45Hz cutoff) */
+    design_lowpass_filter(bank->lowpass, BANDPASS_HIGH_CUTOFF, EEG_SAMPLE_RATE_HZ);
+}
+
+/**
+ * @brief Design notch filter using biquad sections
+ */
+static void design_notch_filter(biquad_filter_t filters[2], float freq_hz, float sample_rate_hz, float bandwidth)
+{
+    float omega = TWOPI * freq_hz / sample_rate_hz;
+    float alpha = sinf(omega) * sinhf(logf(2.0f) / 2.0f * bandwidth * omega / sinf(omega));
+    float cos_omega = cosf(omega);
+
+    /* Notch filter coefficients */
+    float b0 = 1.0f;
+    float b1 = -2.0f * cos_omega;
+    float b2 = 1.0f;
+    float a0 = 1.0f + alpha;
+    float a1 = -2.0f * cos_omega;
+    float a2 = 1.0f - alpha;
+
+    /* Normalize coefficients */
+    b0 /= a0;
+    b1 /= a0;
+    b2 /= a0;
+    a1 /= a0;
+    a2 /= a0;
+
+    /* Initialize first biquad */
+    init_biquad_filter(&filters[0], b0, b1, b2, a1, a2);
+
+    /* Second biquad identical for steeper rolloff */
+    init_biquad_filter(&filters[1], b0, b1, b2, a1, a2);
+}
+
+/**
+ * @brief Design highpass filter using biquad sections
+ */
+static void design_highpass_filter(biquad_filter_t filters[2], float cutoff_hz, float sample_rate_hz)
+{
+    float omega = TWOPI * cutoff_hz / sample_rate_hz;
+    float alpha = sinf(omega) / SQRT2; // Q = 0.707 for Butterworth
+    float cos_omega = cosf(omega);
+
+    /* Highpass filter coefficients */
+    float b0 = (1.0f + cos_omega) / 2.0f;
+    float b1 = -(1.0f + cos_omega);
+    float b2 = (1.0f + cos_omega) / 2.0f;
+    float a0 = 1.0f + alpha;
+    float a1 = -2.0f * cos_omega;
+    float a2 = 1.0f - alpha;
+
+    /* Normalize coefficients */
+    b0 /= a0;
+    b1 /= a0;
+    b2 /= a0;
+    a1 /= a0;
+    a2 /= a0;
+
+    /* Initialize cascaded biquads */
+    init_biquad_filter(&filters[0], b0, b1, b2, a1, a2);
+    init_biquad_filter(&filters[1], b0, b1, b2, a1, a2);
+}
+
+/**
+ * @brief Design lowpass filter using biquad sections
+ */
+static void design_lowpass_filter(biquad_filter_t filters[2], float cutoff_hz, float sample_rate_hz)
+{
+    float omega = TWOPI * cutoff_hz / sample_rate_hz;
+    float alpha = sinf(omega) / SQRT2; // Q = 0.707 for Butterworth
+    float cos_omega = cosf(omega);
+
+    /* Lowpass filter coefficients */
+    float b0 = (1.0f - cos_omega) / 2.0f;
+    float b1 = 1.0f - cos_omega;
+    float b2 = (1.0f - cos_omega) / 2.0f;
+    float a0 = 1.0f + alpha;
+    float a1 = -2.0f * cos_omega;
+    float a2 = 1.0f - alpha;
+
+    /* Normalize coefficients */
+    b0 /= a0;
+    b1 /= a0;
+    b2 /= a0;
+    a1 /= a0;
+    a2 /= a0;
+
+    /* Initialize cascaded biquads */
+    init_biquad_filter(&filters[0], b0, b1, b2, a1, a2);
+    init_biquad_filter(&filters[1], b0, b1, b2, a1, a2);
+}
+
+/**
+ * @brief Initialize biquad filter structure
+ */
+static void init_biquad_filter(biquad_filter_t *filter, float b0, float b1, float b2, float a1, float a2)
+{
+    filter->b0 = b0;
+    filter->b1 = b1;
+    filter->b2 = b2;
+    filter->a1 = a1;
+    filter->a2 = a2;
+    filter->x1 = 0.0f;
+    filter->x2 = 0.0f;
+    filter->y1 = 0.0f;
+    filter->y2 = 0.0f;
+}
+
+/**
+ * @brief Process input through cascaded biquad filters
+ */
+static float process_biquad_cascade(biquad_filter_t filters[2], float input)
+{
+    /* Process through first biquad */
+    float output1 = filters[0].b0 * input + filters[0].b1 * filters[0].x1 + filters[0].b2 * filters[0].x2
+                   - filters[0].a1 * filters[0].y1 - filters[0].a2 * filters[0].y2;
+
+    /* Update first biquad history */
+    filters[0].x2 = filters[0].x1;
+    filters[0].x1 = input;
+    filters[0].y2 = filters[0].y1;
+    filters[0].y1 = output1;
+
+    /* Process through second biquad */
+    float output2 = filters[1].b0 * output1 + filters[1].b1 * filters[1].x1 + filters[1].b2 * filters[1].x2
+                   - filters[1].a1 * filters[1].y1 - filters[1].a2 * filters[1].y2;
+
+    /* Update second biquad history */
+    filters[1].x2 = filters[1].x1;
+    filters[1].x1 = output1;
+    filters[1].y2 = filters[1].y1;
+    filters[1].y1 = output2;
+
+    return output2;
+}
+
+/**
+ * @brief Convert 24-bit ADC value to voltage in microvolts
+ */
+static float convert_adc_to_voltage(int32_t adc_value)
+{
+    /* ADS1263 with 2.5V reference, PGA gain = 32, 24-bit resolution */
+    /* Full scale = ±2.5V / 32 = ±78.125mV */
+    /* LSB = 78125μV / 8388608 = 9.31μV per LSB */
+
+    return ((float)adc_value * 78125.0f) / 8388608.0f;
+}
+
+/**
+ * @brief Detect various types of artifacts in EEG signals
+ */
+static bool detect_artifacts(float left_sample, float right_sample, float prev_left, float prev_right)
+{
+    /* Check for amplitude saturation */
+    if (fabsf(left_sample) > AMPLITUDE_THRESHOLD_UV || fabsf(right_sample) > AMPLITUDE_THRESHOLD_UV)
+    {
+        return true;
+    }
+
+    /* Check for excessive gradient (muscle artifacts, movement) */
+    float left_gradient = fabsf(left_sample - prev_left);
+    float right_gradient = fabsf(right_sample - prev_right);
+
+    if (left_gradient > GRADIENT_THRESHOLD || right_gradient > GRADIENT_THRESHOLD)
+    {
+        return true;
+    }
+
+    /* Check for common-mode artifacts (both channels similar high amplitude) */
+    if (fabsf(left_sample) > 50.0f && fabsf(right_sample) > 50.0f)
+    {
+        float correlation = (left_sample * right_sample) / (fabsf(left_sample) * fabsf(right_sample));
+        if (correlation > 0.8f) // High correlation suggests common-mode noise
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * @brief Update baseline estimates using adaptive filter
+ */
+static void update_baseline(float left_sample, float right_sample)
+{
+    /* Simple adaptive baseline with 0.99 forgetting factor */
+    const float alpha = 0.001f; // Adaptation rate
+
+    processing_state.baseline_left = (1.0f - alpha) * processing_state.baseline_left + alpha * left_sample;
+    processing_state.baseline_right = (1.0f - alpha) * processing_state.baseline_right + alpha * right_sample;
+}
+
+/**
+ * @brief Apply additional signal conditioning
+ */
+static void apply_signal_conditioning(float *left_sample, float *right_sample)
+{
+    /* Remove baseline drift */
+    *left_sample -= processing_state.baseline_left;
+    *right_sample -= processing_state.baseline_right;
+
+    /* Apply soft limiting to prevent excessive values */
+    const float soft_limit = 100.0f; // μV
+
+    if (*left_sample > soft_limit)
+        *left_sample = soft_limit + ((*left_sample - soft_limit) * 0.1f);
+    else if (*left_sample < -soft_limit)
+        *left_sample = -soft_limit + ((*left_sample + soft_limit) * 0.1f);
+
+    if (*right_sample > soft_limit)
+        *right_sample = soft_limit + ((*right_sample - soft_limit) * 0.1f);
+    else if (*right_sample < -soft_limit)
+        *right_sample = -soft_limit + ((*right_sample + soft_limit) * 0.1f);
+}
+
+/**
+ * @brief Process single EEG sample through complete pipeline
+ */
+static void process_eeg_sample(const eeg_raw_sample_t *raw_sample, float *filtered_left, float *filtered_right)
+{
+    static float prev_left = 0.0f, prev_right = 0.0f;
+
+    /* Convert ADC values to microvolts */
+    float left_uv = convert_adc_to_voltage(raw_sample->left_channel);
+    float right_uv = convert_adc_to_voltage(raw_sample->right_channel);
+
+    /* Artifact detection */
+    bool artifact_detected = detect_artifacts(left_uv, right_uv, prev_left, prev_right);
+
+    if (artifact_detected)
+    {
+        /* Replace with interpolated values or zeros */
+        left_uv = prev_left * 0.9f; // Simple interpolation
+        right_uv = prev_right * 0.9f;
+
+        /* Update artifact counter */
+        processing_state.artifact_count[processing_state.artifact_index % ARTIFACT_HISTORY_SIZE]++;
+    }
+
+    /* Update baseline estimates */
+    update_baseline(left_uv, right_uv);
+
+    /* Apply digital filtering pipeline */
+
+    /* Step 1: DC blocking (highpass 0.5Hz) */
+    left_uv = process_biquad_cascade(processing_state.left_filters.highpass, left_uv);
+    right_uv = process_biquad_cascade(processing_state.right_filters.highpass, right_uv);
+
+    /* Step 2: 50Hz notch filter */
+    left_uv = process_biquad_cascade(processing_state.left_filters.notch_50hz, left_uv);
+    right_uv = process_biquad_cascade(processing_state.right_filters.notch_50hz, right_uv);
+
+    /* Step 3: 60Hz notch filter */
+    left_uv = process_biquad_cascade(processing_state.left_filters.notch_60hz, left_uv);
+    right_uv = process_biquad_cascade(processing_state.right_filters.notch_60hz, right_uv);
+
+    /* Step 4: Anti-aliasing lowpass (45Hz) */
+    left_uv = process_biquad_cascade(processing_state.left_filters.lowpass, left_uv);
+    right_uv = process_biquad_cascade(processing_state.right_filters.lowpass, right_uv);
+
+    /* Step 5: Final signal conditioning */
+    apply_signal_conditioning(&left_uv, &right_uv);
+
+    /* Store results */
+    *filtered_left = left_uv;
+    *filtered_right = right_uv;
+
+    /* Update previous values */
+    prev_left = left_uv;
+    prev_right = right_uv;
+
+    processing_state.samples_processed++;
+}
+
+/**
+ * @brief μT-Kernel Task: Signal Preprocessing (50Hz)
+ * Priority: 15
+ */
+void task_signal_processing_entry(INT stacd, void *exinf)
+{
+    printf("SHRAVYA: 🚨 Signal processing task STARTED!\r\n");
+        printf("SHRAVYA: 🚨 About to enter main loop!\r\n");
+    (void)stacd;
+    (void)exinf;
+
+    eeg_raw_sample_t raw_samples[5]; // Process 10 samples at once (from 500Hz to 50Hz)
+    uint32_t samples_read;
+    float filtered_left, filtered_right;
+    ER ercd;
+
+    /* Initialize signal processing */
+    if (signal_processing_init() != FSP_SUCCESS)
+    {
+        printf("SHRAVYA: ❌ Signal processing initialization failed\r\n");
+        /* Initialization failed */
+        while(1)
+        {
+            tk_dly_tsk(1000);
+        }
+    }
+
+    printf("SHRAVYA: ✅ Signal processing task ready\r\n");
+
+    while(1)
+    {
+        printf("SHRAVYA: 🎛️ Waiting for preprocessing semaphore...\r\n");
+        /* Wait for data from EEG acquisition (triggered every 10 samples = 20ms) */
+        ercd = tk_wai_sem(preprocessing_semaphore, TMO_FEVR);
+
+        // MODIFIED: Better debug output
+        if (ercd == E_OK) {
+            printf("SHRAVYA: Signal Processing - Semaphore received! Result: %d\n", ercd);
+        } else if (ercd == E_TMOUT) {
+            printf("SHRAVYA: Signal Processing - Semaphore TIMEOUT! Result: %d\n", ercd);
+        } else {
+            printf("SHRAVYA: Signal Processing - Semaphore ERROR! Result: %d\n", ercd);
+        }
+
+        if (ercd != E_OK) {
+            printf("SHRAVYA: Signal Processing - Semaphore failed: %d\n", ercd);
+            tk_dly_tsk(10); // ADDED: Brief delay before retry to prevent busy loop
+            continue;
+        }
+
+        printf("SHRAVYA: Signal Processing - Starting processing...\n");
+
+        /* Get latest samples from acquisition buffer */
+        if (eeg_get_samples(raw_samples, 5, &samples_read) == FSP_SUCCESS && samples_read > 0)
+        {
+            // ✅ FIXED: Print AFTER getting samples_read value
+            printf("SHRAVYA: 🎛️ Signal Processing - Got %u samples\r\n", samples_read);
+
+            /* Process each sample through filtering pipeline */
+            for (uint32_t i = 0; i < samples_read; i++)
+            {
+                process_eeg_sample(&raw_samples[i], &filtered_left, &filtered_right);
+
+                /* Store in processing buffer */
+                processing_state.processing_buffer_left[processing_state.buffer_index] = filtered_left;
+                processing_state.processing_buffer_right[processing_state.buffer_index] = filtered_right;
+
+                processing_state.buffer_index++;
+
+                /* ALWAYS process features - immediate processing for real-time response */
+                if (true)  // Process every batch of 5 samples
+                {
+                    processing_state.buffer_ready = true;
+                    printf("SHRAVYA: ✅ Processing 5 samples - triggering features immediately\r\n");
+
+                    /* Reset buffer if it gets too full */
+                    if (processing_state.buffer_index >= PROCESSING_WINDOW_SIZE) {
+                        processing_state.buffer_index = OVERLAP_SIZE; // Reset with overlap
+
+                        /* Move overlapped data to beginning of buffer */
+                        memmove(processing_state.processing_buffer_left,
+                               &processing_state.processing_buffer_left[PROCESSING_WINDOW_SIZE - OVERLAP_SIZE],
+                               OVERLAP_SIZE * sizeof(float));
+                        memmove(processing_state.processing_buffer_right,
+                               &processing_state.processing_buffer_right[PROCESSING_WINDOW_SIZE - OVERLAP_SIZE],
+                               OVERLAP_SIZE * sizeof(float));
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            // ✅ ADDED: Debug log when no samples available
+            printf("SHRAVYA: ⚠️ No EEG samples available\r\n");
+        }
+
+        /* Update artifact tracking */
+        /* Update artifact tracking */
+        if ((processing_state.samples_processed % 2500) == 0) // Every 5 seconds
+        {
+            processing_state.artifact_index++;
+            processing_state.artifact_count[processing_state.artifact_index % ARTIFACT_HISTORY_SIZE] = 0;
+        }
+
+        /* ALWAYS trigger feature extraction after processing samples */
+        printf("SHRAVYA: 📊 Signaling feature extraction...\r\n");
+        tk_sig_sem(feature_extraction_semaphore, 1);
+
+        /* WAIT for feature extraction to complete */
+        printf("SHRAVYA: ⏳ Waiting for feature extraction to complete...\r\n");
+        ER feat_wait = tk_wai_sem(features_ready_semaphore, TMO_FEVR);
+        if (feat_wait == E_OK) {
+            printf("SHRAVYA: ✅ Feature extraction completed\r\n");
+        } else {
+            printf("SHRAVYA: ⚠️ Feature extraction wait failed: %d\r\n", feat_wait);
+        }
+
+        // ADDED: Processing cycle completion debug
+        tk_sig_sem(processed_semaphore, 1);
+        printf("SHRAVYA: ✅ Signal Processing cycle complete\r\n");
+    }
+}
+
+/*
+/**
+ * @brief Get processing statistics
+ */
+void signal_processing_get_stats(uint32_t *samples_processed, uint32_t *total_artifacts, bool *is_ready)
+{
+    if (samples_processed) *samples_processed = processing_state.samples_processed;
+
+    if (total_artifacts)
+    {
+        uint32_t total = 0;
+        for (int i = 0; i < ARTIFACT_HISTORY_SIZE; i++)
+        {
+            total += processing_state.artifact_count[i];
+        }
+        *total_artifacts = total;
+    }
+
+    if (is_ready) *is_ready = processing_state.buffer_ready && processing_initialized;
+}
+
+/**
+ * @brief Get filtered signal buffer for feature extraction
+ */
+fsp_err_t signal_processing_get_buffer(float **left_buffer, float **right_buffer, uint32_t *buffer_size)
+{
+    if (!processing_state.buffer_ready) return FSP_ERR_NOT_READY;
+
+    if (left_buffer) *left_buffer = processing_state.processing_buffer_left;
+    if (right_buffer) *right_buffer = processing_state.processing_buffer_right;
+    if (buffer_size) *buffer_size = PROCESSING_WINDOW_SIZE;
+
+    return FSP_SUCCESS;
+}

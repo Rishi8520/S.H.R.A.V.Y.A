@@ -1,0 +1,134 @@
+#include "hal_data.h"
+#include "shravyaCONFIG.h"
+#include "eegTYPES.h"
+#include "semaphoresGLOBAL.h"
+#include <stdio.h>
+
+/* ✅ SPI Callback Function - REQUIRED BY FSP CONFIGURATION */
+void spi_callback(spi_callback_args_t *p_args)
+{
+    /* Handle SPI callback events */
+    switch (p_args->event) {
+        case SPI_EVENT_TRANSFER_COMPLETE:
+            /* SPI transfer completed successfully */
+            printf("SHRAVYA: SPI transfer completed\r\n");
+            break;
+        case SPI_EVENT_TRANSFER_ABORTED:
+            /* SPI transfer was aborted */
+            printf("SHRAVYA: SPI transfer aborted\r\n");
+            break;
+        case SPI_EVENT_ERR_MODE_FAULT:
+            /* SPI mode fault error */
+            printf("SHRAVYA: SPI mode fault error\r\n");
+            break;
+        default:
+            /* Other events */
+            printf("SHRAVYA: SPI event: %d\r\n", p_args->event);
+            break;
+    }
+}
+
+/* ✅ External IRQ Callback Function - REQUIRED BY FSP CONFIGURATION */
+void external_irq_callback(external_irq_callback_args_t *p_args)
+{
+    /* Handle external IRQ events */
+    if (p_args->channel == 0) {
+        /* This is our DRDY signal from ADS1263 */
+        printf("SHRAVYA: EEG DRDY signal received!\r\n");
+    }
+}
+
+/**
+ * @brief Initialize FSP SPI Interface for EEG ADC
+ */
+static fsp_err_t initialize_spi_interface(void)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    printf("SHRAVYA: Initializing SPI for EEG ADC...\r\n");
+
+    /* Open SPI module */
+    err = R_SPI_B_Open(&g_spi0_ctrl, &g_spi0_cfg);
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: CRITICAL - SPI open failed: %u\r\n", err);
+        return err;
+    }
+
+    printf("SHRAVYA: SPI interface ready for ADS1263\r\n");
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Initialize IOPORT for GPIO control - FSP Default Version
+ */
+static fsp_err_t initialize_ioport_interface(void)
+{
+    printf("SHRAVYA: Using FSP default IOPORT - GPIO ready for pin control\r\n");
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief SHRAVYA Main Entry Point - TRON Contest 2025
+ * This is where μT-Kernel 3.0 and AI integration begins
+ */
+void hal_entry(void)
+{
+    fsp_err_t err;
+    printf("SHRAVYA: System starting - TRON Contest 2025\r\n");
+    printf("SHRAVYA: hal_entry() called - FSP managed hardware!\r\n");
+
+    /* FSP Hardware Initialization */
+#if BSP_TZ_SECURE_BUILD
+    R_BSP_NonSecureEnter();
+#endif
+
+    /* Initialize IOPORT */
+    err = initialize_ioport_interface();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: IOPORT failed: %u\r\n", err);
+        return;
+    }
+
+    /* Initialize SPI */
+    err = initialize_spi_interface();
+    if (FSP_SUCCESS != err) {
+        printf("SHRAVYA: SPI failed: %u\r\n", err);
+        return;
+    }
+
+    printf("SHRAVYA: Hardware initialization complete!\r\n");
+
+    /* Simple main loop for testing */
+    while(1) {
+        R_BSP_SoftwareDelay(1000, BSP_DELAY_UNITS_MILLISECONDS);
+        printf("SHRAVYA: System running...\r\n");
+    }
+}
+
+/**
+ * @brief FSP Warm Start Handler
+ */
+void R_BSP_WarmStart(bsp_warm_start_event_t event)
+{
+    if (BSP_WARM_START_RESET == event) {
+#if BSP_FEATURE_FLASH_LP_VERSION != 0
+        R_FACI_LP->DFLCTL = 1U;
+#endif
+    }
+
+    if (BSP_WARM_START_POST_C == event) {
+        R_IOPORT_Open(&IOPORT_CFG_CTRL, &IOPORT_CFG_NAME);
+#if BSP_CFG_SDRAM_ENABLED
+        R_BSP_SdramInit(true);
+#endif
+    }
+}
+
+#if BSP_TZ_SECURE_BUILD
+FSP_CPP_HEADER
+BSP_CMSE_NONSECURE_ENTRY void template_nonsecure_callable();
+BSP_CMSE_NONSECURE_ENTRY void template_nonsecure_callable()
+{
+
+}
+FSP_CPP_FOOTER
+#endif

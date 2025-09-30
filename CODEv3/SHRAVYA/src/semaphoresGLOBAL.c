@@ -1,0 +1,207 @@
+/**
+ * @file semaphoresGLOBAL.c
+ * @brief Global Semaphores for Real Hardware SHRAVYA System - TRON 2025
+ * @version 8.0
+ * @date 2025-09-20
+ */
+
+#include "semaphoresGLOBAL.h"
+#include <stdio.h>
+
+/* ✅ COMPLETE μT-Kernel 3.0 Type System - ESSENTIAL FOR TRON CONTEST */
+#ifndef INT
+typedef int INT;
+#endif
+
+#ifndef ER
+typedef int ER;
+#endif
+
+#ifndef ID
+typedef int ID;
+#endif
+
+#ifndef E_OK
+#define E_OK (0)
+#endif
+
+#ifndef E_SYS
+#define E_SYS (-5)
+#endif
+
+#ifndef E_LIMIT
+#define E_LIMIT (-4)
+#endif
+
+/* ✅ μT-Kernel 3.0 Task Attributes */
+#ifndef TA_TFIFO
+#define TA_TFIFO (0x00000000U)
+#endif
+
+#ifndef TA_WMUL
+#define TA_WMUL (0x00000002U)
+#endif
+
+/* ✅ μT-Kernel 3.0 Structure Types */
+typedef struct {
+    uint32_t sematr;    // Semaphore attributes
+    int isemcnt;        // Initial semaphore count
+    int maxsem;         // Maximum semaphore count
+} T_CSEM;
+
+/* ✅ μT-Kernel 3.0 Function Prototypes */
+extern ID tk_cre_sem(T_CSEM *pk_csem);
+ID processed_semaphore = 0;/* ✅ Global semaphore definitions - PRESERVED FOR TRON CONTEST */
+ID eeg_data_semaphore = 0;
+ID preprocessing_semaphore = 0;
+ID feature_extraction_semaphore = 0;
+ID classification_semaphore = 0;
+ID haptic_semaphore = 0;
+ID communication_semaphore = 0;
+ID features_ready_semaphore = 0;
+ID classification_ready_semaphore = 0;
+ID feedback_ready_semaphore = 0;
+/**
+ * @brief Initialize all global semaphores for REAL hardware operation
+ * ✅ TRON Programming Contest 2025 Compliant
+ */
+ER initialize_global_semaphores(void)
+{
+    T_CSEM csem;
+    ER result = E_OK;
+
+    printf("SHRAVYA: Creating global semaphores for real hardware...\r\n");
+
+    /* ✅ EEG Data Ready Semaphore - Triggered by Pin A4 DRDY interrupt */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 0 - DRDY interrupt will signal
+    csem.maxsem = 10;   // Allow some buffering for 500Hz data
+
+    eeg_data_semaphore = tk_cre_sem(&csem);
+    if (eeg_data_semaphore <= 0) {
+        printf("SHRAVYA: EEG data semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 1 created (EEG DRDY - Pin A4)\r\n");
+
+    /* ✅ Preprocessing Semaphore - Triggered by EEG task every 10 samples */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 0
+    csem.maxsem = 5;    // 50Hz preprocessing rate
+
+    preprocessing_semaphore = tk_cre_sem(&csem);
+    if (preprocessing_semaphore <= 0) {
+        printf("SHRAVYA: Preprocessing semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 2 created (Signal Processing)\r\n");
+    /* Used for producer-consumer handoff between acquisition and processing */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 1 - allows first acquisition cycle
+    csem.maxsem = 1;    // Binary semaphore (0 or 1 only)
+
+    processed_semaphore = tk_cre_sem(&csem);
+    //tk_sig_sem(processed_semaphore, 1);
+    if (processed_semaphore <= 0) {
+        printf("SHRAVYA: Processed handoff semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    /* ✅ Feature Extraction Semaphore - Triggered by signal processing */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 0
+    csem.maxsem = 3;    // Lower rate for feature extraction
+
+    feature_extraction_semaphore = tk_cre_sem(&csem);
+    if (feature_extraction_semaphore <= 0) {
+        printf("SHRAVYA: Feature extraction semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 3 created (Feature Extraction)\r\n");
+
+    /* ✅ Classification Semaphore - Triggered by feature extraction */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 0
+    csem.maxsem = 3;    // AI classification at 5Hz
+
+    classification_semaphore = tk_cre_sem(&csem);
+    if (classification_semaphore <= 0) {
+        printf("SHRAVYA: Classification semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 4 created (AI Classification)\r\n");
+
+    /* ✅ Haptic Semaphore - Triggered by classification when intervention needed */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 0
+    csem.maxsem = 5;    // Allow multiple interventions to queue
+
+    haptic_semaphore = tk_cre_sem(&csem);
+    if (haptic_semaphore <= 0) {
+        printf("SHRAVYA: Haptic semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 5 created (Haptic Feedback)\r\n");
+
+    /* ✅ Communication Semaphore - Triggered by main coordinator */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 0
+    csem.maxsem = 3;    // N8N communication at lower rate
+
+    communication_semaphore = tk_cre_sem(&csem);
+    if (communication_semaphore <= 0) {
+        printf("SHRAVYA: Communication semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 6 created (N8N Communication)\r\n");
+
+    printf("SHRAVYA: Semaphore 7 created (Processing Complete Handoff)\r\n");  // ← ADD THIS LINE
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 1 - allow first feature extraction
+    csem.maxsem = 1;    // Binary semaphore
+    features_ready_semaphore = tk_cre_sem(&csem);
+    if (features_ready_semaphore <= 0) {
+        printf("SHRAVYA: Features ready semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 8 created (Features Ready)\r\n");
+
+    /* Classification Ready Semaphore - Feature extraction → AI classification handoff */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 1 - allow first classification
+    csem.maxsem = 1;    // Binary semaphore
+    classification_ready_semaphore = tk_cre_sem(&csem);
+    if (classification_ready_semaphore <= 0) {
+        printf("SHRAVYA: Classification ready semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 9 created (Classification Ready)\r\n");
+
+    /* Feedback Ready Semaphore - AI classification → Haptic + N8N handoff */
+    csem.sematr = TA_TFIFO | TA_WMUL;
+    csem.isemcnt = 0;   // Start with 1 - allow first feedback
+    csem.maxsem = 1;    // Binary semaphore
+    feedback_ready_semaphore = tk_cre_sem(&csem);
+    if (feedback_ready_semaphore <= 0) {
+        printf("SHRAVYA: Feedback ready semaphore creation failed\r\n");
+        return E_SYS;
+    }
+    printf("SHRAVYA: Semaphore 10 created (Feedback Ready)\r\n");
+
+    printf("SHRAVYA: All 10 semaphores created for real hardware operation\r\n");
+
+    return E_OK;
+}
+
+/**
+ * @brief Get semaphore status for debugging
+ */
+void print_semaphore_status(void)
+{
+    printf("SHRAVYA: Semaphore Status:\r\n");
+    printf("  - EEG Data (DRDY): ID=%d\r\n", (int)eeg_data_semaphore);
+    printf("  - Preprocessing: ID=%d\r\n", (int)preprocessing_semaphore);
+    printf("  - Feature Extraction: ID=%d\r\n", (int)feature_extraction_semaphore);
+    printf("  - Classification: ID=%d\r\n", (int)classification_semaphore);
+    printf("  - Haptic Feedback: ID=%d\r\n", (int)haptic_semaphore);
+    printf("  - Communication: ID=%d\r\n", (int)communication_semaphore);
+}

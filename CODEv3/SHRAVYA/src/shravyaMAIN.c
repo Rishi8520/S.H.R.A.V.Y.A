@@ -1,0 +1,343 @@
+#include "hal_data.h"
+#include "eegTYPES.h"
+#include "cognitiveSTATES.h"
+#include "signalPROCESSING.h"
+//#include "mtk3_bsp2/include/tk/tkernel.h"
+
+#include <stdio.h>
+#ifndef INT
+typedef int INT;
+#endif
+#ifndef ER
+typedef int ER;
+#endif
+#ifndef ID
+typedef int ID;
+#endif
+#ifndef E_OK
+#define E_OK (0)
+#endif
+
+/* Application States */
+typedef enum {
+    APP_STATE_INITIALIZING = 0,
+    APP_STATE_CALIBRATING,
+    APP_STATE_MONITORING,
+    APP_STATE_INTERVENING,
+    APP_STATE_POWER_SAVE,
+    APP_STATE_ERROR
+} app_state_t;
+
+/* System Status Structure */
+typedef struct {
+    app_state_t current_state;
+    uint32_t session_start_time;
+    uint32_t total_interventions;
+    uint32_t system_uptime_minutes;
+    bool all_systems_ready;
+    float overall_system_health;
+
+    /* Subsystem Status */
+    bool eeg_acquisition_active;
+    bool signal_processing_ready;
+    bool cognitive_classifier_ready;
+    bool haptic_system_ready;
+    bool communication_active;
+    bool power_management_ready;
+    bool audio_interface_ready;
+} system_status_t;
+
+/* Global Variables */
+static system_status_t system_status;
+static volatile bool application_running = false;
+#define FATIGUE_THRESHOLD 0.8f
+
+/* Private Function Prototypes */
+static void initialize_all_subsystems(void);
+static void check_system_health(void);
+static void coordinate_data_flow(void);
+static void handle_system_events(void);
+static void update_system_statistics(void);
+static void handle_error_conditions(void);
+extern ER tk_dly_tsk(INT dlytim);
+
+/**
+ * @brief Initialize all SHRAVYA subsystems
+ */
+static void initialize_all_subsystems(void)
+{
+    fsp_err_t err;
+
+    /* Initialize EEG acquisition */
+    err = eeg_acquisition_init();
+    system_status.eeg_acquisition_active = (err == FSP_SUCCESS);
+
+    /* Initialize signal processing */
+    err = signal_processing_init();
+    system_status.signal_processing_ready = (err == FSP_SUCCESS);
+
+    /* Initialize cognitive classifier */
+    err = cognitive_classifier_init();
+    system_status.cognitive_classifier_ready = (err == FSP_SUCCESS);
+
+    /* Initialize haptic feedback */
+    err = haptic_feedback_init();
+    system_status.haptic_system_ready = (err == FSP_SUCCESS);
+
+    /* Initialize communication */
+    err = communication_init();
+    system_status.communication_active = (err == FSP_SUCCESS);
+
+    /* Initialize power management */
+    err = power_management_init();
+    system_status.power_management_ready = (err == FSP_SUCCESS);
+
+    /* Check if all systems are ready */
+    system_status.all_systems_ready =
+        system_status.eeg_acquisition_active &&
+        system_status.signal_processing_ready &&
+        system_status.cognitive_classifier_ready &&
+        system_status.haptic_system_ready &&
+        system_status.communication_active &&
+        system_status.power_management_ready;
+}
+
+/**
+ * @brief Check overall system health
+ */
+static void check_system_health(void)
+{
+    float health_score = 0.0f;
+    uint32_t active_systems = 0;
+
+    /* Count active subsystems */
+    if (system_status.eeg_acquisition_active) { health_score += 1.0f; active_systems++; }
+    if (system_status.signal_processing_ready) { health_score += 1.0f; active_systems++; }
+    if (system_status.cognitive_classifier_ready) { health_score += 1.0f; active_systems++; }
+    if (system_status.haptic_system_ready) { health_score += 1.0f; active_systems++; }
+    if (system_status.communication_active) { health_score += 1.0f; active_systems++; }
+    if (system_status.power_management_ready) { health_score += 1.0f; active_systems++; }
+    if (system_status.audio_interface_ready) { health_score += 1.0f; active_systems++; }
+
+    /* Calculate health percentage */
+    system_status.overall_system_health = (active_systems > 0) ?
+        (health_score / 7.0f) * 100.0f : 0.0f;
+
+    /* Update application state based on health */
+    if (system_status.overall_system_health >= 85.0f) {
+        if (system_status.current_state == APP_STATE_ERROR) {
+            system_status.current_state = APP_STATE_MONITORING;
+        }
+    } else if (system_status.overall_system_health < 50.0f) {
+        system_status.current_state = APP_STATE_ERROR;
+    }
+}
+
+/**
+ * @brief Coordinate data flow between subsystems
+ */
+static void coordinate_data_flow(void)
+{
+    /* Get current cognitive state */
+    cognitive_classification_t current_classification;
+    if (get_classification_result(&current_classification) == FSP_SUCCESS) {
+
+        /* Check if intervention is needed */
+        if (current_classification.intervention_needed) {
+            system_status.current_state = APP_STATE_INTERVENING;
+            system_status.total_interventions++;
+        } else if (system_status.current_state == APP_STATE_INTERVENING) {
+            /* Return to monitoring after intervention */
+            system_status.current_state = APP_STATE_MONITORING;
+        }
+    }
+
+    /* Check power status for power save mode */
+    uint8_t battery_soc;
+    bool low_battery;
+    if (get_power_statistics(&battery_soc, NULL, &low_battery, NULL) == FSP_SUCCESS) {
+        if (low_battery && system_status.current_state != APP_STATE_ERROR) {
+            system_status.current_state = APP_STATE_POWER_SAVE;
+        } else if (!low_battery && system_status.current_state == APP_STATE_POWER_SAVE) {
+            system_status.current_state = APP_STATE_MONITORING;
+        }
+    }
+}
+
+/**
+ * @brief Handle system events and state transitions
+ */
+static void handle_system_events(void)
+{
+    switch (system_status.current_state) {
+        case APP_STATE_INITIALIZING:
+            /* Wait for all systems to initialize */
+            if (system_status.all_systems_ready) {
+                system_status.current_state = APP_STATE_CALIBRATING;
+            }
+            break;
+
+        case APP_STATE_CALIBRATING:
+            /* Perform EEG calibration and baseline measurement */
+            /* This is simplified - actual calibration would take time */
+            system_status.current_state = APP_STATE_MONITORING;
+            break;
+
+        case APP_STATE_MONITORING:
+            /* Normal operation - coordinate data flow */
+            coordinate_data_flow();
+            break;
+
+        case APP_STATE_INTERVENING:
+            /* Intervention in progress - monitor effectiveness */
+            bool haptic_active;
+            get_haptic_statistics(NULL, NULL, &haptic_active);
+            if (!haptic_active) {
+                system_status.current_state = APP_STATE_MONITORING;
+            }
+            break;
+
+        case APP_STATE_POWER_SAVE:
+            /* Reduce functionality to save power */
+            /* This would coordinate with power management */
+            break;
+
+        case APP_STATE_ERROR:
+            /* Handle error conditions */
+            handle_error_conditions();
+            break;
+
+        default:
+            system_status.current_state = APP_STATE_ERROR;
+            break;
+    }
+}
+// Add this to handle_state_transitions function:
+
+static void handle_session_management(void)
+{
+    static bool session_started = false;
+
+    switch(system_status.current_state) {
+        case APP_STATE_INITIALIZING:
+            if (system_status.all_systems_ready && !session_started) {
+                trigger_session_start();
+                session_started = true;
+                system_status.current_state = APP_STATE_MONITORING;
+            }
+            break;
+
+        case APP_STATE_MONITORING:
+            // Session is active - check for drowsiness
+            cognitive_classification_t current_result;
+            if (get_classification_result(&current_result) == FSP_SUCCESS) {
+                if (current_result.dominant_state == COGNITIVE_STATE_FATIGUE &&
+                    current_result.confidence_scores[COGNITIVE_STATE_FATIGUE] > FATIGUE_THRESHOLD) {
+                    // User is getting drowsy!
+                    system_status.current_state = APP_STATE_INTERVENING;
+                }
+            }
+            break;
+
+        case APP_STATE_INTERVENING:
+            // Haptic intervention active
+            tk_dly_tsk(5000); // 5 second intervention
+            system_status.current_state = APP_STATE_MONITORING;
+            break;
+
+        case APP_STATE_ERROR:
+            trigger_session_end();
+            session_started = false;
+            break;
+    }
+}
+
+/**
+ * @brief Update system statistics
+ */
+static void update_system_statistics(void)
+{
+    // ✅ FIXED: Added required clock parameter
+    uint32_t current_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK) / 1000;
+    system_status.system_uptime_minutes = (current_time - system_status.session_start_time) / 60000;
+}
+
+/**
+ * @brief Handle error conditions
+ */
+static void handle_error_conditions(void)
+{
+    /* Log error state */
+    printf("SHRAVYA: System error detected - Health: %.1f%%\n",
+           system_status.overall_system_health);
+
+    /* Attempt to reinitialize failed subsystems */
+    if (!system_status.eeg_acquisition_active) {
+        if (eeg_acquisition_init() == FSP_SUCCESS) {
+            system_status.eeg_acquisition_active = true;
+        }
+    }
+
+    /* Check if recovery is possible */
+    check_system_health();
+}
+
+/**
+ * @brief μT-Kernel Task: Application Coordinator (2Hz)
+ * Priority: 5 (Highest - System coordinator)
+ */
+
+void task_shravya_main_entry(INT stacd, void *exinf)
+{
+    (void)stacd;
+    (void)exinf;
+
+    /* Initialize system status */
+    memset(&system_status, 0, sizeof(system_status));
+    system_status.current_state = APP_STATE_INITIALIZING;
+    // ✅ FIXED: Added required clock parameter
+    system_status.session_start_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK) / 1000;
+
+    /* Initialize all subsystems */
+    initialize_all_subsystems();
+
+    application_running = true;
+
+    while(application_running) {
+        /* Check system health */
+        check_system_health();
+
+        /* Handle system events and state transitions */
+        handle_system_events();
+
+        /* Update system statistics */
+        update_system_statistics();
+
+        /* Status update every 500ms */
+        tk_dly_tsk(500);
+    }
+}
+
+/**
+ * @brief Get system status information
+ */
+fsp_err_t get_system_status(system_status_t *status)
+{
+    if (!status) return FSP_ERR_INVALID_POINTER;
+
+    *status = system_status;
+    return FSP_SUCCESS;
+}
+
+/**
+ * @brief Trigger system shutdown
+ */
+void system_shutdown(void)
+{
+    application_running = false;
+
+    /* Stop all subsystems gracefully */
+    /* This would coordinate shutdown sequence */
+
+    printf("SHRAVYA: System shutdown initiated\n");
+}

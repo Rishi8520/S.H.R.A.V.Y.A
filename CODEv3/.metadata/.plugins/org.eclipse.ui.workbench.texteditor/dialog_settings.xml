@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="false"/>
+		<list key="findhistory">
+			<item value="samples ="/>
+			<item value="3"/>
+			<item value="ER wait_rc = tk_wai_sem(processed_semaphore);"/>
+			<item value="tk_wai_sem"/>
+			<item value="/* Used for producer-consumer handoff between acquisition and processing */"/>
+			<item value="ER wait_rc = tk_wai_sem"/>
+			<item value="void "/>
+			<item value="ER feat_wait = tk_wai_sem(features_ready_semaphore, TMO_FEVR);&#x0A;"/>
+			<item value="ercd = tk_wai_sem(preprocessing_semaphore, 5000)"/>
+			<item value="extern ER tk_wai_sem(ID semid, INT timeout);"/>
+			<item value="printf(&quot;SHRAVYA: ⏳ Waiting for processing to compl"/>
+			<item value="ER proc_wait = tk_wai"/>
+			<item value="samples_for_processing &gt;= 5"/>
+			<item value="extract_eeg_features_direct"/>
+			<item value="#define PROCESSING_WINDOW_SIZE"/>
+		</list>
+	</section>
+</section>

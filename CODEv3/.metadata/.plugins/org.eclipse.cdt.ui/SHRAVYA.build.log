@@ -1,0 +1,605 @@
+04:58:15 **** Build of configuration Debug for project SHRAVYA ****
+make -r -j8 all 
+Building file: ../src/cognitiveCLASSIFIER.c
+Building file: ../src/communicationN8N.c
+Building file: ../src/hal_entry.c
+Building file: ../src/hapticFEEDBACK.c
+Building file: ../src/eegACQUISITION.c
+Building file: ../src/mtk3INTEGRATION.c
+Building file: ../src/mtk3_stubs.c
+Building file: ../src/powerMANAGEMENT.c
+../src/hapticFEEDBACK.c:127:11: warning: no previous declaration for 'haptic_feedback_init' [-Wmissing-declarations]
+  127 | fsp_err_t haptic_feedback_init(void)
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c: In function 'haptic_feedback_init':
+../src/hapticFEEDBACK.c:129:15: warning: unused variable 'err' [-Wunused-variable]
+  129 |     fsp_err_t err = FSP_SUCCESS;
+      |               ^~~
+../src/hapticFEEDBACK.c: At top level:
+../src/hapticFEEDBACK.c:476:6: warning: no previous declaration for 'task_haptic_feedback_entry' [-Wmissing-declarations]
+  476 | void task_haptic_feedback_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c:528:11: warning: no previous declaration for 'get_haptic_statistics' [-Wmissing-declarations]
+  528 | fsp_err_t get_haptic_statistics(uint32_t *total_interventions, float *effectiveness, bool *is_active)
+      |           ^~~~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c:551:11: warning: no previous declaration for 'trigger_session_start' [-Wmissing-declarations]
+  551 | fsp_err_t trigger_session_start(void)
+      |           ^~~~~~~~~~~~~~~~~~~~~
+../src/cognitiveCLASSIFIER.c: In function 'task_feature_extraction_entry':
+../src/cognitiveCLASSIFIER.c:556:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  556 |     printf("SHRAVYA: ✅ Feature extraction task ready\r\n");
+      |     ^~~~~~
+../src/cognitiveCLASSIFIER.c:10:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+    9 | #include <stdlib.h>
+  +++ |+#include <stdio.h>
+   10 | #include <stdbool.h>
+../src/cognitiveCLASSIFIER.c:556:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  556 |     printf("SHRAVYA: ✅ Feature extraction task ready\r\n");
+      |     ^~~~~~
+../src/cognitiveCLASSIFIER.c:556:5: note: include '<stdio.h>' or provide a declaration of 'printf'
+../src/cognitiveCLASSIFIER.c:575:45: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  575 |             printf("SHRAVYA: 📊 Processing %u samples from signal buffer\r\n", buffer_size);
+      |                                            ~^                                  ~~~~~~~~~~~
+      |                                             |                                  |
+      |                                             unsigned int                       uint32_t {aka long unsigned int}
+      |                                            %lu
+../src/cognitiveCLASSIFIER.c: In function 'task_classification_entry':
+../src/cognitiveCLASSIFIER.c:652:9: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  652 |         printf("SHRAVYA: ❌ Cognitive classifier initialization failed\r\n");
+      |         ^~~~~~
+../src/cognitiveCLASSIFIER.c:652:9: note: include '<stdio.h>' or provide a declaration of 'printf'
+../src/cognitiveCLASSIFIER.c:656:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  656 |     printf("SHRAVYA: ✅ Cognitive classifier task ready\r\n");
+      |     ^~~~~~
+../src/cognitiveCLASSIFIER.c:656:5: note: include '<stdio.h>' or provide a declaration of 'printf'
+../src/cognitiveCLASSIFIER.c:715:57: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  715 |             printf("SHRAVYA: 📈 Total classifications: %u, Avg wellness: %.2f\r\n",
+      |                                                        ~^
+      |                                                         |
+      |                                                         unsigned int
+      |                                                        %lu
+  716 |                    classifications_performed, classification_result.overall_wellness_score);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~             
+      |                    |
+      |                    uint32_t {aka long unsigned int}
+../src/cognitiveCLASSIFIER.c: At top level:
+../src/cognitiveCLASSIFIER.c:754:6: warning: no previous declaration for 'handle_intervention_trigger' [-Wmissing-declarations]
+  754 | void handle_intervention_trigger(cognitive_classification_t *result)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/cognitiveCLASSIFIER.c:784:11: warning: no previous declaration for 'get_classification_statistics' [-Wmissing-declarations]
+  784 | fsp_err_t get_classification_statistics(uint32_t *total_classifications,
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c:582:11: warning: no previous declaration for 'trigger_session_end' [-Wmissing-declarations]
+  582 | fsp_err_t trigger_session_end(void)
+      |           ^~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c:657:11: warning: no previous declaration for 'trigger_system_ready' [-Wmissing-declarations]
+  657 | fsp_err_t trigger_system_ready(void)
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/hapticFEEDBACK.c:685:11: warning: no previous declaration for 'haptic_emergency_stop' [-Wmissing-declarations]
+  685 | fsp_err_t haptic_emergency_stop(void)
+      |           ^~~~~~~~~~~~~~~~~~~~~
+../src/mtk3_stubs.c:165:6: warning: no previous declaration for 'SysTick_Handler' [-Wmissing-declarations]
+  165 | void SysTick_Handler(void)
+      |      ^~~~~~~~~~~~~~~
+../src/mtk3_stubs.c:187:4: warning: no previous declaration for 'tk_ini_ker' [-Wmissing-declarations]
+  187 | ER tk_ini_ker(void)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:212:4: warning: no previous declaration for 'tk_cre_tsk' [-Wmissing-declarations]
+  212 | ID tk_cre_tsk(T_CTSK *pk_ctsk)
+      |    ^~~~~~~~~~
+../src/cognitiveCLASSIFIER.c:441:14: warning: 'sigmoid_activation' defined but not used [-Wunused-function]
+  441 | static float sigmoid_activation(float x)
+      |              ^~~~~~~~~~~~~~~~~~
+../src/mtk3_stubs.c:240:4: warning: no previous declaration for 'tk_sta_tsk' [-Wmissing-declarations]
+  240 | ER tk_sta_tsk(ID tskid, INT stacd)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:262:4: warning: no previous declaration for 'tk_dly_tsk' [-Wmissing-declarations]
+  262 | ER tk_dly_tsk(INT dlytim)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:280:4: warning: no previous declaration for 'tk_ext_ker' [-Wmissing-declarations]
+  280 | ER tk_ext_ker(void)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:326:4: warning: no previous declaration for 'tk_isig_sem' [-Wmissing-declarations]
+  326 | ER tk_isig_sem(ID semid, INT cnt)
+      |    ^~~~~~~~~~~
+../src/mtk3_stubs.c:355:4: warning: no previous declaration for 'tk_cre_sem' [-Wmissing-declarations]
+  355 | ID tk_cre_sem(T_CSEM *pk_csem)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:377:4: warning: no previous declaration for 'tk_wai_sem' [-Wmissing-declarations]
+  377 | ER tk_wai_sem(ID semid)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:411:4: warning: no previous declaration for 'tk_sig_sem' [-Wmissing-declarations]
+  411 | ER tk_sig_sem(ID semid)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:436:4: warning: no previous declaration for 'tk_cre_mtx' [-Wmissing-declarations]
+  436 | ID tk_cre_mtx(T_CMTX *pk_cmtx)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:457:4: warning: no previous declaration for 'tk_sus_tsk' [-Wmissing-declarations]
+  457 | ER tk_sus_tsk(ID tskid)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:476:4: warning: no previous declaration for 'tk_rsm_tsk' [-Wmissing-declarations]
+  476 | ER tk_rsm_tsk(ID tskid)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:495:4: warning: no previous declaration for 'tk_rel_wai' [-Wmissing-declarations]
+  495 | ER tk_rel_wai(void)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:505:4: warning: no previous declaration for 'tk_loc_mtx' [-Wmissing-declarations]
+  505 | ER tk_loc_mtx(ID mtxid)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:528:4: warning: no previous declaration for 'tk_unl_mtx' [-Wmissing-declarations]
+  528 | ER tk_unl_mtx(ID mtxid)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:554:4: warning: no previous declaration for 'tk_cre_flg' [-Wmissing-declarations]
+  554 | ID tk_cre_flg(T_CFLG *pk_cflg)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:574:4: warning: no previous declaration for 'tk_set_flg' [-Wmissing-declarations]
+  574 | ER tk_set_flg(ID flgid, uint32_t setptn)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:594:4: warning: no previous declaration for 'tk_set_pow' [-Wmissing-declarations]
+  594 | ER tk_set_pow(INT powmode)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:605:4: warning: no previous declaration for 'tk_get_tid' [-Wmissing-declarations]
+  605 | ID tk_get_tid(void)
+      |    ^~~~~~~~~~
+../src/mtk3_stubs.c:613:10: warning: no previous declaration for 'tk_get_ticks' [-Wmissing-declarations]
+  613 | uint32_t tk_get_ticks(void)
+      |          ^~~~~~~~~~~~
+../src/mtk3_stubs.c:142:17: warning: 'task_stacks' defined but not used [-Wunused-variable]
+  142 | static uint32_t task_stacks[MAX_SHRAVYA_TASKS][TASK_STACK_SIZE / 4];
+      |                 ^~~~~~~~~~~
+../src/communicationN8N.c:292:11: warning: no previous declaration for 'send_http_request' [-Wmissing-declarations]
+  292 | fsp_err_t send_http_request(const char *request_data)
+      |           ^~~~~~~~~~~~~~~~~
+../src/communicationN8N.c: In function 'send_to_n8n_webhook':
+../src/communicationN8N.c:357:26: warning: conversion to 'int' from 'size_t' {aka 'unsigned int'} may change the sign of the result [-Wsign-conversion]
+  357 |     int content_length = strlen(json_data);
+      |                          ^~~~~~
+../src/communicationN8N.c: In function 'task_communication_entry':
+../src/communicationN8N.c:430:22: warning: declaration of 'current_features' shadows a global declaration [-Wshadow]
+  430 |     feature_vector_t current_features;
+      |                      ^~~~~~~~~~~~~~~~
+In file included from ../src/communicationN8N.c:3:
+/media/rishi/Windows-SSD/PROJECT_AND_RESEARCH/TRON_2025/CODEv3/SHRAVYA/include/cognitiveSTATES.h:60:25: note: shadowed declaration is here
+   60 | extern feature_vector_t current_features;
+      |                         ^~~~~~~~~~~~~~~~
+../src/hal_entry.c:136:6: warning: no previous declaration for 'manual_eeg_trigger_task' [-Wmissing-declarations]
+  136 | void manual_eeg_trigger_task(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~
+../src/powerMANAGEMENT.c:77:11: warning: no previous declaration for 'power_management_init' [-Wmissing-declarations]
+   77 | fsp_err_t power_management_init(void)
+      |           ^~~~~~~~~~~~~~~~~~~~~
+../src/powerMANAGEMENT.c: In function 'power_management_init':
+../src/powerMANAGEMENT.c:79:15: warning: unused variable 'err' [-Wunused-variable]
+   79 |     fsp_err_t err = FSP_SUCCESS;
+      |               ^~~
+../src/powerMANAGEMENT.c: In function 'exit_power_save_mode':
+../src/powerMANAGEMENT.c:236:14: warning: unused variable 'current_time' [-Wunused-variable]
+  236 |     uint32_t current_time = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK) / 1000;
+      |              ^~~~~~~~~~~~
+../src/powerMANAGEMENT.c: At top level:
+../src/powerMANAGEMENT.c:260:6: warning: no previous declaration for 'task_power_management_entry' [-Wmissing-declarations]
+  260 | void task_power_management_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/powerMANAGEMENT.c:311:11: warning: no previous declaration for 'get_power_statistics' [-Wmissing-declarations]
+  311 | fsp_err_t get_power_statistics(uint8_t *battery_soc, uint16_t *voltage_mv, bool *low_battery, float *power_mw)
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/hal_entry.c: In function 'manual_eeg_trigger_task':
+../src/hal_entry.c:147:5: warning: implicit declaration of function 'tk_dly_tsk'; did you mean 'tk_sta_tsk'? [-Wimplicit-function-declaration]
+  147 |     tk_dly_tsk(1000);  // Wait 1 second
+      |     ^~~~~~~~~~
+      |     tk_sta_tsk
+../src/powerMANAGEMENT.c:113:18: warning: 'max17048_init' defined but not used [-Wunused-function]
+  113 | static fsp_err_t max17048_init(void)
+      |                  ^~~~~~~~~~~~~
+../src/hal_entry.c: At top level:
+../src/hal_entry.c:467:6: warning: no previous declaration for 'R_BSP_WarmStart' [-Wmissing-declarations]
+  467 | void R_BSP_WarmStart(bsp_warm_start_event_t event)
+      |      ^~~~~~~~~~~~~~~
+Building file: ../src/semaphoresGLOBAL.c
+../src/mtk3INTEGRATION.c:112:4: warning: no previous declaration for 'mtk3_system_init' [-Wmissing-declarations]
+  112 | ER mtk3_system_init(void)
+      |    ^~~~~~~~~~~~~~~~
+../src/mtk3INTEGRATION.c:192:4: warning: no previous declaration for 'mtk3_start_scheduler' [-Wmissing-declarations]
+  192 | ER mtk3_start_scheduler(void)
+      |    ^~~~~~~~~~~~~~~~~~~~
+In file included from ../src/eegACQUISITION.c:11:
+/media/rishi/Windows-SSD/PROJECT_AND_RESEARCH/TRON_2025/CODEv3/SHRAVYA/include/hardwareDRIVERS.h:14:1: warning: "/*" within comment [-Wcomment]
+   14 | /* ✅ ADD: Forward declarations for μT-Kernel types */
+      |  
+Building file: ../src/shravyaMAIN.c
+Building file: ../src/signalPROCESSING.c
+../src/semaphoresGLOBAL.c: In function 'initialize_global_semaphores':
+../src/semaphoresGLOBAL.c:71:8: warning: unused variable 'result' [-Wunused-variable]
+   71 |     ER result = E_OK;
+      |        ^~~~~~
+../src/semaphoresGLOBAL.c: At top level:
+../src/semaphoresGLOBAL.c:198:6: warning: no previous declaration for 'print_semaphore_status' [-Wmissing-declarations]
+  198 | void print_semaphore_status(void)
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c: In function 'spi_mode1_read_byte':
+../src/eegACQUISITION.c:301:5: warning: implicit declaration of function 'gpio_delay_us' [-Wimplicit-function-declaration]
+  301 |     gpio_delay_us(50); // Setup time
+      |     ^~~~~~~~~~~~~
+Building file: ../ra_gen/common_data.c
+../src/eegACQUISITION.c: In function 'pure_gpio_read_device_id':
+../src/eegACQUISITION.c:373:9: warning: implicit declaration of function 'pure_gpio_write_byte'; did you mean 'pure_gpio_read_byte'? [-Wimplicit-function-declaration]
+  373 |         pure_gpio_write_byte(0x06);  // RESET command
+      |         ^~~~~~~~~~~~~~~~~~~~
+      |         pure_gpio_read_byte
+../src/eegACQUISITION.c: At top level:
+../src/eegACQUISITION.c:1201:2: warning: "/*" within comment [-Wcomment]
+ 1201 |  /**
+      |   
+../src/eegACQUISITION.c:1202:2: warning: "/*" within comment [-Wcomment]
+ 1202 |  /**
+      |   
+Building file: ../ra_gen/hal_data.c
+../src/eegACQUISITION.c: In function 'eeg_acquisition_init':
+../src/eegACQUISITION.c:1211:5: warning: implicit declaration of function 'bitbang_write_register'; did you mean 'bitbang_read_register'? [-Wimplicit-function-declaration]
+ 1211 |     bitbang_write_register(0x01, 0x11); // POWER: RESET=1, INTREF=1
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+      |     bitbang_read_register
+../src/eegACQUISITION.c: In function 'ads1263_comprehensive_reset':
+../src/eegACQUISITION.c:1437:43: warning: conversion to 'uint32_t' {aka 'long unsigned int'} from 'int' may change the sign of the result [-Wsign-conversion]
+ 1437 |         R_BSP_SoftwareDelay((attempt + 1) * 20, BSP_DELAY_UNITS_MILLISECONDS);
+      |                             ~~~~~~~~~~~~~~^~~~
+../src/eegACQUISITION.c: At top level:
+../src/eegACQUISITION.c:1533:6: warning: no previous declaration for 'gpio_delay_us' [-Wmissing-declarations]
+ 1533 | void gpio_delay_us(uint32_t microseconds)
+      |      ^~~~~~~~~~~~~
+../src/eegACQUISITION.c:1533:6: warning: conflicting types for 'gpio_delay_us'; have 'void(uint32_t)' {aka 'void(long unsigned int)'}
+../src/eegACQUISITION.c:301:5: note: previous implicit declaration of 'gpio_delay_us' with type 'void(uint32_t)' {aka 'void(long unsigned int)'}
+  301 |     gpio_delay_us(50); // Setup time
+      |     ^~~~~~~~~~~~~
+../src/eegACQUISITION.c:1588:6: warning: no previous declaration for 'pure_gpio_write_byte' [-Wmissing-declarations]
+ 1588 | void pure_gpio_write_byte(uint8_t data) {
+      |      ^~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1588:6: warning: conflicting types for 'pure_gpio_write_byte'; have 'void(uint8_t)' {aka 'void(unsigned char)'}
+../src/eegACQUISITION.c:373:9: note: previous implicit declaration of 'pure_gpio_write_byte' with type 'void(uint8_t)' {aka 'void(unsigned char)'}
+  373 |         pure_gpio_write_byte(0x06);  // RESET command
+      |         ^~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1650:2: warning: "/*" within comment [-Wcomment]
+ 1650 |  /**
+      |   
+../src/eegACQUISITION.c:1682:6: warning: no previous declaration for 'bitbang_write_register' [-Wmissing-declarations]
+ 1682 | void bitbang_write_register(uint8_t reg_addr, uint8_t data)
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1682:6: warning: conflicting types for 'bitbang_write_register'; have 'void(uint8_t,  uint8_t)' {aka 'void(unsigned char,  unsigned char)'}
+../src/eegACQUISITION.c:1211:5: note: previous implicit declaration of 'bitbang_write_register' with type 'void(uint8_t,  uint8_t)' {aka 'void(unsigned char,  unsigned char)'}
+ 1211 |     bitbang_write_register(0x01, 0x11); // POWER: RESET=1, INTREF=1
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c: In function 'ads1263_direct_mode_init':
+../src/eegACQUISITION.c:1841:15: warning: unused variable 'err' [-Wunused-variable]
+ 1841 |     fsp_err_t err = FSP_SUCCESS;
+      |               ^~~
+../src/eegACQUISITION.c:1877:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ 1877 | }
+      | ^
+../src/eegACQUISITION.c: In function 'ads1263_test_direct_reading':
+../src/eegACQUISITION.c:1926:72: warning: conversion from 'int32_t' {aka 'long int'} to 'float' may change value [-Wconversion]
+ 1926 |             printf("SHRAVYA:   Voltage equiv: %.6f V\r\n", signed_data * (5.0f / 2147483648.0f));
+      |                                                                        ^
+../src/eegACQUISITION.c: At top level:
+../src/eegACQUISITION.c:2060:6: warning: no previous declaration for 'ads1263_ultimate_hardware_test' [-Wmissing-declarations]
+ 2060 | void ads1263_ultimate_hardware_test(void)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c: In function 'ads1263_configure_for_real_eeg':
+../src/eegACQUISITION.c:2141:15: warning: unused variable 'err' [-Wunused-variable]
+ 2141 |     fsp_err_t err = FSP_SUCCESS;
+      |               ^~~
+Building file: ../ra_gen/main.c
+../src/eegACQUISITION.c: At top level:
+../src/eegACQUISITION.c:2375:2: warning: "/*" within comment [-Wcomment]
+ 2375 |  /**
+      |   
+../src/eegACQUISITION.c: In function 'ads1263_read_real_eeg_data':
+../src/eegACQUISITION.c:2594:43: warning: conversion to 'long unsigned int' from 'int32_t' {aka 'long int'} may change the sign of the result [-Wsign-conversion]
+ 2594 |     if (*adc1_data & 0x800000) *adc1_data |= 0xFF000000; // Sign extend
+      |                                           ^~
+../src/eegACQUISITION.c:2594:46: warning: conversion to 'int32_t' {aka 'long int'} from 'long unsigned int' may change the sign of the result [-Wsign-conversion]
+ 2594 |     if (*adc1_data & 0x800000) *adc1_data |= 0xFF000000; // Sign extend
+      |                                              ^~~~~~~~~~
+../src/eegACQUISITION.c:2603:43: warning: conversion to 'long unsigned int' from 'int32_t' {aka 'long int'} may change the sign of the result [-Wsign-conversion]
+ 2603 |     if (*adc2_data & 0x800000) *adc2_data |= 0xFF000000; // Sign extend
+      |                                           ^~
+../src/eegACQUISITION.c:2603:46: warning: conversion to 'int32_t' {aka 'long int'} from 'long unsigned int' may change the sign of the result [-Wsign-conversion]
+ 2603 |     if (*adc2_data & 0x800000) *adc2_data |= 0xFF000000; // Sign extend
+      |                                              ^~~~~~~~~~
+Building file: ../ra_gen/pin_data.c
+../src/eegACQUISITION.c: At top level:
+../src/eegACQUISITION.c:2807:6: warning: no previous declaration for 'task_eeg_acquisition_entry' [-Wmissing-declarations]
+ 2807 | void task_eeg_acquisition_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c: In function 'task_eeg_acquisition_entry':
+../src/eegACQUISITION.c:2851:81: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 2851 |                 printf("SHRAVYA: 🎯 Triggering signal processing - Sample %lu (%u buffered)\n",
+      |                                                                                ~^
+      |                                                                                 |
+      |                                                                                 unsigned int
+      |                                                                                %lu
+ 2852 |                        sample_counter, samples_for_processing);
+      |                                        ~~~~~~~~~~~~~~~~~~~~~~                    
+      |                                        |
+      |                                        uint32_t {aka long unsigned int}
+../src/eegACQUISITION.c:2867:21: warning: implicit declaration of function 'process_eeg_samples_direct' [-Wimplicit-function-declaration]
+ 2867 |                     process_eeg_samples_direct();
+      |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+Building file: ../ra_gen/vector_data.c
+Building file: ../ra/fsp/src/r_ssi/r_ssi.c
+../src/eegACQUISITION.c:2868:21: warning: implicit declaration of function 'extract_eeg_features_direct' [-Wimplicit-function-declaration]
+ 2868 |                     extract_eeg_features_direct();
+      |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c: In function 'process_eeg_samples_direct':
+../src/signalPROCESSING.c:446:53: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  446 |         printf("SHRAVYA: 🎛️ Signal Processing - Got %u samples\r\n", samples_read);
+      |                                                    ~^               ~~~~~~~~~~~~
+      |                                                     |               |
+      |                                                     unsigned int    uint32_t {aka long unsigned int}
+      |                                                    %lu
+../src/eegACQUISITION.c:2870:21: warning: implicit declaration of function 'classify_cognitive_state_direct' [-Wimplicit-function-declaration]
+ 2870 |                     classify_cognitive_state_direct();
+      |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2880:41: warning: conversion from 'uint32_t' {aka 'long unsigned int'} to 'float' may change value [-Wconversion]
+ 2880 |                 float rate = 1000000.0f / (current_time - last_status_time) * 1000; // Convert to Hz
+      |                                         ^
+../src/eegACQUISITION.c:2807:37: warning: unused parameter 'stacd' [-Wunused-parameter]
+ 2807 | void task_eeg_acquisition_entry(INT stacd, void *exinf)
+      |                                 ~~~~^~~~~
+../src/eegACQUISITION.c:2807:50: warning: unused parameter 'exinf' [-Wunused-parameter]
+ 2807 | void task_eeg_acquisition_entry(INT stacd, void *exinf)
+      |                                            ~~~~~~^~~~~
+../src/eegACQUISITION.c: At top level:
+../src/eegACQUISITION.c:2970:6: warning: no previous declaration for 'eeg_get_real_signal_quality' [-Wmissing-declarations]
+ 2970 | void eeg_get_real_signal_quality(float *left_impedance, float *right_impedance, uint8_t *integrity_score)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c:451:13: warning: implicit declaration of function 'process_eeg_sample'; did you mean 'process_eeg_samples_direct'? [-Wimplicit-function-declaration]
+  451 |             process_eeg_sample(&raw_samples[i], &filtered_left, &filtered_right);
+      |             ^~~~~~~~~~~~~~~~~~
+      |             process_eeg_samples_direct
+../src/signalPROCESSING.c:461:41: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  461 |         printf("SHRAVYA: ✅ Processing %u samples - features ready\r\n", samples_read);
+      |                                        ~^                                ~~~~~~~~~~~~
+      |                                         |                                |
+      |                                         unsigned int                     uint32_t {aka long unsigned int}
+      |                                        %lu
+../src/signalPROCESSING.c: At top level:
+../src/signalPROCESSING.c:501:6: warning: no previous declaration for 'process_eeg_sample' [-Wmissing-declarations]
+  501 | void process_eeg_sample(const eeg_raw_sample_t *raw_sample, float *filtered_left, float *filtered_right)
+      |      ^~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c:501:6: warning: conflicting types for 'process_eeg_sample'; have 'void(const eeg_raw_sample_t *, float *, float *)'
+../src/signalPROCESSING.c:451:13: note: previous implicit declaration of 'process_eeg_sample' with type 'void(const eeg_raw_sample_t *, float *, float *)'
+  451 |             process_eeg_sample(&raw_samples[i], &filtered_left, &filtered_right);
+      |             ^~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c: In function 'task_signal_processing_entry':
+../src/eegACQUISITION.c: In function 'ads1263_read_adc1_rdata_robust':
+../src/signalPROCESSING.c:618:57: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  618 |             printf("SHRAVYA: 🎛️ Signal Processing - Got %u samples\r\n", samples_read);
+      |                                                        ~^               ~~~~~~~~~~~~
+      |                                                         |               |
+      |                                                         unsigned int    uint32_t {aka long unsigned int}
+      |                                                        %lu
+../src/signalPROCESSING.c: At top level:
+../src/signalPROCESSING.c:689:6: warning: no previous declaration for 'extract_eeg_features_direct' [-Wmissing-declarations]
+  689 | void extract_eeg_features_direct(void)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c: In function 'extract_eeg_features_direct':
+../src/eegACQUISITION.c:3119:20: warning: conversion to 'uint32_t' {aka 'long unsigned int'} from 'long int' may change the sign of the result [-Wsign-conversion]
+ 3119 |             return (int32_t)conversion_data; // Return as signed 32-bit
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c:703:37: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+Building file: ../ra/fsp/src/r_spi_b/r_spi_b.c
+  703 |     printf("SHRAVYA: 📊 Processing %u samples from signal buffer\r\n", buffer_size);
+      |                                    ~^                                  ~~~~~~~~~~~
+      |                                     |                                  |
+      |                                     unsigned int                       uint32_t {aka long unsigned int}
+      |                                    %lu
+../src/eegACQUISITION.c: In function 'ads1263_read_adc2_rdata_robust':
+../src/signalPROCESSING.c: At top level:
+../src/signalPROCESSING.c:745:6: warning: no previous declaration for 'classify_cognitive_state_direct' [-Wmissing-declarations]
+  745 | void classify_cognitive_state_direct(void)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:3167:20: warning: conversion to 'uint32_t' {aka 'long unsigned int'} from 'long int' may change the sign of the result [-Wsign-conversion]
+ 3167 |             return (int32_t)conversion_data;
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c: In function 'ads1263_validate_dual_sample':
+../src/eegACQUISITION.c:3351:74: warning: conversion to 'long unsigned int' from 'int32_t' {aka 'long int'} may change the sign of the result [-Wsign-conversion]
+ 3351 |     sample->data_checksum = sample->left_channel ^ sample->right_channel ^
+      |                                                                          ^
+../src/eegACQUISITION.c: In function 'ads1263_update_dual_acquisition_stats':
+../src/eegACQUISITION.c:3385:62: warning: conversion from 'uint32_t' {aka 'long unsigned int'} to 'float' may change value [-Wconversion]
+ 3385 |             float time_diff_sec = (current_time - last_time) / 1000000.0f;
+      |                                                              ^
+../src/eegACQUISITION.c: In function 'ads1263_rdata_dual_channel_acquisition':
+../src/eegACQUISITION.c:3459:48: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 3459 |                 printf("SHRAVYA: 🚨 CRITICAL: %u consecutive dual-channel failures\r\n", consecutive_errors);
+      |                                               ~^                                         ~~~~~~~~~~~~~~~~~~
+      |                                                |                                         |
+      |                                                unsigned int                              uint32_t {aka long unsigned int}
+      |                                               %lu
+../src/eegACQUISITION.c: At top level:
+../src/eegACQUISITION.c:3419:18: warning: 'ads1263_rdata_dual_channel_acquisition' defined but not used [-Wunused-function]
+ 3419 | static fsp_err_t ads1263_rdata_dual_channel_acquisition(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2790:18: warning: 'troubleshoot_electrode_connection' defined but not used [-Wunused-function]
+ 2790 | static fsp_err_t troubleshoot_electrode_connection(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2776:18: warning: 'troubleshoot_drdy_signal' defined but not used [-Wunused-function]
+ 2776 | static fsp_err_t troubleshoot_drdy_signal(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2752:13: warning: 'debug_print_register_dump' defined but not used [-Wunused-function]
+ 2752 | static void debug_print_register_dump(void)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2712:13: warning: 'debug_print_hardware_status' defined but not used [-Wunused-function]
+ 2712 | static void debug_print_hardware_status(void)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2624:13: warning: 'ads1263_calculate_real_signal_quality' defined but not used [-Wunused-function]
+ 2624 | static void ads1263_calculate_real_signal_quality(eeg_raw_sample_t *sample)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2531:18: warning: 'ads1263_check_power_supply' defined but not used [-Wunused-function]
+ 2531 | static fsp_err_t ads1263_check_power_supply(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2380:18: warning: 'ads1263_measure_electrode_impedance' defined but not used [-Wunused-function]
+ 2380 | static fsp_err_t ads1263_measure_electrode_impedance(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2369:18: warning: 'ads1263_write_command_verified' defined but not used [-Wunused-function]
+ 2369 | static fsp_err_t ads1263_write_command_verified(uint8_t command)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2264:18: warning: 'ads1263_write_register_verified' defined but not used [-Wunused-function]
+ 2264 | static fsp_err_t ads1263_write_register_verified(uint8_t reg_addr, uint8_t data)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:2193:18: warning: 'ads1263_perform_comprehensive_calibration' defined but not used [-Wunused-function]
+ 2193 | static fsp_err_t ads1263_perform_comprehensive_calibration(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1966:13: warning: 'test_ads1263_command_response' defined but not used [-Wunused-function]
+ 1966 | static void test_ads1263_command_response(void)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1906:13: warning: 'ads1263_test_direct_reading' defined but not used [-Wunused-function]
+ 1906 | static void ads1263_test_direct_reading(void)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1839:18: warning: 'ads1263_direct_mode_init' defined but not used [-Wunused-function]
+ 1839 | static fsp_err_t ads1263_direct_mode_init(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1804:17: warning: 'ads1263_direct_data_read' defined but not used [-Wunused-function]
+ 1804 | static uint32_t ads1263_direct_data_read(void)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1701:6: warning: 'ads1263_comprehensive_diagnostic' defined but not used [-Wunused-function]
+ 1701 | void ads1263_comprehensive_diagnostic(void) {
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1484:18: warning: 'ads1263_verify_device_id' defined but not used [-Wunused-function]
+ 1484 | static fsp_err_t ads1263_verify_device_id(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1465:18: warning: 'ads1263_power_cycle' defined but not used [-Wunused-function]
+ 1465 | static fsp_err_t ads1263_power_cycle(void)
+      |                  ^~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1412:18: warning: 'ads1263_comprehensive_reset' defined but not used [-Wunused-function]
+ 1412 | static fsp_err_t ads1263_comprehensive_reset(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1373:18: warning: 'ads1263_hardware_probe' defined but not used [-Wunused-function]
+ 1373 | static fsp_err_t ads1263_hardware_probe(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1051:18: warning: 'determine_optimal_spi_mode' defined but not used [-Wunused-function]
+ 1051 | static fsp_err_t determine_optimal_spi_mode(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:1016:16: warning: 'read_device_id_enhanced' defined but not used [-Wunused-function]
+ 1016 | static uint8_t read_device_id_enhanced(void) {
+      |                ^~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:980:16: warning: 'debug_ads1263_device_id_enhanced' defined but not used [-Wunused-function]
+  980 | static uint8_t debug_ads1263_device_id_enhanced(void)
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:920:18: warning: 'test_spi_bit_width_compatibility' defined but not used [-Wunused-function]
+  920 | static fsp_err_t test_spi_bit_width_compatibility(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:870:18: warning: 'verify_hardware_connections' defined but not used [-Wunused-function]
+  870 | static fsp_err_t verify_hardware_connections(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:820:13: warning: 'debug_fsp_pin_configuration' defined but not used [-Wunused-function]
+  820 | static void debug_fsp_pin_configuration(void)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:766:13: warning: 'fix_cs_pin_control' defined but not used [-Wunused-function]
+  766 | static void fix_cs_pin_control(void)
+      |             ^~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:703:18: warning: 'debug_spi_configuration_comprehensive' defined but not used [-Wunused-function]
+  703 | static fsp_err_t debug_spi_configuration_comprehensive(void)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:592:16: warning: 'wake_and_reset_ads1263' defined but not used [-Wunused-function]
+  592 | static uint8_t wake_and_reset_ads1263(void)
+      |                ^~~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:497:13: warning: 'ads1263_register_scan' defined but not used [-Wunused-function]
+  497 | static void ads1263_register_scan(void) {
+      |             ^~~~~~~~~~~~~~~~~~~~~
+../src/eegACQUISITION.c:327:13: warning: 'wait_for_drdy' defined but not used [-Wunused-function]
+  327 | static bool wait_for_drdy(uint32_t timeout_ms)
+      |             ^~~~~~~~~~~~~
+../src/signalPROCESSING.c: In function 'classify_cognitive_state_direct':
+../src/signalPROCESSING.c:789:5: warning: implicit declaration of function 'send_to_n8n_direct' [-Wimplicit-function-declaration]
+  789 |     send_to_n8n_direct(classification_result);
+      |     ^~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c: At top level:
+../src/signalPROCESSING.c:795:6: warning: no previous declaration for 'send_to_n8n_direct' [-Wmissing-declarations]
+  795 | void send_to_n8n_direct(cognitive_classification_t classification_result)
+      |      ^~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c:795:6: warning: conflicting types for 'send_to_n8n_direct'; have 'void(cognitive_classification_t)'
+../src/signalPROCESSING.c:789:5: note: previous implicit declaration of 'send_to_n8n_direct' with type 'void(cognitive_classification_t)'
+  789 |     send_to_n8n_direct(classification_result);
+      |     ^~~~~~~~~~~~~~~~~~
+../src/signalPROCESSING.c:855:1: warning: "/*" within comment [-Wcomment]
+  855 | /**
+      |  
+../src/shravyaMAIN.c: In function 'initialize_all_subsystems':
+../src/shravyaMAIN.c:72:11: warning: implicit declaration of function 'eeg_acquisition_init' [-Wimplicit-function-declaration]
+Building file: ../ra/fsp/src/r_ioport/r_ioport.c
+   72 |     err = eeg_acquisition_init();
+      |           ^~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:84:11: warning: implicit declaration of function 'haptic_feedback_init' [-Wimplicit-function-declaration]
+   84 |     err = haptic_feedback_init();
+      |           ^~~~~~~~~~~~~~~~~~~~
+Building file: ../ra/fsp/src/r_icu/r_icu.c
+../src/shravyaMAIN.c:88:11: warning: implicit declaration of function 'communication_init' [-Wimplicit-function-declaration]
+   88 |     err = communication_init();
+      |           ^~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:92:11: warning: implicit declaration of function 'power_management_init' [-Wimplicit-function-declaration]
+   92 |     err = power_management_init();
+      |           ^~~~~~~~~~~~~~~~~~~~~
+Building file: ../ra/fsp/src/r_ether_phy/targets/KSZ8091RNB/r_ether_phy_target_ksz8091rnb.c
+../src/shravyaMAIN.c: In function 'coordinate_data_flow':
+../src/shravyaMAIN.c:158:9: warning: implicit declaration of function 'get_power_statistics' [-Wimplicit-function-declaration]
+  158 |     if (get_power_statistics(&battery_soc, NULL, &low_battery, NULL) == FSP_SUCCESS) {
+      |         ^~~~~~~~~~~~~~~~~~~~
+Building file: ../ra/fsp/src/r_ether_phy/targets/KSZ8041/r_ether_phy_target_ksz8041.c
+../src/shravyaMAIN.c: In function 'handle_system_events':
+../src/shravyaMAIN.c:194:13: warning: implicit declaration of function 'get_haptic_statistics' [-Wimplicit-function-declaration]
+  194 |             get_haptic_statistics(NULL, NULL, &haptic_active);
+      |             ^~~~~~~~~~~~~~~~~~~~~
+Building file: ../ra/fsp/src/r_ether_phy/targets/ICS1894/r_ether_phy_target_ics1894.c
+../src/shravyaMAIN.c: In function 'handle_session_management':
+../src/shravyaMAIN.c:224:17: warning: implicit declaration of function 'trigger_session_start' [-Wimplicit-function-declaration]
+Building file: ../ra/fsp/src/r_ether_phy/targets/DP83620/r_ether_phy_target_dp83620.c
+  224 |                 trigger_session_start();
+      |                 ^~~~~~~~~~~~~~~~~~~~~
+Building file: ../ra/fsp/src/r_ether_phy/r_ether_phy.c
+../src/shravyaMAIN.c:249:13: warning: implicit declaration of function 'trigger_session_end' [-Wimplicit-function-declaration]
+  249 |             trigger_session_end();
+      |             ^~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:221:5: warning: enumeration value 'APP_STATE_CALIBRATING' not handled in switch [-Wswitch]
+  221 |     switch(system_status.current_state) {
+      |     ^~~~~~
+../src/shravyaMAIN.c:221:5: warning: enumeration value 'APP_STATE_POWER_SAVE' not handled in switch [-Wswitch]
+../src/shravyaMAIN.c: At top level:
+../src/shravyaMAIN.c:290:6: warning: no previous declaration for 'task_shravya_main_entry' [-Wmissing-declarations]
+  290 | void task_shravya_main_entry(INT stacd, void *exinf)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:324:11: warning: no previous declaration for 'get_system_status' [-Wmissing-declarations]
+  324 | fsp_err_t get_system_status(system_status_t *status)
+      |           ^~~~~~~~~~~~~~~~~
+../src/shravyaMAIN.c:335:6: warning: no previous declaration for 'system_shutdown' [-Wmissing-declarations]
+  335 | void system_shutdown(void)
+      |      ^~~~~~~~~~~~~~~
+Building file: ../ra/fsp/src/r_dtc/r_dtc.c
+../src/shravyaMAIN.c:217:13: warning: 'handle_session_management' defined but not used [-Wunused-function]
+  217 | static void handle_session_management(void)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_clocks.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_common.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_delay.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_group_irq.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_guard.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_io.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_irq.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_macl.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_register_protection.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_rom_registers.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_sbrk.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_sdram.c
+Building file: ../ra/fsp/src/bsp/mcu/all/bsp_security.c
+Building file: ../ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/startup.c
+Building file: ../ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/system.c
+Building file: ../ra/board/ra8d1_ek/board_init.c
+Building file: ../ra/board/ra8d1_ek/board_leds.c
+Building target: SHRAVYA.elf
+arm-none-eabi-objcopy -O srec "SHRAVYA.elf"  "SHRAVYA.srec"
+arm-none-eabi-size --format=berkeley "SHRAVYA.elf"
+   text	   data	    bss	    dec	    hex	filename
+  56596	    144	 863040	 919780	  e08e4	SHRAVYA.elf
+
+04:58:17 Build Finished. 0 errors, 151 warnings. (took 2s.115ms)
+

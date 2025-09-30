@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;SHRAVYA/src/audioINTERFACE.c&apos;" deleteContents="false" description="Delete resource &apos;SHRAVYA/src/audioINTERFACE.c&apos;" element1="/SHRAVYA/src/audioINTERFACE.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1758290638920"/>&#x0A;<refactoring comment="Delete resource &apos;SHRAVYA/include/audioINTERFACE.h&apos;" deleteContents="false" description="Delete resource &apos;SHRAVYA/include/audioINTERFACE.h&apos;" element1="/SHRAVYA/include/audioINTERFACE.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1758290643847"/>
+</session>

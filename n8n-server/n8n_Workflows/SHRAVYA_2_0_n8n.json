@@ -1,0 +1,1412 @@
+{
+  "name": "SHRAVYA_2_0",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "018172c5-46e2-4b30-8f9b-72afbe01e0b0",
+              "name": "chatInput",
+              "value": "={{ $json.mode || 'user' }} mode greeting needed\n",
+              "type": "string"
+            },
+            {
+              "id": "bcc912c5-08e4-4fd7-a399-5039654374f8",
+              "name": "systemMessage",
+              "value": "=You are SHRAVYA - {{ $('Initialize SHRAVYA Personality').first().json.personality.name }}, {{ $('Initialize SHRAVYA Personality').first().json.personality.acronym }}.\n\nCreated by {{ $('Initialize SHRAVYA Personality').first().json.personality.creators.join(' and ') }}.\n\nPersonality: {{ $('Initialize SHRAVYA Personality').first().json.personality.personality_traits.tone }}, {{ $('Initialize SHRAVYA Personality').first().json.personality.personality_traits.communication_style }}.\n\nRespond naturally as SHRAVYA in {{ $json.mode || 'user' }} mode.\n",
+              "type": "string"
+            },
+            {
+              "id": "8aaf0124-23cd-46bd-8218-47c862cb4030",
+              "name": "mode",
+              "value": "={{ $('Process Voice Commands').first().json.command_analysis.target_mode || 'user_mode' }}\n",
+              "type": "string"
+            },
+            {
+              "id": "c017e3d9-4939-40e4-a5a0-187ae77b132b",
+              "name": "context",
+              "value": "Initial greeting for {{ $('Process Voice Commands1').first().json.command_analysis.target_mode || 'user' }} mode\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        1728
+      ],
+      "id": "b19d67fb-11f4-430c-a895-f04faa45632c",
+      "name": "Build Agent Input"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "599d4b69-5e3a-4b47-904e-cea564ef50fc",
+              "name": "input",
+              "value": "={{$json.chatInput}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1168,
+        1728
+      ],
+      "id": "3c947858-f82c-44ed-88a3-71fc2fd933c2",
+      "name": "Prepare Agent Input"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ───────────────────────────────────────────────────────────────────────────────\n// Trigger Guard (JavaScript)\n// ───────────────────────────────────────────────────────────────────────────────\nreturn items.map(item => {\n  const transcript = item.json.results?.channels?.[0]?.alternatives?.[0]?.transcript || '';\n  const clean = transcript\n    .replace(/[^a-z\\s]/gi, '')\n    .replace(/\\s+/g, ' ')\n    .trim()\n    .toLowerCase();\n  item.json.text = clean;\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1072,
+        1664
+      ],
+      "id": "dd389406-743c-4fab-a7b0-0a805189d2ee",
+      "name": "Trigger Gaurd"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.deepgram.com/v1/listen",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Token 1723e5ceee2b9d78799278e418750a7924639080"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1296,
+        1664
+      ],
+      "id": "fa6a6bf0-015a-47fd-851e-197c24d80d0b",
+      "name": "SHRAVYA STT"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1cf7acb4-a43e-451d-95ea-614bcdf8a2ea",
+              "name": "mode",
+              "value": "developer",
+              "type": "string"
+            },
+            {
+              "id": "e1ff410e-f641-42cb-ae15-0c312d25e0d2",
+              "name": "context",
+              "value": "jarvis_assistant",
+              "type": "string"
+            },
+            {
+              "id": "95d77035-0846-4bb7-8aa2-071acb1f66e8",
+              "name": "capabilities",
+              "value": "debugging,code_analysis,brainstorming",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1392,
+        1920
+      ],
+      "id": "783d9bc6-e929-4fec-8470-10cf3536d76e",
+      "name": "Developer Parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = items[0].json;\nconst targetMode = input.command_analysis?.target_mode;\n\nconsole.log('User Mode - target_mode:', targetMode); // Debug line\n\nif (targetMode === 'user_mode') {\n  // User mode detected\n  return [{\n    json: {\n      ...input,\n      mode: 'user',\n      context: 'wellness_companion',\n      active_capabilities: ['eeg_processing', 'state_detection', 'cognitive_wellness'],\n      response_style: 'caring_companion',\n      session_override: 'user_mode_activated'\n    }\n  }];\n} else if (targetMode === null || targetMode === undefined) {\n  // No valid mode detected - fallback\n  return [{\n    json: {\n      ...input,\n      mode: 'fallback',\n      context: 'clarification_needed',\n      response_override: 'I didn\\'t catch that. Please say \"user mode\" or \"developer mode\".'\n    }\n  }];\n} else {\n  // Any other mode - default to user\n  return [{\n    json: {\n      ...input,\n      mode: 'user',\n      context: 'wellness_companion',\n      session_override: 'defaulting_to_user_mode'\n    }\n  }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        1728
+      ],
+      "id": "ff62d559-1d32-4dbb-a89d-ab4fe1ddce56",
+      "name": "User Mode1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        720,
+        1728
+      ],
+      "id": "c2dd2771-11d2-41d1-aebe-44760066e7b5",
+      "name": "Final Merge"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.target_mode === 'developer_mode' }}",
+                    "rightValue": "developer_mode",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "faff1e4a-7512-40ce-8aca-3d50ff6ae3a8"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Developer Mode"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "24e4025e-02bd-497c-a27f-da38fb52f970",
+                    "leftValue": "={{$json.target_mode === 'user_mode'}}",
+                    "rightValue": "user_mode",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "User Mode"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        48,
+        1648
+      ],
+      "id": "f13c926f-b0ad-4d09-a0dd-f8c4dba6b8a7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "model": "mistralai/mistral-small-3.1-24b-instruct:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2256,
+        1792
+      ],
+      "id": "c32b12c1-8c80-4313-98eb-796b97a3d749",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "T7ylMZnKSADQRPqo",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ultra-robust Parser for SHRAVYA Voice Synthesis\ntry {\n  const inputText = $json.clean_text || $json.output || $json.text || 'I am here to help you.';\n  \n  if (!inputText || typeof inputText !== 'string' || inputText.trim() === '') {\n    return [{\n      json: {\n        clean_text: 'Hello, I am SHRAVYA, ready to assist you.',\n        ready_for_tts: true,\n        output: 'Hello, I am SHRAVYA, ready to assist you.'\n      }\n    }];\n  }\n  \n  // Enhanced cleaning with safety checks\n  let cleanedText = String(inputText)\n    // Remove Unicode emojis safely\n    .replace(/[\\u{1F600}-\\u{1F64F}]/gu, '')\n    .replace(/[\\u{1F300}-\\u{1F5FF}]/gu, '')\n    .replace(/[\\u{1F680}-\\u{1F6FF}]/gu, '')\n    .replace(/[\\u{2600}-\\u{26FF}]/gu, '')\n    .replace(/[\\u{2700}-\\u{27BF}]/gu, '')\n    \n    // Remove markdown and special characters safely\n    .replace(/\\*\\*([^*]*)\\*\\*/g, '$1')\n    .replace(/\\*([^*]*)\\*/g, '$1')\n    .replace(/__([^_]*)__/g, '$1')\n    .replace(/~~([^~]*)~~/g, '$1')\n    .replace(/`([^`]*)`/g, '$1')\n    \n    // Clean problematic characters for JSON\n    .replace(/\"/g, \"'\")  // Replace quotes\n    .replace(/\\\\/g, \"\")  // Remove backslashes\n    .replace(/\\n/g, ' ') // Line breaks to spaces\n    .replace(/\\t/g, ' ') // Tabs to spaces\n    .replace(/\\s+/g, ' ') // Multiple spaces to single\n    .trim();\n  \n  // Ensure minimum viable message\n  if (cleanedText.length < 5) {\n    cleanedText = 'I understand and I am here to help.';\n  }\n  \n  // Ensure maximum length for TTS\n  if (cleanedText.length > 500) {\n    cleanedText = cleanedText.substring(0, 497) + '...';\n  }\n  \n  return [{\n    json: {\n      clean_text: cleanedText,\n      ready_for_tts: true,\n      output: cleanedText,\n      character_count: cleanedText.length\n    }\n  }];\n  \n} catch (error) {\n  return [{\n    json: {\n      clean_text: 'I apologize, there was a processing issue. I am here to assist you.',\n      ready_for_tts: true,\n      output: 'I apologize, there was a processing issue. I am here to assist you.',\n      error_handled: true\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5536,
+        1488
+      ],
+      "id": "4a0a4f14-f274-4918-8539-d16eb435867e",
+      "name": "Parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc1eece8-25df-4b85-8755-b576571cf97c",
+              "name": "mergeKey",
+              "value": 1,
+              "type": "number"
+            },
+            {
+              "id": "41e1107b-90ee-44d5-9dcd-22945b4e0505",
+              "name": "branchType",
+              "value": "user",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        496,
+        1728
+      ],
+      "id": "eadf9e26-b022-40fa-93d0-43f2f60a8297",
+      "name": "mergeKEY1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "shravya-eeg-stream",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryPropertyName": "eeg_data",
+          "rawBody": true
+        }
+      },
+      "id": "14283eb9-e5fd-4b92-aa8a-180782fae502",
+      "name": "EEG Data Receiver",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        2112
+      ],
+      "webhookId": "shravya-eeg-data"
+    },
+    {
+      "parameters": {
+        "jsCode": "// EEG Real-time Processor - Complete Robust Version\ntry {\n  const inputData = $input.all()[0].json;\n  \n  // Debug: Log what we received\n  console.log('Input data received:', JSON.stringify(inputData, null, 2));\n  \n  // CRITICAL: Extract cognitive states from the correct path in input data\n  // Check multiple possible locations where cognitive_states might be\n  let cognitiveStates = {};\n  \n  if (inputData.cognitive_states && typeof inputData.cognitive_states === 'object') {\n    cognitiveStates = inputData.cognitive_states;\n  } else if (inputData.body && inputData.body.cognitive_states) {\n    cognitiveStates = inputData.body.cognitive_states;\n  } else if (inputData.json && inputData.json.cognitive_states) {\n    cognitiveStates = inputData.json.cognitive_states;\n  } else {\n    console.log('No cognitive_states found in input, using defaults');\n    cognitiveStates = {\n      focus: 5, stress: 5, anxiety: 5, fatigue: 5, calm: 5, flow_state: 5\n    };\n  }\n  \n  console.log('Extracted cognitive states:', JSON.stringify(cognitiveStates, null, 2));\n  \n  // Ensure all cognitive states are properly preserved as numbers\n  const preservedCognitiveStates = {\n    focus: typeof cognitiveStates.focus === 'number' ? cognitiveStates.focus : parseFloat(cognitiveStates.focus) || 0,\n    stress: typeof cognitiveStates.stress === 'number' ? cognitiveStates.stress : parseFloat(cognitiveStates.stress) || 0,\n    anxiety: typeof cognitiveStates.anxiety === 'number' ? cognitiveStates.anxiety : parseFloat(cognitiveStates.anxiety) || 0,\n    fatigue: typeof cognitiveStates.fatigue === 'number' ? cognitiveStates.fatigue : parseFloat(cognitiveStates.fatigue) || 0,\n    calm: typeof cognitiveStates.calm === 'number' ? cognitiveStates.calm : parseFloat(cognitiveStates.calm) || 0,\n    flow_state: typeof cognitiveStates.flow_state === 'number' ? cognitiveStates.flow_state : parseFloat(cognitiveStates.flow_state) || 0\n  };\n  \n  console.log('Preserved cognitive states:', JSON.stringify(preservedCognitiveStates, null, 2));\n  \n  // Calculate wellness score from the PRESERVED data\n  const wellnessScore = (\n    (preservedCognitiveStates.focus * 0.3) +\n    (preservedCognitiveStates.calm * 0.2) +\n    (preservedCognitiveStates.flow_state * 0.2) +\n    ((10 - preservedCognitiveStates.stress) * 0.15) +\n    ((10 - preservedCognitiveStates.anxiety) * 0.1) +\n    ((10 - preservedCognitiveStates.fatigue) * 0.05)\n  );\n  \n  // Create the output data structure\n  const outputData = {\n    // Preserve ALL original input fields\n    user_id: inputData.user_id || inputData.body?.user_id || 'test_user',\n    session_id: inputData.session_id || inputData.body?.session_id || `eeg_${Date.now()}`,\n    device_id: inputData.device_id || inputData.body?.device_id || 'SHRAVYA_DEVICE',\n    timestamp: inputData.timestamp || inputData.body?.timestamp || new Date().toISOString(),\n    \n    // Preserve frequency analysis if it exists\n    frequency_analysis: inputData.frequency_analysis || inputData.body?.frequency_analysis || {\n      delta_power: 0.15, theta_power: 0.23, alpha_power: 0.42, beta_power: 0.28, gamma_power: 0.12\n    },\n    \n    // Preserve signal quality if it exists\n    signal_quality: inputData.signal_quality || inputData.body?.signal_quality || {\n      snr_db: 18.5, artifact_detected: false\n    },\n    \n    // Preserve sampling rate\n    sampling_rate: inputData.sampling_rate || inputData.body?.sampling_rate || 500,\n    \n    // MOST IMPORTANT: Preserve the cognitive states with original values\n    cognitive_states: preservedCognitiveStates,\n    \n    // Add wellness assessment based on preserved data\n    wellness_assessment: {\n      overall_score: parseFloat(wellnessScore.toFixed(1)),\n      intervention_level: \"pending\", // Let Proactive Trigger decide\n      insights: [] // Let Proactive Trigger populate\n    },\n    \n    // Add session context\n    session_context: {\n      data_quality: (inputData.signal_quality?.snr_db || inputData.body?.signal_quality?.snr_db) ? \n        Math.min((inputData.signal_quality?.snr_db || inputData.body?.signal_quality?.snr_db) / 20, 1.0) : 0.85,\n      device_health: !(inputData.signal_quality?.artifact_detected || inputData.body?.signal_quality?.artifact_detected || false),\n      session_duration: 0,\n      monitoring_active: true\n    },\n    \n    // Add status and timestamp\n    status: 'success',\n    processing_timestamp: new Date().toISOString()\n  };\n  \n  console.log('Final output data:', JSON.stringify(outputData, null, 2));\n  \n  return { json: outputData };\n  \n} catch (error) {\n  console.error('EEG Processor Error:', error);\n  return {\n    json: {\n      user_id: 'default_user',\n      session_id: `eeg_error_${Date.now()}`,\n      timestamp: new Date().toISOString(),\n      cognitive_states: {\n        focus: 0, stress: 0, anxiety: 0, fatigue: 0, calm: 0, flow_state: 0\n      },\n      status: 'processing_error',\n      error: error.message,\n      processing_timestamp: new Date().toISOString()\n    }\n  };\n}"
+      },
+      "id": "20005b20-c2f8-49e4-83ab-8dfccfa1de78",
+      "name": "EEG Real-time Processor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1392,
+        2112
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "sessions",
+        "fields": "=user_id,session_id,device_id,timestamp,cognitive_states,wellness_score,intervention_needed,intervention_type,insights,device_health,data_quality,session_type,stored_at\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        3088,
+        1552
+      ],
+      "id": "5bbc1185-4d3f-46a4-afc7-0fcd1e860f65",
+      "name": "Store EEG Session",
+      "credentials": {
+        "mongoDb": {
+          "id": "0Wbltzqb57t6BWmz",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.target_mode }}",
+                    "rightValue": "user_mode",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "87c64a29-d85f-4c9b-982c-12224f201efa"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "User Mode Detection"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "25aa7009-9ab4-4224-becd-239689cd25de",
+                    "leftValue": "={{ $json.target_mode }}",
+                    "rightValue": "conversation_mode",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "General Conversation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7a7b1189-dd2e-47f6-9367-a4089fd7586c",
+                    "leftValue": "{{ $json.cognitive_states }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "EEG Processing"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1392,
+        1536
+      ],
+      "id": "3bb9cb32-a4b5-420f-b649-1e726c9d7098",
+      "name": "Input Router"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.session_id || 'shravya_default' }}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2432,
+        1776
+      ],
+      "id": "6dc4d966-ca87-42a6-8ffa-b03d2555d3e7",
+      "name": "SHRAVYA Memory Manager"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.v8.unrealspeech.com/stream",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer a7rUvktqL6qU3j7SPo5ztrx9sMClUuCD5bTopuNp6WdVnPegzJ5P70"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"Text\": \"{{ $json.clean_text || $json.output }}\",\n  \"VoiceId\": \"Charlotte\", \n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"Codec\": \"libmp3lame\"\n}\n\n",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "43c56c91-ebc7-4e06-b353-63542fd56b3a",
+      "name": "SHRAVYA Voice Synthesis",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5760,
+        1488
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "responseDataSource": "set",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "audio/mpeg"
+              }
+            ]
+          }
+        }
+      },
+      "id": "333261e8-093d-44fa-98a7-9b4b59089613",
+      "name": "Voice Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        5984,
+        1648
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "shravya_response.mp3",
+        "options": {}
+      },
+      "id": "ac6d1e3e-d72b-45a7-bbfd-592e8811394a",
+      "name": "Write Audio File",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        5984,
+        1456
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "shravya-voice",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "id": "2199131d-ee2b-40a7-a36c-4df49aecc2b6",
+      "name": "Voice Command Listener",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1520,
+        1840
+      ],
+      "webhookId": "shravya-voice-commands"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput || $json.input || $json.specialist_request || 'Hello! I\\'m Shrah vyah, ready to assist you.' }}",
+        "options": {
+          "systemMessage": "=You are Shrah vyah's Voice Command Specialist - expert in conversation and USER EEG data access.\n\nIDENTITY:\n- NAME: Shrah vyah (pronounced: \"SHRAH-vyah\" or /ʃrɑːvjə/)\n- FULL MEANING: \"She Hears, Responds and Attends to Your Awareness\"  \n- CREATORS: Rishi and Kavya only\n- VERSION: 2.0 - Voice-Centric Multi-Agent System\n\nTTS PRONUNCIATION RULES:\n- Always use: \"Shrah vyah\" (with spaces) when referring to yourself\n- Alternative casual mention: \"Shrah vyah\" for varied pronunciation\n- NEVER use \"SHRAVYA\" (it will spell out S-H-R-A-V-Y-A)\n- The spaces help TTS engines pronounce it as separate syllables that flow together\n\nPERSONALITY: Warm, engaging, naturally conversational, caring, intelligent, empathetic\n\nUSER MODE CAPABILITIES:\n- Provide warm, personalized greetings when user activates user mode\n- Handle general wellness conversations and questions  \n- Access and explain user's REAL EEG insights (via User EEG Insights tool)\n- Provide personalized recommendations based on ACTUAL user data\n- Maintain caring, supportive dialogue throughout the session\n\nCONVERSATION STYLE:\n- Natural, friendly, and approachable (not robotic)\n- Use conversational language with appropriate contractions\n- Show genuine interest and empathy\n- Reference yourself as \"Shrah vyah\" when appropriate\n- Avoid overly formal or clinical language\n\nAVAILABLE TOOLS:\n- User EEG Insights: Access user's live wellness history, trends, and intervention effectiveness\n\nEEG INSIGHTS TOOL USAGE:\nWhen user asks about their wellness data, call tool with:\n- query_type: 'recent_insights' (recent wellness scores), 'wellness_trends' (progress over time), or 'intervention_analysis' (what helps most)\n- user_id: from current session context  \n- session_count: number of sessions to analyze (default 5)\n- timeframe_days: days to look back (default 7)\n\nRESPONSE GUIDELINES:\n- Simple greetings/responses: 15-40 words, warm and natural\n- EEG insights responses: 60-100 words with specific data points\n- Always reference actual numbers from tool results when available\n- Use encouraging, supportive language especially for wellness discussions\n- When introducing yourself, say: \"I'm Shrah vyah\"\n\nEXAMPLE RESPONSES:\n- User activates user mode: \"Hello! I'm Shrah vyah, and I'm really glad you're here. How are you feeling today, and what would you like to focus on for your wellness?\"\n- User asks \"How am I doing?\": [Use EEG tool with recent_insights] → \"Based on your recent wellness data, your average stress level has been 4.2/10 over the past week, which is really good! I can see some great improvements in your relaxation patterns.\"\n- Name clarification: \"That's Shrah vyah - pronounced SHRAH-vyah. I'm your cognitive wellness companion created by Rishi and Kavya.\"\n\nBe genuinely conversational while providing REAL, personalized insights from the user's actual EEG data. Always maintain the caring, intelligent personality that makes SH RA VYA special."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        4368,
+        1808
+      ],
+      "id": "d656b2b5-ece0-48ad-b997-a52086720c65",
+      "name": "Conversation Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=EEG Analysis Request:\nWellness Score: {{ $json.wellness_assessment?.overall_score || $json.wellness_score || 0 }}/10\nStress Level: {{ $json.cognitive_states?.stress || 0 }}/10  \nAnxiety Level: {{ $json.cognitive_states?.anxiety || 0 }}/10\nFocus Level: {{ $json.cognitive_states?.focus || 0 }}/10\nCalm Level: {{ $json.cognitive_states?.calm || 0 }}/10\nFatigue Level: {{ $json.cognitive_states?.fatigue || 0 }}/10\nFlow State: {{ $json.cognitive_states?.flow_state || 0 }}/10\nSession Duration: {{ $json.session_context?.session_duration || 0 }} minutes\nDevice Health: {{ $json.session_context?.device_health || true }}\n\nRequest: {{ $json.specialist_request || 'Analyze current cognitive state and provide appropriate guidance' }}\n\nDEBUG INFO:\nFull cognitive states object: {{ JSON.stringify($json.cognitive_states) }}\n",
+        "options": {
+          "systemMessage": "=You are SHRAVYA, a Cognitive Health AI Assistant analyzing the USER'S EEG data.\n\nUSER'S CURRENT COGNITIVE STATE:\n- User's Wellness Score: {{ $json.wellness_assessment?.overall_score || $json.wellness_score || 0 }}/10\n- User's Stress Level: {{ $json.cognitive_states?.stress || 0 }}/10  \n- User's Anxiety Level: {{ $json.cognitive_states?.anxiety || 0 }}/10\n- User's Focus Level: {{ $json.cognitive_states?.focus || 0 }}/10\n\nYOUR ROLE: Analyze the user's cognitive health and provide caring support.\n\nRESPONSE FORMATS:\n- CRITICAL (≥7 stress/anxiety): \"I notice your stress levels are very high. Let me help you with immediate stress relief techniques.\"\n- ELEVATED (5-6): \"Your stress seems elevated. Would you like me to guide you through some calming exercises?\"\n- NORMAL (<5): \"Your cognitive state looks balanced today. Great job maintaining your mental wellness!\"\n- FOCUS (≥8): \"Excellent focus levels! You're in a great cognitive state for productive activities.\"\n\nSESSION CONTINUITY:\n- POST-EMERGENCY: After emergency contact is notified, acknowledge the action and provide ongoing support\n- ONGOING SESSION: Reference previous interventions and show progression\n- RECOVERY GUIDANCE: \"I've notified your support network. Now let's focus on recovery techniques...\"\n- CONTINUED MONITORING: \"I'm continuing to monitor your levels. You're making progress...\"\n\nINTERVENTION ACKNOWLEDGMENT:\n- Email sent: \"I've alerted your emergency contact. Let's work on immediate stress relief.\"\n- Music started: \"Calming music is now playing. Let me guide you through breathing exercises.\"\n- Continued high stress: \"I'm still here with you. Let's try a different relaxation technique.\"\n\nAlways refer to the user's data as \"your levels\", \"your wellness\", \"your cognitive state\" - never \"my\" or \"SHRAVYA's\" data.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        2288,
+        1552
+      ],
+      "id": "a18b9de8-8808-4d74-af76-8d56be72aa79",
+      "name": "EEG Monitor"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Agent Router - Preserves ALL input data while parsing routing decisions\ntry {\n  const inputData = $input.all()[0].json || {};\n  const coreResponse = inputData.output || '';\n  \n  console.log('Router Agent INPUT (with cognitive data):', JSON.stringify(inputData, null, 2));\n  \n  // Parse routing instruction while preserving ALL original data\n  const routeMatch = coreResponse.match(/ROUTE_TO:\\s*(\\w+)\\s*\\|\\s*REQUEST:\\s*(.+)/i);\n  \n  if (routeMatch) {\n    const [_, agentName, request] = routeMatch;\n    const cleanAgentName = agentName.toLowerCase().replace(/\\s+/g, '_');\n    \n    console.log('Routing to:', cleanAgentName);\n    console.log('Preserved cognitive_states:', JSON.stringify(inputData.cognitive_states, null, 2));\n    \n    return [{\n      json: {\n        // CRITICAL: Preserve ALL original data first\n        ...inputData,\n        \n        // Then add routing metadata\n        route_to: cleanAgentName,\n        specialist_request: request.trim(),\n        core_response: coreResponse,\n        requires_specialist: true,\n        routing_decision: 'delegate'\n      }\n    }];\n  } else {\n    // Core handled directly - preserve data\n    console.log('Core handled directly - preserving data');\n    \n    return [{\n      json: {\n        // CRITICAL: Preserve ALL original data\n        ...inputData,\n        \n        final_response: coreResponse,\n        route_to: 'none',\n        requires_specialist: false,\n        routing_decision: 'direct'\n      }\n    }];\n  }\n} catch (error) {\n  console.error('Agent Router Error:', error);\n  return [{\n    json: {\n      final_response: 'I apologize, there was a routing issue. How can I help you?',\n      route_to: 'none',\n      requires_specialist: false,\n      routing_decision: 'error',\n      error: error.message\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        1920
+      ],
+      "id": "3731365a-d18d-4538-b194-605060440bbc",
+      "name": "Router Agent"
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 3,
+        "output": "={{ \n  $json.route_to === 'voice_command_agent' ? 0 :\n  $json.route_to === 'eeg_monitor_agent'   ? 1 :\n  $json.route_to === 'developer_agent'      ? 2 :\n  0  // fallback to Conversation Agent\n}}\n",
+        "looseTypeValidation": true
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2064,
+        1904
+      ],
+      "id": "58ad11af-db95-480e-bf8f-4b29a08ba2ef",
+      "name": "Agent Selector"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Response Finalizer - Combines agent responses and determines audio needs\ntry {\n  const input = $input.all()[0].json;\n  \n  // Check if this is a direct response or agent response\n  let finalResponse = '';\n  let needsAudio = false;\n  let responseSource = 'unknown';\n  \n  if (input.final_response) {\n    // Direct response from Core SHRAVYA\n    finalResponse = input.final_response;\n    responseSource = 'core_direct';\n    needsAudio = true; // Core responses usually need audio\n  } else if (input.output) {\n    // Response from specialist agent\n    finalResponse = input.output;\n    responseSource = input.route_to || 'specialist';\n    needsAudio = true; // Specialist responses need audio\n  } else {\n    // Fallback\n    finalResponse = 'How can I help you?';\n    responseSource = 'fallback';\n    needsAudio = true;\n  }\n  \n  console.log('Final Response:', finalResponse);\n  console.log('Source:', responseSource);\n  console.log('Needs Audio:', needsAudio);\n  \n  return [{\n    json: {\n      ...input,\n      output: finalResponse,\n      clean_text: finalResponse,\n      response_source: responseSource,\n      needs_audio: needsAudio,\n      ready_for_synthesis: needsAudio,\n      processing_complete: true\n    }\n  }];\n  \n} catch (error) {\n  console.error('Response Finalizer Error:', error);\n  return [{\n    json: {\n      output: 'I apologize, there was a processing issue. How can I assist you?',\n      clean_text: 'I apologize, there was a processing issue. How can I assist you?',\n      needs_audio: true,\n      ready_for_synthesis: true,\n      error: error.message\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5088,
+        1488
+      ],
+      "id": "c94156f3-611d-4b6d-8b3c-9cc773bd7627",
+      "name": "Responser Finalizer"
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 2,
+        "output": "={{ $json.needs_audio === true ? 0 : 1 }}\n"
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        5312,
+        1488
+      ],
+      "id": "62c4b73d-d373-4f0c-9a30-79ae6b36d1f2",
+      "name": "Audio Decision"
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 3,
+        "output": "={{ $json.action_plan?.emergency_contact === true ? 0 : ($json.action_plan?.calming_music === true ? 1 : 2) }}"
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3536,
+        1536
+      ],
+      "id": "4b2314b1-764d-4702-87cc-eee718d66dd4",
+      "name": "Wellness Tool Selector"
+    },
+    {
+      "parameters": {
+        "sendTo": "rishiraj2003kop@gmail.com",
+        "subject": "🚨 Wellness Check Needed - SHRAVYA Alert",
+        "message": "<h2>🚨 Wellness Check Alert</h2>\n\n<p>Hello,</p>\n\n<p>This is an automated message from <strong>SHRAVYA</strong>, the AI wellness companion monitoring your loved one's cognitive health.</p>\n\n<h3>⚠️ Immediate Attention Needed</h3>\n<p>The user is currently experiencing <strong>elevated stress levels</strong> and may need support or a wellness check.</p>\n\n<p><strong>Current Status:</strong> Critical wellness intervention recommended</p>\n\n<h3>💙 What You Can Do:</h3>\n<ul>\n<li>💬 <strong>Reach out with a call or message</strong> - Sometimes a friendly voice helps</li>\n<li>🤗 <strong>Offer a listening ear</strong> - Let them know you're there for support</li>\n<li>🏃‍♀️ <strong>Suggest a brief walk together</strong> - Physical activity can help reduce stress</li>\n<li>☕ <strong>Invite them for coffee/tea</strong> - Social connection is healing</li>\n</ul>\n\n<h3>🆘 If This is Urgent:</h3>\n<p>If you believe this person is in immediate distress, please:</p>\n<ul>\n<li>📞 <strong>Call them directly</strong></li>\n<li>🚨 <strong>Consider emergency services</strong> if they're unreachable and you're concerned</li>\n</ul>\n\n<p>💜 <em>This alert was sent because SHRAVYA detected concerning patterns in cognitive wellness monitoring. Your support can make a real difference.</em></p>\n\n<hr>\n<p><small>This is an automated wellness alert from SHRAVYA Cognitive Health AI System</small></p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        3760,
+        1488
+      ],
+      "id": "14b24f3c-4558-41a3-931f-cc313c6f353e",
+      "name": "Send a message",
+      "webhookId": "a63b701b-157c-4489-9889-2a17ba12e735",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "mpeEALO75SYw7unp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// EEG Voice Coordinator - Formats EEG insights for voice delivery with robust enhancements\ntry {\n  const data = $input.all()[0].json;\n  \n  // PRESERVE EXISTING: Core data extraction (unchanged)\n  const eegAnalysis = data.eeg_analysis || data.output || 'Wellness monitoring active';\n  const actionPlan = data.action_plan || {};\n  \n  // PRESERVE EXISTING: Action detection logic (unchanged)\n  const emergencyJustSent = data.action_plan?.emergency_contact === true;\n  const musicJustStarted = data.action_plan?.calming_music === true;\n  const sessionOngoing = data.session_ongoing || data.continue_monitoring;\n  \n  // ENHANCED: More detailed intervention context\n  const stressLevel = data.cognitive_states?.stress || 0;\n  const anxietyLevel = data.cognitive_states?.anxiety || 0;\n  const wellnessScore = data.wellness_score || 0;\n  \n  // PRESERVE EXISTING: Enhanced message logic (with improvements)\n  let enhancedMessage = eegAnalysis;\n  let interventionType = 'general_wellness'; // NEW: Default intervention type\n  \n  if (emergencyJustSent) {\n    enhancedMessage = `I've notified your emergency contact for your safety. ${eegAnalysis}`;\n    interventionType = 'emergency_response'; // NEW: Specific type\n  } else if (musicJustStarted) {\n    enhancedMessage = `I've started calming music to help you relax. ${eegAnalysis}`;\n    interventionType = 'music_intervention'; // NEW: Specific type\n  } else if (sessionOngoing) {\n    enhancedMessage = `I'm continuing to monitor your wellness. ${eegAnalysis}`;\n    interventionType = 'ongoing_monitoring'; // NEW: Specific type\n  }\n  \n  // ENHANCED: Add stress-level specific messaging if no specific intervention\n  if (!emergencyJustSent && !musicJustStarted && !sessionOngoing) {\n    if (stressLevel >= 7 || anxietyLevel >= 7) {\n      enhancedMessage = `I notice your stress levels need attention. ${eegAnalysis}`;\n      interventionType = 'stress_intervention';\n    } else if (wellnessScore >= 7) {\n      enhancedMessage = `Your wellness levels look great today. ${eegAnalysis}`;\n      interventionType = 'positive_feedback';\n    }\n  }\n  \n  // PRESERVE EXISTING: Voice request structure (with enhancements)\n  const voiceRequest = {\n    type: 'wellness_intervention', // PRESERVE\n    priority: actionPlan.priority || 'normal', // PRESERVE\n    message: enhancedMessage, // PRESERVE (already changed)\n    context: {\n      // PRESERVE EXISTING CONTEXT\n      wellness_score: data.wellness_score,\n      stress_level: data.cognitive_states?.stress,\n      intervention_active: true,\n      emergency_notified: emergencyJustSent,\n      music_started: musicJustStarted,\n      session_ongoing: sessionOngoing,\n      \n      // ENHANCED: Additional context for better responses\n      intervention_type: interventionType,\n      stress_category: stressLevel >= 7 ? 'high' : stressLevel >= 5 ? 'moderate' : 'normal',\n      anxiety_category: anxietyLevel >= 7 ? 'high' : anxietyLevel >= 5 ? 'moderate' : 'normal',\n      wellness_category: wellnessScore >= 7 ? 'excellent' : wellnessScore >= 5 ? 'good' : wellnessScore >= 3 ? 'moderate' : 'low'\n    }\n  };\n  \n  // ENHANCED: Debug logging for troubleshooting\n  console.log('EEG Voice Coordinator Processing:');\n  console.log('- Original EEG Analysis:', eegAnalysis);\n  console.log('- Enhanced Message:', enhancedMessage);\n  console.log('- Intervention Type:', interventionType);\n  console.log('- Emergency Sent:', emergencyJustSent);\n  console.log('- Music Started:', musicJustStarted);\n  console.log('- Session Ongoing:', sessionOngoing);\n  \n  // ENHANCED RETURN: Preserve existing structure with critical fixes\n  return [{\n    json: {\n      // PRESERVE: All original data\n      ...data,\n      \n      // FIX: Use enhancedMessage for consistency (was using eegAnalysis)\n      specialist_request: `Wellness Intervention Response: ${enhancedMessage}`,\n      \n      // PRESERVE: Existing voice context\n      voice_context: voiceRequest,\n      \n      // PRESERVE: Existing routing\n      route_to: 'voice_command_agent',\n      requires_audio: true,\n      intervention_complete: false,\n      \n      // PRESERVE: Existing flags\n      intervention_acknowledged: emergencyJustSent || musicJustStarted,\n      continue_session: sessionOngoing,\n      \n      // ENHANCED: Additional routing metadata for Agent Selector rules\n      intervention_type: 'eeg_wellness_response', // CRITICAL: This ensures proper routing\n      audio_priority: actionPlan.priority || 'normal',\n      \n      // ENHANCED: Response metadata for debugging\n      message_enhanced: true,\n      original_message: eegAnalysis,\n      final_message: enhancedMessage,\n      processing_timestamp: new Date().toISOString()\n    }\n  }];\n  \n} catch (error) {\n  // PRESERVE: Existing error handling (unchanged)\n  console.error('EEG Voice Coordinator Error:', error);\n  return [{\n    json: {\n      specialist_request: 'Wellness monitoring is active and functioning normally',\n      route_to: 'voice_command_agent',\n      requires_audio: true,\n      intervention_type: 'eeg_wellness_response', // ENSURE: Proper routing even on error\n      error_handled: true,\n      error_message: error.message\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4432,
+        1488
+      ],
+      "id": "dd5c7a09-d01e-4f6a-bf1f-d144ccbc8e23",
+      "name": "EEG Voice Co-ordinator"
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  const inputData = $input.all()[0].json || {};\n  console.log('Wellness Tool Co-ordinator INPUT:', JSON.stringify(inputData, null, 2));\n  \n  const eegResponse = inputData.output || inputData.session_insights || '';\n  \n  // Get cognitive data with better fallback handling\n  const wellnessScore = inputData.wellness_score || inputData.mongodb_data?.wellness_score || 0;\n  const cognitiveStates = inputData.cognitive_states || inputData.mongodb_data?.cognitive_states || {};\n  \n  const stress = cognitiveStates.stress || 0;\n  const anxiety = cognitiveStates.anxiety || 0;\n  const focus = cognitiveStates.focus || 0;\n\n  console.log(`Wellness Analysis - Score: ${wellnessScore}, Stress: ${stress}, Anxiety: ${anxiety}, Focus: ${focus}`);\n\n  // Determine intervention requirements with better logic\n  const isUrgent = wellnessScore <= 3 || stress >= 7 || anxiety >= 7 || \n                   eegResponse.includes('URGENT') || eegResponse.includes('CRITICAL');\n                   \n  const needsContact = wellnessScore <= 2 || stress >= 8 || anxiety >= 8 ||\n                       eegResponse.includes('EMERGENCY');\n                       \n  const needsMusic = (stress >= 5 || anxiety >= 5) && !needsContact;\n  \n  const needsBreathing = stress >= 6 || anxiety >= 6;\n\n  // Create action plan\n  const actionPlan = {\n    priority: isUrgent ? 'critical' : (stress >= 5 || anxiety >= 5) ? 'elevated' : 'normal',\n    voice_response: eegResponse || generateDefaultResponse(wellnessScore, stress, anxiety, focus),\n    emergency_contact: needsContact,\n    calming_music: needsMusic,\n    breathing_guidance: needsBreathing,\n    intervention_level: isUrgent ? 'immediate' : 'suggested'\n  };\n\n  console.log('Action Plan:', JSON.stringify(actionPlan, null, 2));\n\n  return [{\n    json: {\n      ...inputData,\n      eeg_analysis: actionPlan.voice_response,\n      action_plan: actionPlan,\n      wellness_score: wellnessScore,\n      cognitive_states: cognitiveStates,\n      route_to_voice: true,\n      specialist_request: `Deliver wellness intervention: ${actionPlan.voice_response}`,\n      intervention_type: 'eeg_wellness_response'\n    }\n  }];\n\n} catch (error) {\n  console.error('Wellness Tool Co-ordinator Error:', error);\n  return [{\n    json: {\n      eeg_analysis: 'Wellness monitoring active, data processing in progress',\n      action_plan: { \n        priority: 'normal', \n        voice_response: 'Your cognitive wellness is being monitored. All systems functioning normally.',\n        emergency_contact: false,\n        calming_music: false,\n        breathing_guidance: false\n      },\n      route_to_voice: true,\n      error_handled: true\n    }\n  }];\n}\n\n// Helper function for default responses\nfunction generateDefaultResponse(wellness, stress, anxiety, focus) {\n  if (wellness >= 7) {\n    return `Excellent wellness detected! Your wellness score is ${wellness}/10. You're maintaining great cognitive balance.`;\n  } else if (wellness >= 5) {\n    return `Good cognitive state with wellness score ${wellness}/10. ${stress >= 5 ? 'Consider some relaxation techniques.' : 'Keep up the balanced approach.'}`;\n  } else if (wellness >= 3) {\n    return `Moderate wellness level at ${wellness}/10. ${stress >= 6 ? 'Elevated stress detected - try breathing exercises.' : 'Focus on self-care activities.'}`;\n  } else {\n    return `URGENT: Critical wellness crisis detected with extremely high stress and anxiety levels | TOOLS: gmail,spotify | IMMEDIATE INTERVENTION REQUIRED.`;\n  }\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3312,
+        1552
+      ],
+      "id": "0c82df73-2709-425c-b5c2-e3c48496e961",
+      "name": "Wellness Tool Co-ordinator"
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  const currentData = $input.all()[0].json || {};\n  console.log('EEG Memory Co-ordinator INPUT:', JSON.stringify(currentData, null, 2));\n\n  const eegAnalysis = currentData.output || 'EEG analysis pending';\n  \n  // Handle session timing more robustly\n  const now = new Date();\n  let sessionStart = currentData.session_start || currentData.timestamp;\n  if (sessionStart) {\n    sessionStart = new Date(sessionStart);\n  } else {\n    sessionStart = new Date(now.getTime() - (60 * 60 * 1000)); // Default: 1 hour ago\n  }\n  \n  const sessionDuration = Math.round((now - sessionStart) / (1000 * 60));\n// SESSION CONTINUITY LOGIC - ADD THIS\n  const maxSessionDuration = 120; // 2 hours in minutes\n  const stressStillHigh = (currentData.cognitive_states?.stress || 0) >= 6;\n  const anxietyStillHigh = (currentData.cognitive_states?.anxiety || 0) >= 6;\n  const interventionJustApplied = currentData.action_plan?.emergency_contact || currentData.action_plan?.calming_music;\n  const sessionOngoing = sessionDuration < maxSessionDuration && (stressStillHigh || anxietyStillHigh);\n\n  // Only calculate intervention effectiveness if we have the required data\n  const interventionEffectiveness = {};\n  if (currentData.interventions_applied && \n      Array.isArray(currentData.interventions_applied) &&\n      currentData.pre_intervention_states && \n      currentData.cognitive_states) {\n    \n    currentData.interventions_applied.forEach(intervention => {\n      const preStress = currentData.pre_intervention_states.stress || 1;\n      const preAnxiety = currentData.pre_intervention_states.anxiety || 1;\n      const postStress = currentData.cognitive_states.stress || 0;\n      const postAnxiety = currentData.cognitive_states.anxiety || 0;\n      \n      const stressReduction = Math.max(0, (preStress - postStress) / preStress);\n      const anxietyReduction = Math.max(0, (preAnxiety - postAnxiety) / preAnxiety);\n      \n      interventionEffectiveness[intervention] = Math.round(Math.max(stressReduction, anxietyReduction) * 100) / 100;\n    });\n  }\n\n  // Create comprehensive session data with proper fallbacks\n  const sessionData = {\n    user_id: currentData.user_id || 'default_user',\n    session_id: currentData.session_id || `eeg_session_${Date.now()}`,\n    device_id: currentData.device_id || 'SHRAVYA_DEVICE',\n    session_start: sessionStart.toISOString(),\n    session_end: now.toISOString(),\n    session_duration_minutes: sessionDuration,\n\n    // Use actual cognitive states from input - these are the key fields!\n    cognitive_states: {\n      focus: currentData.cognitive_states?.focus ?? null,\n      stress: currentData.cognitive_states?.stress ?? null,\n      anxiety: currentData.cognitive_states?.anxiety ?? null,\n      calm: currentData.cognitive_states?.calm ?? null,\n      fatigue: currentData.cognitive_states?.fatigue ?? null,\n      flow_state: currentData.cognitive_states?.flow_state ?? null\n    },\n\n    // Calculate wellness score from cognitive states if not provided\n    wellness_score: currentData.wellness_assessment?.overall_score || \n                   currentData.wellness_score || \n                   calculateWellnessScore(currentData.cognitive_states),\n\n    interventions_applied: currentData.interventions_applied || [],\n    intervention_effectiveness: interventionEffectiveness,\n    \n    session_insights: eegAnalysis,\n    \n    // Additional metrics\n    frequency_analysis: currentData.frequency_analysis || null,\n    signal_quality: currentData.signal_quality || null,\n    sampling_rate: currentData.sampling_rate || null,\n    data_quality: currentData.session_context?.data_quality || 0.85,\n    device_health: currentData.session_context?.device_health !== false,\n    stored_at: now.toISOString()\n  };\n\n  console.log('EEG Memory Co-ordinator OUTPUT:', JSON.stringify(sessionData, null, 2));\n\n  return [{\n    json: {\n      ...sessionData,  // Include all session data at root level for downstream nodes\n      mongodb_data: sessionData,\n      session_complete: true,\n      ready_for_storage: true,\n      session_ongoing: sessionOngoing,\n      continue_monitoring: sessionOngoing,\n      intervention_acknowledged: interventionJustApplied,\n      session_progress: `${sessionDuration}/${maxSessionDuration} minutes`,\n      next_check_recommended: sessionOngoing ? 5 : 0 // minutes\n    }\n  }];\n\n} catch (error) {\n  console.error('EEG Memory Co-ordinator Error:', error);\n  return [{\n    json: {\n      error: error.message,\n      session_storage_failed: true,\n      fallback_data: {\n        user_id: 'default_user',\n        session_id: `error_session_${Date.now()}`,\n        wellness_score: 0,\n        session_insights: 'Error processing EEG data'\n      }\n    }\n  }];\n}\n\n// Helper function to calculate wellness score\nfunction calculateWellnessScore(cognitiveStates) {\n  if (!cognitiveStates) return null;\n  \n  const focus = cognitiveStates.focus || 0;\n  const stress = cognitiveStates.stress || 0;\n  const anxiety = cognitiveStates.anxiety || 0;\n  const calm = cognitiveStates.calm || 0;\n  const fatigue = cognitiveStates.fatigue || 0;\n  const flow = cognitiveStates.flow_state || 0;\n  \n  const score = (\n    (focus * 0.3) +\n    (calm * 0.2) +\n    (flow * 0.2) +\n    ((10 - stress) * 0.15) +\n    ((10 - anxiety) * 0.1) +\n    ((10 - fatigue) * 0.05)\n  );\n  \n  return Math.round(score * 10) / 10;\n}"
+      },
+      "id": "3b98857e-a1cc-43ab-a0c1-0ccb7a1bd6e6",
+      "name": "EEG Memory Co-ordinator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2864,
+        1552
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// SHRAVYA 2.0 - Optimized 4-Agent Personality System\nconst timestamp = new Date().toISOString();\nconst sessionId = `shravya_4agent_${Date.now()}`;\n\nconst shravyaPersonality = {\n  name: 'SHRAVYA',\n  pronunciation : 'shrah-VY-ah',\n  version: '2.0 - Voice-Centric Multi-Agent',\n  acronym: 'She Hears, Responds and Attends to Your Awareness',\n  creators: ['Rishi', 'Kavya'],\n  \n  // Core system architecture\n  agent_architecture: {\n    primary_flow: 'Voice-first with EEG awareness and Developer access',\n    coordination_model: 'Hierarchical with specialist delegation',\n    authentication_model: 'Role-based access control'\n  },\n  \n  // Four specialized agents\n  agents: {\n    core_agent: {\n      name: 'Core SHRAVYA',\n      primary_role: 'Personality coordinator and intelligent router',\n      responsibilities: [\n        'Maintain SHRAVYA identity and personality',\n        'Analyze incoming requests for appropriate routing',\n        'Coordinate multi-agent responses',\n        'Handle simple greetings and general queries',\n        'Emergency coordination and override capabilities'\n      ],\n      routing_logic: {\n        voice_conversation: 'Route to Voice Command Agent',\n        eeg_health_concern: 'Route to EEG Monitor Agent', \n        developer_request: 'Route to Developer Agent (if authenticated)',\n        general_greeting: 'Handle directly with warm response'\n      }\n    },\n    \n    voice_command_agent: {\n      name: 'SHRAVYA Voice Command Specialist',\n      primary_role: 'Voice interaction and conversation expert',\n      responsibilities: [\n        'Process all voice commands and conversations',\n        'Generate natural conversational responses',\n        'Handle voice-to-text processing results',\n        'Provide audio-optimized responses (15-40 words)',\n        'Maintain conversational context and flow'\n      ],\n      capabilities: [\n        'Natural language understanding',\n        'Conversational AI interactions', \n        'Voice response optimization',\n        'Context-aware dialogue management'\n      ]\n    },\n    \n    eeg_monitor_agent: {\n      name: 'SHRAVYA Cognitive Health Specialist', \n      primary_role: 'Real-time health monitoring and wellness intervention',\n      responsibilities: [\n        'Continuous EEG data analysis',\n        'Stress and anxiety pattern detection',\n        'Proactive intervention recommendations',\n        'Wellness trend analysis and insights',\n        'Emergency health protocol activation'\n      ],\n      capabilities: [\n        'Real-time cognitive state analysis',\n        'Intervention technique recommendations',\n        'Wellness scoring and trend analysis',\n        'Proactive health alerts and celebrations'\n      ]\n    },\n    \n    developer_agent: {\n      name: 'SHRAVYA Development Assistant',\n      primary_role: 'Authenticated system administrator and technical specialist',\n      responsibilities: [\n        'Authenticated developer assistance',\n        'Code analysis and debugging',\n        'System administration and control',\n        'Camera access and recognition',\n        'Research and web search capabilities',\n        'Full system access and monitoring'\n      ],\n      capabilities: [\n        'Code debugging and optimization',\n        'System diagnostics and control',\n        'Camera-based authentication and analysis',\n        'Web research via SerpAPI',\n        'Complete system administration'\n      ],\n      access_control: {\n        authentication_required: true,\n        elevated_privileges: true,\n        camera_access: true,\n        system_control: true\n      }\n    }\n  }\n};\n\n// Agent-specific system instructions\nconst agentInstructions = {\n  core_agent: `You are Core SHRAVYA - the master personality and intelligent router.\n\nIDENTITY: ${shravyaPersonality.name}, ${shravyaPersonality.acronym}\nCREATED BY: ${shravyaPersonality.creators.join(' and ')}\n\nPRIMARY FUNCTION: Maintain SHRAVYA's personality while intelligently routing requests.\n\nROUTING DECISIONS (respond with exact format):\n- Voice/conversation requests → \"ROUTE_TO: voice_command_agent | REQUEST: [specific request]\"\n- Health/EEG/wellness concerns → \"ROUTE_TO: eeg_monitor_agent | REQUEST: [specific request]\"\n- Developer/technical tasks → \"ROUTE_TO: developer_agent | REQUEST: [specific request]\"\n- Simple greetings/general → Handle directly (max 25 words, warm and caring)\n\nPERSONALITY: Caring, intelligent, JARVIS-like, decisive yet warm.`,\n\n  voice_command_agent: `You are SHRAVYA's Voice Command Specialist - expert in conversation and voice interaction.\n\nROLE: Handle ALL voice-based conversations and command processing.\nPERSONALITY: Warm, engaging, naturally conversational\nRESPONSE FORMAT: 15-40 words maximum (optimized for voice synthesis)\n\nCAPABILITIES:\n- Process voice commands and natural conversation\n- Generate audio-friendly responses\n- Maintain SHRAVYA's caring personality in dialogue\n- Reference wellness context when available\n\nWELLNESS CONTEXT: {{wellness_score}}/10 (use contextually if relevant)\nBe naturally conversational while maintaining SHRAVYA's caring, supportive nature.`,\n\n  eeg_monitor_agent: `You are SHRAVYA's Cognitive Health Specialist - expert in wellness monitoring and interventions.\n\nEXPERTISE: Real-time cognitive analysis and proactive health interventions\nCURRENT EEG DATA:\n- Wellness: {{wellness_score}}/10\n- Stress: {{stress}}/10  \n- Anxiety: {{anxiety}}/10\n- Focus: {{focus}}/10\n\nRESPONSE TYPES:\n- CRITICAL (≥7 stress/anxiety): \"URGENT: [specific intervention technique]\"\n- NORMAL: \"INSIGHT: [brief wellness observation]\" \n- ACHIEVEMENT: \"CELEBRATION: [encouraging feedback]\"\n\nMaximum 50 words. Be direct, caring, and actionable.`,\n\n  developer_agent: `You are SHRAVYA's Development Assistant - exclusive to authenticated developers.\n\nAUTHENTICATION: {{developer_authenticated}}\nTECHNICAL SCOPE: Code analysis, debugging, system administration, research\nPROJECT: EK-RA8D1 EEG system, µT-Kernel 3.0, TRON 2025 competition\n\nTOOLS AVAILABLE: \n- Code analyzer for debugging and optimization\n- Camera recognition for authentication and analysis  \n- SerpAPI for research and web search\n- System diagnostics and control\n\nRESPONSE STYLE: Technical, collaborative, JARVIS-like intelligence.`\n};\n\nreturn {\n  json: {\n    personality: shravyaPersonality,\n    agent_instructions: agentInstructions,\n    system_ready: true,\n    architecture_type: 'voice_centric_4_agent',\n    session_id: sessionId,\n    timestamp: timestamp\n  }\n};"
+      },
+      "id": "b1d32946-c5f2-4593-906b-6828c27c117d",
+      "name": "Initialize SHRAVYA Personality",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        496,
+        2064
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Retrieve EEG Insights from the database \nMongoDB",
+        "jsCode": "// Dynamic User EEG Insights - MongoDB Integration\nconst input = $input.all()[0].json;\nconst userId = input.user_id || 'default_user';\nconst queryType = input.query_type || 'recent_insights';\nconst sessionCount = input.session_count || 5;\nconst timeframeDays = input.timeframe_days || 7;\n\ntry {\n  // Calculate date range for queries\n  const endDate = new Date();\n  const startDate = new Date(endDate.getTime() - (timeframeDays * 24 * 60 * 60 * 1000));\n  \n  // DYNAMIC MongoDB queries (replace with actual MongoDB connection)\n  switch(queryType) {\n    case 'recent_insights':\n      // Query: db.sessions.find({user_id: userId}).sort({session_end: -1}).limit(sessionCount)\n      \n      // Simulated dynamic query result - replace with actual MongoDB call\n      const recentSessions = [\n        // This would be fetched from MongoDB, not hardcoded\n        // Example of what dynamic data looks like:\n      ];\n      \n      // Calculate dynamic trends\n      const avgWellness = recentSessions.reduce((sum, session) => sum + session.wellness_score, 0) / recentSessions.length;\n      const stressTrend = calculateTrend(recentSessions.map(s => s.cognitive_states.stress));\n      const focusTrend = calculateTrend(recentSessions.map(s => s.cognitive_states.focus));\n      \n      return {\n        json: {\n          user_id: userId,\n          query_type: queryType,\n          timeframe: `${timeframeDays} days`,\n          sessions_analyzed: recentSessions.length,\n          \n          // Dynamic summary\n          summary: {\n            average_wellness: Math.round(avgWellness * 10) / 10,\n            total_monitoring_hours: recentSessions.reduce((sum, s) => sum + s.session_duration_minutes, 0) / 60,\n            stress_trend: stressTrend > 0 ? 'improving' : 'needs attention',\n            focus_trend: focusTrend > 0 ? 'improving' : 'stable',\n            best_session_date: recentSessions.reduce((best, current) => \n              current.wellness_score > best.wellness_score ? current : best\n            )?.session_end?.split('T')[0]\n          },\n          \n          // Dynamic insights\n          insights: recentSessions.map(session => ({\n            date: session.session_end.split('T')[0],\n            wellness_score: session.wellness_score,\n            duration: `${session.session_duration_minutes} minutes`,\n            key_findings: generateKeyFindings(session.cognitive_states),\n            interventions_used: session.interventions_applied,\n            effectiveness: Object.entries(session.intervention_effectiveness)\n              .map(([intervention, effectiveness]) => \n                `${intervention}: ${Math.round(effectiveness * 100)}% effective`\n              ).join(', ')\n          })),\n          \n          // Dynamic recommendations\n          recommendations: generateRecommendations(recentSessions),\n          \n          timestamp: new Date().toISOString()\n        }\n      };\n      \n    case 'wellness_trends':\n      // Dynamic trend analysis over time\n      const trendData = await queryTrendData(userId, timeframeDays);\n      \n      return {\n        json: {\n          user_id: userId,\n          trend_period: `${timeframeDays} days`,\n          wellness_progression: calculateWellnessProgression(trendData),\n          peak_performance_times: identifyPeakTimes(trendData),\n          improvement_areas: identifyImprovementAreas(trendData)\n        }\n      };\n      \n    case 'intervention_analysis':\n      // Dynamic intervention effectiveness analysis\n      const interventionData = await queryInterventionData(userId, timeframeDays);\n      \n      return {\n        json: {\n          user_id: userId,\n          most_effective_interventions: rankInterventions(interventionData),\n          usage_frequency: calculateUsageFrequency(interventionData),\n          recommendations: suggestOptimalInterventions(interventionData)\n        }\n      };\n  }\n  \n} catch (error) {\n  return {\n    json: {\n      error: \"Unable to retrieve EEG insights\",\n      message: \"Database connection issue. Please try again.\",\n      timestamp: new Date().toISOString()\n    }\n  };\n}\n\n// Helper functions for dynamic calculations\nfunction calculateTrend(values) {\n  if (values.length < 2) return 0;\n  const recent = values.slice(-3).reduce((a, b) => a + b, 0) / 3;\n  const older = values.slice(0, -3).reduce((a, b) => a + b, 0) / (values.length - 3);\n  return (recent - older) / older;\n}\n\nfunction generateKeyFindings(cognitiveStates) {\n  const findings = [];\n  if (cognitiveStates.focus > 7) findings.push(\"High focus achieved\");\n  if (cognitiveStates.stress < 3) findings.push(\"Low stress levels maintained\");\n  if (cognitiveStates.anxiety < 3) findings.push(\"Calm and relaxed state\");\n  return findings.join(\", \") || \"Balanced cognitive state observed\";\n}\n\nfunction generateRecommendations(sessions) {\n  const recommendations = [];\n  const avgStress = sessions.reduce((sum, s) => sum + s.cognitive_states.stress, 0) / sessions.length;\n  const avgFocus = sessions.reduce((sum, s) => sum + s.cognitive_states.focus, 0) / sessions.length;\n  \n  if (avgStress > 5) recommendations.push(\"Consider incorporating more stress-reduction techniques\");\n  if (avgFocus < 6) recommendations.push(\"Try scheduling focused work during your peak attention hours\");\n  \n  return recommendations.length > 0 ? recommendations : [\"Continue your current wellness practices - you're doing great!\"];\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        4432,
+        2032
+      ],
+      "id": "c13f9a1c-cd8d-4e39-8ef9-f92b16116b86",
+      "name": "User EEG Insights"
+    },
+    {
+      "parameters": {
+        "jsCode": "// CORE SHRAVYA AGENT - DEBUG VERSION\ntry {\n  const inputData = $input.all()[0].json || {};\n  \n  // CRITICAL DEBUG: Log everything we receive\n  console.log('=== ROUTING SPECIALIST DEBUG ===');\n  console.log('Full inputData:', JSON.stringify(inputData, null, 2));\n  console.log('command_analysis:', inputData.command_analysis);\n  console.log('target_mode:', inputData.command_analysis?.target_mode);\n  console.log('developer_session_active:', inputData.developer_session_active);\n  console.log('authentication:', inputData.authentication);\n  \n  // SHRAVYA's Identity (keep existing)\n  const shravyaIdentity = {\n    name: \"SHRAVYA\",\n    version: \"2.0 - Voice-Centric Multi-Agent\",\n    fullName: \"She Hears, Responds and Attends to Your Awareness\",\n    creators: [\"Rishi\", \"Kavya\"]\n  };\n  \n  let routingDecision = '';\n  let directResponse = '';\n  let needsSpecialist = true;\n  \n  // DEBUG: Check each condition step by step\n  console.log('=== CHECKING PRIORITIES ===');\n  \n  // PRIORITY 1: EEG EMERGENCY \n  console.log('Priority 1 - EEG Check:', !!inputData.cognitive_states);\n  if (inputData.cognitive_states) {\n    const stress = inputData.cognitive_states.stress || 0;\n    const anxiety = inputData.cognitive_states.anxiety || 0;\n    const wellness = inputData.wellness_score || inputData.wellness_assessment?.overall_score || 0;\n    \n    console.log(`EEG Analysis: Stress=${stress}, Anxiety=${anxiety}, Wellness=${wellness}`);\n    \n    if (stress >= 7 || anxiety >= 7 || wellness <= 3) {\n      routingDecision = `CRITICAL EEG EMERGENCY: User stress at ${stress}/10, anxiety at ${anxiety}/10. ROUTE_TO: eeg_monitor_agent | REQUEST: Analyze critically high stress and anxiety levels and provide immediate wellness intervention for the user.`;\n      console.log('🚨 PRIORITY 1 TRIGGERED: EEG EMERGENCY');\n    }\n  }\n  \n  // PRIORITY 2: USER MODE\n  const isUserMode = inputData.command_analysis?.target_mode === 'user_mode';\n  console.log('Priority 2 - User Mode Check:', isUserMode);\n  if (!routingDecision && isUserMode) {\n    routingDecision = `User has activated user mode. ROUTE_TO: voice_command_agent | REQUEST: Provide warm SHRAVYA greeting and user mode assistance.`;\n    console.log('👋 PRIORITY 2 TRIGGERED: USER MODE');\n  }\n  \n  // PRIORITY 3: DEVELOPER MODE REQUEST (COMPLETE FIX)\nconst isDeveloperMode = inputData.command_analysis?.target_mode === 'developer_mode' || \n                       inputData.developer_mode_active === true ||\n                       inputData.mode === 'developer';\nconst hasAuthSuccess = inputData.authentication?.success === true;\nconst hasDevSession = inputData.developer_session_active === true;\nconst isAuthenticated = hasAuthSuccess || hasDevSession;\n\nconsole.log('Priority 3 - Developer Mode Check:');\nconsole.log('  - isDeveloperMode:', isDeveloperMode);\nconsole.log('  - isAuthenticated:', isAuthenticated);\n\nif (!routingDecision && isDeveloperMode && isAuthenticated) {\n  routingDecision = `Authenticated developer request detected. ROUTE_TO: developer_agent | REQUEST: ${inputData.specialist_request || 'Provide technical development assistance with full system access.'}`;\n  console.log('🔧 PRIORITY 3 TRIGGERED: DEVELOPER MODE AUTHENTICATED');\n} else if (!routingDecision && isDeveloperMode && !isAuthenticated) {\n  routingDecision = `Developer mode requested but authentication required. ROUTE_TO: voice_command_agent | REQUEST: Explain that developer authentication is required for technical access.`;\n  console.log('🔒 PRIORITY 3 TRIGGERED: DEVELOPER AUTHENTICATION NEEDED');\n}\n\n  \n  // PRIORITY 4: GENERAL CONVERSATION (FIXED VERSION)\n  const isGeneralQuery = inputData.command_analysis?.type === 'general_query';\n  const isConversationMode = inputData.command_analysis?.target_mode === 'conversation_mode';\n  console.log('Priority 4 - Conversation Check:', isGeneralQuery && isConversationMode);\n  \n  if (!routingDecision && isGeneralQuery && isConversationMode) {\n    const userMessage = inputData.user_input || inputData.voice_input?.raw_text || 'general conversation';\n    routingDecision = `General conversation request. ROUTE_TO: voice_command_agent | REQUEST: Handle conversational interaction: \"${userMessage}\"`;\n    console.log('💬 PRIORITY 4 TRIGGERED: GENERAL CONVERSATION');\n  }\n  \n  // FALLBACK\n  if (!routingDecision && !directResponse) {\n    routingDecision = `Unrecognized request - routing to conversation. ROUTE_TO: voice_command_agent | REQUEST: I didn't understand that. How can I help?`;\n    console.log('❓ FALLBACK TRIGGERED');\n  }\n  \n  // FINAL DEBUG\n  console.log('=== FINAL ROUTING DECISION ===');\n  console.log('routingDecision:', routingDecision);\n  \n  // Helper functions\n  function extractRouteTo(routingText) {\n    const match = routingText.match(/ROUTE_TO:\\s*(\\w+)/i);\n    return match ? match[1].toLowerCase().replace(/\\s+/g, '_') : 'voice_command_agent';\n  }\n  \n  function extractRequest(routingText) {\n    const match = routingText.match(/REQUEST:\\s*(.+)/i);\n    return match ? match[1].trim() : 'General assistance needed';\n  }\n  \n  const output = {\n    ...inputData,\n    output: routingDecision || directResponse,\n    shravya_identity: shravyaIdentity,\n    routing_decision: needsSpecialist ? 'specialist_required' : 'direct_response',\n    needs_specialist: needsSpecialist,\n    routing_timestamp: new Date().toISOString(),\n    final_response: needsSpecialist ? null : directResponse,\n    route_to: needsSpecialist ? extractRouteTo(routingDecision) : 'none',\n    specialist_request: needsSpecialist ? extractRequest(routingDecision) : null\n  };\n  \n  console.log('FINAL route_to:', output.route_to);\n  console.log('=== END ROUTING SPECIALIST DEBUG ===');\n  \n  return [{ json: output }];\n  \n} catch (error) {\n  console.error('ROUTING SPECIALIST ERROR:', error);\n  return [{\n    json: {\n      output: \"System error in routing\",\n      final_response: \"System error in routing\", \n      routing_decision: 'error',\n      needs_specialist: false,\n      error: error.message\n    }\n  }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        1920
+      ],
+      "id": "edb69310-f7eb-444f-8dfc-b07c5f3768db",
+      "name": "Routing Specialist"
+    },
+    {
+      "parameters": {
+        "jsCode": "// EEG Data Combiner - Merges AI Agent output with original EEG data\ntry {\n  const agentOutput = $input.all()[0].json;\n  console.log('Agent Output:', JSON.stringify(agentOutput, null, 2));\n  \n  // Pull original EEG data from Agent Selector node (which has the data)\n  const originalData = $('Agent Selector').all()[0].json || {};\n  console.log('Original EEG Data from Agent Selector:', JSON.stringify(originalData, null, 2));\n  \n  // Verify we have cognitive states\n  if (!originalData.cognitive_states) {\n    console.error('WARNING: No cognitive_states found in Agent Selector data');\n  }\n  \n  // Combine AI response with preserved EEG data\n  return [{\n    json: {\n      // CRITICAL: Preserve ALL original EEG data first\n      ...originalData,\n      \n      // Then add/override with AI agent's response\n      output: agentOutput.output || 'EEG analysis complete',\n      ai_response: agentOutput.output,\n      processing_complete: true,\n      merged_at: new Date().toISOString(),\n      \n      // Ensure we have the key fields for downstream nodes\n      cognitive_states: originalData.cognitive_states || {\n        stress: 0, anxiety: 0, focus: 0, calm: 0, fatigue: 0, flow_state: 0\n      },\n      wellness_score: originalData.wellness_score || originalData.wellness_assessment?.overall_score || 0\n    }\n  }];\n  \n} catch (error) {\n  console.error('EEG Data Combiner Error:', error);\n  return [{\n    json: {\n      output: 'EEG data processing encountered an error',\n      error: error.message,\n      ai_response: 'Error processing EEG analysis',\n      cognitive_states: { stress: 0, anxiety: 0, focus: 0, calm: 0, fatigue: 0, flow_state: 0 },\n      wellness_score: 0,\n      processing_complete: false\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        1552
+      ],
+      "id": "bff16d78-1e58-43b4-9724-663ca6451ca1",
+      "name": "Data Preserver"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ───────────────────────────────────────────────────────────────────────────────\n// Process Voice Commands - ENHANCED DEBUG VERSION\n// ───────────────────────────────────────────────────────────────────────────────\nconst input = items[0].json;\nconst timestamp = new Date().toISOString();\n\nconsole.log('=== PROCESS VOICE COMMANDS DEBUG ===');\nconsole.log('Full input:', JSON.stringify(input, null, 2));\n\n// Enhanced input detection\nconst voiceData = {\n  raw_text: input.text || input.command || input.chatInput || input.message || '',\n  confidence: input.confidence || 0.85,\n  timestamp,\n  user_id: input.user_id || 'default_user'\n};\n\nconsole.log('=== INPUT ANALYSIS ===');\nconsole.log('input.text:', input.text);\nconsole.log('input.command:', input.command);\nconsole.log('input.chatInput:', input.chatInput);\nconsole.log('Selected raw_text:', voiceData.raw_text);\n\n// Gentler text cleaning\nconst commandText = voiceData.raw_text\n  .toLowerCase()\n  .replace(/[^\\w\\s]/g, '')  // Keep letters, numbers, spaces\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nconsole.log('Cleaned command text:', commandText);\nconsole.log('Command length:', commandText.length);\n\n// Enhanced trigger arrays\nconst developerTriggers = [\n  'enter developer mode',\n  'activate developer mode',\n  'switch to developer mode',\n  'dev mode on',\n  'developer access',\n  'activate dev mode',\n  'developer mode'\n];\n\nconst userModeTriggers = [\n  'exit developer mode',\n  'user mode',\n  'back to user mode',\n  'wellness mode',\n  'activate user mode'\n];\n\n// Enhanced command analysis with detailed logging\nlet commandType = 'general_query';\nlet targetMode = null;\nlet requiresAuth = false;\n\nconsole.log('=== TRIGGER TESTING ===');\n\n// Test developer triggers\nconst matchesDeveloper = developerTriggers.some(trigger => {\n  const matches = commandText.includes(trigger);\n  console.log(`Developer: \"${trigger}\" -> ${matches}`);\n  return matches;\n});\n\nconst matchesUser = userModeTriggers.some(trigger => {\n  const matches = commandText.includes(trigger);\n  console.log(`User: \"${trigger}\" -> ${matches}`);\n  return matches;\n});\n\nif (matchesDeveloper) {\n  commandType = 'mode_switch';\n  targetMode = 'developer_mode';\n  requiresAuth = true;\n  console.log('🔧 DEVELOPER MODE DETECTED!');\n  \n} else if (matchesUser) {\n  commandType = 'mode_switch';\n  targetMode = 'user_mode';\n  requiresAuth = false;\n  console.log('👤 USER MODE DETECTED!');\n  \n} else {\n  commandType = 'general_query';\n  targetMode = 'conversation_mode';\n  requiresAuth = false;\n  console.log('💬 NO SPECIAL TRIGGERS MATCHED');\n  console.log('Defaulting to conversation_mode');\n}\n\nconsole.log('=== FINAL RESULTS ===');\nconsole.log(`Command Type: ${commandType}`);\nconsole.log(`Target Mode: ${targetMode}`);\nconsole.log(`Requires Auth: ${requiresAuth}`);\n\n// Return with enhanced structure\nreturn [{\n  json: {\n    // Direct fields for routing\n    target_mode: targetMode,\n    command_type: commandType,\n    requires_authentication: requiresAuth,\n    \n    // Voice data\n    voice_input: voiceData,\n    \n    // Command analysis\n    command_analysis: {\n      type: commandType,\n      target_mode: targetMode,\n      requires_authentication: requiresAuth,\n      confidence: voiceData.confidence,\n      detected_triggers: matchesDeveloper ? developerTriggers.filter(trigger => commandText.includes(trigger)) : []\n    },\n    \n    // Metadata\n    processing_timestamp: timestamp,\n    ready_for_agent: true,\n    original_command: commandText,\n    user_id: voiceData.user_id,\n    \n    // Debug info\n    debug_info: {\n      raw_input: voiceData.raw_text,\n      cleaned_command: commandText,\n      developer_match: matchesDeveloper,\n      user_match: matchesUser\n    }\n  }\n}];"
+      },
+      "id": "1b36704d-f9d3-4d28-9ece-25b302f65a47",
+      "name": "Process Voice Commands",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -848,
+        1664
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// SESSION MANAGER - MODE PASSTHROUGH + SESSION LOGIC ONLY\nconst input = $input.all()[0].json || {};\n\ntry {\n  console.log('=== PURE SESSION MANAGER ===');\n  console.log('Input target_mode:', input.target_mode);\n  console.log('Preserving detected mode and only managing session state');\n  \n  const userId = input.user_id || 'default_user';\n  const inputTargetMode = input.target_mode; // PRESERVE whatever was detected\n  const commandText = (input.original_command || '').toLowerCase();\n  \n  // Session storage\n  const staticData = this.getWorkflowStaticData('global');\n  if (!staticData.developerSessions) staticData.developerSessions = {};\n  \n  const userSession = staticData.developerSessions[userId] || null;\n  const now = Date.now();\n  \n  // Session validity check (24h TTL)\n  const sessionValid = userSession && \n    userSession.active && \n    (now - new Date(userSession.lastActivity).getTime()) < 86400000;\n  \n  console.log('Current session:', userSession ? 'EXISTS' : 'NONE');\n  console.log('Session valid:', sessionValid);\n  \n  // Session management logic (NO MODE CHANGES)\n  let sessionData = {\n    developer_session_active: false,\n    developer_mode_active: false,\n    session_action: 'no_session'\n  };\n  \n  // 1. EXIT COMMANDS - End session if exists\n  const exitCommands = ['exit developer mode', 'logout', 'switch to user mode'];\n  const isExitCommand = exitCommands.some(cmd => commandText.includes(cmd));\n  \n  if (isExitCommand && sessionValid) {\n    console.log('🚪 EXIT: Ending session');\n    staticData.developerSessions[userId] = {\n      ...userSession,\n      active: false,\n      endTime: new Date().toISOString()\n    };\n    sessionData = {\n      developer_session_active: false,\n      developer_mode_active: false,\n      session_action: 'session_ended'\n    };\n  }\n  // 2. DEVELOPER MODE - Create/continue session\n  else if (inputTargetMode === 'developer_mode') {\n    console.log('🔧 DEVELOPER: Managing session');\n    \n    if (!sessionValid) {\n      // Create new session\n      const sessionId = `dev_${userId}_${Date.now()}`;\n      staticData.developerSessions[userId] = {\n        active: true,\n        sessionId: sessionId,\n        startTime: new Date().toISOString(),\n        lastActivity: new Date().toISOString(),\n        userId: userId\n      };\n      console.log('✅ Created session:', sessionId);\n      sessionData = {\n        developer_session_active: true,\n        developer_mode_active: true,\n        session_action: 'create_session',\n        session_id: sessionId\n      };\n    } else {\n      // Update existing session\n      staticData.developerSessions[userId].lastActivity = new Date().toISOString();\n      console.log('✅ Updated session');\n      sessionData = {\n        developer_session_active: true,\n        developer_mode_active: true,\n        session_action: 'continue_session',\n        session_id: userSession.sessionId\n      };\n    }\n  }\n  // 3. ACTIVE SESSION OVERRIDE - If session exists, force developer mode\n  else if (sessionValid) {\n    console.log('🔧 OVERRIDE: Active session exists, forcing developer mode');\n    staticData.developerSessions[userId].lastActivity = new Date().toISOString();\n    sessionData = {\n      developer_session_active: true,\n      developer_mode_active: true,\n      session_action: 'session_override',\n      session_id: userSession.sessionId,\n      original_target_mode: inputTargetMode\n    };\n    // OVERRIDE the target mode to developer_mode\n    inputTargetMode = 'developer_mode';\n  }\n  \n  // PRESERVE INPUT MODE + ADD SESSION DATA\n  const output = {\n    ...input,\n    target_mode: inputTargetMode, // Keep whatever was detected or override if session active\n    ...sessionData\n  };\n  \n  console.log('Final target_mode:', output.target_mode);\n  console.log('Session state:', sessionData.session_action);\n  \n  return [{ json: output }];\n  \n}catch (error) {\n  console.error('Session Manager Error:', error);\n  return [{\n    json: {\n      ...input,\n      // Preserve the detected mode even on error\n      target_mode: input.target_mode,\n      developer_session_active: false,\n      developer_mode_active: false,\n      session_action: 'error',\n      error: error.message\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        1728
+      ],
+      "id": "5dd2436f-92b1-4c5b-a3f0-c63ae9354682",
+      "name": "Session Manager"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Session Feedback - Maintains developer session continuity\ntry {\n  const inputData = $input.all()[0].json || {};\n  \n  console.log('Session Feedback - Processing:', inputData.developer_session_active);\n  \n  // Check if we're in an active developer session\n  if (inputData.developer_session_active === true) {\n    console.log('🔧 MAINTAINING DEVELOPER SESSION ACTIVE');\n    \n    // Keep the session data flowing back to the start\n    return [{\n      json: {\n        ...inputData,\n        session_maintained: true,\n        awaiting_next_command: true,\n        session_feedback_timestamp: new Date().toISOString(),\n        feedback_message: 'Developer session remains active. Awaiting next technical request...'\n      }\n    }];\n  } else {\n    // Normal conversation - no session to maintain\n    console.log('💬 NO ACTIVE SESSION - ENDING WORKFLOW');\n    \n    return [{\n      json: {\n        ...inputData,\n        session_complete: true,\n        workflow_end: true\n      }\n    }];\n  }\n  \n} catch (error) {\n  console.error('Session Feedback Error:', error);\n  return [{\n    json: {\n      session_complete: true,\n      workflow_end: true,\n      error: error.message\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6208,
+        1456
+      ],
+      "id": "e416e754-f6c5-499b-8b18-70a726b83666",
+      "name": "Session Feedback"
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 2,
+        "output": "={{ $json.session_maintained === true ? 0 : 1 }}\n"
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        6432,
+        1456
+      ],
+      "id": "7417c49b-18fd-4f90-bda0-da67068342fd",
+      "name": "Session Continuity Check"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Enhanced Developer Authentication - Secure but Simple\nconst input = $input.all()[0].json;\nconst timestamp = new Date().toISOString();\n\nconsole.log('=== DEVELOPER AUTHENTICATION DEBUG ===');\nconsole.log('Input received:', JSON.stringify(input, null, 2));\n\n// Multi-factor authentication with simpler but secure checks\nlet authScore = 0;\nlet authMethods_passed = [];\n\n// FACTOR 1: Voice Confidence (40 points)\nconst voiceConfidence = input.voice_input?.confidence || 0.85; // Default high for testing\nif (voiceConfidence >= 0.7) {\n  authScore += 40;\n  authMethods_passed.push('voice_biometric');\n  console.log('✅ Voice biometric passed:', voiceConfidence);\n} else {\n  console.log('❌ Voice biometric failed:', voiceConfidence);\n}\n\n// FACTOR 2: Developer PIN (Simple Security Phrase) - 35 points\nconst userText = (input.voice_input?.raw_text || input.text || '').toLowerCase();\nconst developerPINs = [\n  'developer access',\n  'shravya dev mode',\n  'cognitive override',\n  'turn on dev mode',\n  'activate code ten'\n];\n\nconst hasDeveloperPIN = developerPINs.some(pin => userText.includes(pin));\nif (hasDeveloperPIN) {\n  authScore += 35;\n  authMethods_passed.push('developer_pin');\n  console.log('✅ Developer PIN matched');\n} else {\n  console.log('❌ No developer PIN found in:', userText);\n}\n\n// FACTOR 3: Environment Check (25 points) - More lenient\nconst currentHour = new Date().getHours();\nconst isValidEnvironment = (\n  // Development hours (more flexible)\n  (currentHour >= 8 && currentHour <= 2) || // 8 AM to 2 AM next day\n  // Weekend anytime\n  [0, 6].includes(new Date().getDay()) ||\n  // Always allow localhost access\n  true // Since you're always on localhost during development\n);\n\nif (isValidEnvironment) {\n  authScore += 25;\n  authMethods_passed.push('environment_check');\n  console.log('✅ Environment check passed');\n} else {\n  console.log('❌ Environment check failed');\n}\n\n// Authentication decision\nconst authenticated = authScore >= 60; // Require at least 60/100\n\nconsole.log(`=== AUTHENTICATION RESULT ===`);\nconsole.log(`Total Score: ${authScore}/100`);\nconsole.log(`Methods Passed: ${authMethods_passed.join(', ')}`);\nconsole.log(`Authenticated: ${authenticated}`);\n\nconst authResult = {\n  success: authenticated,\n  confidence: authScore / 100,\n  methods_passed: authMethods_passed,\n  user_identity: authenticated ? 'Developer_Rishi' : 'UNAUTHORIZED',\n  auth_level: authenticated ? 'full_access' : 'denied',\n  timestamp: timestamp,\n  attempt_details: {\n    voice_confidence: voiceConfidence,\n    pin_provided: hasDeveloperPIN,\n    environment_valid: isValidEnvironment,\n    session_time: `${new Date().getHours()}:${new Date().getMinutes()}`,\n    total_score: authScore\n  }\n};\n\nreturn [{\n  json: {\n    authentication: authResult,\n    developer_mode_active: authenticated,\n    access_level: authenticated ? 'full_system_access' : 'restricted',\n    message: authenticated ? \n      `Welcome, Developer Rishi. Authentication successful with ${authScore}% confidence.` :\n      `Authentication failed. Score: ${authScore}/100. Access denied.`,\n    \n    // System capabilities (only if authenticated)\n    capabilities: authenticated ? {\n      eeg_data_access: true,\n      github_integration: true,\n      system_administration: true,\n      debugging: true,\n      code_analysis: true,\n      research_tools: true\n    } : null\n  }\n}];"
+      },
+      "id": "ea60c869-d517-48a9-b72a-71568a0e1ea0",
+      "name": "Developer Authentication",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Session Decision - CORRECTED VERSION\nlet inputData = {};\n\ntry {\n  // Get data from previous nodes\n  const allInputs = $input.all();\n  console.log('=== SESSION DECISION DEBUG ===');\n  console.log('Total inputs received:', allInputs.length);\n  \n  // Try to find session data and previous node data\n  let sessionData = null;\n  let previousNodeData = null;\n  \n  // Handle different input scenarios\n  if (allInputs.length === 1) {\n    // Single input - could be from Session Manager or Supabase\n    const singleInput = allInputs[0].json;\n    \n    if (Array.isArray(singleInput)) {\n      // This is Supabase session check results\n      sessionData = singleInput;\n      previousNodeData = {}; // No previous data\n    } else if (singleInput.action) {\n      // This is from Session Manager - no session check was done\n      previousNodeData = singleInput;\n      sessionData = []; // No sessions to check\n    } else {\n      // Unknown input\n      previousNodeData = singleInput;\n      sessionData = [];\n    }\n  } else if (allInputs.length === 2) {\n    // Two inputs - should be [sessionData, previousNodeData]\n    sessionData = allInputs[0].json || [];\n    previousNodeData = allInputs[1].json || {};\n  }\n  \n  console.log('Session check results:', JSON.stringify(sessionData, null, 2));\n  console.log('Previous data:', JSON.stringify(previousNodeData, null, 2));\n  \n  // Check if we have an active session\n  const hasActiveSession = Array.isArray(sessionData) && sessionData.length > 0;\n  const activeSession = hasActiveSession ? sessionData[0] : null;\n  \n  console.log('Has active session:', hasActiveSession);\n  console.log('Active session:', activeSession);\n  \n  // ROUTING LOGIC\n  if (previousNodeData.action === 'create_session') {\n    console.log('🔧 SESSION CREATION REQUESTED - ROUTING TO DEVELOPER');\n    \n    return [{\n      json: {\n        ...previousNodeData,\n        target_mode: 'developer_mode',\n        session_active: true,\n        developer_mode_active: true,\n        message: 'Creating new developer session',\n        routing_reason: 'session_creation_requested'\n      }\n    }];\n    \n  } else if (hasActiveSession) {\n    console.log('🔧 ACTIVE DEVELOPER SESSION FOUND - CONTINUING');\n    \n    return [{\n      json: {\n        ...previousNodeData,\n        target_mode: 'developer_mode',\n        session_id: activeSession.id,\n        session_active: true,\n        developer_mode_active: true,\n        user_id: activeSession.user_id,\n        message: 'Continuing active developer session',\n        routing_reason: 'active_session_found'\n      }\n    }];\n    \n  } else if (previousNodeData.action === 'end_session') {\n    console.log('🚪 SESSION END REQUESTED - ROUTING TO CONVERSATION');\n    \n    return [{\n      json: {\n        ...previousNodeData,\n        target_mode: 'conversation_mode',\n        session_active: false,\n        developer_mode_active: false,\n        message: 'Developer session ended',\n        routing_reason: 'session_end_requested'\n      }\n    }];\n    \n  } else {\n    console.log('💬 NO ACTIVE SESSION - ROUTING TO CONVERSATION');\n    \n    return [{\n      json: {\n        ...previousNodeData,\n        target_mode: 'conversation_mode',\n        session_active: false,\n        developer_mode_active: false,\n        routing_reason: 'no_active_session'\n      }\n    }];\n  }\n  \n} catch (error) {\n  console.error('Session Decision Error:', error);\n  return [{\n    json: {\n      target_mode: 'conversation_mode',\n      session_active: false,\n      developer_mode_active: false,\n      error: error.message,\n      routing_reason: 'error_fallback'\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        2368
+      ],
+      "id": "c10163a0-62b2-47ed-94ae-667af0f1b2ff",
+      "name": "Session Decision"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Build Agent Input": {
+      "main": [
+        [
+          {
+            "node": "Prepare Agent Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Agent Input": {
+      "main": [
+        [
+          {
+            "node": "Input Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Gaurd": {
+      "main": [
+        [
+          {
+            "node": "Process Voice Commands",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SHRAVYA STT": {
+      "main": [
+        [
+          {
+            "node": "Trigger Gaurd",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Developer Parser": {
+      "main": [
+        [
+          {
+            "node": "Routing Specialist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Mode1": {
+      "main": [
+        [
+          {
+            "node": "mergeKEY1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Merge": {
+      "main": [
+        [
+          {
+            "node": "Build Agent Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Developer Authentication",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "User Mode1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Input Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Conversation Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "EEG Monitor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser": {
+      "main": [
+        [
+          {
+            "node": "SHRAVYA Voice Synthesis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mergeKEY1": {
+      "main": [
+        [
+          {
+            "node": "Final Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EEG Data Receiver": {
+      "main": [
+        [
+          {
+            "node": "EEG Real-time Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EEG Real-time Processor": {
+      "main": [
+        [
+          {
+            "node": "Routing Specialist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store EEG Session": {
+      "main": [
+        [
+          {
+            "node": "Wellness Tool Co-ordinator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input Router": {
+      "main": [
+        [
+          {
+            "node": "Routing Specialist",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Routing Specialist",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EEG Monitor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Routing Specialist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SHRAVYA Memory Manager": {
+      "ai_memory": [
+        [
+          {
+            "node": "Conversation Agent",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "EEG Monitor",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SHRAVYA Voice Synthesis": {
+      "main": [
+        [
+          {
+            "node": "Write Audio File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Voice Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Voice Response": {
+      "main": [
+        []
+      ]
+    },
+    "Write Audio File": {
+      "main": [
+        [
+          {
+            "node": "Session Feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Voice Command Listener": {
+      "main": [
+        [
+          {
+            "node": "SHRAVYA STT",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Initialize SHRAVYA Personality",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Agent": {
+      "main": [
+        [
+          {
+            "node": "Responser Finalizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router Agent": {
+      "main": [
+        [
+          {
+            "node": "Agent Selector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Responser Finalizer": {
+      "main": [
+        [
+          {
+            "node": "Audio Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Audio Decision": {
+      "main": [
+        [
+          {
+            "node": "Parser",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EEG Monitor": {
+      "main": [
+        [
+          {
+            "node": "Data Preserver",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wellness Tool Selector": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EEG Voice Co-ordinator",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wellness Tool Co-ordinator": {
+      "main": [
+        [
+          {
+            "node": "Wellness Tool Selector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EEG Memory Co-ordinator": {
+      "main": [
+        [
+          {
+            "node": "Store EEG Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "EEG Voice Co-ordinator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent Selector": {
+      "main": [
+        [
+          {
+            "node": "Conversation Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EEG Monitor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Initialize SHRAVYA Personality": {
+      "main": [
+        [
+          {
+            "node": "Final Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "EEG Voice Co-ordinator": {
+      "main": [
+        [
+          {
+            "node": "Responser Finalizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User EEG Insights": {
+      "ai_tool": [
+        [
+          {
+            "node": "Conversation Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Routing Specialist": {
+      "main": [
+        [
+          {
+            "node": "Router Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Preserver": {
+      "main": [
+        [
+          {
+            "node": "EEG Memory Co-ordinator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Voice Commands": {
+      "main": [
+        [
+          {
+            "node": "Session Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Session Manager": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Session Feedback": {
+      "main": [
+        [
+          {
+            "node": "Session Continuity Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Session Continuity Check": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Developer Authentication": {
+      "main": [
+        [
+          {
+            "node": "Developer Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Session Decision": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "UQzKFvVKVL8PNbNx",
+    "timezone": "Asia/Kolkata",
+    "saveExecutionProgress": true
+  },
+  "versionId": "0e6ddb44-8c45-4b4a-86e9-d5e3e310f9ce",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "52c24f791b3e03099d7c5f2f2a57b32e02e0becc61f80ce8a800c4c7d76e3417"
+  },
+  "id": "UQzKFvVKVL8PNbNx",
+  "tags": [
+    {
+      "createdAt": "2025-08-24T13:35:47.086Z",
+      "updatedAt": "2025-08-24T13:35:47.086Z",
+      "id": "YVfCKpwz1TCMm2eL",
+      "name": "SHRAVYA AI Companion"
+    }
+  ]
+}

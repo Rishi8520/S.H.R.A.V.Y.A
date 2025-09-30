@@ -1,0 +1,67 @@
+#ifndef SHRAVYA_CONFIG_H
+#define SHRAVYA_CONFIG_H
+
+/* System Configuration */
+#define SHRAVYA_VERSION "2.0"
+#define SYSTEM_CLOCK_FREQ_HZ 480000000 // 480MHz
+#define EEG_SAMPLE_RATE_HZ 500 // 500Hz sampling
+
+/* Task Priorities (μT-Kernel 3.0) */
+#define TASK_PRIORITY_EEG_ACQ 10 // Highest priority
+#define TASK_PRIORITY_PREPROCESSING 15
+#define TASK_PRIORITY_FEATURE_EXTRACT 20
+#define TASK_PRIORITY_CLASSIFICATION 25
+#define TASK_PRIORITY_HAPTIC 30
+#define TASK_PRIORITY_COMMUNICATION 35
+
+/* Buffer Sizes */
+#define EEG_BUFFER_SIZE_SAMPLES 2048 // 4 seconds at 500Hz
+#define EEG_PROCESSING_WINDOW 1024 // 2 seconds overlap
+
+/* ✅ CORRECTED: Hardware Pin Assignments Based on Board Image */
+#define ADS1263_SPI_CHANNEL 0
+#define ADS1263_CS_PIN BSP_IO_PORT_04_PIN_13     // P413 - Your actual CS connection
+#define ADS1263_DRDY_PIN BSP_IO_PORT_00_PIN_04   // P004 - Pin A4 IRQ0
+
+/* ✅ FIXED: Vibration Motor Pins - Digital PWM 4 & 5 */
+#define VIBRATION_MOTOR_LEFT_PIN BSP_IO_PORT_03_PIN_01   // P301 (PWM4)
+#define VIBRATION_MOTOR_RIGHT_PIN BSP_IO_PORT_03_PIN_02  // P302 (PWM5)
+
+/* EEG Signal Processing */
+#define EEG_INPUT_RANGE_UV 100.0f // ±100μV
+#define EEG_NOISE_FLOOR_UV 2.0f   // 2μV noise floor
+#define EEG_ARTIFACT_THRESHOLD_UV 200.0f
+
+/* AI Classification Thresholds */
+#define STRESS_THRESHOLD 0.7f
+#define ANXIETY_THRESHOLD 0.75f
+#define FATIGUE_THRESHOLD 0.8f
+#define FOCUS_THRESHOLD 0.6f
+
+
+
+/* System Configuration */
+#define SHRAVYA_VERSION "2.0"
+#define SYSTEM_CLOCK_FREQ_HZ 480000000 // 480MHz
+
+// ✅ UPDATED: Enhanced EEG Configuration
+#define EEG_SAMPLE_RATE_HZ 2000         // 2kHz for rich data
+#define EEG_CHANNELS 2                  // Dual channel (left/right)
+#define EEG_PROCESSING_BATCH_SIZE 10000 // 5 seconds of data
+#define EEG_TRANSMISSION_INTERVAL_SEC 5 // Batch every 5 seconds
+
+/* Buffer Sizes - Optimized for 2kHz */
+#define EEG_BUFFER_SIZE_SAMPLES 16384   // 8 seconds circular buffer
+#define EEG_PROCESSING_WINDOW 8192      // 4 second processing window
+
+/* Communication */
+#define N8N_WEBHOOK_HOST "localhost"
+#define N8N_WEBHOOK_PORT 3000
+#define N8N_WEBHOOK_PATH "/webhook/eeg-data"
+
+/* ADS1263 RDATA Configuration */
+#define ADS1263_RDATA_TIMEOUT_MS 10     // Max wait for RDATA
+#define ADS1263_RETRY_COUNT 3           // Hardware retry attempts
+#define ADS1263_DATA_VALIDATION 1       // Enable data integrity checks
+
+#endif /* SHRAVYA_CONFIG_H */

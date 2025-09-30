@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # LinTO AI Whisper STT - Much more reliable!
+  whisper-linto:
+    image: lintoai/linto-stt-whisper:latest
+    container_name: shravya-whisper-linto
+    ports:
+      - "8000:80"  # LinTO uses port 80 inside container
+    environment:
+      - MODEL=base
+      - CONCURRENCY=1
+      - SERVICE_MODE=http
+    volumes:
+      - ./audio-samples:/opt/audio-samples
+    restart: unless-stopped
+    
+  # Keep your working TTS service
+  simple-tts:
+    image: python:3.11-slim
+    container_name: shravya-tts-cpu
+    ports:
+      - "8880:8880"
+    working_dir: /app
+    volumes:
+      - ./tts_service.py:/app/tts_service.py
+    command: >
+      bash -c "
+        pip install fastapi uvicorn pyttsx3 &&
+        python tts_service.py
+      "
+    restart: unless-stopped
+
+networks:
+  default:
+    name: shravya-network
